@@ -10,13 +10,17 @@ namespace DeepBot.Data.Driver
     {
         private static readonly IMongoDatabase Base = new MongoClient().GetDatabase("DeepBot");
 
-        public static readonly IMongoCollection<AccountMongoDB> Accounts = Base.GetCollection<AccountMongoDB>("Accounts");
+        public static readonly IMongoCollection<UserDB> Users = Base.GetCollection<UserDB>("Users");
+        public static readonly IMongoCollection<AccountDB> Accounts = Base.GetCollection<AccountDB>("Accounts");
 
         public static void Inset<TDocument>(this TDocument document)
         {
             switch (document)
             {
-                case AccountMongoDB e:
+                case UserDB e:
+                    Users.InsertOne(e);
+                    break;
+                case AccountDB e:
                     Accounts.InsertOne(e);
                     break;
                 default:
@@ -28,7 +32,10 @@ namespace DeepBot.Data.Driver
         {
             switch (document)
             {
-                case AccountMongoDB e:
+                case UserDB e:
+                    Users.DeleteOne(x => x.Key == e.Key);
+                    break;
+                case AccountDB e:
                     Accounts.DeleteOne(x => x.Key == e.Key);
                     break;
                 default:
@@ -42,7 +49,10 @@ namespace DeepBot.Data.Driver
 
             switch (document)
             {
-                case AccountMongoDB e:
+                case UserDB e:
+                    Users.ReplaceOne(x => x.Key == e.Key, e);
+                    break;
+                case AccountDB  e:
                     Accounts.ReplaceOne(x => x.Key == e.Key, e);
                     break;
                 default:
