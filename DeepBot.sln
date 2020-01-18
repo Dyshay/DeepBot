@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29324.140
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBot", "DeepBot\DeepBot.csproj", "{B900C1BD-3BF9-48F4-8D34-D81409ADC83A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DeepBot.Data", "DeepBot.Data\DeepBot.Data.csproj", "{C8F5B626-B996-4504-919C-1F565C4D49DF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B900C1BD-3BF9-48F4-8D34-D81409ADC83A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B900C1BD-3BF9-48F4-8D34-D81409ADC83A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B900C1BD-3BF9-48F4-8D34-D81409ADC83A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B900C1BD-3BF9-48F4-8D34-D81409ADC83A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C8F5B626-B996-4504-919C-1F565C4D49DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C8F5B626-B996-4504-919C-1F565C4D49DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C8F5B626-B996-4504-919C-1F565C4D49DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C8F5B626-B996-4504-919C-1F565C4D49DF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CACCCE9B-9679-4D82-A42A-47154005083E}
+	EndGlobalSection
+EndGlobal
