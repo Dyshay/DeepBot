@@ -5,12 +5,7 @@ using System.Text;
 
 namespace DeepBot.Data.Model
 {
-    public class Enums
-    {
-    }
-
-
-    /* Etat character enum */
+    #region Etat character enum 
     public enum CharacterState
     {
         DISCONNECTED = 0,
@@ -21,8 +16,9 @@ namespace DeepBot.Data.Model
         FIGHTING = 5,
         DIALOGING = 6
     }
+    #endregion
 
-    /* Type item enum */ 
+    #region Type item enum
     public enum ItemTypeEnum
     {
         TYPE_AMULETTE = 1,
@@ -140,8 +136,9 @@ namespace DeepBot.Data.Model
         TYPE_FRAGM_AME_SHUSHU = 115,
         TYPE_POTION_FAMILIER = 116,
     }
+    #endregion
 
-    /* type slot enum */
+    #region Type slot enum
     public enum ItemSlotEnum
     {
         SLOT_INVENTORY = -1,
@@ -187,8 +184,9 @@ namespace DeepBot.Data.Model
         SLOT_ITEMBAR_13 = 47,
         SLOT_ITEMBAR_14 = 48,
     }
+    #endregion
 
-    /* type effet List */ 
+    #region Type effet List
     public enum EffectEnum : int
     {
         None = -1,
@@ -437,4 +435,30 @@ namespace DeepBot.Data.Model
         BddCreateGuild = 2010,
         BddLaunchFight = 2011,
     }
+    #endregion
+
+    #region Cell type enum
+    public enum CellTypes
+    {
+        NOT_WALKABLE = 0,
+        INTERACTIVE_OBJECT = 1,
+        TELEPORT_CELL = 2,
+        UNKNOWN1 = 3,
+        WALKABLE = 4,
+        UNKNOWN2 = 5,
+        PATH_1 = 6,
+        PATH_2 = 7
+    }
+    #endregion
+
+    #region Movement direction enum
+    public enum MovementDirection
+    {
+        NONE,
+        TOP,
+        BOTTOM,
+        LEFT,
+        RIGHT,
+    }
+    #endregion
 }
