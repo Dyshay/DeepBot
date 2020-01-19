@@ -35,7 +35,7 @@ namespace DeepBot
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            /* database */ 
+            /* database */
             services.Configure<DataBaseSettings>(options =>
             {
                 options.ConnectionString
@@ -43,14 +43,8 @@ namespace DeepBot
                 options.Database
                     = Configuration.GetSection("MongoConnection:Database").Value;
             });
-            /* identity mongoDB */
-            services.AddIdentity<UserDB, RoleDB>()
-                    .AddMongoDbStores<UserDB, RoleDB, Guid>
-                    (
-                        "mongodb://admin:admin123!@localhost",
-                        "DeepBot"
-                    ).AddDefaultTokenProviders();
 
+            /*IdentityBuilder */
             var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
             {
                 MongoDbSettings = new MongoDbSettings
@@ -75,7 +69,8 @@ namespace DeepBot
                     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.-_";
                 }
             };
-            services.ConfigureMongoDbIdentity<UserDB, RoleDB, Guid>(mongoDbIdentityConfiguration);
+            services.ConfigureMongoDbIdentity<UserDB,RoleDB, Guid>(mongoDbIdentityConfiguration);
+
 
         }
 
