@@ -9,7 +9,6 @@ namespace DeepBot.CLI.Model
     public class Account
     {
         public TalkHubService TalkingService;
-
         public string ApiKey;
         public string AccountName;
         public string Password;
@@ -18,7 +17,7 @@ namespace DeepBot.CLI.Model
         {
             TalkingService = new TalkHubService();
             ApiKey = apiKey;
-            accountName = AccountName;
+            AccountName = accountName;
             Password = password;
         }
     }
