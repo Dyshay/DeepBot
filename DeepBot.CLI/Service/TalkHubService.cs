@@ -21,9 +21,9 @@ namespace DeepBot.CLI.Service
             Connection.Start().Wait();
         }
 
-        public async Task<string> SendHandlePackageToServer(string package, string apiKey)
+        public async Task SendHandlePackageToServer(string package, string apiKey)
         {
-            return await Hub.Invoke<string>("ReceivedHandler", package, apiKey);
+            await Hub.Invoke("ReceivedHandler", package, apiKey);
         } 
 
         public async Task JoinRoom(string apiKey)

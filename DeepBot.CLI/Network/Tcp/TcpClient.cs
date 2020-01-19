@@ -89,7 +89,7 @@ namespace DeepBot.CLI.Network.Tcp
                 foreach (var packet in datas.Replace("\x0a", string.Empty).Split('\0').Where(x => x != string.Empty))
                 {
                     PacketReceivedEvent?.Invoke(packet);
-                    PackageReceiver.Receive(this, packet, Account);
+                    PackageReceiver.Receive(packet, Account);
                 }
 
                 if (IsConnected())
