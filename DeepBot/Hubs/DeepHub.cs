@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using DeepBot.Data.Database;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,17 @@ namespace DeepBot.Hubs
     {
         public async Task ReceivedHandler(string package, string apiKey)
         {
-            // package receveid from CLI
+
+        }
+
+        public async Task SendPackage(string package, string apiKey)
+        {
+
+        }
+
+        public async Task JoinRoom(string apiKey)
+        {
+            await Groups.AddToGroupAsync(Context.ConnectionId, apiKey);
         }
     }
 }

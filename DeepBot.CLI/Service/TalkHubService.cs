@@ -15,8 +15,6 @@ namespace DeepBot.CLI.Service
 
         public TalkHubService()
         {
-
-            //TO SPECIFY
             string url = "https://localhost:44319/";
             Connection = new HubConnection(url);
             Hub = Connection.CreateHubProxy("DeepTalk");
@@ -27,6 +25,11 @@ namespace DeepBot.CLI.Service
         {
             return await Hub.Invoke<string>("ReceivedHandler", package, apiKey);
         } 
+
+        public async Task JoinRoom(string apiKey)
+        {
+            await Hub.Invoke("JoinRoom", apiKey);
+        }
 
         public void SendPackage()
         {
