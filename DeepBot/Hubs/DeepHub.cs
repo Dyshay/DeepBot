@@ -17,6 +17,7 @@ namespace DeepBot.Hubs
         public async Task SendPackage(string package, string apiKey)
         {
             // SEND TO CLI APP
+            await Task.Delay(500);
         }
 
         public async Task JoinRoomCLI(string apiKey)

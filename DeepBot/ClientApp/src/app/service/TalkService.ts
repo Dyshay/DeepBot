@@ -11,6 +11,11 @@ export class TalkService {
 
     constructor() {
         this.createConnection();
+        this.startConnection();
+    }
+
+    sendMessage(message: string) {
+        this._hubConnection.invoke('SendPackage', message, '5000');
     }
 
     private createConnection(): void {
@@ -19,13 +24,19 @@ export class TalkService {
             .build();
     }
 
+    joinRoom() {
+        this._hubConnection.invoke('JoinRoomClient', '500');
+    }
+
     private startConnection(): void {
         this._hubConnection
             .start()
             .then(() => {
+                console.log('passe')
                 this.connectIsEstablished = true;
                 console.log('Init connection on DeepTalk');
                 this.connectionEstablished.emit(true);
+                this._hubConnection.invoke('JoinRoomClient', '500');
             })
             .catch(err => {
                 console.log('Error on initialize connection with DeepTalk, retrying...');
