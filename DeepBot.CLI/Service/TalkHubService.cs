@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNet.SignalR.Client;
+﻿using Microsoft.AspNetCore.SignalR.Client;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,32 +8,41 @@ namespace DeepBot.CLI.Service
 {
     public class TalkHubService
     {
-        private IHubProxy Hub;
         private HubConnection Connection;
 
-        public event Action<string,bool> PackageBuild;
+        public event Action<string, bool> PackageBuild;
 
         public TalkHubService()
         {
-            string url = "https://localhost:44319/";
-            Connection = new HubConnection(url);
-            Hub = Connection.CreateHubProxy("DeepTalk");
-            Connection.Start().Wait();
+            string url = "https://localhost:44319/deeptalk";
+            Connection = new HubConnectionBuilder()
+                .WithUrl(url)
+                .Build();
+
+            Connection.Closed += async (error) =>
+            {
+                await Task.Delay(new Random().Next(0, 5) * 1000);
+                await Connection.StartAsync();
+            };
+
+            Connection.StartAsync();
+
+            GetPackage();
         }
 
         public async Task SendHandlePackageToServer(string package, string apiKey)
         {
-            await Hub.Invoke("ReceivedHandler", package, apiKey);
-        } 
+            await Connection.InvokeAsync("ReceivedHandler", package, apiKey);
+        }
 
         public async Task JoinRoom(string apiKey)
         {
-            await Hub.Invoke("JoinRoom", apiKey);
+            await Connection.InvokeAsync("JoinRoomCLI", apiKey);
         }
 
-        public void SendPackage()
+        public void GetPackage()
         {
-            Hub.On<string,bool>("SendPackage", (c, o) => PackageBuild?.Invoke(c,o));
+            Connection.On<string, bool>("SendPackage", (c, o) => PackageBuild?.Invoke(c, o));
         }
     }
 }

@@ -16,14 +16,14 @@ namespace DeepBot.Hubs
 
         public async Task SendPackage(string package, string apiKey)
         {
-            // SEND TO CLI APP
-            await Task.Delay(500);
+           await Clients.Group(apiKey).SendAsync("SendPackage", "test", true);
         }
 
         public async Task JoinRoomCLI(string apiKey)
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, apiKey);
             // UPDATE DATABASE WITH CLI COUNT
+            // ConnectionId update on account where Api Key
         }
 
         public async Task JoinRoomClient(string apiKey)

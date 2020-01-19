@@ -11,10 +11,9 @@ namespace DeepBot.CLI
 
         static void Main(string[] args)
         {
-            while (true)
-            {
-
-            }
+            Console.ReadLine();
+            TcpClient tcp = new TcpClient("500", "test", "test");
+            Console.ReadLine();
         }
     }
 }

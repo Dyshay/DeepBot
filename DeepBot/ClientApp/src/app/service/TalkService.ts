@@ -28,6 +28,10 @@ export class TalkService {
         this._hubConnection.invoke('JoinRoomClient', '500');
     }
 
+    sendPackage() {
+        this._hubConnection.invoke('SendPackage', 'test', '500')
+    }
+
     private startConnection(): void {
         this._hubConnection
             .start()

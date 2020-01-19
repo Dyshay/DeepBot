@@ -16,4 +16,8 @@ export class HomeComponent {
     sendMessage(): void {
         this.TalkService.sendMessage(this.txtMessage);
     }
+
+    sendPackage(): void {
+        this.TalkService.sendPackage();
+    }
 }

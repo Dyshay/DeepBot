@@ -26,10 +26,15 @@ namespace DeepBot.CLI.Network.Tcp
         public TcpClient(string apiKey, string accountName, string password)
         {
             Account = new Account(apiKey, accountName, password);
+            Account.TalkingService.JoinRoom(apiKey);
             Account.TalkingService.PackageBuild += SendPackage;
         }
 
-        private void SendPackage(string package, bool needResponse = false) => SendPacketAsync(package, needResponse).Wait();
+        public void SendPackage(string package, bool needResponse = false)
+        //=> SendPacketAsync(package, needResponse).Wait();
+        {
+                Console.WriteLine(package);
+        }
 
         public void Connect(IPAddress ip, int port)
         {
