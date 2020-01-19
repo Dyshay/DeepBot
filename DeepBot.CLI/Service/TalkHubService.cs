@@ -18,5 +18,7 @@ namespace DeepBot.CLI.Service
             Hub = Connection.CreateHubProxy("DeepTalk");
             Connection.Start().Wait();
         }
+
+
     }
 }
