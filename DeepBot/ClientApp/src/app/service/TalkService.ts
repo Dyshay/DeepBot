@@ -36,7 +36,6 @@ export class TalkService {
         this._hubConnection
             .start()
             .then(() => {
-                console.log('passe')
                 this.connectIsEstablished = true;
                 console.log('Init connection on DeepTalk');
                 this.connectionEstablished.emit(true);
