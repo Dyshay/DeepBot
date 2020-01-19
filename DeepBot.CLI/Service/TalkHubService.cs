@@ -11,7 +11,7 @@ namespace DeepBot.CLI.Service
         private IHubProxy Hub;
         private HubConnection Connection;
 
-        public event Action<string> PackageBuild;
+        public event Action<string,bool> PackageBuild;
 
         public TalkHubService()
         {
@@ -29,7 +29,7 @@ namespace DeepBot.CLI.Service
 
         public void SendPackage()
         {
-            Hub.On<string>("SendPackage", (c) => PackageBuild?.Invoke(c));
+            Hub.On<string,bool>("SendPackage", (c, o) => PackageBuild?.Invoke(c,o));
         }
     }
 }

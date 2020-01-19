@@ -1,4 +1,5 @@
-﻿using DeepBot.CLI.Network.Packages;
+﻿using DeepBot.CLI.Model;
+using DeepBot.CLI.Network.Packages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,18 @@ namespace DeepBot.CLI.Network.Tcp
     {
         private Socket Socket { get; set; }
         private byte[] Buffer { get; set; }
+        public Account Account { get; set; }
         private SemaphoreSlim Semaphore { get; set; }
         private bool Disposed;
 
         public event Action<string> PacketReceivedEvent;
         public event Action<string> PacketSendEvent;
 
+
+        public TcpClient(string apiKey, string accountName, string password)
+        {
+            Account = new Account(apiKey, accountName, password);
+        }
 
         public void Connect(IPAddress ip, int port)
         {
@@ -79,7 +86,7 @@ namespace DeepBot.CLI.Network.Tcp
                 foreach (var packet in datas.Replace("\x0a", string.Empty).Split('\0').Where(x => x != string.Empty))
                 {
                     PacketReceivedEvent?.Invoke(packet);
-                    PackageReceiver.Receive(this, packet);
+                    PackageReceiver.Receive(this, packet, Account);
                 }
 
                 if (IsConnected())

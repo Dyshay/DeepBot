@@ -1,5 +1,7 @@
-﻿using DeepBot.CLI.Network.Frames;
+﻿using DeepBot.CLI.Model;
+using DeepBot.CLI.Network.Frames;
 using DeepBot.CLI.Network.Tcp;
+using DeepBot.CLI.Service;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,12 +28,15 @@ namespace DeepBot.CLI.Network.Packages
             }
         }
 
-        public static void Receive(TcpClient client, string package)
+        public static async void Receive(TcpClient client, string package, Account acc)
         {
             PackageData method = methods.Find(m => package.StartsWith(m.PackageName));
 
             if (method != null)
+            {
                 method.Information.Invoke(method.Instance, new object[2] { client, package });
+                string value = await acc.TalkingService.SendHandlePackageToServer(package, acc.ApiKey);
+            }
         }
     }
 }
