@@ -1,5 +1,8 @@
-﻿using DeepBot.Data.Driver;
+﻿using AspNetCore.Identity.MongoDbCore.Models;
+using DeepBot.Data.Driver;
 using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
+using MongoDbGenericRepository.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,8 +10,20 @@ using System.Text;
 
 namespace DeepBot.Data.Database
 {
-    public class UserDB : Document<int>
+    [CollectionName("Users")]
+    public class UserDB : MongoIdentityUser<Guid>
     {
+
+        public UserDB() : base()
+        {
+        }
+
+        public UserDB(string userName, string email) : base(userName, email)
+        {
+        }
+
+        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
+        public Guid UserId { get; set; }
         public List<Guid> AccountsId { get; set; }
         public int MaxAccount { get; set; } /* type d'abonnement => 8 accounts max de base */ 
         public TimeSpan ConnectedHour { get; set; } /* total temps de connection sur site */

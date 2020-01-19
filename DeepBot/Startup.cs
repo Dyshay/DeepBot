@@ -6,6 +6,12 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using DeepBot.Data;
+using DeepBot.Data.Database;
+using System;
+using Microsoft.AspNetCore.Identity;
+using AspNetCore.Identity.MongoDbCore.Infrastructure;
+using AspNetCore.Identity.MongoDbCore.Extensions;
 
 namespace DeepBot
 {
@@ -29,6 +35,7 @@ namespace DeepBot
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            /* database */ 
             services.Configure<DataBaseSettings>(options =>
             {
                 options.ConnectionString
@@ -36,6 +43,40 @@ namespace DeepBot
                 options.Database
                     = Configuration.GetSection("MongoConnection:Database").Value;
             });
+            /* identity mongoDB */
+            services.AddIdentity<UserDB, RoleDB>()
+                    .AddMongoDbStores<UserDB, RoleDB, Guid>
+                    (
+                        "mongodb://admin:admin123!@localhost",
+                        "DeepBot"
+                    ).AddDefaultTokenProviders();
+
+            var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
+            {
+                MongoDbSettings = new MongoDbSettings
+                {
+                    ConnectionString = "mongodb://admin:admin123!@localhost",
+                    DatabaseName = "DeepBot"
+                },
+                IdentityOptionsAction = options =>
+                {
+                    options.Password.RequireDigit = false;
+                    options.Password.RequiredLength = 6;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = false;
+                    options.Password.RequireLowercase = false;
+
+                    // Lockout settings
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
+                    options.Lockout.MaxFailedAccessAttempts = 10;
+
+                    // ApplicationUser settings
+                    options.User.RequireUniqueEmail = true;
+                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.-_";
+                }
+            };
+            services.ConfigureMongoDbIdentity<UserDB, RoleDB, Guid>(mongoDbIdentityConfiguration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
