@@ -15,8 +15,9 @@ namespace DeepBot.CLI.Service
 
         public TalkHubService()
         {
+
             //TO SPECIFY
-            string url = "";
+            string url = "https://localhost:44319/";
             Connection = new HubConnection(url);
             Hub = Connection.CreateHubProxy("DeepTalk");
             Connection.Start().Wait();
@@ -24,7 +25,7 @@ namespace DeepBot.CLI.Service
 
         public async Task<string> SendHandlePackageToServer(string package, string apiKey)
         {
-            return await Hub.Invoke<string>("HandlePackage", package, apiKey);
+            return await Hub.Invoke<string>("ReceivedHandler", package, apiKey);
         } 
 
         public void SendPackage()
