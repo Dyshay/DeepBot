@@ -33,7 +33,7 @@ namespace DeepBot.Data.Driver
             switch (document)
             {
                 case UserDB e:
-                    Users.DeleteOne(x => x.Key == e.Key);
+                    Users.DeleteOne(x => x.UserId == e.UserId);
                     break;
                 case AccountDB e:
                     Accounts.DeleteOne(x => x.Key == e.Key);
@@ -50,7 +50,7 @@ namespace DeepBot.Data.Driver
             switch (document)
             {
                 case UserDB e:
-                    Users.ReplaceOne(x => x.Key == e.Key, e);
+                    Users.ReplaceOne(x => x.UserId == e.UserId, e);
                     break;
                 case AccountDB  e:
                     Accounts.ReplaceOne(x => x.Key == e.Key, e);
