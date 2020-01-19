@@ -8,9 +8,9 @@ namespace DeepBot.Hubs
 {
     public class DeepHub : Hub
     {
-        public async Task ReceveidHandler(string handler)
+        public async Task ReceivedHandler(string package, string apiKey)
         {
-            await Clients.All.SendAsync("MessageReceived", handler);
+            // package receveid from CLI
         }
     }
 }
