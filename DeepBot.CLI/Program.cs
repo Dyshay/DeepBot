@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeepBot.CLI.Network.Packages;
+using System;
 
 namespace DeepBot.CLI
 {
@@ -6,7 +7,12 @@ namespace DeepBot.CLI
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            PackageReceiver.Initialize();
+
+            while (true)
+            {
+
+            }
         }
     }
 }

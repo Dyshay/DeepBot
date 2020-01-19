@@ -16,6 +16,10 @@ namespace DeepBot.Data.Database
         public DateTime EndDateSubscribe { get; set; } /* fin date clé active */ 
         public string Pseudo { get; set; } /* pseudo à la anakama*/ 
         public string ApiKey { get; set; } /* clé api d'identification*/
+        public string AddressIP { get; set; }
+        public short AppCliOnline { get; set; }
+        [BsonIgnore]
+        public string CliConnectionId { get; set; }
         [BsonIgnore]
         public List<AccountDB> Accounts { get; set; } /*List account de cet User */
 
