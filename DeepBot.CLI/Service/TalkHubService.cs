@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DeepBot.CLI.Service
 {
@@ -9,6 +10,8 @@ namespace DeepBot.CLI.Service
     {
         private IHubProxy Hub;
         private HubConnection Connection;
+
+        public event Action<string> PackageBuild;
 
         public TalkHubService()
         {
@@ -19,6 +22,14 @@ namespace DeepBot.CLI.Service
             Connection.Start().Wait();
         }
 
+        public async Task<string> SendHandlePackageToServer(string package, string apiKey)
+        {
+            return await Hub.Invoke<string>("HandlePackage", package, apiKey);
+        } 
 
+        public void SendPackage()
+        {
+            Hub.On<string>("SendPackage", (c) => PackageBuild?.Invoke(c));
+        }
     }
 }
