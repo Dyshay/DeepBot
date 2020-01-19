@@ -13,7 +13,7 @@ namespace DeepBot.Data.Driver
         public static readonly IMongoCollection<UserDB> Users = Base.GetCollection<UserDB>("Users");
         public static readonly IMongoCollection<AccountDB> Accounts = Base.GetCollection<AccountDB>("Accounts");
 
-        public static void Inset<TDocument>(this TDocument document)
+        public static void Insert<TDocument>(this TDocument document)
         {
             switch (document)
             {

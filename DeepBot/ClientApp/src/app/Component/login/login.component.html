@@ -1,0 +1,73 @@
+<div class="background">
+  <div class="wrapper fadeInDown">
+    <div class="row justify-content-between w-100 h-100">
+      <div class="col-6 pl-5 justify-content-center ">
+        <div class="presentation">
+          <h1 class="display-1 text-center"> DeepBot</h1>
+          <p class="lead mt-5">
+            Phrase d'intro du bot
+            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus.
+          </p>
+          <dl class="row mt-5">
+            <dt class="col-sm-3">Description lists</dt>
+            <dd class="col-sm-9">A description list is perfect for defining terms.</dd>
+
+            <dt class="col-sm-3">Euismod</dt>
+            <dd class="col-sm-9">
+              <p>Vestibulum id ligula porta felis euismod semper eget lacinia odio sem nec elit.</p>
+              <p>Donec id elit non mi porta gravida at eget metus.</p>
+            </dd>
+
+            <dt class="col-sm-3">Malesuada porta</dt>
+            <dd class="col-sm-9">Etiam porta sem malesuada magna mollis euismod.</dd>
+
+            <dt class="col-sm-3 text-truncate">Truncated term is truncated</dt>
+            <dd class="col-sm-9">Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</dd>
+
+            <dt class="col-sm-3">Nesting</dt>
+            <dd class="col-sm-9">
+              <dl class="row">
+                <dt class="col-sm-4">Nested definition list</dt>
+                <dd class="col-sm-8">Aenean posuere, tortor sed cursus feugiat, nunc augue blandit nunc.</dd>
+              </dl>
+            </dd>
+          </dl>
+
+        </div>
+       
+      </div>
+      <div class="col-4 justify-content-center">
+        <div id="formContent">
+
+          <div class="fadeIn first mt-3 pt-2">
+            <img src="../../assets/logo.svg" id="icon" alt="User Icon" class="img-thumbnail"/>
+          </div>
+
+          <form #form="ngForm" (submit)="onSubmit(form)" class="mt-3">
+            <input type="text" id="UserName" class="fadeIn second" name="UserName" placeholder="Identifiant ou E-Mail" [(ngModel)]="formModel.UserName">
+            <input type="text" id="password" class="fadeIn third pt-2" name="Password" placeholder="Mot de passe" [(ngModel)]="formModel.Password">
+            <input type="submit" class="fadeIn fourth mt-2" value="Se Connecter" [disabled]="form.invalid">
+          </form>
+
+
+          <div id="formFooter">
+            <div class="row justify-content-center">
+              <h4><a class="underlineHover" href="#">Créer un compte</a></h4>
+            </div>
+            <div class="row justify-content-center">
+              <h4><a class="underlineHover" href="#">Mot de passe oublié ?</a></h4>
+
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+
+
+
+  </div>
+</div>
