@@ -11,7 +11,7 @@ namespace DeepBot.Data.Database
 {
     public class CharacterDB
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
+        
         public Guid AccountId { get; set; } /* FK */
         public int CharacterId { get; set; }
         public string CharacterName { get; set; }
@@ -43,7 +43,6 @@ namespace DeepBot.Data.Database
         public Map CharacterMap { get; set; }
         [BsonIgnore]
         public Group CharacterGroup { get; set; }
-
         [BsonIgnore]
         public AccountDB CharacterAccount { get; set; }
 

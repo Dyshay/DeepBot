@@ -12,8 +12,8 @@ namespace DeepBot.Data.Database
 {
     public class AccountDB : Document<int>
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid AccountId { get; set; }
+
+        public Guid AccountId { get; set; } = new Guid();
         public int MaxCharacter { get; set; } = 5;
         public DateTime EndAnakamaSubscribe { get; set; }
         public string AnkamaPseudo { get; set; }

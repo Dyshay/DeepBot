@@ -12,14 +12,22 @@ namespace DeepBot.Data.Driver
 
         public static readonly IMongoCollection<UserDB> Users = Base.GetCollection<UserDB>("Users");
         public static readonly IMongoCollection<AccountDB> Accounts = Base.GetCollection<AccountDB>("Accounts");
+        public static readonly IMongoCollection<RoleDB> Roles = Base.GetCollection<RoleDB>("Roles");
 
-        public static void Inset<TDocument>(this TDocument document)
+       public static long CountRole()
+        {
+            return Base.GetCollection<RoleDB>("Roles").CountDocuments(_ =>true);
+        }
+
+        public static void AddRole(string name)
+        {
+            Base.GetCollection<RoleDB>("Roles").InsertOne(new RoleDB() { Name = name });
+        }
+
+        public static void Insert<TDocument>(this TDocument document)
         {
             switch (document)
             {
-                case UserDB e:
-                    Users.InsertOne(e);
-                    break;
                 case AccountDB e:
                     Accounts.InsertOne(e);
                     break;
@@ -32,9 +40,6 @@ namespace DeepBot.Data.Driver
         {
             switch (document)
             {
-                case UserDB e:
-                    Users.DeleteOne(x => x.Key == e.Key);
-                    break;
                 case AccountDB e:
                     Accounts.DeleteOne(x => x.Key == e.Key);
                     break;
@@ -49,9 +54,6 @@ namespace DeepBot.Data.Driver
 
             switch (document)
             {
-                case UserDB e:
-                    Users.ReplaceOne(x => x.Key == e.Key, e);
-                    break;
                 case AccountDB  e:
                     Accounts.ReplaceOne(x => x.Key == e.Key, e);
                     break;
@@ -59,6 +61,9 @@ namespace DeepBot.Data.Driver
                     throw new NotImplementedException();
             }
         }
+
+
+
 
     }
 }
