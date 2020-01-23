@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import {  MatFormFieldModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatFormFieldModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,14 +23,14 @@ import { HomeComponent } from './Component/home/home.component';
 import { AuthGuard } from './guard/auth-guard.component';
 import { UserService } from './Service/user.service';
 import { AuthInterceptor } from './interceptor/auth.incerpetor';
+import { HomeModule } from './Component/home/home.module';
 
 @NgModule({
     declarations: [
         LoginComponent,
         AppComponent,
         LoginComponent,
-        RegisterComponent,
-        HomeComponent
+        RegisterComponent
     ],
     imports: [
         MatDividerModule,
@@ -58,7 +58,7 @@ import { AuthInterceptor } from './interceptor/auth.incerpetor';
 
         // Vex
         VexModule,
-        CustomLayoutModule,
+        HomeModule,
         RouterModule.forRoot([
             {
                 path: 'login', component: LoginComponent, pathMatch: 'full',

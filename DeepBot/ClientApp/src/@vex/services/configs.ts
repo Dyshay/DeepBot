@@ -5,14 +5,14 @@ import { Config } from '../interfaces/config.model';
 const defaultConfig: Config = {
   id: ConfigName.apollo,
   name: 'Apollo',
-  imgSrc: '//vex-landing.visurel.com/assets/img/layouts/apollo.png',
+  imgSrc: 'assets/img/logo-rounded.svg',
   layout: 'horizontal',
   boxed: false,
   sidenav: {
-    title: 'VEX',
-    imageUrl: 'assets/img/demo/logo.svg',
-    showCollapsePin: true,
-    state: 'expanded'
+    title: 'DEEPBOT',
+    imageUrl: 'assets/img/logo-rounded.svg',
+    showCollapsePin: false,
+    state: 'collapsed'
   },
   toolbar: {
     fixed: true
