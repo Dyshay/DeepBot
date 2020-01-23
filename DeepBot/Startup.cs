@@ -1,22 +1,27 @@
+
+using AspNetCore.Identity.Mongo;
+using DeepBot.ControllersModel;
+using DeepBot.Data.Database;
 using DeepBot.Hubs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using DeepBot.Data;
-using DeepBot.Data.Database;
+using Microsoft.IdentityModel.Tokens;
 using System;
-using Microsoft.AspNetCore.Identity;
-using AspNetCore.Identity.MongoDbCore.Infrastructure;
-using AspNetCore.Identity.MongoDbCore.Extensions;
+using System.Text;
 
 namespace DeepBot
 {
     public class Startup
     {
+        private string ConnectionString => Configuration.GetConnectionString("DefaultConnection");
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,48 +40,49 @@ namespace DeepBot
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            /* database */
-            services.Configure<DataBaseSettings>(options =>
+            services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
             {
-                options.ConnectionString
-                    = Configuration.GetSection("MongoConnection:ConnectionString").Value;
-                options.Database
-                    = Configuration.GetSection("MongoConnection:Database").Value;
+                identity.Password.RequireDigit = false;
+                identity.Password.RequireLowercase = false;
+                identity.Password.RequireNonAlphanumeric = false;
+                identity.Password.RequireUppercase = false;
+                identity.Password.RequiredLength = 1;
+                identity.Password.RequiredUniqueChars = 0;
+            },
+                mongo =>
+                {
+                    mongo.ConnectionString = ConnectionString;
+                }).AddDefaultTokenProviders();
+            //Inject appseetings
+            services.Configure<ApplicationSettings>(Configuration.GetSection("ApplicationSettings"));
+
+
+            //Jwt Authentiication
+            var key = Encoding.UTF8.GetBytes(Configuration["ApplicationSettings:JWT_Secret"].ToString());
+            services.AddAuthentication(x =>
+            {
+                x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                x.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(x =>
+            {
+                x.SaveToken = false;
+                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(key),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ClockSkew = TimeSpan.Zero
+                };
             });
-
-            /*IdentityBuilder */
-            var mongoDbIdentityConfiguration = new MongoDbIdentityConfiguration
-            {
-                MongoDbSettings = new MongoDbSettings
-                {
-                    ConnectionString = "mongodb://admin:admin123!@localhost",
-                    DatabaseName = "DeepBot"
-                },
-                IdentityOptionsAction = options =>
-                {
-                    options.Password.RequireDigit = false;
-                    options.Password.RequiredLength = 6;
-                    options.Password.RequireNonAlphanumeric = false;
-                    options.Password.RequireUppercase = false;
-                    options.Password.RequireLowercase = false;
-
-                    // Lockout settings
-                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(30);
-                    options.Lockout.MaxFailedAccessAttempts = 10;
-
-                    // ApplicationUser settings
-                    options.User.RequireUniqueEmail = true;
-                    options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@.-_";
-                }
-            };
-            services.ConfigureMongoDbIdentity<UserDB,RoleDB, Guid>(mongoDbIdentityConfiguration);
-
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -88,6 +94,8 @@ namespace DeepBot
                 app.UseHsts();
             }
 
+
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -97,12 +105,15 @@ namespace DeepBot
 
 
             app.UseRouting();
-
+            //Identity
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
+                endpoints.MapHub<DeepHub>("/deeptalk");
             });
 
             app.UseSpa(spa =>
@@ -117,6 +128,9 @@ namespace DeepBot
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            ///* création des roles si non présent */
+            //DataInit.SeedAndCreateRoles(app.ApplicationServices).GetAwaiter().GetResult();
         }
     }
 }

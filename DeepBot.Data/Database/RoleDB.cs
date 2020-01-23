@@ -1,24 +1,28 @@
-﻿using AspNetCore.Identity.MongoDbCore.Models;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDbGenericRepository.Attributes;
+﻿using AspNetCore.Identity.Mongo.Model;
+using Microsoft.AspNetCore.Identity;
 using System;
-
+using System.Collections.Generic;
+using System.Text;
 
 namespace DeepBot.Data.Database
 {
-	[CollectionName("Roles")]
-	public class RoleDB : MongoIdentityRole<Guid>
-    {
-		public RoleDB() : base()
+	public class RoleDB : MongoRole
+	{
+		//public ObjectId _id { get; set; }
+
+		public RoleDB()
 		{
 		}
 
-		public RoleDB(string roleName) : base(roleName)
+		public RoleDB(string name)
 		{
+			Name = name;
+			NormalizedName = name.ToUpperInvariant();
 		}
 
-		[BsonId(IdGenerator = typeof(CombGuidGenerator))]
-		public Guid RoleId { get; set; }
+		public override string ToString()
+		{
+			return Name;
+		}
 	}
 }

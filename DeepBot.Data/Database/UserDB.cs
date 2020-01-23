@@ -1,29 +1,37 @@
-﻿using AspNetCore.Identity.MongoDbCore.Models;
-using DeepBot.Data.Driver;
+﻿using AspNetCore.Identity.Mongo.Model;
+using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
-using MongoDbGenericRepository.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace DeepBot.Data.Database
 {
-    [CollectionName("Users")]
-    public class UserDB : MongoIdentityUser<Guid>
+    public class UserDB : MongoUser
     {
-
-        public UserDB() : base()
+        public UserDB()
         {
+            Roles = new List<string>();
+            Claims = new List<IdentityUserClaim<string>>();
+            Logins = new List<IdentityUserLogin<string>>();
+            Tokens = new List<IdentityUserToken<string>>();
+            RecoveryCodes = new List<TwoFactorRecoveryCode>();
         }
 
-        public UserDB(string userName, string email) : base(userName, email)
-        {
-        }
+        //public string AuthenticatorKey { get; set; }
 
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid UserId { get; set; }
+        //public List<string> Roles { get; set; }
+
+        //public List<IdentityUserClaim<string>> Claims { get; set; }
+
+        //public List<IdentityUserLogin<string>> Logins { get; set; }
+
+        //public List<IdentityUserToken<string>> Tokens { get; set; }
+
+        //public List<TwoFactorRecoveryCode> RecoveryCodes { get; set; }
+
+
+
         public List<Guid> AccountsId { get; set; }
         public int MaxAccount { get; set; } /* type d'abonnement => 8 accounts max de base */ 
         public TimeSpan ConnectedHour { get; set; } /* total temps de connection sur site */
