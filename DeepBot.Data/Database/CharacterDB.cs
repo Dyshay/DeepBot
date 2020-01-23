@@ -11,9 +11,10 @@ namespace DeepBot.Data.Database
 {
     public class CharacterDB
     {
-        
+        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
+        public Guid CharacterId { get; set; }
         public Guid AccountId { get; set; } /* FK */
-        public int CharacterId { get; set; }
+        public int CharacterAnkamaId { get; set; }
         public string CharacterName { get; set; }
         public TimeSpan ConnectedHour { get; set; } /* total temps de connection sur character */
 
