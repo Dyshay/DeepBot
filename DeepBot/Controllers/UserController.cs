@@ -122,8 +122,9 @@ namespace DeepBot.Controllers
                         {
                             Subject = new ClaimsIdentity(new Claim[]
 {
-                        new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
-                        new Claim(_options.ClaimsIdentity.RoleClaimType, role)
+    new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
+    new Claim(_options.ClaimsIdentity.RoleClaimType, role),
+                            new Claim("UserID", user.Id)
 }),
 
                             Expires = DateTime.UtcNow.AddDays(7),
