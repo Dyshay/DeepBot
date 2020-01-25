@@ -3,4 +3,5 @@ export interface Account {
     IsSubscriber: boolean,
     ApiKey: string,
     EndDateSubscribe: Date,
+    Access_token: string,
 }
