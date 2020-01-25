@@ -30,6 +30,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { ROOT_REDUCERS,metaReducers} from './reducers';
+import { AuthEffects } from './Component/auth/effects/auth.effects';
 
 @NgModule({
     declarations: [
@@ -78,7 +79,7 @@ import { ROOT_REDUCERS,metaReducers} from './reducers';
                 // In a production build you would want to disable the Store Devtools
                 // logOnly: environment.production,
               }),
-              EffectsModule.forRoot([]),
+              EffectsModule.forRoot([AuthEffects]),
         HomeModule,
         RouterModule.forRoot([
             {
