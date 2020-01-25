@@ -24,20 +24,20 @@ export class AuthEffects {
 
     );
 
-    loginSuccess$ = createEffect(() => 
+    loginSuccess$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.loginSuccess),
             map(action => action.user),
             tap((user: Account) => {
-                let token = user.Access_token;
-                    localStorage.setItem('DeepBot', JSON.stringify({token}));
+                let token = user.token;
+                localStorage.setItem('DeepBot', JSON.stringify({ token }));
                 this.router.navigate(['/']);
             })
         ),
-        {dispatch: false}
+        { dispatch: false }
     );
 
-    loginFailure$ = createEffect(() => 
+    loginFailure$ = createEffect(() =>
         this.actions$.pipe(
             ofType(AuthActions.loginFailure),
             map(action => action.error),
