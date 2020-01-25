@@ -29,6 +29,7 @@ export class ToolbarUserComponent implements OnInit {
     const popoverRef = this.popover.open({
       content: ToolbarUserDropdownComponent,
       origin: originRef,
+      offsetX: -180,
       offsetY: 12,
       position: [
         {
