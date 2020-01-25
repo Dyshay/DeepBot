@@ -24,6 +24,12 @@ import { AuthGuard } from './guard/auth-guard.component';
 import { UserService } from './Service/user.service';
 import { AuthInterceptor } from './interceptor/auth.incerpetor';
 import { HomeModule } from './Component/home/home.module';
+import { environment } from '../environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ROOT_REDUCERS,metaReducers} from './reducers';
 
 @NgModule({
     declarations: [
@@ -58,6 +64,21 @@ import { HomeModule } from './Component/home/home.module';
 
         // Vex
         VexModule,
+        StoreModule.forRoot(ROOT_REDUCERS,{metaReducers, runtimeChecks: {strictStateImmutability: true,
+            strictActionImmutability: true,
+            strictStateSerializability: true,
+            strictActionSerializability: true,}}),
+            StoreRouterConnectingModule.forRoot({
+                routerState: RouterState.Minimal,
+              }),
+              StoreDevtoolsModule.instrument({
+                name: 'DeepBot',
+                logOnly: environment.production
+          
+                // In a production build you would want to disable the Store Devtools
+                // logOnly: environment.production,
+              }),
+              EffectsModule.forRoot([]),
         HomeModule,
         RouterModule.forRoot([
             {
