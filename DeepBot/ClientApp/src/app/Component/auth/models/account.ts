@@ -1,5 +1,5 @@
 export interface Account {
-    UserName: string,
+    userName: string,
     IsSubscriber: boolean,
     ApiKey: string,
     EndDateSubscribe: Date,
