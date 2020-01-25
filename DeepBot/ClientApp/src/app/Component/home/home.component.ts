@@ -10,6 +10,9 @@ import { DOCUMENT } from '@angular/common';
 import { ConfigService } from '../../../@vex/services/config.service';
 import theme from '../../../@vex/utils/tailwindcss';
 import { SidebarComponent } from 'src/@vex/components/sidebar/sidebar.component';
+import { Store, select } from '@ngrx/store';
+import * as fromAuth from '../auth/reducers';
+
 
 @Component({
     selector: 'app-home',
@@ -35,12 +38,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     constructor(private layoutService: LayoutService,
         private configService: ConfigService,
         private breakpointObserver: BreakpointObserver,
-        private router: Router) { }
+        private router: Router,
+        private store: Store<fromAuth.State>
+        ) { }
 
     ngOnInit() {
-        this.layoutService.configpanelOpen$.pipe(
-            untilDestroyed(this)
-        ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());
+        // this.layoutService.configpanelOpen$.pipe(
+        //     untilDestroyed(this)
+        // ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());
     }
 
     ngOnDestroy(): void { }

@@ -28,9 +28,9 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(AuthActions.loginSuccess),
             map(action => action.user),
-            tap((user: Account) => {
+            tap((user: any) => {
                 let token = user.token;
-                localStorage.setItem('DeepBot', JSON.stringify({ token }));
+                localStorage.setItem('DeepBot', token );
                 this.router.navigate(['/']);
             })
         ),
@@ -45,6 +45,16 @@ export class AuthEffects {
         )
     )
 
+    fetchUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.getUser),
+            map(action => action),
+            exhaustMap(() =>
+                this.authService.getUser().pipe(
+                    map(account => AuthActions.getUserSuccess({ account })),
+                )))
+
+    );
 
     constructor(private actions$: Actions, private authService: AuthService, private router: Router) { }
 }
