@@ -1,6 +1,6 @@
 export interface Account {
     userName: string,
-    IsSubscriber: boolean,
+    isSubcriber: boolean,
     ApiKey: string,
     EndDateSubscribe: Date,
     token: string,
