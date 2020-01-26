@@ -12,6 +12,7 @@ import theme from '../../../@vex/utils/tailwindcss';
 import { SidebarComponent } from 'src/@vex/components/sidebar/sidebar.component';
 import { Store, select } from '@ngrx/store';
 import * as fromAuth from '../auth/reducers';
+import { AuthActions } from '../auth/actions';
 
 
 @Component({
@@ -40,7 +41,10 @@ export class HomeComponent implements OnInit, OnDestroy {
         private breakpointObserver: BreakpointObserver,
         private router: Router,
         private store: Store<fromAuth.State>
-        ) { }
+        ) { 
+            this.store.dispatch(AuthActions.getUser());
+
+        }
 
     ngOnInit() {
         // this.layoutService.configpanelOpen$.pipe(
