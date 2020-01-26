@@ -53,6 +53,23 @@
        <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon>
      </a>
     </ng-template>
+    <a 
+    *ngIf="user | async as u"
+    (click)="copyClipboard(u.apiKey)"
+    class="notification"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    >
+     <mat-icon [icIcon]="keyIcon"
+     color="#ff9f43"
+               class="notification-icon"
+               fxFlex="none"></mat-icon>
+     <div fxFlex="auto">
+       <div class="notification-label">Clé API</div>
+       <div class="notification-description">{{(user | async).apiKey}}</div>
+     </div>
+     <!-- <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon> -->
+   </a>
     <!-- <a (click)="close()"
        class="notification"
        fxLayout="row"
