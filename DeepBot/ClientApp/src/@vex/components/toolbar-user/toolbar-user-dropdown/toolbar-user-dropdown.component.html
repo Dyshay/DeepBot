@@ -7,13 +7,13 @@
       <div class="dropdown-heading">{{ (user | async).userName }}</div>
     </div>
 
-    <button [matMenuTriggerFor]="settingsMenu"
+    <!-- <button [matMenuTriggerFor]="settingsMenu"
             mat-icon-button
             matTooltip="Settings"
             matTooltipPosition="before"
             type="button">
       <mat-icon [icIcon]="icSettings" class="notifications-header-icon"></mat-icon>
-    </button>
+    </button> -->
   </div>
 
   <div class="dropdown-content">
@@ -36,8 +36,8 @@
     </a>
   </div>
 
-  <div class="dropdown-footer" fxLayout="row" fxLayoutAlign="space-between center">
-    <button [matMenuTriggerFor]="statusMenu" class="dropdown-footer-select" mat-button type="button">
+  <div class="dropdown-footer" fxLayout="row" fxLayoutAlign="center">
+    <!-- <button [matMenuTriggerFor]="statusMenu" class="dropdown-footer-select" mat-button type="button">
       <ng-container *ngFor="let status of statuses; trackBy: trackById">
         <span *ngIf="status === activeStatus">
           <mat-icon [icIcon]="status.icon" [ngClass]="status.colorClass"></mat-icon>
@@ -45,8 +45,8 @@
           <mat-icon [icIcon]="icArrowDropDown" class="dropdown-footer-select-caret"></mat-icon>
         </span>
       </ng-container>
-    </button>
-    <a (click)="close()" [routerLink]="['/login']" color="primary" mat-button>LOGOUT</a>
+    </button> -->
+    <a (click)="close()" [routerLink]="['/login']" color="primary" mat-button>Déconnexion</a>
   </div>
 </div>
 
