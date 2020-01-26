@@ -7,7 +7,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
-import {  MatFormFieldModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
+import { MatFormFieldModule, MatIconModule, MatSnackBarModule, MatTooltipModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { ToastrModule } from 'ngx-toastr';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -23,14 +23,22 @@ import { HomeComponent } from './Component/home/home.component';
 import { AuthGuard } from './guard/auth-guard.component';
 import { UserService } from './Service/user.service';
 import { AuthInterceptor } from './interceptor/auth.incerpetor';
+import { HomeModule } from './Component/home/home.module';
+import { environment } from '../environments/environment';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { ROOT_REDUCERS, metaReducers } from './reducers';
+import { AuthEffects } from './Component/auth/effects/auth.effects';
+import { reducers } from './Component/auth/reducers';
+import { AuthModule } from './Component/auth.module';
 
 @NgModule({
     declarations: [
-        LoginComponent,
         AppComponent,
         LoginComponent,
         RegisterComponent,
-        HomeComponent
     ],
     imports: [
         MatDividerModule,
@@ -51,6 +59,7 @@ import { AuthInterceptor } from './interceptor/auth.incerpetor';
         MatInputModule,
         MatFormFieldModule,
         BrowserModule,
+        AuthModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -58,7 +67,25 @@ import { AuthInterceptor } from './interceptor/auth.incerpetor';
 
         // Vex
         VexModule,
-        CustomLayoutModule,
+        StoreModule.forRoot(ROOT_REDUCERS, {
+            metaReducers, runtimeChecks: {
+                strictStateImmutability: true,
+                strictActionImmutability: true,
+                strictStateSerializability: true,
+                strictActionSerializability: true,
+            }
+        }),
+        StoreRouterConnectingModule.forRoot({
+            routerState: RouterState.Minimal,
+        }),
+        StoreDevtoolsModule.instrument({
+            name: 'DeepBot',
+            logOnly: environment.production
+
+            // In a production build you would want to disable the Store Devtools
+            // logOnly: environment.production,
+        }),
+        EffectsModule.forRoot([]),
         RouterModule.forRoot([
             {
                 path: 'login', component: LoginComponent, pathMatch: 'full',
