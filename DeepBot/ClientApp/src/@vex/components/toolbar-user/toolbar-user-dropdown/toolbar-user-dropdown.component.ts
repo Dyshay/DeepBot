@@ -19,6 +19,11 @@ import icLock from '@iconify/icons-ic/twotone-lock';
 import icNotificationsOff from '@iconify/icons-ic/twotone-notifications-off';
 import { Icon } from '@visurel/iconify-angular';
 import { PopoverRef } from '../../popover/popover-ref';
+import * as fromAuth from '../../../../app/Component/auth/reducers';
+import { Store, select } from '@ngrx/store';
+import { Account } from 'src/app/Component/auth/models/account';
+import { Observable } from 'rxjs';
+import { AuthActions } from 'src/app/Component/auth/actions';
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -98,7 +103,8 @@ export class ToolbarUserDropdownComponent implements OnInit {
   ];
 
   activeStatus: OnlineStatus = this.statuses[0];
-
+  user = this.store.pipe(select(fromAuth.getUser));
+  userDisplay : Observable<Account> = this.user;
   trackById = trackById;
   icPerson = icPerson;
   icSettings = icSettings;
@@ -110,7 +116,11 @@ export class ToolbarUserDropdownComponent implements OnInit {
   icNotificationsOff = icNotificationsOff;
 
   constructor(private cd: ChangeDetectorRef,
-              private popoverRef: PopoverRef<ToolbarUserDropdownComponent>) { }
+    private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
+    private store: Store<fromAuth.State>
+  ) {
+    this.store.dispatch(AuthActions.getUser());
+  }
 
   ngOnInit() {
   }
