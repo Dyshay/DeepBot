@@ -15,7 +15,7 @@ export class ToolbarUserComponent implements OnInit {
   dropdownOpen: boolean;
   icPerson = icPerson;
 
-  @Input() account : Account | null;
+  @Input() username : Account | null;
 
   theme = theme;
 
