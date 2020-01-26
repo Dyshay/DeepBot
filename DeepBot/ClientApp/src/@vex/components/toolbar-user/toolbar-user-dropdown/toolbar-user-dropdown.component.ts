@@ -1,12 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { MenuItem } from '../interfaces/menu-item.interface';
 import { trackById } from '../../../utils/track-by';
 import icPerson from '@iconify/icons-ic/twotone-person';
 import icSettings from '@iconify/icons-ic/twotone-settings';
-import icAccountCircle from '@iconify/icons-ic/twotone-account-circle';
-import icMoveToInbox from '@iconify/icons-ic/twotone-move-to-inbox';
-import icListAlt from '@iconify/icons-ic/twotone-list-alt';
-import icTableChart from '@iconify/icons-ic/twotone-table-chart';
 import icCheckCircle from '@iconify/icons-ic/twotone-check-circle';
 import icAccessTime from '@iconify/icons-ic/twotone-access-time';
 import icDoNotDisturb from '@iconify/icons-ic/twotone-do-not-disturb';
@@ -21,12 +16,11 @@ import { Icon } from '@visurel/iconify-angular';
 import { PopoverRef } from '../../popover/popover-ref';
 import * as fromAuth from '../../../../app/Component/auth/reducers';
 import { Store, select } from '@ngrx/store';
-import { Account } from 'src/app/Component/auth/models/account';
-import { Observable } from 'rxjs';
 import { AuthActions } from 'src/app/Component/auth/actions';
 import checkCircle from '@iconify/icons-fa-solid/check-circle';
 import exclamationCircle from '@iconify/icons-fa-solid/exclamation-circle';
-import { of, from } from 'rxjs';
+import keyIcon from '@iconify/icons-fa-solid/key';
+
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -83,6 +77,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
   icBusiness = icBusiness;
   icVerifiedUser = icVerifiedUser;
   icLock = icLock;
+  keyIcon = keyIcon;
   icNotificationsOff = icNotificationsOff;
 
   constructor(private cd: ChangeDetectorRef,
@@ -102,5 +97,19 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   close() {
     this.popoverRef.close();
+  }
+
+  copyClipboard(apiKey: string){
+    let selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = apiKey;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+    document.execCommand('copy');
+    document.body.removeChild(selBox);
   }
 }
