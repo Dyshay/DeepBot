@@ -24,6 +24,9 @@ import { Store, select } from '@ngrx/store';
 import { Account } from 'src/app/Component/auth/models/account';
 import { Observable } from 'rxjs';
 import { AuthActions } from 'src/app/Component/auth/actions';
+import checkCircle from '@iconify/icons-fa-solid/check-circle';
+import exclamationCircle from '@iconify/icons-fa-solid/exclamation-circle';
+import { of, from } from 'rxjs';
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -40,40 +43,7 @@ export interface OnlineStatus {
 })
 export class ToolbarUserDropdownComponent implements OnInit {
 
-  items: MenuItem[] = [
-    {
-      id: '1',
-      icon: icAccountCircle,
-      label: 'My Profile',
-      description: 'Personal Information',
-      colorClass: 'text-teal-500',
-      route: '/pages/profile'
-    },
-    {
-      id: '2',
-      icon: icMoveToInbox,
-      label: 'My Inbox',
-      description: 'Messages & Latest News',
-      colorClass: 'text-primary-500',
-      route: '/apps/chat'
-    },
-    {
-      id: '3',
-      icon: icListAlt,
-      label: 'My Projects',
-      description: 'Tasks & Active Projects',
-      colorClass: 'text-amber-500',
-      route: '/apps/scrumboard'
-    },
-    {
-      id: '4',
-      icon: icTableChart,
-      label: 'Billing Information',
-      description: 'Pricing & Current Plan',
-      colorClass: 'text-purple-500',
-      route: '/pages/pricing'
-    }
-  ];
+  user = this.store.pipe(select(fromAuth.getUser));
 
   statuses: OnlineStatus[] = [
     {
@@ -103,13 +73,13 @@ export class ToolbarUserDropdownComponent implements OnInit {
   ];
 
   activeStatus: OnlineStatus = this.statuses[0];
-  user = this.store.pipe(select(fromAuth.getUser));
-  userDisplay : Observable<Account> = this.user;
+  checkCircle = checkCircle;
   trackById = trackById;
   icPerson = icPerson;
   icSettings = icSettings;
   icChevronRight = icChevronRight;
   icArrowDropDown = icArrowDropDown;
+  exclamationCircle = exclamationCircle;
   icBusiness = icBusiness;
   icVerifiedUser = icVerifiedUser;
   icLock = icLock;
