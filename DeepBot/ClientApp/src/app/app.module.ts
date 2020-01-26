@@ -29,15 +29,16 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ROOT_REDUCERS,metaReducers} from './reducers';
+import { ROOT_REDUCERS, metaReducers } from './reducers';
 import { AuthEffects } from './Component/auth/effects/auth.effects';
+import { reducers } from './Component/auth/reducers';
+import { AuthModule } from './Component/auth.module';
 
 @NgModule({
     declarations: [
-        LoginComponent,
         AppComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
     ],
     imports: [
         MatDividerModule,
@@ -58,6 +59,7 @@ import { AuthEffects } from './Component/auth/effects/auth.effects';
         MatInputModule,
         MatFormFieldModule,
         BrowserModule,
+        AuthModule,
         FormsModule,
         ReactiveFormsModule,
         BrowserAnimationsModule,
@@ -65,22 +67,25 @@ import { AuthEffects } from './Component/auth/effects/auth.effects';
 
         // Vex
         VexModule,
-        StoreModule.forRoot(ROOT_REDUCERS,{metaReducers, runtimeChecks: {strictStateImmutability: true,
-            strictActionImmutability: true,
-            strictStateSerializability: true,
-            strictActionSerializability: true,}}),
-            StoreRouterConnectingModule.forRoot({
-                routerState: RouterState.Minimal,
-              }),
-              StoreDevtoolsModule.instrument({
-                name: 'DeepBot',
-                logOnly: environment.production
-          
-                // In a production build you would want to disable the Store Devtools
-                // logOnly: environment.production,
-              }),
-              EffectsModule.forRoot([AuthEffects]),
-        HomeModule,
+        StoreModule.forRoot(ROOT_REDUCERS, {
+            metaReducers, runtimeChecks: {
+                strictStateImmutability: true,
+                strictActionImmutability: true,
+                strictStateSerializability: true,
+                strictActionSerializability: true,
+            }
+        }),
+        StoreRouterConnectingModule.forRoot({
+            routerState: RouterState.Minimal,
+        }),
+        StoreDevtoolsModule.instrument({
+            name: 'DeepBot',
+            logOnly: environment.production
+
+            // In a production build you would want to disable the Store Devtools
+            // logOnly: environment.production,
+        }),
+        EffectsModule.forRoot([]),
         RouterModule.forRoot([
             {
                 path: 'login', component: LoginComponent, pathMatch: 'full',
