@@ -17,23 +17,58 @@
   </div>
 
   <div class="dropdown-content">
+    <div *ngIf="(user | async).isSubcriber; else notSub">
     <a (click)="close()"
-       *ngFor="let item of items; trackBy: trackById"
-       [routerLink]="item.route"
        class="notification"
        fxLayout="row"
+       [routerLink]=""
        fxLayoutAlign="start center"
-       matRipple>
-      <mat-icon [icIcon]="item.icon"
-                [ngClass]="item.colorClass"
+       >
+        <mat-icon [icIcon]="checkCircle"
+        color="green"
+                  class="notification-icon"
+                  fxFlex="none"></mat-icon>
+        <div fxFlex="auto">
+          <div class="notification-label">Votre abonnement</div>
+          <div class="notification-description">Actif</div>
+        </div>
+        <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon>
+      </a>
+    </div>
+    <ng-template #notSub>
+      <a (click)="close()"
+      class="notification"
+      fxLayout="row"
+      [routerLink]=""
+      fxLayoutAlign="start center"
+      >
+       <mat-icon [icIcon]="exclamationCircle"
+       color="red"
+                 class="notification-icon"
+                 fxFlex="none"></mat-icon>
+       <div fxFlex="auto">
+         <div class="notification-label">Votre abonnement</div>
+         <div class="notification-description">Inactif</div>
+       </div>
+       <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon>
+     </a>
+    </ng-template>
+    <!-- <a (click)="close()"
+       class="notification"
+       fxLayout="row"
+       [routerLink]=""
+       fxLayoutAlign="start center"
+       >
+      <mat-icon [icIcon]="exclamationCircle"
+      color="red"
                 class="notification-icon"
                 fxFlex="none"></mat-icon>
       <div fxFlex="auto">
-        <div class="notification-label">{{ item.label }}</div>
-        <div class="notification-description">{{ item.description }}</div>
+        <div class="notification-label">Votre abonnement</div>
+        <div class="notification-description">Inactif</div>
       </div>
       <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon>
-    </a>
+    </a> -->
   </div>
 
   <div class="dropdown-footer" fxLayout="row" fxLayoutAlign="center">
