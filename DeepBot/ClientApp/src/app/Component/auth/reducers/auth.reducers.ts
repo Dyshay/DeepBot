@@ -3,13 +3,13 @@ import { AuthActions } from '../actions';
 import { Account } from '../models/account';
 
 export interface State {
-    user: Account | null;
+    account: Account | null;
     error: string | null,
     pending: boolean,
 }
 
 export const initialState: State = {
-    user: null,
+    account: null,
     error: null,
     pending: false,
 }
@@ -21,10 +21,10 @@ export const reducer = createReducer(initialState,
     on(AuthActions.loginSuccess, (state, { user }) => ({ ...state, user, pending: false })),
     on(AuthActions.loginFailure, (state, { error }) => ({ ...state, error, pending: false })),
     on(AuthActions.getUser, (state) => ({ ...state, pending: true })),
-    on(AuthActions.getUserSuccess, (state, { user }) => ({ ...state, user, pending: false }))
+    on(AuthActions.getUserSuccess, (state, { account }) => ({ ...state, account, pending: false }))
 )
 
 
-export const getUser = (state:State) => state.user;
+export const getUser = (state:State) => state.account;
 export const getError = (state: State) => state.error;
 export const getPending = (state: State) => state.pending;

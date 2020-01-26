@@ -7,4 +7,4 @@ export const login = createAction('[AUTH/LOGIN] Login', props<{user: User}>());
 export const loginFailure = createAction('[AUTH/LOGIN] Login Failure', props<{error: any}>());
 
 export const getUser = createAction('[AUTH] GET USER')
-export const getUserSuccess = createAction('[AUTH] GET USER SUCCESS', props<{user: Account}>());
+export const getUserSuccess = createAction('[AUTH] GET USER SUCCESS', props<{account: Account}>());
