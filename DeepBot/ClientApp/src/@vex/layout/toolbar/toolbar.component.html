@@ -1,25 +1,10 @@
-<div
-  class="toolbar w-full px-gutter"
-  fxLayout="row"
-  fxLayoutAlign="start center"
-  vexContainer
->
-  <button
-    (click)="openSidenav()"
-    [fxHide]="!mobileQuery"
-    mat-icon-button
-    type="button"
-  >
+<div class="toolbar w-full px-gutter" fxLayout="row" fxLayoutAlign="start center" vexContainer>
+  <button (click)="openSidenav()" [fxHide]="!mobileQuery" mat-icon-button type="button">
     <mat-icon [icIcon]="icMenu"></mat-icon>
   </button>
 
-  <a
-    *ngIf="isVerticalLayout$ | async"
-    [routerLink]="['/']"
-    class="ltr:mr-4 rtl:ml-4 block"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-  >
+  <a *ngIf="isVerticalLayout$ | async" [routerLink]="['/']" class="ltr:mr-4 rtl:ml-4 block" fxLayout="row"
+    fxLayoutAlign="start center">
     <img class="w-8 select-none" src="assets/img/demo/logo.svg" />
     <h1 [fxHide]="mobileQuery" class="title ltr:pl-4 rtl:pr-4 m-0 select-none">
       VEX
@@ -27,13 +12,7 @@
   </a>
 
   <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
-    <button
-      *ngIf="isHorizontalLayout$ | async"
-      [fxHide]="mobileQuery"
-      color="primary"
-      mat-button
-      type="button"
-    >
+    <button *ngIf="isHorizontalLayout$ | async" [fxHide]="mobileQuery" color="primary" mat-button type="button">
       Forum
       <!-- <ic-icon
         [icon]="icArrowDropDown"
@@ -44,13 +23,7 @@
   </div>
 
   <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
-    <button
-      *ngIf="isHorizontalLayout$ | async"
-      [fxHide]="mobileQuery"
-      color="primary"
-      mat-button
-      type="button"
-    >
+    <button *ngIf="isHorizontalLayout$ | async" [fxHide]="mobileQuery" color="primary" mat-button type="button">
       Bot
       <!-- <ic-icon
         [icon]="icArrowDropDown"
@@ -60,13 +33,7 @@
     </button>
   </div>
   <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
-    <button
-      *ngIf="isHorizontalLayout$ | async"
-      [fxHide]="mobileQuery"
-      color="primary"
-      mat-button
-      type="button"
-    >
+    <button *ngIf="isHorizontalLayout$ | async" [fxHide]="mobileQuery" color="primary" mat-button type="button">
       Documentation
       <!-- <ic-icon
         [icon]="icArrowDropDown"
@@ -102,15 +69,12 @@
     </div>
 
     <div class="px-1">
-      <vex-toolbar-user [account]="account$ | async"></vex-toolbar-user>
+      <div *ngIf="(user$ | async) as Account">
+        <vex-toolbar-user [username]="user$ | async"></vex-toolbar-user>
+      </div>
     </div>
 
-    <mat-menu
-      #languageMenu="matMenu"
-      overlapTrigger="false"
-      xPosition="before"
-      yPosition="below"
-    >
+    <mat-menu #languageMenu="matMenu" overlapTrigger="false" xPosition="before" yPosition="below">
       <button mat-menu-item disabled>
         <mat-icon [icIcon]="emojioneFR"></mat-icon>
         <span>Français</span>
@@ -128,7 +92,5 @@
   </div>
 </div>
 
-<vex-navigation
-  *ngIf="(isVerticalLayout$ | async) && isNavbarBelowToolbar$ | async"
-  [fxHide]="mobileQuery"
-></vex-navigation>
+<vex-navigation *ngIf="(isVerticalLayout$ | async) && isNavbarBelowToolbar$ | async" [fxHide]="mobileQuery">
+</vex-navigation>

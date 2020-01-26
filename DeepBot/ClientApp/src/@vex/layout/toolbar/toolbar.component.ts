@@ -19,7 +19,6 @@ import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
 import { MegaMenuComponent } from '../../components/mega-menu/mega-menu.component';
 import icSearch from '@iconify/icons-ic/twotone-search';
-import { User } from 'src/webModel/UserModel';
 import * as fromAuth from '../../../app/Component/auth/reducers';
 import { Store, select } from '@ngrx/store';
 import { AuthActions } from 'src/app/Component/auth/actions';
@@ -31,7 +30,7 @@ import { AuthActions } from 'src/app/Component/auth/actions';
 })
 export class ToolbarComponent implements OnInit {
 
-  account$ = this.store.pipe(select(fromAuth.getUser));
+  user$ = this.store.pipe(select(fromAuth.getUser));
   @Input() mobileQuery: boolean;
 
   @Input()
@@ -66,12 +65,9 @@ export class ToolbarComponent implements OnInit {
     private popoverService: PopoverService,
     private store: Store<fromAuth.State>
     ) {
-      
-      this.store.dispatch(AuthActions.getUser())
     }
 
   ngOnInit() {
-    console.log(this.accounts)
   }
 
   openQuickpanel() {
