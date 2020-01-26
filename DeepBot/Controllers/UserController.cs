@@ -9,6 +9,7 @@ using AspNetCore.Identity.Mongo.Model;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -65,10 +66,13 @@ namespace DeepBot.Controllers
         //POST :/api/User/Register
         public async Task<IActionResult> Register(RegisterUserModel model)
         {
+            var apiKey = Guid.NewGuid();
+
             var user = new UserDB()
             {
                 UserName = model.UserName,
-                Email = model.UserEmail
+                Email = model.UserEmail,
+                ApiKey = apiKey.EncodeBase64String(),
             };
 
             var result = await _userManager.CreateAsync(user, model.UserPassword);
@@ -124,7 +128,8 @@ namespace DeepBot.Controllers
 {
     new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
     new Claim(_options.ClaimsIdentity.RoleClaimType, role),
-                            new Claim("UserID", user.Id)
+                            new Claim("UserID", user.Id),
+                            new Claim("ApiKey", user.ApiKey)
 }),
 
                             Expires = DateTime.UtcNow.AddDays(7),
