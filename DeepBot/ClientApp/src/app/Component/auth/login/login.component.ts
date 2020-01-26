@@ -9,6 +9,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { User } from '../../../../webModel/UserModel';
 import { environment } from '../../../../environments/environment';
 import { ToastrService } from 'ngx-toastr';
+import { Store } from '@ngrx/store';
+import * as fromAuth from '../reducers';
+import { AuthActions } from '../actions';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -39,7 +42,8 @@ export class LoginComponent implements OnInit {
               private cd: ChangeDetectorRef,
       private snackbar: MatSnackBar,
       private http: HttpClient,
-      private toastr: ToastrService
+      private toastr: ToastrService,
+      private store: Store<fromAuth.State>
   ) {}
 
   ngOnInit() {
@@ -50,17 +54,19 @@ export class LoginComponent implements OnInit {
   }
 
   send() {
-      let body = JSON.stringify({
-          UserName : this.form.controls["email"].value,
-          Password: this.form.controls["password"].value
-      });
-      this.http.post<User>(environment.apiURL + 'User/Login', body, httpOptions).subscribe(
-          (result: any) => {
-              localStorage.setItem('DeepBot', result.token);
-              this.router.navigateByUrl('');
-          },
-          (err) => { }
-      );
+    let user : User  = {
+        userName : this.form.controls["email"].value,
+        userPassword : this.form.controls["password"].value,
+        userEmail : '',
+    }
+    this.store.dispatch(AuthActions.login({user}))
+      // this.http.post<User>(environment.apiURL + 'User/Login', body, httpOptions).subscribe(
+      //     (result: any) => {
+      //         localStorage.setItem('DeepBot', result.token);
+      //         this.router.navigateByUrl('');
+      //     },
+      //     (err) => { }
+      // );
   }
 
   toggleVisibility() {
