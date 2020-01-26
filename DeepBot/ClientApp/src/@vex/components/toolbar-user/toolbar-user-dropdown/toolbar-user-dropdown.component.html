@@ -67,6 +67,7 @@
      <div fxFlex="auto">
        <div class="notification-label">Clé API</div>
        <div class="notification-description">{{(user | async).apiKey}}</div>
+       <div class="notification-description" *ngIf="isCopy">Clé copié</div>
      </div>
      <!-- <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon> -->
    </a>

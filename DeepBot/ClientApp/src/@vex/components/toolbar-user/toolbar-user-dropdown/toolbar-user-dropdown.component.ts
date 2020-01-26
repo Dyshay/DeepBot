@@ -20,6 +20,8 @@ import { AuthActions } from 'src/app/Component/auth/actions';
 import checkCircle from '@iconify/icons-fa-solid/check-circle';
 import exclamationCircle from '@iconify/icons-fa-solid/exclamation-circle';
 import keyIcon from '@iconify/icons-fa-solid/key';
+import { ToastrService } from 'ngx-toastr';
+import { timeout } from 'rxjs/operators';
 
 
 export interface OnlineStatus {
@@ -66,6 +68,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
     }
   ];
 
+  isCopy: boolean = false;
   activeStatus: OnlineStatus = this.statuses[0];
   checkCircle = checkCircle;
   trackById = trackById;
@@ -82,7 +85,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   constructor(private cd: ChangeDetectorRef,
     private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
-    private store: Store<fromAuth.State>
+    private store: Store<fromAuth.State>,
   ) {
     this.store.dispatch(AuthActions.getUser());
   }
@@ -100,6 +103,7 @@ export class ToolbarUserDropdownComponent implements OnInit {
   }
 
   copyClipboard(apiKey: string){
+    this.isCopy = true;
     let selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -111,5 +115,9 @@ export class ToolbarUserDropdownComponent implements OnInit {
     selBox.select();
     document.execCommand('copy');
     document.body.removeChild(selBox);
+    setTimeout(() => {
+      this.isCopy = false;
+      this.close();
+    }, 5000);
   }
 }
