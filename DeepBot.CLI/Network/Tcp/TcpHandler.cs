@@ -11,23 +11,24 @@ using System.Threading.Tasks;
 
 namespace DeepBot.CLI.Network.Tcp
 {
-    public class TcpClient
+    public class TcpHandler
     {
         private Socket Socket { get; set; }
         private byte[] Buffer { get; set; }
-        public Account Account { get; set; }
         private SemaphoreSlim Semaphore { get; set; }
-        private bool Disposed;
 
         public event Action<string> PacketReceivedEvent;
         public event Action<string> PacketSendEvent;
 
+        private bool Disposed;
+        private Account Account;
 
-        public TcpClient(string apiKey, string accountName, string password)
+        public TcpHandler(Account account)
         {
-            Account = new Account(apiKey, accountName, password);
-            Account.TalkingService.JoinRoom(apiKey);
-            Account.TalkingService.PackageBuild += SendPackage;
+            Account = account;
+            account.TalkingService.PackageBuild += SendPackage;
+            account.TalkingService.JoinRoom().Wait();
+            account.TalkingService.ConnexionHandler += (c, v) => Connect(c, v);
         }
 
         public void SendPackage(string package, bool needResponse = false)
@@ -36,7 +37,7 @@ namespace DeepBot.CLI.Network.Tcp
                 Console.WriteLine(package);
         }
 
-        public void Connect(IPAddress ip, int port)
+        public void Connect(string IP, int port)
         {
 
             try
@@ -45,7 +46,8 @@ namespace DeepBot.CLI.Network.Tcp
                 Buffer = new byte[Socket.ReceiveBufferSize];
                 Semaphore = new SemaphoreSlim(1);
                 ///TODO ADD PROXY SOCKS
-                Socket.BeginConnect(ip, port, new AsyncCallback(ConnectCallback), Socket);
+                Socket.BeginConnect(IPAddress.Parse(IP), port, new AsyncCallback(ConnectCallback), Socket);
+                //return Socket;
             }
             catch (Exception ex)
             {
