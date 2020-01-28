@@ -16,28 +16,30 @@ namespace DeepBot.Hubs
             // GOING TO HANDLE FRAME AND BOT LOGIC
         }
 
-        public async Task SendPackage(string package, string apiKey)
+        public async Task SendPackage(string package)
         {
-           await Clients.Group(apiKey).SendAsync("SendPackage", "test", true);
+           await Clients.Group(GetApiKey()).SendAsync("SendPackage", "test", true);
         }
 
         public async Task JoinRoomCLI()
         {
-            string apiKey = Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
-            await Groups.AddToGroupAsync(Context.ConnectionId, apiKey);
+            await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
-        public async Task JoinRoomClient(string apiKey)
+        public async Task JoinRoomClient()
         {
-            await Groups.AddToGroupAsync(Context.ConnectionId, apiKey);
+            await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
-        public async Task SendLog(string log, string apiKey)
+        public async Task SendLog(string log)
         {
-            string cliContextId = Context.ConnectionId;
-            var ClientsWeb = Clients.GroupExcept(apiKey, cliContextId);
-
+            var ClientsWeb = Clients.OthersInGroup(GetApiKey());
             await ClientsWeb.SendAsync("ConsoleSend", log);
+        }
+
+        private string GetApiKey()
+        {
+            return Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
         }
     }
 }
