@@ -26,9 +26,6 @@ namespace DeepBot.CLI.Network.Tcp
         public TcpHandler(Account account)
         {
             Account = account;
-            account.TalkingService.PackageBuild += SendPackage;
-            account.TalkingService.JoinRoom().Wait();
-            account.TalkingService.ConnexionHandler += (c, v) => Connect(c, v);
         }
 
         public void SendPackage(string package, bool needResponse = false)
