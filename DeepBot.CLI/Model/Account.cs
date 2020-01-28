@@ -30,6 +30,22 @@ namespace DeepBot.CLI.Model
             AccountName = accountName;
             Password = password;
             Clients = new Dictionary<short, TcpHandler>();
+            TalkingService.JoinRoom().Wait();
+            TalkingService.PackageBuild += SendPackage;
+            TalkingService.ConnexionHandler += DispatchConnect;
+            TalkingService.CreateTcpHandler += CreateTcpHandler;
+        }
+
+        private void DispatchConnect(string ip, short port, short tcpId)
+        {
+            var TcpClient = Clients[tcpId];
+            TcpClient.Connect(ip, port);
+        }
+
+        private void SendPackage(string package, bool needResponse, short tcpId)
+        {
+            var TcpClient = Clients[tcpId];
+            TcpClient.SendPackage(package, needResponse);
         }
 
         public void CreateTcpHandler(short id)
