@@ -1,4 +1,5 @@
 ﻿using DeepBot.Data.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace DeepBot.Hubs
 {
+    [Authorize]
     public class DeepHub : Hub
     {
         public async Task ReceivedHandler(string package, string apiKey)
@@ -19,11 +21,10 @@ namespace DeepBot.Hubs
            await Clients.Group(apiKey).SendAsync("SendPackage", "test", true);
         }
 
-        public async Task JoinRoomCLI(string apiKey)
+        public async Task JoinRoomCLI()
         {
+            string apiKey = Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
             await Groups.AddToGroupAsync(Context.ConnectionId, apiKey);
-            // UPDATE DATABASE WITH CLI COUNT
-            // ConnectionId update on account where Api Key
         }
 
         public async Task JoinRoomClient(string apiKey)

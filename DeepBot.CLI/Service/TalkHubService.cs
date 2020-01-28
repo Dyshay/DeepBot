@@ -11,13 +11,20 @@ namespace DeepBot.CLI.Service
         private HubConnection Connection;
 
         public event Action<string, bool> PackageBuild;
+        public event Action<string, short> ConnexionHandler;
+        public event Action<short> CreateTcpHandler;
 
-        public TalkHubService()
+        public TalkHubService(string token)
         {
             string url = "https://localhost:44319/deeptalk";
             Connection = new HubConnectionBuilder()
-                .WithUrl(url)
+                .WithUrl(url, options => {
+                    options.AccessTokenProvider = async () => {
+                        return token;
+                    };
+                })
                 .Build();
+
 
             Connection.Closed += async (error) =>
             {
@@ -27,7 +34,14 @@ namespace DeepBot.CLI.Service
 
             Connection.StartAsync();
 
+            InitHandler();
+        }
+
+        private void InitHandler()
+        {
             GetPackage();
+            InitConnectionTcp();
+            HandleCreateTcp();
         }
 
         public async Task SendHandlePackageToServer(string package, string apiKey)
@@ -35,9 +49,19 @@ namespace DeepBot.CLI.Service
             await Connection.InvokeAsync("ReceivedHandler", package, apiKey);
         }
 
-        public async Task JoinRoom(string apiKey)
+        public async Task JoinRoom()
         {
-            await Connection.InvokeAsync("JoinRoomCLI", apiKey);
+            await Connection.InvokeAsync("JoinRoomCLI");
+        }
+
+        public void HandleCreateTcp()
+        {
+            Connection.On<short>("CreateTcp", (o) => CreateTcpHandler?.Invoke(o));
+        }
+
+        public void InitConnectionTcp()
+        {
+            Connection.On<string, short>("NewConnection", (ip, port) => ConnexionHandler?.Invoke(ip, port));
         }
 
         public void GetPackage()
