@@ -10,8 +10,8 @@ namespace DeepBot.CLI.Service
     {
         private HubConnection Connection;
 
-        public event Action<string, bool> PackageBuild;
-        public event Action<string, short> ConnexionHandler;
+        public event Action<string, bool, short> PackageBuild;
+        public event Action<string, short, short> ConnexionHandler;
         public event Action<short> CreateTcpHandler;
 
         public TalkHubService(string token)
@@ -61,12 +61,12 @@ namespace DeepBot.CLI.Service
 
         public void InitConnectionTcp()
         {
-            Connection.On<string, short>("NewConnection", (ip, port) => ConnexionHandler?.Invoke(ip, port));
+            Connection.On<string, short, short>("NewConnection", (ip, port, tcpId) => ConnexionHandler?.Invoke(ip, port, tcpId));
         }
 
         public void GetPackage()
         {
-            Connection.On<string, bool>("SendPackage", (c, o) => PackageBuild?.Invoke(c, o));
+            Connection.On<string, bool, short>("SendPackage", (c, o, tcpId) => PackageBuild?.Invoke(c, o, tcpId));
         }
     }
 }
