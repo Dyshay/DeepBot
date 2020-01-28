@@ -7,29 +7,62 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.Json;
 using DeepBot.CLI.Network.Tcp;
+using System.IO;
+using System.Reflection;
 
 namespace DeepBot.CLI.Model
 {
     public class Account
     {
         private HttpClient Client;
-        private Dictionary<short,TcpHandler> Clients;
+        private Dictionary<short, TcpHandler> Clients;
         public TalkHubService TalkingService;
         public string access_token;
         public string ApiKey;
-        public string AccountName;
-        public string Password;
+        private Login Identification;
 
         public Account()
         {
             Clients = new Dictionary<short, TcpHandler>();
+            Identification = new Login();
         }
 
-        public Account(string accountName, string password)
+        public void RequestFileAccount()
         {
-            AccountName = accountName;
-            Password = password;
-            Clients = new Dictionary<short, TcpHandler>();
+            string appLocation = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            string accFileLoc = Path.Combine(appLocation, "account.json");
+
+            if (!File.Exists(accFileLoc))
+            {
+                Console.WriteLine("Don't have account file");
+                Console.WriteLine("Insert your web account");
+                Identification.UserName = Console.ReadLine();
+                Console.WriteLine("Insert your password account");
+                Identification.Password = Console.ReadLine();
+                using (var tw = File.CreateText(accFileLoc))
+                {
+                    tw.WriteLine(JsonSerializer.Serialize(Identification));
+                }
+                Console.WriteLine("Account file created");
+                Console.WriteLine(accFileLoc);
+            }
+            else
+            {
+                using (StreamReader sr = File.OpenText(accFileLoc))
+                {
+                    string s = "";
+                    while((s = sr.ReadLine()) != null)
+                    {
+                        Identification = JsonSerializer.Deserialize<Login>(s);
+                        Console.WriteLine("Account file is loaded");
+                    }
+                }
+            }
+
+        }
+
+        private void Initialize()
+        {
             TalkingService.JoinRoom().Wait();
             TalkingService.PackageBuild += SendPackage;
             TalkingService.ConnexionHandler += DispatchConnect;
@@ -57,14 +90,9 @@ namespace DeepBot.CLI.Model
         public async Task<bool> Login()
         {
             Client = new HttpClient();
-            Login log = new Login
-            {
-                Password = Password,
-                UserName = AccountName,
-            };
 
-            var JsonString = JsonSerializer.Serialize(log);
-            var response = await Client.PostAsync("https://localhost:44319/api/User/Login", new StringContent(JsonString, Encoding.UTF8,"application/json"));
+            var JsonString = JsonSerializer.Serialize(Identification);
+            var response = await Client.PostAsync("https://localhost:44319/api/User/Login", new StringContent(JsonString, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {
@@ -72,6 +100,7 @@ namespace DeepBot.CLI.Model
                 WebToken objectToken = JsonSerializer.Deserialize<WebToken>(token);
                 access_token = objectToken.token;
                 TalkingService = new TalkHubService(access_token);
+                Initialize();
                 return true;
             }
 

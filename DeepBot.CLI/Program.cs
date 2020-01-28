@@ -10,8 +10,10 @@ namespace DeepBot.CLI
     {
         static void Main(string[] args)
         {
+            Account Account = new Account();
+            Account.RequestFileAccount();
+
             Console.ReadLine();
-            Account Account = new Account("dyshay", "test");
 
             if (Account.Login().Result)
             {
