@@ -30,11 +30,7 @@ namespace DeepBot.CLI.Network.Tcp
             TcpId = tcpId;
         }
 
-        public void SendPackage(string package, bool needResponse = false)
-        //=> SendPacketAsync(package, needResponse).Wait();
-        {
-                Console.WriteLine(package);
-        }
+        public void SendPackage(string package, bool needResponse = false) => SendPacketAsync(package, needResponse).Wait();
 
         public void Connect(string IP, int port)
         {
