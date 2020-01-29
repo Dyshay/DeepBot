@@ -1,4 +1,5 @@
-﻿using DeepBot.Data.Database;
+﻿using DeepBot.Core.Network;
+using DeepBot.Data.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
@@ -14,9 +15,9 @@ namespace DeepBot.Core.Hubs
     {
         private static List<AccountDB> Accounts = new List<AccountDB>();
 
-        public async Task ReceivedHandler(string package)
+        public void ReceivedHandler(string package, short tcpId)
         {
-            // GOING TO HANDLE FRAME AND BOT LOGIC
+            Receiver.Receive(this, package, Context.ConnectionId, tcpId);
         }
 
         public async Task SendPackage(string package)
