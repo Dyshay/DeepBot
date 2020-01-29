@@ -2,6 +2,7 @@
 using AspNetCore.Identity.Mongo;
 using DeepBot.ControllersModel;
 using DeepBot.Core.Hubs;
+using DeepBot.Core.Network;
 using DeepBot.Data.Database;
 using DeepBot.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -104,6 +105,8 @@ namespace DeepBot
                 app.UseSpaStaticFiles();
             }
 
+            //Launch Handler Core
+            Receiver.Initialize();
 
             app.UseRouting();
             //Identity
