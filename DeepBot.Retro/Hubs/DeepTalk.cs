@@ -1,6 +1,7 @@
 ﻿using DeepBot.Core.Network;
 using DeepBot.Data.Database;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -13,11 +14,11 @@ namespace DeepBot.Core.Hubs
     [Authorize]
     public class DeepTalk : Hub
     {
-        private static List<AccountDB> Accounts = new List<AccountDB>();
+        private static List<UserDB> User = new List<UserDB>();
 
         public void ReceivedHandler(string package, short tcpId)
         {
-            Receiver.Receive(this, package, Context.ConnectionId, tcpId);
+            Receiver.Receive(this, User.FirstOrDefault(c => c.CliConnectionId == Context.ConnectionId), package, Context.ConnectionId, tcpId);
         }
 
         public async Task SendPackage(string package)
