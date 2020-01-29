@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepBot", "DeepBot\DeepBot.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepBot.Data", "DeepBot.Data\DeepBot.Data.csproj", "{C8F5B626-B996-4504-919C-1F565C4D49DF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepBot.Retro", "DeepBot.Retro\DeepBot.Retro.csproj", "{6ADF06F4-22EF-4979-9603-416B64F5D24D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepBot.Core", "DeepBot.Retro\DeepBot.Core.csproj", "{6ADF06F4-22EF-4979-9603-416B64F5D24D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DeepBot.CLI", "DeepBot.CLI\DeepBot.CLI.csproj", "{73664377-85DA-4A06-AADE-25EECCA7934E}"
 EndProject

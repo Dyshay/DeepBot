@@ -1,15 +1,15 @@
-﻿using DeepBot.Data.Database;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace DeepBot.Hubs
+namespace DeepBot.Core.Hubs
 {
     [Authorize]
-    public class DeepHub : Hub
+    public class DeepTalk : Hub
     {
         public async Task ReceivedHandler(string package, string apiKey)
         {
@@ -18,7 +18,7 @@ namespace DeepBot.Hubs
 
         public async Task SendPackage(string package)
         {
-           await Clients.Group(GetApiKey()).SendAsync("SendPackage", "test", true);
+            await Clients.Group(GetApiKey()).SendAsync("SendPackage", "test", true);
         }
 
         public async Task JoinRoomCLI()
