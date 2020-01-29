@@ -20,8 +20,8 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             hub.Clients.Caller.SendAsync("SendPackage", "1.30", false, tcpId);
 
             // USE THE ACCOUNT AND PASSWORD FROM account
-            hub.Clients.Caller.SendAsync("SendPackage", $"account\n{Hash.EncryptPassword("password", welcomeKey)}");
-            hub.Clients.Caller.SendAsync("SendPackage", "Af");
+            hub.Clients.Caller.SendAsync("SendPackage", $"account\n{Hash.EncryptPassword("password", welcomeKey)}", false, tcpId);
+            hub.Clients.Caller.SendAsync("SendPackage", "Af", false, tcpId);
         }
     }
 }
