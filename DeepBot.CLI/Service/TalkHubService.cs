@@ -12,7 +12,7 @@ namespace DeepBot.CLI.Service
 
         public event Action<string, bool, short> PackageBuild;
         public event Action<string, short, short> ConnexionHandler;
-        public event Action<short> CreateTcpHandler;
+        public event Action CreateTcpHandler;
 
         public TalkHubService(string token)
         {
@@ -44,9 +44,9 @@ namespace DeepBot.CLI.Service
             HandleCreateTcp();
         }
 
-        public async Task SendHandlePackageToServer(string package)
+        public async Task SendHandlePackageToServer(string package, short tcpId)
         {
-            await Connection.InvokeAsync("ReceivedHandler", package);
+            await Connection.InvokeAsync("ReceivedHandler", package, tcpId);
         }
 
         public async Task JoinRoom()
@@ -56,7 +56,7 @@ namespace DeepBot.CLI.Service
 
         public void HandleCreateTcp()
         {
-            Connection.On<short>("CreateTcp", (o) => CreateTcpHandler?.Invoke(o));
+            Connection.On("CreateTcp", () => CreateTcpHandler?.Invoke());
         }
 
         public void InitConnectionTcp()
