@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DeepBot.Data.Database;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,9 @@ namespace DeepBot.Core.Hubs
     [Authorize]
     public class DeepTalk : Hub
     {
-        public async Task ReceivedHandler(string package, string apiKey)
+        private static List<AccountDB> Accounts = new List<AccountDB>();
+
+        public async Task ReceivedHandler(string package)
         {
             // GOING TO HANDLE FRAME AND BOT LOGIC
         }
