@@ -51,7 +51,7 @@ namespace DeepBot.CLI.Model
                 using (StreamReader sr = File.OpenText(accFileLoc))
                 {
                     string s = "";
-                    while((s = sr.ReadLine()) != null)
+                    while ((s = sr.ReadLine()) != null)
                     {
                         Identification = JsonSerializer.Deserialize<Login>(s);
                         Console.WriteLine("Account file is loaded");
@@ -69,7 +69,7 @@ namespace DeepBot.CLI.Model
             TalkingService.CreateTcpHandler += CreateTcpHandler;
         }
 
-        private void DispatchConnect(string ip, short port,bool isSwitch, short tcpId)
+        private void DispatchConnect(string ip, short port, bool isSwitch, short tcpId)
         {
             var TcpClient = Clients[tcpId];
             if (isSwitch)

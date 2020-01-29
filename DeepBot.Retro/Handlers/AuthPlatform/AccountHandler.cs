@@ -23,5 +23,11 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             hub.Clients.Caller.SendAsync("SendPackage", $"account\n{Hash.EncryptPassword("password", welcomeKey)}", false, tcpId);
             hub.Clients.Caller.SendAsync("SendPackage", "Af", false, tcpId);
         }
+        [Receiver("AXK")]
+        public void GetServerWorld(DeepTalk hub, string package, UserDB account, short tcpId)
+        {
+            string gameTicket = package.Substring(14);
+            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()));
+        }
     }
 }
