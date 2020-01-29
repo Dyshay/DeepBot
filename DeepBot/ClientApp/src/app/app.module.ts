@@ -33,6 +33,7 @@ import { ROOT_REDUCERS, metaReducers } from './reducers';
 import { AuthEffects } from './Component/auth/effects/auth.effects';
 import { reducers } from './Component/auth/reducers';
 import { AuthModule } from './Component/auth.module';
+import { TalkService } from './service/TalkService';
 
 @NgModule({
     declarations: [
@@ -103,7 +104,7 @@ import { AuthModule } from './Component/auth.module';
         provide: HTTP_INTERCEPTORS,
         useClass: AuthInterceptor,
         multi: true
-    }],
+    }, TalkService],
     bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -18,7 +18,7 @@ namespace DeepBot.Core.Hubs
 
         public void ReceivedHandler(string package, short tcpId)
         {
-            Receiver.Receive(this, User.FirstOrDefault(c => c.CliConnectionId == Context.ConnectionId), package, Context.ConnectionId, tcpId);
+            Receiver.Receive(this,package, User.FirstOrDefault(c => c.CliConnectionId == Context.ConnectionId), tcpId);
         }
 
         public async Task SendPackage(string package)
@@ -42,9 +42,26 @@ namespace DeepBot.Core.Hubs
             await ClientsWeb.SendAsync("ConsoleSend", log);
         }
 
+        public async Task InitTcpCli()
+        {
+            var clientCli = Clients.OthersInGroup(GetApiKey());
+            await clientCli.SendAsync("CreateTcp");
+        }
+
+        public async Task CreateConnexion()
+        {
+            var clientCli = Clients.OthersInGroup(GetApiKey());
+            await clientCli.SendAsync("NewConnection", "34.251.172.139", 443,1);
+        }
+
         private string GetApiKey()
         {
             return Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
+        }
+
+        public override Task OnConnectedAsync()
+        {
+            return base.OnConnectedAsync();
         }
     }
 }
