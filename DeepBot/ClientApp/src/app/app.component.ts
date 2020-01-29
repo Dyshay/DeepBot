@@ -28,7 +28,7 @@ import icSettings from '@iconify/icons-ic/twotone-settings';
 import { LayoutService } from '../@vex/services/layout.service';
 import icUpdate from '@iconify/icons-ic/twotone-update';
 import { ActivatedRoute } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { SplashScreenService } from '../@vex/services/splash-screen.service';
 import { Style, StyleService } from '../@vex/services/style.service';
@@ -42,7 +42,7 @@ import { ConfigName } from '../@vex/interfaces/config-name.model';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'vex';
+  title = 'DeppBot';
 
   constructor(private configService: ConfigService,
               private styleService: StyleService,
@@ -60,21 +60,19 @@ export class AppComponent {
       this.renderer.addClass(this.document.body, 'is-blink');
     }
 
-    /**
-     * Customize the template to your needs with the ConfigService
-     * Example:
-     *  this.configService.updateConfig({
-     *    sidenav: {
-     *      title: 'Custom App',
-     *      imageUrl: '//placehold.it/100x100',
-     *      showCollapsePin: false
-     *    },
-     *    showConfigButton: false,
-     *    footer: {
-     *      visible: false
-     *    }
-     *  });
-     */
+    
+    
+       this.configService.updateConfig({
+         sidenav: {
+           title: 'DeepBot',
+           imageUrl: 'assets/img/logo/logo-rounded.svg',
+           showCollapsePin: false
+         },
+         footer: {
+          visible: false
+         }
+      });
+     
 
     /**
      * Config Related Subscriptions
@@ -105,13 +103,25 @@ export class AppComponent {
     this.navigationService.items = [
       {
         type: 'link',
-        label: 'Dashboard',
+        label: 'Tableau de bord',
         route: '/dashboards',
         icon: icLayers
       },
       {
         type: 'subheading',
-        label: 'Apps',
+        label: 'Customiser',
+        children: [{
+          type: 'link',
+          label: 'Configuration',
+          route: () => this.layoutService.openConfigpanel(),
+          icon: icSettings
+        }]
+      },
+
+      {
+        type: 'dropdown',
+        label: 'Vex',
+        icon: icContactSupport,
         children: [
           {
             type: 'link',
@@ -120,31 +130,24 @@ export class AppComponent {
             icon: icAssigment
           },
           {
-            type: 'dropdown',
-            label: 'Help Center',
-            icon: icContactSupport,
-            children: [
-              {
-                type: 'link',
-                label: 'Getting Started',
-                route: '/apps/help-center/getting-started'
-              },
-              {
-                type: 'link',
-                label: 'Pricing & Plans',
-                route: '/apps/help-center/pricing'
-              },
-              {
-                type: 'link',
-                label: 'FAQ',
-                route: '/apps/help-center/faq'
-              },
-              {
-                type: 'link',
-                label: 'Guides',
-                route: '/apps/help-center/guides'
-              }
-            ]
+            type: 'link',
+            label: 'Getting Started',
+            route: '/apps/help-center/getting-started'
+          },
+          {
+            type: 'link',
+            label: 'Pricing & Plans',
+            route: '/apps/help-center/pricing'
+          },
+          {
+            type: 'link',
+            label: 'FAQ',
+            route: '/apps/help-center/faq'
+          },
+          {
+            type: 'link',
+            label: 'Guides',
+            route: '/apps/help-center/guides'
           },
           {
             type: 'link',
@@ -155,7 +158,7 @@ export class AppComponent {
               value: '12',
               background: theme.colors['deep-purple']['500'],
               color: theme.textColor['deep-purple-contrast']['500']
-            },
+            }
           },
           {
             type: 'link',
@@ -166,7 +169,7 @@ export class AppComponent {
               value: '16',
               background: theme.colors.cyan['500'],
               color: theme.textColor['cyan-contrast']['600']
-            },
+            }
           },
           {
             type: 'link',
@@ -175,23 +178,16 @@ export class AppComponent {
             icon: icChromeReaderMode
           },
           {
-            type: 'dropdown',
-            label: 'Contacts',
-            icon: icContacts,
-            children: [
-              {
-                type: 'link',
-                label: 'List - Grid',
-                route: '/apps/contacts/grid',
-              },
-              {
-                type: 'link',
-                label: 'List - Table',
-                route: '/apps/contacts/table',
-              }
-            ]
+            type: 'link',
+            label: 'List - Grid',
+            route: '/apps/contacts/grid',
           },
           {
+            type: 'link',
+            label: 'List - Table',
+            route: '/apps/contacts/table',
+          },
+                    {
             type: 'link',
             label: 'Scrumboard',
             route: '/apps/scrumboard',
@@ -202,33 +198,20 @@ export class AppComponent {
               color: theme.textColor['primary-contrast']['500']
             }
           },
-        ]
-      },
-      {
-        type: 'subheading',
-        label: 'Pages',
-        children: [
           {
-            type: 'dropdown',
-            label: 'Authentication',
-            icon: icLock,
-            children: [
-              {
-                type: 'link',
-                label: 'Login',
-                route: '/login'
-              },
-              {
-                type: 'link',
-                label: 'Register',
-                route: '/register'
-              },
-              {
-                type: 'link',
-                label: 'Forgot Password',
-                route: '/forgot-password'
-              }
-            ]
+            type: 'link',
+            label: 'Login',
+            route: '/login'
+          },
+          {
+            type: 'link',
+            label: 'Register',
+            route: '/register'
+          },
+          {
+            type: 'link',
+            label: 'Forgot Password',
+            route: '/forgot-password'
           },
           {
             type: 'link',
@@ -255,50 +238,44 @@ export class AppComponent {
                 type: 'link',
                 label: '500',
                 route: '/pages/error-500'
+              },
+              {
+                type: 'link',
+                label: 'Pricing',
+                icon: icAttachMoney,
+                route: '/pages/pricing'
+              },
+              {
+                type: 'link',
+                label: 'Profile',
+                icon: icPersonOutline,
+                route: '/pages/profile'
+              },
+              {
+                type: 'link',
+                label: 'Invoice',
+                icon: icReceipt,
+                route: '/pages/invoice'
+              },
+              {
+                type: 'link',
+                label: 'FAQ',
+                icon: icHelp,
+                route: '/pages/faq'
+              },
+              {
+                type: 'link',
+                label: 'Guides',
+                icon: icBook,
+                route: '/pages/guides',
+                badge: {
+                  value: '18',
+                  background: theme.colors.teal['500'],
+                  color: theme.textColor['teal-contrast']['500']
+                },
               }
             ]
           },
-          {
-            type: 'link',
-            label: 'Pricing',
-            icon: icAttachMoney,
-            route: '/pages/pricing'
-          },
-          {
-            type: 'link',
-            label: 'Profile',
-            icon: icPersonOutline,
-            route: '/pages/profile'
-          },
-          {
-            type: 'link',
-            label: 'Invoice',
-            icon: icReceipt,
-            route: '/pages/invoice'
-          },
-          {
-            type: 'link',
-            label: 'FAQ',
-            icon: icHelp,
-            route: '/pages/faq'
-          },
-          {
-            type: 'link',
-            label: 'Guides',
-            icon: icBook,
-            route: '/pages/guides',
-            badge: {
-              value: '18',
-              background: theme.colors.teal['500'],
-              color: theme.textColor['teal-contrast']['500']
-            },
-          },
-        ]
-      },
-      {
-        type: 'subheading',
-        label: 'UI Elements',
-        children: [
           {
             type: 'dropdown',
             label: 'Components',
@@ -499,12 +476,6 @@ export class AppComponent {
               },
             ]
           },
-        ]
-      },
-      {
-        type: 'subheading',
-        label: 'Documentation',
-        children: [
           {
             type: 'link',
             label: 'Changelog',
@@ -596,18 +567,9 @@ export class AppComponent {
             fragment: 'further-help',
             routerLinkActive: { exact: true }
           },
+
+
         ]
-      },
-      {
-        type: 'subheading',
-        label: 'Customize',
-        children: []
-      },
-      {
-        type: 'link',
-        label: 'Configuration',
-        route: () => this.layoutService.openConfigpanel(),
-        icon: icSettings
       }
     ];
   }
