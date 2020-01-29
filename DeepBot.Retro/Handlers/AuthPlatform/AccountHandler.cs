@@ -8,11 +8,11 @@ namespace DeepBot.Core.Handlers.AuthPlatform
 {
     public class AccountHandler
     {
-        public void GetWelcomeKeyAsync(DeepTalk hub, string packageRawData, string apiKey, short tcpId)
+        public void GetWelcomeKeyAsync(DeepTalk hub, string packageRawData, string cliId, short tcpId)
         {
             //account dispatch value (connecting)
 
-            hub.Clients.Group(apiKey).SendAsync("SendPackage", "1.30", false, tcpId);
+            hub.Clients.User(cliId).SendAsync("SendPackage", "1.30", false, tcpId);
 
         }
     }
