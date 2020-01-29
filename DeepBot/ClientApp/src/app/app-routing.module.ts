@@ -15,6 +15,10 @@ const childrenRoutes: VexRoutes = [
     loadChildren: () => import('./pages/dashboards/dashboard-analytics/dashboard-analytics.module').then(m => m.DashboardAnalyticsModule),
   },
   {
+    path: 'createAccount',
+    loadChildren: () => import('./pages/pages/create-account/create-account.module').then(m => m.CreateAccountModule),
+  },
+  {
     path: 'apps',
     children: [
       {

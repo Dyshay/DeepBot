@@ -1,0 +1,70 @@
+<div fxLayout="row" fxLayoutAlign="center center" fxFlexFill style="height:100% !important ">
+
+  <div @fadeInUp class="card" fxFlex="60">
+    <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
+      <h2 class="title m-0">Ajouter un compte Dofus</h2>
+    </div>
+
+    <div class="px-6 py-4" fxLayout="column">
+      <mat-form-field>
+        <mat-label>Nom de compte</mat-label>
+        <input matInput required>
+      </mat-form-field>
+
+
+      <mat-form-field>
+        <mat-label>Mot de passe du compte</mat-label>
+        <input [type]="inputType" matInput required value="">
+        <button (click)="togglePassword()" mat-icon-button matSuffix type="button">
+          <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+          <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+        </button>
+        <mat-hint>Cliquez sur l'oeil pour afficher mot de passe</mat-hint>
+      </mat-form-field>
+
+      <mat-form-field class="mt-1">
+        <mat-label>Serveur</mat-label>
+        <mat-select>
+          <mat-option>Arty</mat-option>
+          <mat-option>Ayuto</mat-option>
+          <mat-option>Bilby</mat-option>
+          <mat-option>Clustus</mat-option>
+          <mat-option>etc</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field class="mt-2">
+        <mat-label>Associer à un groupe existant</mat-label>
+        <mat-select>
+          <mat-option>Groupe bot combat 01</mat-option>
+          <mat-option>Groupe bot combat 02</mat-option>
+          <mat-option>Lister groupe lier au compte utilisateur</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+        <button color="primary" mat-raised-button type="button" (click)="findCharacter()">Rechercher les personnages sur le compte</button>
+      </div>
+
+
+      <mat-form-field *ngIf="ischaractersfound" class="mt-2">
+        <mat-label>Choisisez votre personnage</mat-label>
+        <mat-select>
+          <mat-option>Perso 1 ( classe, lvl )</mat-option>
+          <mat-option>Perso 2 ( classe, lvl )</mat-option>
+          <mat-option>Perso 3 ( classe, lvl )</mat-option>
+          <mat-option>Perso 4 ( classe, lvl )</mat-option>
+          <mat-option>Perso 5 ( classe, lvl )</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+        <button mat-button type="button">Annuler</button>
+        <button color="primary" mat-raised-button type="button" (click)="addAccount()">Ajouter</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+

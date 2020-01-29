@@ -8,8 +8,8 @@
      class="ltr:mr-4 rtl:ml-4 block"
      fxLayout="row"
      fxLayoutAlign="start center">
-    <img class="w-8 select-none" src="assets/img/demo/logo.svg">
-    <h1 [fxHide]="mobileQuery" class="title ltr:pl-4 rtl:pr-4 m-0 select-none">VEX</h1>
+    <img class="w-8 select-none" src="assets/img/logo/logo-rounded.svg">
+    <h1 [fxHide]="mobileQuery" class="title ltr:pl-4 rtl:pr-4 m-0 select-none">DeepBot</h1>
   </a>
 
   <button *ngIf="isHorizontalLayout$ | async"
@@ -17,45 +17,112 @@
           [matMenuTriggerFor]="addNewMenu"
           color="primary"
           mat-raised-button
-          type="button">ADD NEW
+          type="button">
+    Gestion du bot
   </button>
 
   <mat-menu #addNewMenu="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below">
-    <button mat-menu-item>
+
+    <button [matMenuTriggerFor]="AccountMenu" mat-menu-item>
       <mat-icon [icIcon]="icPersonAdd"></mat-icon>
-      <span>Add Contact</span>
+      <span>Gerer mes comptes Dofus</span>
     </button>
 
-    <button mat-menu-item>
+    <button [matMenuTriggerFor]="GroupMenu" mat-menu-item>
       <mat-icon [icIcon]="icDoneAll"></mat-icon>
-      <span>Add Task</span>
+      <span>Gérer mes groupes</span>
     </button>
 
-    <button mat-menu-item>
+    <button [matMenuTriggerFor]="PathMenu" mat-menu-item>
       <mat-icon [icIcon]="icAssignmentTurnedIn"></mat-icon>
-      <span>Add Project</span>
+      <span>Gérer mes trajets</span>
     </button>
 
-    <button [matMenuTriggerFor]="documentMenu" mat-menu-item>
+    <button [matMenuTriggerFor]="IAMenu" mat-menu-item>
       <mat-icon [icIcon]="icBallot"></mat-icon>
-      <span>Add Document</span>
+      <span>Gérer mes IA</span>
     </button>
   </mat-menu>
 
-  <mat-menu #documentMenu="matMenu">
+  <mat-menu #IAMenu="matMenu">
     <button mat-menu-item>
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Add Quote</span>
+      <span>Creer un trajet</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Add Invoice</span>
+      <span>Modifier un trajet</span>
+    </button>
+  </mat-menu>
+
+  <!--menu account-->
+  <mat-menu #AccountMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/createAccount']">
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Ajouter un compte Dofus</span>
     </button>
 
     <button mat-menu-item>
-      <mat-icon [icIcon]="icReceipt"></mat-icon>
-      <span>Add Receipt</span>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier un compte Dofus</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer un compte Dofus</span>
+    </button>
+  </mat-menu>
+
+  <!--menu group-->
+  <mat-menu #GroupMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Créer un groupe de bot</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier un groupe</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer un groupe</span>
+    </button>
+  </mat-menu>
+
+  <!--menu trajet-->
+  <mat-menu #PathMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Creer un trajet</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier un trajet</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer un trajet</span>
+    </button>
+  </mat-menu>
+
+  <!--menu IA-->
+  <mat-menu #IAMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Creer une IA</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier une IA</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer une IA</span>
     </button>
   </mat-menu>
 
@@ -65,7 +132,8 @@
             (click)="openMegaMenu(megaMenuOriginRef)"
             color="primary"
             mat-button
-            type="button">MEGA MENU
+            type="button">
+      Menu
       <ic-icon [icon]="icArrowDropDown" class="ltr:-mr-1 rtl:-ml-1" inline="true"></ic-icon>
     </button>
   </div>
