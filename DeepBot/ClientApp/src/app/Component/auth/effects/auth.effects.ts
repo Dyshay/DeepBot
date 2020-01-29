@@ -7,6 +7,7 @@ import { AuthService } from '../services/auth.services';
 import { AuthActions } from '../actions';
 import { User } from 'src/webModel/UserModel';
 import { Account } from '../models/account';
+import { TalkService } from "src/app/service/TalkService";
 
 @Injectable()
 export class AuthEffects {
@@ -30,7 +31,7 @@ export class AuthEffects {
             map(action => action.user),
             tap((user: any) => {
                 let token = user.token;
-                localStorage.setItem('DeepBot', token );
+                localStorage.setItem('DeepBot', token);
                 this.router.navigate(['/']);
             })
         ),
@@ -56,5 +57,16 @@ export class AuthEffects {
 
     );
 
-    constructor(private actions$: Actions, private authService: AuthService, private router: Router) { }
+    fetchUserSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(AuthActions.getUserSuccess),
+            map(action => action.account),
+            tap((account: any) => {
+                this.deeptalk.startConnection();
+            })
+        ),
+        { dispatch: false }
+    );
+
+    constructor(private actions$: Actions, private authService: AuthService, private router: Router, private deeptalk: TalkService) { }
 }

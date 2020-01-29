@@ -34,6 +34,7 @@
   <ItemGroup>
     <Folder Include="ClientApp\src\app\Component\Modal\" />
     <Folder Include="ClientApp\src\app\dataFormatter\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
