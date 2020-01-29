@@ -21,11 +21,6 @@ namespace DeepBot.Core.Hubs
             Receiver.Receive(this,package, User.FirstOrDefault(c => c.CliConnectionId == Context.ConnectionId), tcpId);
         }
 
-        public async Task SendPackage(string package)
-        {
-            await Clients.Group(GetApiKey()).SendAsync("SendPackage", "test", true);
-        }
-
         public async Task JoinRoomCLI()
         {
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
