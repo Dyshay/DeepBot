@@ -44,9 +44,9 @@ namespace DeepBot.CLI.Service
             HandleCreateTcp();
         }
 
-        public async Task SendHandlePackageToServer(string package, string apiKey)
+        public async Task SendHandlePackageToServer(string package)
         {
-            await Connection.InvokeAsync("ReceivedHandler", package, apiKey);
+            await Connection.InvokeAsync("ReceivedHandler", package);
         }
 
         public async Task JoinRoom()
