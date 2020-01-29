@@ -11,15 +11,17 @@ namespace DeepBot.CLI.Service
         private HubConnection Connection;
 
         public event Action<string, bool, short> PackageBuild;
-        public event Action<string, short, short> ConnexionHandler;
+        public event Action<string, short, bool, short> ConnexionHandler;
         public event Action CreateTcpHandler;
 
         public TalkHubService(string token)
         {
             string url = "https://localhost:44319/deeptalk";
             Connection = new HubConnectionBuilder()
-                .WithUrl(url, options => {
-                    options.AccessTokenProvider = async () => {
+                .WithUrl(url, options =>
+                {
+                    options.AccessTokenProvider = async () =>
+                    {
                         return token;
                     };
                 })
@@ -61,7 +63,7 @@ namespace DeepBot.CLI.Service
 
         public void InitConnectionTcp()
         {
-            Connection.On<string, short, short>("NewConnection", (ip, port, tcpId) => ConnexionHandler?.Invoke(ip, port, tcpId));
+            Connection.On<string, short, bool, short>("NewConnection", (ip, port, @switch, tcpId) => ConnexionHandler?.Invoke(ip, port, @switch, tcpId));
         }
 
         public void GetPackage()

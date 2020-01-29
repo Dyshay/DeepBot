@@ -69,9 +69,11 @@ namespace DeepBot.CLI.Model
             TalkingService.CreateTcpHandler += CreateTcpHandler;
         }
 
-        private void DispatchConnect(string ip, short port, short tcpId)
+        private void DispatchConnect(string ip, short port,bool isSwitch, short tcpId)
         {
             var TcpClient = Clients[tcpId];
+            if (isSwitch)
+                TcpClient.Disconnect();
             TcpClient.Connect(ip, port);
         }
 
