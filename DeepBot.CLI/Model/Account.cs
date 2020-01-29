@@ -81,10 +81,11 @@ namespace DeepBot.CLI.Model
             TcpClient.SendPackage(package, needResponse);
         }
 
-        public void CreateTcpHandler(short id)
+        public void CreateTcpHandler()
         {
-            TcpHandler tcp = new TcpHandler(this);
-            Clients.TryAdd(id, tcp);
+            short tcpId = (short)(Clients.Count + 1);
+            TcpHandler tcp = new TcpHandler(this, tcpId);
+            Clients.TryAdd(tcpId, tcp);
         }
 
         public async Task<bool> Login()
