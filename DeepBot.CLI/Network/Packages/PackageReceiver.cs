@@ -6,7 +6,7 @@ namespace DeepBot.CLI.Network.Packages
     {
         public static async void Receive(string package, Account acc)
         {
-            await acc.TalkingService.SendHandlePackageToServer(package, acc.ApiKey);
+            await acc.TalkingService.SendHandlePackageToServer(package);
         }
     }
 }
