@@ -1,5 +1,6 @@
 ﻿using DeepBot.Core.Handlers;
 using DeepBot.Core.Hubs;
+using DeepBot.Data.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace DeepBot.Core.Network
         {
             Assembly asm = typeof(IHandler).GetTypeInfo().Assembly;
 
-            foreach (var type in asm.GetTypes().SelectMany(x => x.GetMethods()).Where(m => m.GetCustomAttributes(typeof(ReceiverAttribute), false).Length >0))
+            foreach (var type in asm.GetTypes().SelectMany(x => x.GetMethods()).Where(m => m.GetCustomAttributes(typeof(ReceiverAttribute), false).Length > 0))
             {
                 ReceiverAttribute attribute = type.GetCustomAttributes(typeof(ReceiverAttribute), true)[0] as ReceiverAttribute;
                 Type typeValue = Type.GetType(type.DeclaringType.FullName);
@@ -26,12 +27,12 @@ namespace DeepBot.Core.Network
             }
         }
 
-        public static void Receive(DeepTalk hub, string package, string cliId, short tcpId)
+        public static void Receive(DeepTalk hub, UserDB user, string package, string cliId, short tcpId)
         {
             ReceiverData method = methods.Find(m => package.StartsWith(m.HandlerName));
 
             if (method != null)
-                method.Information.Invoke(method.Instance, new object[4] { hub, package, cliId, tcpId });
+                method.Information.Invoke(method.Instance, new object[5] { hub, user, package, cliId, tcpId });
         }
     }
 }
