@@ -32,12 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeepBot.Retro\DeepBot.Retro.csproj" />
+    <Folder Include="ClientApp\src\app\Component\Modal\" />
+    <Folder Include="ClientApp\src\app\dataFormatter\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\Component\Modal\" />
-    <Folder Include="ClientApp\src\app\dataFormatter\" />
+    <ProjectReference Include="..\DeepBot.Retro\DeepBot.Core.csproj" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
