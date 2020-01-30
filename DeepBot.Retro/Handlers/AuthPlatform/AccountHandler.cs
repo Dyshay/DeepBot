@@ -29,7 +29,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public void GetAccountUserName(DeepTalk hub, string package, AccountDB account, short tcpId) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
 
         [Receiver("Af")]
-        public void GetLoginQueue(DeepTalk hub, string package, AccountDB account, short tcpId) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
+        public void GetLoginQueue(DeepTalk hub, string package, AccountDB account, short tcpId) => hub.DispatchToClient("LOG", "[File d'attente] Position " + package[2] + "/" + package[4], tcpId).Wait();
 
         [Receiver("AH")]
         public void GetServerState(DeepTalk hub, string package, AccountDB account, short tcpId)
@@ -100,6 +100,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         [Receiver("AXEf")]
         public void NotSubscribe(DeepTalk hub, string package, AccountDB account, short tcpId)
         {
+            hub.DispatchToClient("LOG", "Vous n'êtes pas abonnée", tcpId).Wait();
             //prmClient.Account.Logger.Error("Vous n'êtes pas abonné");
             //prmClient.Disconnect();
         }
