@@ -17,6 +17,7 @@ namespace DeepBot.Core.Hubs
         private static List<UserDB> Users = new List<UserDB>();
         private UserManager<UserDB> Manager;
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
+        private string CliID => Users.FirstOrDefault(c => c.Id == userId).CliConnectionId;
 
         public void ReceivedHandler(string package, short tcpId)
         {
@@ -42,18 +43,17 @@ namespace DeepBot.Core.Hubs
 
         public async Task InitTcpCli()
         {
-            var clientCli = Clients.OthersInGroup(GetApiKey());
-            await clientCli.SendAsync("CreateTcp");
+            await Clients.Client(CliID).SendAsync("CreateTcp");
         }
 
         public async Task CreateConnexion(string userName, string password)
         {
-            var clientCli = Clients.OthersInGroup(GetApiKey());
             short tcpId = (short)(Users.FirstOrDefault(c => c.Id == userId).Accounts.Count + 1);
+
             Users.FirstOrDefault(c => c.Id == userId)
                 .Accounts.Add(new AccountDB { TcpId = tcpId, Username = userName, Password = password });
 
-            await clientCli.SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
+            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }
 
         private string GetApiKey()
