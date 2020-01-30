@@ -31,6 +31,36 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         [Receiver("Af")]
         public void GetLoginQueue(DeepTalk hub, string package, AccountDB account, short tcpId) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
 
+        [Receiver("AH")]
+        public void GetServerState(DeepTalk hub, string package, AccountDB account, short tcpId)
+        {
+            string[] serverList = package.Substring(2).Split('|');
+            //GameServer server = account.Game.Server;
+            bool firstTime = true;
+
+            foreach (string sv in serverList)
+            {
+                string[] separator = sv.Split(';');
+
+                int id = int.Parse(separator[0]);
+                ServerState serverState = (ServerState)byte.Parse(separator[1]);
+
+                //if (id == (int)account.Config.Server)
+                //{
+                //    server.Id = id;
+                //    server.Name = account.Config.Server.ToString();
+                //    server.State = serverState;
+                //    account.Logger.Info($"Le serveur {account.Config.Server} est {account.Game.Server.State}");
+
+                //    if (serverState != ServerState.ONLINE)
+                //        firstTime = false;
+                //}
+            }
+
+            //if (!firstTime && server.State == ServerState.ONLINE)
+                hub.Clients.Caller.SendAsync("SendPackage", "Ax", false, tcpId);
+        }
+
         [Receiver("AXK")]
         public void GetServerWorld(DeepTalk hub, string package, AccountDB account, short tcpId)
         {
