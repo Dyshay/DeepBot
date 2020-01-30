@@ -42,6 +42,12 @@ namespace DeepBot.Data.Database
         [BsonIgnore]
         public string GameTicket { get; set; }
 
+        /// <summary>
+        /// CLI Informations attached to account
+        /// </summary>
+        [BsonIgnore]
+        public short TcpId { get; set; }
+
 
         //public TcpClient Connexion { get; set; } <= @Dyshay ? 
         [BsonConstructor]
