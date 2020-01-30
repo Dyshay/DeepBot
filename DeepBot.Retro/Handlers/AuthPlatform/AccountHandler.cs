@@ -3,10 +3,12 @@ using DeepBot.Core.Network;
 using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
+using DeepBot.Data.Model.GameServer;
 using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DeepBot.Core.Handlers.AuthPlatform
 {
@@ -35,7 +37,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public void GetServerState(DeepTalk hub, string package, AccountDB account, short tcpId)
         {
             string[] serverList = package.Substring(2).Split('|');
-            //GameServer server = account.Game.Server;
+            Server server = account.Server;
             bool firstTime = true;
 
             foreach (string sv in serverList)
@@ -65,35 +67,35 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public async void GetServerList(DeepTalk hub, string package, AccountDB account, short tcpId)
         {
             //AM.Account account = prmClient.Account;
-            //string[] loc5 = pack.Substring(3).Split('|');
-            //int counter = 1;
-            //bool picked = false;
+            string[] loc5 = package.Substring(3).Split('|');
+            int counter = 1;
+            bool picked = false;
 
-            //while (counter < loc5.Length && !picked)
-            //{
-            //    string[] _loc10_ = loc5[counter].Split(',');
-            //    int serverId = int.Parse(_loc10_[0]);
+            while (counter < loc5.Length && !picked)
+            {
+                string[] _loc10_ = loc5[counter].Split(',');
+                int serverId = int.Parse(_loc10_[0]);
 
-            //    if (serverId == account.Game.Server.Id)
-            //    {
-            //        if (account.Game.Server.State == ServerState.ONLINE)
-            //        {
-            //            picked = true;
-            //            //account.Game.Character.evento_Servidor_Seleccionado();
-            //        }
-            //        else
-            //        {
-            //            var wait = Randomize.GetRandom(100, 1000);
-            //            account.Logger.Info($"Serveur non accessible pour le moment, je réessaye dans {wait}ms");
-            //            await Task.Delay(wait);
-            //        }
-            //    }
-            //    else
-            //        counter++;
-            //}
+                if (serverId == account.Server.Id)
+                {
+                    if (account.Server.State == ServerState.ONLINE)
+                    {
+                        picked = true;
+                        //account.Game.Character.evento_Servidor_Seleccionado();
+                    }
+                    else
+                    {
+                        var wait = new Random().Next(100,1000);
+                        hub.DispatchToClient("LOG", $"Serveur non accessible pour le moment, je réessaye dans {wait}ms", tcpId).Wait();
+                        await Task.Delay(wait);
+                    }
+                }
+                else
+                    counter++;
+            }
 
-            //if (picked)
-            //    prmClient.SendPacket($"AX{account.Game.Server.Id}", true);
+            if (picked)
+                await hub.Clients.Caller.SendAsync("SendPackage", $"AX{account.Server.Id}", true, tcpId);
         }
 
 
@@ -101,8 +103,6 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public void NotSubscribe(DeepTalk hub, string package, AccountDB account, short tcpId)
         {
             hub.DispatchToClient("LOG", "Vous n'êtes pas abonnée", tcpId).Wait();
-            //prmClient.Account.Logger.Error("Vous n'êtes pas abonné");
-            //prmClient.Disconnect();
         }
 
         [Receiver("AXK")]
