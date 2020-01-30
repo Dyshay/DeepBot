@@ -23,12 +23,10 @@ namespace DeepBot.Core.Hubs
             Receiver.Receive(this,package, Users.FirstOrDefault(c => c.Id == userId), tcpId);
         }
 
-        public async Task JoinRoomCLI()
+        public void JoinRoomCLI()
         {
             Users.FirstOrDefault(c => c.Id == userId).CliConnectionId = Context.ConnectionId;
             Users.FirstOrDefault(c => c.Id == userId).Accounts = new List<AccountDB>();
-
-            await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
         public async Task JoinRoomClient()
@@ -63,12 +61,17 @@ namespace DeepBot.Core.Hubs
         {
             if (Users.Any(c => c.Id != userId))
                 Users.Add(await Manager.FindByIdAsync(userId));
+
+            await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
             if (Users.Any(c => c.Id == userId))
                 Users.Add(await Manager.FindByIdAsync(userId));
+
+            else if (Users.Any(c => c.CliConnectionId == Context.ConnectionId))
+               await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
         public DeepTalk(UserManager<UserDB> manager)
