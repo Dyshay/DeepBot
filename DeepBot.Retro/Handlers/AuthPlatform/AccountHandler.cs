@@ -61,6 +61,49 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 hub.Clients.Caller.SendAsync("SendPackage", "Ax", false, tcpId);
         }
 
+        [Receiver("AxK")]
+        public async void GetServerList(DeepTalk hub, string package, AccountDB account, short tcpId)
+        {
+            //AM.Account account = prmClient.Account;
+            //string[] loc5 = pack.Substring(3).Split('|');
+            //int counter = 1;
+            //bool picked = false;
+
+            //while (counter < loc5.Length && !picked)
+            //{
+            //    string[] _loc10_ = loc5[counter].Split(',');
+            //    int serverId = int.Parse(_loc10_[0]);
+
+            //    if (serverId == account.Game.Server.Id)
+            //    {
+            //        if (account.Game.Server.State == ServerState.ONLINE)
+            //        {
+            //            picked = true;
+            //            //account.Game.Character.evento_Servidor_Seleccionado();
+            //        }
+            //        else
+            //        {
+            //            var wait = Randomize.GetRandom(100, 1000);
+            //            account.Logger.Info($"Serveur non accessible pour le moment, je réessaye dans {wait}ms");
+            //            await Task.Delay(wait);
+            //        }
+            //    }
+            //    else
+            //        counter++;
+            //}
+
+            //if (picked)
+            //    prmClient.SendPacket($"AX{account.Game.Server.Id}", true);
+        }
+
+
+        [Receiver("AXEf")]
+        public void NotSubscribe(DeepTalk hub, string package, AccountDB account, short tcpId)
+        {
+            //prmClient.Account.Logger.Error("Vous n'êtes pas abonné");
+            //prmClient.Disconnect();
+        }
+
         [Receiver("AXK")]
         public void GetServerWorld(DeepTalk hub, string package, AccountDB account, short tcpId)
         {
