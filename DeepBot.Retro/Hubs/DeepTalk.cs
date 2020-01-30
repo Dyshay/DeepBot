@@ -56,6 +56,11 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }
 
+        public async Task DispatchToClient(string type, object value)
+        {
+            await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("DispatchClient", type, value);
+        }
+
         private string GetApiKey()
         {
             return Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
