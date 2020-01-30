@@ -20,7 +20,7 @@ namespace DeepBot.Core.Hubs
 
         public void ReceivedHandler(string package, short tcpId)
         {
-            Receiver.Receive(this,package, Users.FirstOrDefault(c => c.Id == userId), tcpId);
+            Receiver.Receive(this, package, Users.FirstOrDefault(c => c.Id == userId), tcpId);
         }
 
         public void JoinRoomCLI()
@@ -46,10 +46,14 @@ namespace DeepBot.Core.Hubs
             await clientCli.SendAsync("CreateTcp");
         }
 
-        public async Task CreateConnexion()
+        public async Task CreateConnexion(string userName, string password)
         {
             var clientCli = Clients.OthersInGroup(GetApiKey());
-            await clientCli.SendAsync("NewConnection", "34.251.172.139", 443, false, 1);
+            short tcpId = (short)(Users.FirstOrDefault(c => c.Id == userId).Accounts.Count + 1);
+            Users.FirstOrDefault(c => c.Id == userId)
+                .Accounts.Add(new AccountDB { TcpId = tcpId, Username = userName, Password = password });
+
+            await clientCli.SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }
 
         private string GetApiKey()
@@ -71,7 +75,7 @@ namespace DeepBot.Core.Hubs
                 Users.Add(await Manager.FindByIdAsync(userId));
 
             else if (Users.Any(c => c.CliConnectionId == Context.ConnectionId))
-               await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
+                await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
         public DeepTalk(UserManager<UserDB> manager)
