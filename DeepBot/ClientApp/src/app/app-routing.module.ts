@@ -19,6 +19,10 @@ const childrenRoutes: VexRoutes = [
     loadChildren: () => import('./pages/pages/create-account/create-account.module').then(m => m.CreateAccountModule),
   },
   {
+    path: 'createGroup',
+    loadChildren: () => import('./pages/pages/create-group/create-group.module').then(m => m.CreateGroupModule),
+  },
+  {
     path: 'apps',
     children: [
       {
