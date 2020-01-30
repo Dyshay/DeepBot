@@ -1,5 +1,6 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import * as signalr from '@aspnet/signalr';
+import * as fromAuth from '../Component/auth/reducers';
 
 @Injectable()
 export class TalkService {
@@ -9,8 +10,9 @@ export class TalkService {
     private connectIsEstablished = false;
     private _hubConnection: signalr.HubConnection;
 
-    constructor() {
+    constructor(private store: Store<fromAuth.State>) {
         this.createConnection();
+        this.InitGetData();
         // this.startConnection();
         // this.joinRoom();
         // this.initNewTcp();
@@ -28,6 +30,7 @@ export class TalkService {
                     return localStorage.getItem('DeepBot');
                 }, skipNegotiation: true, transport: signalr.HttpTransportType.WebSockets
             })
+
             .build();
     }
 
@@ -44,7 +47,20 @@ export class TalkService {
         this._hubConnection.invoke('InitTcpCli')
     }
 
-    callAuth(){
+    InitGetData() {
+        this._hubConnection.on('DispatchClient', (type: string, value: any) => {
+            switch (type) {
+                case "LOG":
+
+                    break;
+
+                default:
+                    break;
+            }
+        });
+    }
+
+    callAuth() {
         this._hubConnection.invoke('CreateConnexion');
     }
 
@@ -58,7 +74,7 @@ export class TalkService {
                 this._hubConnection.invoke('JoinRoomClient');
             })
             .catch(err => {
-                console.log('Error on initialize connection with DeepTalk, retrying...');
+                co nsole.log('Error on initialize connection with DeepTalk, retrying...');
                 setTimeout(function () {
                     this.startConnection();
                 }, 5000);
