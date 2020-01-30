@@ -75,7 +75,10 @@ namespace DeepBot.Core.Hubs
                 Users.Add(await Manager.FindByIdAsync(userId));
 
             else if (Users.Any(c => c.CliConnectionId == Context.ConnectionId))
+            {
+                Users.FirstOrDefault(c => c.CliConnectionId == Context.ConnectionId).CliConnectionId = "";
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
+            }
         }
 
         public DeepTalk(UserManager<UserDB> manager)
