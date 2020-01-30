@@ -76,7 +76,7 @@
 
   <!--menu group-->
   <mat-menu #GroupMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/createGroup']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
       <span>Créer un groupe de bot</span>
     </button>
