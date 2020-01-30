@@ -7,6 +7,7 @@ using System.Text.Json.Serialization;
 using System.ComponentModel.DataAnnotations.Schema;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
+using DeepBot.Data.Enums;
 
 namespace DeepBot.Data.Database
 {
@@ -41,6 +42,8 @@ namespace DeepBot.Data.Database
         public string Password { get; set; } = string.Empty;
         [BsonIgnore]
         public string GameTicket { get; set; }
+        [BsonIgnore]
+        public AccountState State { get; set; } = AccountState.DISCONNECTED;
 
         /// <summary>
         /// CLI Informations attached to account

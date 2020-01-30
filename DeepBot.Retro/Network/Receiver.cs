@@ -27,7 +27,7 @@ namespace DeepBot.Core.Network
             }
         }
 
-        public static void Receive(DeepTalk hub, string package, UserDB account ,short tcpId)
+        public static void Receive(DeepTalk hub, string package, AccountDB account ,short tcpId)
         {
             ReceiverData method = methods.Find(m => package.StartsWith(m.HandlerName));
 
