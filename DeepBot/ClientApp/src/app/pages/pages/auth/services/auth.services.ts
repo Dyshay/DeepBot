@@ -19,11 +19,12 @@ const httpOptions = {
 export class AuthService {
   constructor(private http: HttpClient, private store: Store<fromRoot.State & fromAuth.State>) { }
 
-  login({ userName, userPassword }: User): Observable<any> {
+  login(user: User): Observable<any> {
     let body = {
-      UserName: userName,
-      Password: userPassword,
+      UserName: user.userName,
+      Password: user.userPassword,
     }
+    console.log(body);
     return this.http.post<User>(`${environment.apiURL}User/Login`, body, httpOptions);
   }
 

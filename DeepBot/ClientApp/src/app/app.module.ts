@@ -16,11 +16,14 @@ import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { TalkService } from './Services/TalkService';
+import { AuthModule } from './pages/pages/auth/auth.modules';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    AuthModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -53,7 +56,7 @@ import { EffectsModule } from '@ngrx/effects';
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true
-  }],
+  }, TalkService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
