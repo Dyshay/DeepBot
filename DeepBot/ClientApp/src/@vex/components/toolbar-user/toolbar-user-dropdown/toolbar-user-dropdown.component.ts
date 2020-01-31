@@ -1,7 +1,12 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { MenuItem } from '../interfaces/menu-item.interface';
 import { trackById } from '../../../utils/track-by';
 import icPerson from '@iconify/icons-ic/twotone-person';
 import icSettings from '@iconify/icons-ic/twotone-settings';
+import icAccountCircle from '@iconify/icons-ic/twotone-account-circle';
+import icMoveToInbox from '@iconify/icons-ic/twotone-move-to-inbox';
+import icListAlt from '@iconify/icons-ic/twotone-list-alt';
+import icTableChart from '@iconify/icons-ic/twotone-table-chart';
 import icCheckCircle from '@iconify/icons-ic/twotone-check-circle';
 import icAccessTime from '@iconify/icons-ic/twotone-access-time';
 import icDoNotDisturb from '@iconify/icons-ic/twotone-do-not-disturb';
@@ -14,15 +19,6 @@ import icLock from '@iconify/icons-ic/twotone-lock';
 import icNotificationsOff from '@iconify/icons-ic/twotone-notifications-off';
 import { Icon } from '@visurel/iconify-angular';
 import { PopoverRef } from '../../popover/popover-ref';
-import * as fromAuth from '../../../../app/Component/auth/reducers';
-import { Store, select } from '@ngrx/store';
-import { AuthActions } from 'src/app/Component/auth/actions';
-import checkCircle from '@iconify/icons-fa-solid/check-circle';
-import exclamationCircle from '@iconify/icons-fa-solid/exclamation-circle';
-import keyIcon from '@iconify/icons-fa-solid/key';
-import { ToastrService } from 'ngx-toastr';
-import { timeout } from 'rxjs/operators';
-
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -39,7 +35,40 @@ export interface OnlineStatus {
 })
 export class ToolbarUserDropdownComponent implements OnInit {
 
-  user = this.store.pipe(select(fromAuth.getUser));
+  items: MenuItem[] = [
+    {
+      id: '1',
+      icon: icAccountCircle,
+      label: 'My Profile',
+      description: 'Personal Information',
+      colorClass: 'text-teal-500',
+      route: '/pages/profile'
+    },
+    {
+      id: '2',
+      icon: icMoveToInbox,
+      label: 'My Inbox',
+      description: 'Messages & Latest News',
+      colorClass: 'text-primary-500',
+      route: '/apps/chat'
+    },
+    {
+      id: '3',
+      icon: icListAlt,
+      label: 'My Projects',
+      description: 'Tasks & Active Projects',
+      colorClass: 'text-amber-500',
+      route: '/apps/scrumboard'
+    },
+    {
+      id: '4',
+      icon: icTableChart,
+      label: 'Billing Information',
+      description: 'Pricing & Current Plan',
+      colorClass: 'text-purple-500',
+      route: '/pages/pricing'
+    }
+  ];
 
   statuses: OnlineStatus[] = [
     {
@@ -68,27 +97,20 @@ export class ToolbarUserDropdownComponent implements OnInit {
     }
   ];
 
-  isCopy: boolean = false;
   activeStatus: OnlineStatus = this.statuses[0];
-  checkCircle = checkCircle;
+
   trackById = trackById;
   icPerson = icPerson;
   icSettings = icSettings;
   icChevronRight = icChevronRight;
   icArrowDropDown = icArrowDropDown;
-  exclamationCircle = exclamationCircle;
   icBusiness = icBusiness;
   icVerifiedUser = icVerifiedUser;
   icLock = icLock;
-  keyIcon = keyIcon;
   icNotificationsOff = icNotificationsOff;
 
   constructor(private cd: ChangeDetectorRef,
-    private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
-    private store: Store<fromAuth.State>,
-  ) {
-    this.store.dispatch(AuthActions.getUser());
-  }
+              private popoverRef: PopoverRef<ToolbarUserDropdownComponent>) { }
 
   ngOnInit() {
   }
@@ -100,24 +122,5 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   close() {
     this.popoverRef.close();
-  }
-
-  copyClipboard(apiKey: string){
-    this.isCopy = true;
-    let selBox = document.createElement('textarea');
-    selBox.style.position = 'fixed';
-    selBox.style.left = '0';
-    selBox.style.top = '0';
-    selBox.style.opacity = '0';
-    selBox.value = apiKey;
-    document.body.appendChild(selBox);
-    selBox.focus();
-    selBox.select();
-    document.execCommand('copy');
-    document.body.removeChild(selBox);
-    setTimeout(() => {
-      this.isCopy = false;
-      this.close();
-    }, 5000);
   }
 }

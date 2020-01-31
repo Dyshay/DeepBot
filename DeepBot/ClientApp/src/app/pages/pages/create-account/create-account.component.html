@@ -1,0 +1,66 @@
+
+    <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
+
+      <div @fadeInUp class="card mt-24" fxFlex="60">
+        <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
+          <h2 class="title m-0">Ajouter un compte Dofus</h2>
+        </div>
+
+        <div class="px-6 py-4" fxLayout="column" [formGroup]="form">
+          <mat-form-field>
+            <mat-label>Nom de compte</mat-label>
+            <input matInput required formControlName="accountName">
+          </mat-form-field>
+
+
+          <mat-form-field>
+            <mat-label>Mot de passe du compte</mat-label>
+            <input [type]="inputType" matInput required value="" formControlName="password" >
+            <button (click)="togglePassword()" mat-icon-button matSuffix type="button">
+              <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+              <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+            </button>
+            <mat-hint>Cliquez sur l'oeil pour afficher mot de passe</mat-hint>
+          </mat-form-field>
+
+          <mat-form-field class="mt-1">
+            <mat-label>Serveur</mat-label>
+            <mat-select formControlName="server">
+              <mat-option [value] ="1">Arty</mat-option>
+              <mat-option [value] ="2">Ayuto</mat-option>
+              <mat-option [value] ="3">Bilby</mat-option>
+              <mat-option [value] ="4">Clustus</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field class="mt-2">
+            <mat-label>Associer à un groupe existant</mat-label>
+            <mat-select  formControlName="group" >
+              <mat-option *ngFor="let group of groupList" [value]="group.groupId" style="height: 5em !important;">
+                <b>Leader : {{group.leader.characterName}}</b>
+                ( Nbr perso dans groupe : {{group.groupTotal}}, &nbsp; groupe lvl {{group.groupLevel}}, &nbsp;  PP : {{group.groupProspection}})
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
+            <button color="primary" mat-raised-button type="button" (click)="findCharacter()">Rechercher les personnages sur le compte</button>
+          </div>
+
+
+          <mat-form-field *ngIf="ischaractersfound" class="mt-2">
+            <mat-label>Choisisez votre personnage</mat-label>
+            <mat-select formControlName="character">
+              <mat-option *ngFor="let character of characterList" [value]="character.characterName"><b>{{character.characterName}} </b> (Classe : {{character.classe}}, Level : {{character.level}} )</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+            <button mat-button type="button">Annuler</button>
+            <button color="primary" mat-raised-button type="button" (click)="addAccount()" [disabled]="!form.valid">Ajouter</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
