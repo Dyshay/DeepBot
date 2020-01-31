@@ -9,6 +9,7 @@ namespace DeepBot.Core.Network.HubMessage.Messages
     {
         public override NetworkType Type => NetworkType.LOG;
         public LogType LogType { get; set; }
+        public string Message { get; set; }
 
         public LogMessage(LogType type, string message)
         {
