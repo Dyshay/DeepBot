@@ -11,10 +11,11 @@ namespace DeepBot.Core.Network.HubMessage.Messages
         public LogType LogType { get; set; }
         public string Message { get; set; }
 
-        public LogMessage(LogType type, string message)
+        public LogMessage(LogType type, string message, short tcpId)
         {
             Message = message;
             LogType = type;
+            TcpId = tcpId;
         }
     }
 }
