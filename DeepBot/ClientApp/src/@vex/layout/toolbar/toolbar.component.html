@@ -3,51 +3,155 @@
     <mat-icon [icIcon]="icMenu"></mat-icon>
   </button>
 
-  <a *ngIf="isVerticalLayout$ | async" [routerLink]="['/']" class="ltr:mr-4 rtl:ml-4 block" fxLayout="row"
-    fxLayoutAlign="start center">
-    <img class="w-8 select-none" src="assets/img/demo/logo.svg" />
-    <h1 [fxHide]="mobileQuery" class="title ltr:pl-4 rtl:pr-4 m-0 select-none">
-      DeepBot
-    </h1>
+  <a *ngIf="isVerticalLayout$ | async"
+     [routerLink]="['/']"
+     class="ltr:mr-4 rtl:ml-4 block"
+     fxLayout="row"
+     fxLayoutAlign="start center">
+    <img class="w-8 select-none" src="assets/img/logo/logo-rounded.svg">
+    <h1 [fxHide]="mobileQuery" class="title ltr:pl-4 rtl:pr-4 m-0 select-none">DeepBot</h1>
   </a>
 
+  <button *ngIf="isHorizontalLayout$ | async"
+          [fxHide]="mobileQuery"
+          [matMenuTriggerFor]="addNewMenu"
+          color="primary"
+          mat-raised-button
+          type="button">
+    Gestion du bot
+  </button>
+
+  <mat-menu #addNewMenu="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below">
+
+    <button [matMenuTriggerFor]="AccountMenu" mat-menu-item>
+      <mat-icon [icIcon]="icPersonAdd"></mat-icon>
+      <span>Gerer mes comptes Dofus</span>
+    </button>
+
+    <button [matMenuTriggerFor]="GroupMenu" mat-menu-item>
+      <mat-icon [icIcon]="icDoneAll"></mat-icon>
+      <span>Gérer mes groupes</span>
+    </button>
+
+    <button [matMenuTriggerFor]="PathMenu" mat-menu-item>
+      <mat-icon [icIcon]="icAssignmentTurnedIn"></mat-icon>
+      <span>Gérer mes trajets</span>
+    </button>
+
+    <button [matMenuTriggerFor]="IAMenu" mat-menu-item>
+      <mat-icon [icIcon]="icBallot"></mat-icon>
+      <span>Gérer mes IA</span>
+    </button>
+  </mat-menu>
+
+  <mat-menu #IAMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Creer un trajet</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier un trajet</span>
+    </button>
+  </mat-menu>
+
+  <!--menu account-->
+  <mat-menu #AccountMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/createAccount']">
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Ajouter un compte Dofus</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier un compte Dofus</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer un compte Dofus</span>
+    </button>
+  </mat-menu>
+
+  <!--menu group-->
+  <mat-menu #GroupMenu="matMenu">
+    <button mat-menu-item [routerLink]="['/createGroup']">
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Créer un groupe de bot</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier un groupe</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer un groupe</span>
+    </button>
+  </mat-menu>
+
+  <!--menu trajet-->
+  <mat-menu #PathMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Creer un trajet</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier un trajet</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer un trajet</span>
+    </button>
+  </mat-menu>
+
+  <!--menu IA-->
+  <mat-menu #IAMenu="matMenu">
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icDescription"></mat-icon>
+      <span>Creer une IA</span>
+    </button>
+
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Modifier une IA</span>
+    </button>
+    <button mat-menu-item>
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
+      <span>Supprimer une IA</span>
+    </button>
+  </mat-menu>
 
   <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
-    <button *ngIf="isHorizontalLayout$ | async" [fxHide]="mobileQuery" color="primary" mat-button type="button">
-      Bot
-      <!-- <ic-icon
-        [icon]="icArrowDropDown"
-        class="ltr:-mr-1 rtl:-ml-1"
-        inline="true"
-        ></ic-icon> -->
+    <button *ngIf="isHorizontalLayout$ | async"
+            [fxHide]="mobileQuery"
+            (click)="openMegaMenu(megaMenuOriginRef)"
+            color="primary"
+            mat-button
+            type="button">
+      Menu
+      <ic-icon [icon]="icArrowDropDown" class="ltr:-mr-1 rtl:-ml-1" inline="true"></ic-icon>
     </button>
   </div>
-  <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
-    <button *ngIf="isHorizontalLayout$ | async" [fxHide]="mobileQuery" color="primary" mat-button type="button">
-      Documentation
-      <!-- <ic-icon
-          [icon]="icArrowDropDown"
-          class="ltr:-mr-1 rtl:-ml-1"
-          inline="true"
-          ></ic-icon> -->
-    </button>
-  </div>
-  <div #megaMenuOriginRef class="ltr:ml-2 rtl:mr-2">
-    <button *ngIf="isHorizontalLayout$ | async" [fxHide]="mobileQuery" color="primary" mat-button type="button"
-      disabled>
-      Forum
-      <!-- <ic-icon
-                                                [icon]="icArrowDropDown"
-                                                class="ltr:-mr-1 rtl:-ml-1"
-                                                inline="true"
-                                              ></ic-icon> -->
-    </button>
+
+
+  <div *ngIf="(isVerticalLayout$ | async) && isNavbarInToolbar$ | async"
+       [fxHide]="mobileQuery"
+       class="px-gutter"
+       fxFlex="none"
+       fxLayout="row"
+       fxLayoutAlign="start center">
+    <vex-navigation-item *ngFor="let item of navigationItems" [item]="item"></vex-navigation-item>
   </div>
 
   <span fxFlex></span>
 
-  <div class="-mx-3 flex items-center">
-    <!-- <div class="px-1">
+  <div class="-mx-1 flex items-center">
+    <div class="px-1">
       <button (click)="openSearch()" mat-icon-button type="button">
         <mat-icon [icIcon]="icSearch"></mat-icon>
       </button>
@@ -61,7 +165,7 @@
       <button (click)="openQuickpanel()" mat-icon-button type="button">
         <mat-icon [icIcon]="icBookmarks"></mat-icon>
       </button>
-    </div> -->
+    </div>
 
     <div class="px-1">
       <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
@@ -93,5 +197,5 @@
   </div>
 </div>
 
-<vex-navigation *ngIf="(isVerticalLayout$ | async) && isNavbarBelowToolbar$ | async" [fxHide]="mobileQuery">
-</vex-navigation>
+<vex-navigation *ngIf="(isVerticalLayout$ | async) && isNavbarBelowToolbar$ | async"
+                [fxHide]="mobileQuery"></vex-navigation>

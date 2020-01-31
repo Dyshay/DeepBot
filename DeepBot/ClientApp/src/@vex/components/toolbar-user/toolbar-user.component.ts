@@ -3,7 +3,7 @@ import { PopoverService } from '../popover/popover.service';
 import { ToolbarUserDropdownComponent } from './toolbar-user-dropdown/toolbar-user-dropdown.component';
 import icPerson from '@iconify/icons-ic/twotone-person';
 import theme from '../../utils/tailwindcss';
-import { Account } from 'src/app/Component/auth/models/account';
+import { Account } from 'src/webModel/Account';
 
 @Component({
   selector: 'vex-toolbar-user',
@@ -15,9 +15,8 @@ export class ToolbarUserComponent implements OnInit {
   dropdownOpen: boolean;
   icPerson = icPerson;
 
-  @Input() username : Account | null;
-
   theme = theme;
+  @Input() username : Account | null;
 
   constructor(private popover: PopoverService,
               private cd: ChangeDetectorRef) { }
@@ -32,7 +31,6 @@ export class ToolbarUserComponent implements OnInit {
     const popoverRef = this.popover.open({
       content: ToolbarUserDropdownComponent,
       origin: originRef,
-      offsetX: -180,
       offsetY: 12,
       position: [
         {

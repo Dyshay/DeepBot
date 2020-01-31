@@ -80,6 +80,14 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe(() => this.sidenav.close());
   }
 
+  // callServerInitTcp(){
+  //   this.hub.initNewTcp();
+  // }
+
+  // callAuth(){
+  //   this.hub.callAuth();
+  // }
+
   ngAfterViewInit(): void {
     this.router.events.pipe(
       filter<Event, Scroll>((e: Event): e is Scroll => e instanceof Scroll),

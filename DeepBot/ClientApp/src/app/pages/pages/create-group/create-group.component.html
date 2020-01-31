@@ -1,0 +1,142 @@
+<vex-page-layout>
+
+  <vex-page-layout-header fxLayout="column" fxLayoutAlign="center start">
+    <div vexContainer>
+      <h1 class="title m-0">Créer votre groupe de bot et personnalisez le</h1>
+      <h4 class="ml-6"> - Ce groupe sera sauvegardé sur votre compte. </h4>
+      <h4 class="ml-6"> - Vous retrouverais ce groupe sur la bar de navigation de vos bot. </h4>
+    </div>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content vexContainer @fadeInUp>
+    <div class="card p-6">
+
+      <div  class="overflow-hidden mt-10 mx-5" fxLayoutAlign="center center">
+        <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+          <ng-template matStepperIcon="edit">
+            <mat-icon [icIcon]="icDoneAll"></mat-icon>
+          </ng-template>
+
+          <ng-template matStepperIcon="done">
+            <mat-icon [icIcon]="icDoneAll"></mat-icon>
+          </ng-template>
+
+          <mat-step [stepControl]="groupstep1">
+            <form [formGroup]="groupstep1">
+              <ng-template matStepLabel>Le groupe</ng-template>
+
+              <h2 class="title m-0">Creer un groupe</h2>
+              <div class="subheading-1">Definissez les propriétés du groupe</div>
+
+              <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                <mat-form-field fxFlex="auto">
+                  <mat-label>Nom du groupe</mat-label>
+                  <input formControlName="groupName" matInput required>
+                  <mat-hint>Nom utilisé dans la bar de navigation des bots</mat-hint>
+                </mat-form-field>
+                <div fxLayout="column" fxLayout.gt-xs="row" fxLayoutGap="8px" fxLayoutGap.gt-xs="24px">
+                  <mat-checkbox [checked]="hourchecked" (change)="hourchecked = !hourchecked" class="mt-6">Définir une plage de connexion automatique du groupe</mat-checkbox>
+                  <mat-form-field fxFlex="auto" *ngIf="hourchecked">
+                    <mat-label>Heure de début</mat-label>
+                    <input type="number" formControlName="startHour" matInput required>
+                    <span matSuffix>Heure</span>
+                    <mat-hint>Heure à laquelle le groupe de bot se connectera automatiquement</mat-hint>
+                  </mat-form-field>
+                  <mat-form-field fxFlex="auto" *ngIf="hourchecked">
+                    <mat-label>Heure de fin</mat-label>
+                    <input type="number" formControlName="endHour" matInput required>
+                    <span matSuffix>Heure</span>
+                    <mat-hint>Heure à laquelle le groupe de bot se déconnectera automatiquement aprés son combat</mat-hint>
+                  </mat-form-field>
+                </div>
+                <mat-form-field class="mt-1">
+                  <mat-label>Trajet par défaut à utilisé</mat-label>
+                  <mat-select formControlName="trajet">
+                    <mat-option [value]="1">Trajet 1</mat-option>
+                    <mat-option [value]="2">Trajet 2</mat-option>
+                    <mat-option [value]="3">Trajet 3</mat-option>
+                    <mat-option [value]="4">Trajet 4</mat-option>
+                  </mat-select>
+                  <mat-hint>Le trajet utilisé par le bot peut étre modifié à tout moment</mat-hint>
+                </mat-form-field>
+
+              </div>
+
+              <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button (click)="stepper.reset()" color="primary" mat-button
+                        type="button">
+                  Annuler
+                </button>
+                <button [disabled]="groupstep1.invalid" color="primary" mat-raised-button matStepperNext>
+                  Suivant
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="groupstep2">
+            <form [formGroup]="groupstep2">
+              <ng-template matStepLabel>Le leader</ng-template>
+
+              <h2 class="title m-0">Selectionnez un leader</h2>
+              <div class="subheading-1">Selectionnez le personnages leader du groupe. Atention, il est possible de lier un leader à plusieurs groupes.</div>
+
+              <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+
+                <mat-form-field class="mt-2" fxFlex="auto">
+                  <mat-label>Choisisez votre leader</mat-label>
+                  <mat-select formControlName="leader">
+                    <mat-option *ngFor="let character of characterList" [value]="character.characterName"><b>{{character.characterName}} </b> (Classe : {{character.classe}}, Level : {{character.level}} )</mat-option>
+                  </mat-select>
+                  <mat-hint>Le personnage selectionné sera le leader du groupe , il lancera les groupes, fera office de banque  etc..</mat-hint>
+                </mat-form-field>
+              </div>
+
+              <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button color="primary" mat-button matStepperPrevious type="button">Retour</button>
+                <button [disabled]="groupstep2.invalid" color="primary" mat-raised-button matStepperNext>
+                  Suivant
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="groupstep3">
+            <form [formGroup]="groupstep3">
+              <ng-template matStepLabel>Membres du groupe</ng-template>
+
+              <div class="title m-0">Selectionnez les membres du groupe</div>
+              <div class="subheading-1">
+                Le groupe peut être composé de maximum 8 membres. Atention, il est possible de lier un personnage à plusieurs groupes.
+              </div>
+
+              <div class="mt-4" fxLayout="row" fxFlexFill>
+                <mat-selection-list #membres>
+                  <mat-list-option *ngFor="let character of characterList" [value]="character.characterName">
+                    <b>{{character.characterName}} </b> (Classe : {{character.classe}}, Level : {{character.level}} )
+                  </mat-list-option>
+                </mat-selection-list>
+              </div>
+
+              <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button color="primary" mat-button matStepperPrevious type="button">Retour</button>
+                <button (click)="submit()" [disabled]="groupstep3.invalid" color="primary" mat-raised-button
+                        matStepperNext>
+                  Créer groupe
+                </button>
+              </div>
+            </form>
+
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+    </div>
+  </vex-page-layout-content>
+
+</vex-page-layout>
+
+
+
+
+
+

@@ -10,14 +10,23 @@ namespace DeepBot.CLI.Service
     {
         private HubConnection Connection;
 
-        public event Action<string, bool> PackageBuild;
+        public event Action<string, bool, short> PackageBuild;
+        public event Action<string, short, bool, short> ConnexionHandler;
+        public event Action CreateTcpHandler;
 
-        public TalkHubService()
+        public TalkHubService(string token)
         {
             string url = "https://localhost:44319/deeptalk";
             Connection = new HubConnectionBuilder()
-                .WithUrl(url)
+                .WithUrl(url, options =>
+                {
+                    options.AccessTokenProvider = async () =>
+                    {
+                        return token;
+                    };
+                })
                 .Build();
+
 
             Connection.Closed += async (error) =>
             {
@@ -27,22 +36,39 @@ namespace DeepBot.CLI.Service
 
             Connection.StartAsync();
 
+            InitHandler();
+        }
+
+        private void InitHandler()
+        {
             GetPackage();
+            InitConnectionTcp();
+            HandleCreateTcp();
         }
 
-        public async Task SendHandlePackageToServer(string package, string apiKey)
+        public async Task SendHandlePackageToServer(string package, short tcpId)
         {
-            await Connection.InvokeAsync("ReceivedHandler", package, apiKey);
+            await Connection.InvokeAsync("ReceivedHandler", package, tcpId);
         }
 
-        public async Task JoinRoom(string apiKey)
+        public async Task JoinRoom()
         {
-            await Connection.InvokeAsync("JoinRoomCLI", apiKey);
+            await Connection.InvokeAsync("JoinRoomCLI");
+        }
+
+        public void HandleCreateTcp()
+        {
+            Connection.On("CreateTcp", () => CreateTcpHandler?.Invoke());
+        }
+
+        public void InitConnectionTcp()
+        {
+            Connection.On<string, short, bool, short>("NewConnection", (ip, port, @switch, tcpId) => ConnexionHandler?.Invoke(ip, port, @switch, tcpId));
         }
 
         public void GetPackage()
         {
-            Connection.On<string, bool>("SendPackage", (c, o) => PackageBuild?.Invoke(c, o));
+            Connection.On<string, bool, short>("SendPackage", (c, o, tcpId) => PackageBuild?.Invoke(c, o, tcpId));
         }
     }
 }

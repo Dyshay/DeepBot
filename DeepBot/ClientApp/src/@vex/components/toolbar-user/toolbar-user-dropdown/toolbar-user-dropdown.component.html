@@ -7,90 +7,37 @@
       <div class="dropdown-heading">{{ (user | async).userName }}</div>
     </div>
 
-    <!-- <button [matMenuTriggerFor]="settingsMenu"
+    <button [matMenuTriggerFor]="settingsMenu"
             mat-icon-button
             matTooltip="Settings"
             matTooltipPosition="before"
             type="button">
       <mat-icon [icIcon]="icSettings" class="notifications-header-icon"></mat-icon>
-    </button> -->
+    </button>
   </div>
 
   <div class="dropdown-content">
-    <div *ngIf="(user | async).isSubcriber; else notSub">
     <a (click)="close()"
+       *ngFor="let item of items; trackBy: trackById"
+       [routerLink]="item.route"
        class="notification"
        fxLayout="row"
-       [routerLink]=""
        fxLayoutAlign="start center"
-       >
-        <mat-icon [icIcon]="checkCircle"
-        color="green"
-                  class="notification-icon"
-                  fxFlex="none"></mat-icon>
-        <div fxFlex="auto">
-          <div class="notification-label">Votre abonnement</div>
-          <div class="notification-description">Actif</div>
-        </div>
-        <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon>
-      </a>
-    </div>
-    <ng-template #notSub>
-      <a (click)="close()"
-      class="notification"
-      fxLayout="row"
-      [routerLink]=""
-      fxLayoutAlign="start center"
-      >
-       <mat-icon [icIcon]="exclamationCircle"
-       color="red"
-                 class="notification-icon"
-                 fxFlex="none"></mat-icon>
-       <div fxFlex="auto">
-         <div class="notification-label">Votre abonnement</div>
-         <div class="notification-description">Inactif</div>
-       </div>
-       <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon>
-     </a>
-    </ng-template>
-    <a 
-    *ngIf="user | async as u"
-    (click)="copyClipboard(u.apiKey)"
-    class="notification"
-    fxLayout="row"
-    fxLayoutAlign="start center"
-    >
-     <mat-icon [icIcon]="keyIcon"
-     color="#ff9f43"
-               class="notification-icon"
-               fxFlex="none"></mat-icon>
-     <div fxFlex="auto">
-       <div class="notification-label">Clé API</div>
-       <div class="notification-description">{{(user | async).apiKey}}</div>
-       <div class="notification-description" *ngIf="isCopy">Clé copié</div>
-     </div>
-     <!-- <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon> -->
-   </a>
-    <!-- <a (click)="close()"
-       class="notification"
-       fxLayout="row"
-       [routerLink]=""
-       fxLayoutAlign="start center"
-       >
-      <mat-icon [icIcon]="exclamationCircle"
-      color="red"
+       matRipple>
+      <mat-icon [icIcon]="item.icon"
+                [ngClass]="item.colorClass"
                 class="notification-icon"
                 fxFlex="none"></mat-icon>
       <div fxFlex="auto">
-        <div class="notification-label">Votre abonnement</div>
-        <div class="notification-description">Inactif</div>
+        <div class="notification-label">{{ item.label }}</div>
+        <div class="notification-description">{{ item.description }}</div>
       </div>
       <mat-icon [icIcon]="icChevronRight" class="notification-chevron" fxFlex="none"></mat-icon>
-    </a> -->
+    </a>
   </div>
 
-  <div class="dropdown-footer" fxLayout="row" fxLayoutAlign="center">
-    <!-- <button [matMenuTriggerFor]="statusMenu" class="dropdown-footer-select" mat-button type="button">
+  <div class="dropdown-footer" fxLayout="row" fxLayoutAlign="space-between center">
+    <button [matMenuTriggerFor]="statusMenu" class="dropdown-footer-select" mat-button type="button">
       <ng-container *ngFor="let status of statuses; trackBy: trackById">
         <span *ngIf="status === activeStatus">
           <mat-icon [icIcon]="status.icon" [ngClass]="status.colorClass"></mat-icon>
@@ -98,8 +45,8 @@
           <mat-icon [icIcon]="icArrowDropDown" class="dropdown-footer-select-caret"></mat-icon>
         </span>
       </ng-container>
-    </button> -->
-    <a (click)="close()" [routerLink]="['/login']" color="primary" mat-button>Déconnexion</a>
+    </button>
+    <a (click)="close()" [routerLink]="['/login']" color="primary" mat-button>LOGOUT</a>
   </div>
 </div>
 
