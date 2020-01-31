@@ -7,6 +7,9 @@ namespace DeepBot.Data.Enums
     public enum NetworkType
     {
         LOG,
-
+        INVENTORY,
+        CHARACTER,
+        GUILD,
+        MAP,
     }
 }
