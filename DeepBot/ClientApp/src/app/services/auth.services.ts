@@ -24,6 +24,7 @@ export class AuthService {
       UserName: userName,
       Password: userPassword,
     }
+    console.log(body);
     return this.http.post<User>(`${environment.apiURL}User/Login`, body, httpOptions);
   }
 

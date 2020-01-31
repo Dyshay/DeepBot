@@ -32,14 +32,13 @@ export class TalkService {
         this._hubConnection.invoke('SendPackage', 'test', '500')
     }
 
-    private startConnection(): void {
+    public startConnection(): void {
         this._hubConnection
             .start()
             .then(() => {
                 this.connectIsEstablished = true;
                 console.log('Init connection on DeepTalk');
                 this.connectionEstablished.emit(true);
-                this._hubConnection.invoke('JoinRoomClient', '500');
             })
             .catch(err => {
                 console.log('Error on initialize connection with DeepTalk, retrying...');
