@@ -1,7 +1,7 @@
 import { LogType } from "./Enum/LogType";
 
 export interface LogMessage{
-    LogType: LogType,
-    Message: string,
-    TcpId: number
+    logType: LogType,
+    message: string,
+    tcpId: number
 }
