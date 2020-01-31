@@ -1,5 +1,6 @@
 ﻿using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
+using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
@@ -32,7 +33,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public void GetAccountUserName(DeepTalk hub, string package, AccountDB account, short tcpId) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
 
         [Receiver("Af")]
-        public void GetLoginQueue(DeepTalk hub, string package, AccountDB account, short tcpId) => hub.DispatchToClient("LOG", "[File d'attente] Position " + package[2] + "/" + package[4], tcpId).Wait();
+        public void GetLoginQueue(DeepTalk hub, string package, AccountDB account, short tcpId) => hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION,"[File d'attente] Position " + package[2] + "/" + package[4]), tcpId).Wait();
 
         [Receiver("AH")]
         public void GetServerState(DeepTalk hub, string package, AccountDB account, short tcpId)
@@ -87,7 +88,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                     else
                     {
                         var wait = new Random().Next(100,1000);
-                        hub.DispatchToClient("LOG", $"Serveur non accessible pour le moment, je réessaye dans {wait}ms", tcpId).Wait();
+                        hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Serveur non accessible pour le moment, je réessaye dans {wait}ms"), tcpId).Wait();
                         await Task.Delay(wait);
                     }
                 }
@@ -103,7 +104,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         [Receiver("AXEf")]
         public void NotSubscribe(DeepTalk hub, string package, AccountDB account, short tcpId)
         {
-            hub.DispatchToClient("LOG", "Vous n'êtes pas abonnée", tcpId).Wait();
+            hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION,"Vous n'êtes pas abonnée"), tcpId).Wait();
         }
 
         [Receiver("AXK")]
