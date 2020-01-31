@@ -3,7 +3,6 @@ import { LayoutService } from '../../services/layout.service';
 import icBookmarks from '@iconify/icons-ic/twotone-bookmarks';
 import emojioneUS from '@iconify/icons-emojione/flag-for-flag-united-states';
 import emojioneDE from '@iconify/icons-emojione/flag-for-flag-germany';
-import emojioneFR from '@iconify/icons-emojione/flag-for-flag-france';
 import icMenu from '@iconify/icons-ic/twotone-menu';
 import { ConfigService } from '../../services/config.service';
 import { map } from 'rxjs/operators';
@@ -19,9 +18,6 @@ import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
 import { MegaMenuComponent } from '../../components/mega-menu/mega-menu.component';
 import icSearch from '@iconify/icons-ic/twotone-search';
-import * as fromAuth from '../../../app/Component/auth/reducers';
-import { Store, select } from '@ngrx/store';
-import { AuthActions } from 'src/app/Component/auth/actions';
 
 @Component({
   selector: 'vex-toolbar',
@@ -30,7 +26,6 @@ import { AuthActions } from 'src/app/Component/auth/actions';
 })
 export class ToolbarComponent implements OnInit {
 
-  user$ = this.store.pipe(select(fromAuth.getUser));
   @Input() mobileQuery: boolean;
 
   @Input()
@@ -48,7 +43,6 @@ export class ToolbarComponent implements OnInit {
   icBookmarks = icBookmarks;
   emojioneUS = emojioneUS;
   emojioneDE = emojioneDE;
-  emojioneFR = emojioneFR;
   icMenu = icMenu;
   icPersonAdd = icPersonAdd;
   icAssignmentTurnedIn = icAssignmentTurnedIn;
@@ -60,12 +54,9 @@ export class ToolbarComponent implements OnInit {
   icArrowDropDown = icArrowDropDown;
 
   constructor(private layoutService: LayoutService,
-    private configService: ConfigService,
-    private navigationService: NavigationService,
-    private popoverService: PopoverService,
-    private store: Store<fromAuth.State>
-    ) {
-    }
+              private configService: ConfigService,
+              private navigationService: NavigationService,
+              private popoverService: PopoverService) { }
 
   ngOnInit() {
   }

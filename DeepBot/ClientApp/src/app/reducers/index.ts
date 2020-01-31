@@ -9,7 +9,7 @@ import {
   } from '@ngrx/store';
   import { environment } from '../../environments/environment';
   import * as fromRouter from '@ngrx/router-store';
-  import * as fromAuth from '../Component/auth/reducers';
+import * as fromAuth from '../pages/pages/auth/reducers';
   
   /**
    * Every reducer module's default export is the reducer function itself. In
@@ -65,4 +65,3 @@ import {
   export const metaReducers: MetaReducer<State>[] = !environment.production
     ? [logger]
     : [];
-  

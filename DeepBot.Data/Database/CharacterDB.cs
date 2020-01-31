@@ -43,7 +43,7 @@ namespace DeepBot.Data.Database
         [BsonIgnore]
         public Map CharacterMap { get; set; }
         [BsonIgnore]
-        public Group CharacterGroup { get; set; }
+        public GroupDB CharacterGroup { get; set; }
         [BsonIgnore]
         public AccountDB CharacterAccount { get; set; }
 
