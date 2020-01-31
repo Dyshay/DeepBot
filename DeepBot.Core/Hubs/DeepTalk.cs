@@ -22,7 +22,7 @@ namespace DeepBot.Core.Hubs
 
         public void ReceivedHandler(string package, short tcpId)
         {
-            Receiver.Receive(this, package, Users.FirstOrDefault(c => c.Id == userId), tcpId);
+            Receiver.Receive(this, package, Users.FirstOrDefault(c => c.Id == userId).Accounts.FirstOrDefault(c => c.TcpId == tcpId), tcpId);
         }
 
         public void JoinRoomCLI()
