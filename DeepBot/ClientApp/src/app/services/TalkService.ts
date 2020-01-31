@@ -1,5 +1,5 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/signalr';
 
 @Injectable()
 export class TalkService {
@@ -11,7 +11,7 @@ export class TalkService {
 
     constructor() {
         this.createConnection();
-        this.startConnection();
+        // this.startConnection();
     }
 
     sendMessage(message: string) {
@@ -20,7 +20,11 @@ export class TalkService {
 
     private createConnection(): void {
         this._hubConnection = new HubConnectionBuilder()
-            .withUrl("https://localhost:44319/deeptalk")
+            .withUrl("https://localhost:44319/deeptalk",{	
+                accessTokenFactory: () => {	
+                    return localStorage.getItem('DeepBot');	
+                }, skipNegotiation: true, transport: HttpTransportType.WebSockets	
+            })
             .build();
     }
 
@@ -41,7 +45,7 @@ export class TalkService {
                 this.connectionEstablished.emit(true);
             })
             .catch(err => {
-                console.log('Error on initialize connection with DeepTalk, retrying...');
+                console.log('Error on initialize connection with DeepTalk, retrying...', err);
                 setTimeout(function () {
                     this.startConnection();
                 }, 5000);

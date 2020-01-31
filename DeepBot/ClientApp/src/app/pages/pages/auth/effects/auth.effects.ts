@@ -11,6 +11,7 @@ import { AuthService } from "src/app/services/auth.services";
 
 @Injectable()
 export class AuthEffects {
+    static isConnectedTalker = false;
 
     login$ = createEffect(() =>
         this.actions$.pipe(
@@ -30,7 +31,6 @@ export class AuthEffects {
             ofType(AuthActions.loginSuccess),
             map(action => action.user),
             tap((user: any) => {
-                console.log('test');
                 let token = user.token;
                 localStorage.setItem('DeepBot', token);
                 this.router.navigate(['/']);
@@ -63,7 +63,10 @@ export class AuthEffects {
             ofType(AuthActions.getUserSuccess),
             map(action => action.account),
             tap((account: any) => {
-                this.deeptalk.startConnection();
+                if(!AuthEffects.isConnectedTalker){
+                    this.deeptalk.startConnection();
+                    AuthEffects.isConnectedTalker = true;
+                }
             })
         ),
         { dispatch: false }
