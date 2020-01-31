@@ -1,8 +1,9 @@
 
 using AspNetCore.Identity.Mongo;
 using DeepBot.ControllersModel;
+using DeepBot.Core.Hubs;
+using DeepBot.Core.Network;
 using DeepBot.Data.Database;
-using DeepBot.Hubs;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DeepBot
 {
@@ -75,6 +77,21 @@ namespace DeepBot
                     ValidateAudience = false,
                     ClockSkew = TimeSpan.Zero
                 };
+                x.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = Context =>
+                    {
+                        var accessToken = Context.Request.Query["access_token"];
+
+                        var path = Context.HttpContext.Request.Path;
+                        if (!string.IsNullOrEmpty(accessToken) && (path.StartsWithSegments("/deeptalk")))
+                        {
+                            // Read the token out of the query string
+                            Context.Token = accessToken;
+                        }
+                        return Task.CompletedTask;
+                    }
+                };
             });
         }
 
@@ -103,6 +120,8 @@ namespace DeepBot
                 app.UseSpaStaticFiles();
             }
 
+            //Launch Handler Core
+            Receiver.Initialize();
 
             app.UseRouting();
             //Identity
@@ -113,7 +132,7 @@ namespace DeepBot
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}");
-                endpoints.MapHub<DeepHub>("/deeptalk");
+                endpoints.MapHub<DeepTalk>("/deeptalk");
             });
 
             app.UseSpa(spa =>
