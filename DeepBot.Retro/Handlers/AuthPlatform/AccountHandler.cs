@@ -20,11 +20,12 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             //account dispatch value (connecting)
             account.State = AccountState.CONNECTING;
             account.WelcomeKey = package.Substring(2);
-            hub.Clients.Caller.SendAsync("SendPackage", "1.30", false, tcpId);
+
+            hub.SendPackage("1.30", tcpId);
 
             // USE THE ACCOUNT AND PASSWORD FROM account
-            hub.Clients.Caller.SendAsync("SendPackage", $"${account.Username}\n{Hash.EncryptPassword(account.Password, account.WelcomeKey)}", false, tcpId);
-            hub.Clients.Caller.SendAsync("SendPackage", "Af", false, tcpId);
+            hub.SendPackage($"{account.Username}\n{Hash.EncryptPassword(account.Password, account.WelcomeKey)}", tcpId);
+            hub.SendPackage($"Af", tcpId);
         }
 
         [Receiver("Ad")]
@@ -60,7 +61,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             }
 
             //if (!firstTime && server.State == ServerState.ONLINE)
-                hub.Clients.Caller.SendAsync("SendPackage", "Ax", false, tcpId);
+            hub.SendPackage("Ax", tcpId);
         }
 
         [Receiver("AxK")]
@@ -95,7 +96,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             }
 
             if (picked)
-                await hub.Clients.Caller.SendAsync("SendPackage", $"AX{account.Server.Id}", true, tcpId);
+                hub.SendPackage($"AX{account.Server.Id}", tcpId, true);
         }
 
 
