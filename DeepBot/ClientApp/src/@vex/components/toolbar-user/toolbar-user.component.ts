@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, Input } from '@angular/core';
 import { PopoverService } from '../popover/popover.service';
 import { ToolbarUserDropdownComponent } from './toolbar-user-dropdown/toolbar-user-dropdown.component';
 import icPerson from '@iconify/icons-ic/twotone-person';
 import theme from '../../utils/tailwindcss';
+import { Account } from 'src/webModel/Account';
 
 @Component({
   selector: 'vex-toolbar-user',
@@ -15,6 +16,7 @@ export class ToolbarUserComponent implements OnInit {
   icPerson = icPerson;
 
   theme = theme;
+  @Input() username : Account | null;
 
   constructor(private popover: PopoverService,
               private cd: ChangeDetectorRef) { }
