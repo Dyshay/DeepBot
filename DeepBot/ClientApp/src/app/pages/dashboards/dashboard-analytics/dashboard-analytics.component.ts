@@ -10,6 +10,7 @@ import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import theme from '../../../../@vex/utils/tailwindcss';
 import { Store, select } from '@ngrx/store';
 import * as fromBot from '../../pages/bot/reducers';
+import { TalkService } from 'src/app/Services/TalkService';
 
 @Component({
   selector: 'vex-dashboard-analytics',
@@ -93,7 +94,7 @@ export class DashboardAnalyticsComponent implements OnInit {
 
   theme = theme;
 
-  constructor(private cd: ChangeDetectorRef, private store: Store<fromBot.State>) { }
+  constructor(private cd: ChangeDetectorRef, private store: Store<fromBot.State>, private deepTalk: TalkService) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -107,6 +108,11 @@ export class DashboardAnalyticsComponent implements OnInit {
         }
       ];
     }, 3000);
+  }
+
+  init(){
+    this.deepTalk.InitTcpCli();
+    this.deepTalk.createConnexion();
   }
 
 }
