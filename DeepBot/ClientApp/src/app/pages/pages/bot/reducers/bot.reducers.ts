@@ -3,16 +3,16 @@ import { BotActions } from '../actions';
 import { LogMessage } from 'src/webModel/LogMessage';
 
 export interface State {
-    logs: LogMessage[] | null;
+    logs: LogMessage[] ;
 }
 
 export const initialState: State = {
-    logs: null,
+    logs: [],
 }
 
 
 export const reducer = createReducer(initialState,
-    on(BotActions.receveidLogs, (state, { logs }) => ({ ...state, logs: state.logs.concat(logs) })),
+    on(BotActions.receveidLogs, (state, { network }) => ({ ...state, logs: state.logs.concat(network) })),
 )
 
 
