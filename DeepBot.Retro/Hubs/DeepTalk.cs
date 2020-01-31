@@ -1,4 +1,5 @@
 ﻿using DeepBot.Core.Network;
+using DeepBot.Core.Network.HubMessage;
 using DeepBot.Data.Database;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -56,9 +57,9 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }
 
-        public async Task DispatchToClient(string type, string textDisplay, short tcpId)
+        public async Task DispatchToClient(NetworkMessage network, short tcpId)
         {
-            await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("DispatchClient", type, textDisplay, tcpId);
+            await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("DispatchClient", network, tcpId);
         }
 
         private string GetApiKey()
