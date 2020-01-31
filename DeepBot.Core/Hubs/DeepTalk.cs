@@ -69,7 +69,7 @@ namespace DeepBot.Core.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            if (Users.Any(c => c.Id != userId))
+            if (!Users.Select(c => c.Id).Contains(userId))
                 Users.Add(await Manager.FindByIdAsync(userId));
 
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
