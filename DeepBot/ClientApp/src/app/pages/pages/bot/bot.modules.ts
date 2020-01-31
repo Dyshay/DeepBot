@@ -9,4 +9,4 @@ import { EffectsModule } from '@ngrx/effects';
         StoreModule.forFeature('bot', reducers),
     ],
 })
-export class AuthModule {}
+export class BotModule {}

@@ -1,1 +1,4 @@
 <div class="ml-5"> test dashboard</div>
+<li *ngFor="let item of logs | async as list">
+    {{item.message}}
+</li>
