@@ -12,7 +12,17 @@ export class NavigationService {
   private _openChangeSubject = new Subject<NavigationDropdown>();
   openChange$ = this._openChangeSubject.asObservable();
 
-  constructor() {}
+  constructor() { }
+
+  addDropdown(item: NavigationDropdown) {
+    this.items.push(item);
+  }
+  addLink(item: NavigationLink) {
+    this.items.push(item);
+  }
+  addSubheading(item: NavigationSubheading) {
+    this.items.push(item);
+  }
 
   triggerOpenChange(item: NavigationDropdown) {
     this._openChangeSubject.next(item);

@@ -19,9 +19,10 @@ import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
 import { MegaMenuComponent } from '../../components/mega-menu/mega-menu.component';
 import icSearch from '@iconify/icons-ic/twotone-search';
-import * as fromAuth from '../../../app/Component/auth/reducers';
+import * as fromAuth from '../../../app/pages/pages/auth/reducers';
 import { Store, select } from '@ngrx/store';
-import { AuthActions } from 'src/app/Component/auth/actions';
+import { AuthActions } from 'src/app/pages/pages/auth/actions';
+
 
 @Component({
   selector: 'vex-toolbar',
@@ -60,12 +61,14 @@ export class ToolbarComponent implements OnInit {
   icArrowDropDown = icArrowDropDown;
 
   constructor(private layoutService: LayoutService,
-    private configService: ConfigService,
-    private navigationService: NavigationService,
-    private popoverService: PopoverService,
-    private store: Store<fromAuth.State>
-    ) {
-    }
+              private configService: ConfigService,
+              private navigationService: NavigationService,
+              private popoverService: PopoverService,
+              private store: Store<fromAuth.State>
+              ) {
+
+                this.store.dispatch(AuthActions.getUser())
+               }
 
   ngOnInit() {
   }

@@ -1,0 +1,165 @@
+<meta meta charset="utf-8" />
+
+<div
+  class="w-full h-full bg-pattern"
+  fxLayout="column"
+  fxLayoutAlign="center center"
+>
+  <div class="row w-100 mx-5 p-5">
+    <div class="col-md-5">
+      <mat-card>
+        <mat-card-header>
+          <img mat-card-avatar src="assets/img/logo-rounded.svg" />
+          <mat-card-title>DeepBot</mat-card-title>
+        </mat-card-header>
+        <img mat-card-image src="assets/img/LoginTeaser.svg" /> 
+        <mat-card-content>
+          <!--<p>Piqued favour stairs it enable exeter as seeing. Remainder met improving but engrossed sincerity age. Better but length gay denied abroad are. Attachment astonished to on appearance imprudence so collecting in excellence. Tiled way blind lived whose new. The for fully had she there leave merit enjoy forth. </p>-->
+          <dl class="row">
+            <dt class="col-sm-3 my-2">Description lists</dt>
+            <dd class="col-sm-9 my-2">
+              A description list is perfect for defining terms.
+            </dd>
+
+            <dt class="col-sm-3 my-2">Euismod</dt>
+            <dd class="col-sm-9 my-2">
+              <p>
+                Vestibulum id ligula porta felis euismod semper eget lacinia
+                odio sem nec elit.
+              </p>
+              <p>Donec id elit non mi porta gravida at eget metus.</p>
+            </dd>
+
+            <dt class="col-sm-3 my-2">Malesuada porta</dt>
+            <dd class="col-sm-9 my-2">
+              Etiam porta sem malesuada magna mollis euismod.
+            </dd>
+
+            <dt class="col-sm-3 text-truncate my-2">
+              Truncated term is truncated
+            </dt>
+            <dd class="col-sm-9 my-2">
+              Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum
+              nibh, ut fermentum massa justo sit amet risus.
+            </dd>
+
+            <dt class="col-sm-3 my-2">Nesting</dt>
+            <dd class="col-sm-9 my-2">
+              <dl class="row my-2">
+                <dt class="col-sm-4">Nested definition list</dt>
+                <dd class="col-sm-8">
+                  Aenean posuere, tortor sed cursus feugiat, nunc augue blandit
+                  nunc.
+                </dd>
+              </dl>
+            </dd>
+          </dl>
+        </mat-card-content>
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+          <div fxLayout="row">
+            <span fxFlex></span>
+            <button type="button" class="btn btn-primary btn-lg mr-2">
+              Plus d'Info
+            </button>
+            <button type="button" class="btn btn-primary btn-lg ml-2">
+              Discord
+            </button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </div>
+    <div class="col-2"></div>
+    <div class="col-4 my-auto">
+      <div
+        @fadeInUp
+        class=" mx-auto card overflow-hidden w-full h-full max-w-xxl"
+      >
+        <div class="mt-3 pb-0" fxLayout="column" fxLayoutAlign="center center">
+          <div class="fill-current text-center">
+            <img class="w-24" src="assets/img/logo.svg" />
+          </div>
+        </div>
+
+        <div class="text-center mt-4">
+          <h1 class="m-0">Bienvenue</h1>
+          <h3 class=" text-secondary m-0">
+            Connectez vous à l'aide du formulaire ci-dessous
+          </h3>
+        </div>
+
+        <div
+          [formGroup]="form"
+          class="p-6"
+          fxLayout="column"
+          fxLayoutGap="16px"
+        >
+          <div fxFlex="auto" fxLayout="column">
+            <mat-form-field fxFlex="grow">
+              <mat-label>Nom d'utilisateur ou E-Mail</mat-label>
+              <input formControlName="email" matInput required />
+              <mat-error *ngIf="form.get('email').hasError('required')"
+                >E-Mail ou Nom d'utilisatuer requis</mat-error
+              >
+            </mat-form-field>
+            <mat-form-field fxFlex="grow">
+              <mat-label>Mot de passe</mat-label>
+              <input
+                [type]="inputType"
+                formControlName="password"
+                matInput
+                required
+              />
+              <button
+                (click)="toggleVisibility()"
+                mat-icon-button
+                matSuffix
+                matTooltip="Toggle Visibility"
+                type="button"
+              >
+                <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+                <mat-icon
+                  *ngIf="!visible"
+                  [icIcon]="icVisibilityOff"
+                ></mat-icon>
+              </button>
+              <mat-hint>Appuyez pour afficher le mot de passe</mat-hint>
+              <mat-error *ngIf="form.get('password').hasError('required')"
+                >Votre mot de passe est requis</mat-error
+              >
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="space-between center">
+            <mat-checkbox class="caption" color="primary">
+              <h3 class=" text-secondary m-0">
+                Mémoriser mes Identifiants
+              </h3></mat-checkbox
+            >
+            <a [routerLink]="['/forgot-password']" class="caption">
+              <h3 class=" text-secondary m-0">Mot de passe oublié ?</h3></a
+            >
+          </div>
+
+          <button
+            (click)="send()"
+            color="primary"
+            class="w-50 mx-auto"
+            mat-raised-button
+            type="button"
+          >
+            SE CONNECTER dd
+          </button>
+
+          <p class="text-secondary text-center">
+            <a [routerLink]="['/register']">
+              <h3 class=" text-secondary m-0">
+                Cliquez ici pour créer un compte
+              </h3></a
+            >
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
