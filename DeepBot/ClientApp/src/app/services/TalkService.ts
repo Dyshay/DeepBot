@@ -1,5 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/signalr';
+import { Store } from '@ngrx/store';
+import * as fromBot from '../pages/pages/bot/reducers';
+import { BotActions } from '../pages/pages/bot/actions';
 
 @Injectable()
 export class TalkService {
@@ -9,7 +12,7 @@ export class TalkService {
     private connectIsEstablished = false;
     private _hubConnection: HubConnection;
 
-    constructor() {
+    constructor(private store: Store<fromBot.State>) {
         this.createConnection();
         // this.startConnection();
     }
@@ -20,20 +23,20 @@ export class TalkService {
 
     private createConnection(): void {
         this._hubConnection = new HubConnectionBuilder()
-            .withUrl("https://localhost:44319/deeptalk",{	
-                accessTokenFactory: () => {	
-                    return localStorage.getItem('DeepBot');	
-                }, skipNegotiation: true, transport: HttpTransportType.WebSockets	
+            .withUrl("https://localhost:44319/deeptalk", {
+                accessTokenFactory: () => {
+                    return localStorage.getItem('DeepBot');
+                }, skipNegotiation: true, transport: HttpTransportType.WebSockets
             })
             .build();
     }
 
-    joinRoom() {
-        this._hubConnection.invoke('JoinRoomClient', '500');
+    createConnexion() {
+        this._hubConnection.invoke('CreateConnexion', 'test','test');
     }
 
-    sendPackage() {
-        this._hubConnection.invoke('SendPackage', 'test', '500')
+    InitTcpCli() {
+        this._hubConnection.invoke('InitTcpCli')
     }
 
     public startConnection(): void {
@@ -50,11 +53,19 @@ export class TalkService {
                     this.startConnection();
                 }, 5000);
             });
+        this.GetClientMessage();
     }
 
     private registerOnServerEvents(): void {
         this._hubConnection.on('ConsoleSend', (data: string) => {
             this.messageReceived.emit(data);
         });
+    }
+
+    private GetClientMessage(): void {
+        this._hubConnection.on("DispatchClient", (network, tcpId) => {
+            // if()
+            this.store.dispatch(BotActions.receveidLogs({network}))
+        })
     }
 }
