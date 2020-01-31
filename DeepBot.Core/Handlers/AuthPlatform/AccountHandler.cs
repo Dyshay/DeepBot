@@ -22,6 +22,8 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             account.State = AccountState.CONNECTING;
             account.WelcomeKey = package.Substring(2);
 
+            hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Connexion au serveur d'auth", tcpId), tcpId).Wait();
+
             hub.SendPackage("1.30", tcpId);
 
             // USE THE ACCOUNT AND PASSWORD FROM account
@@ -50,19 +52,21 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 ServerState serverState = (ServerState)byte.Parse(separator[1]);
 
                 //if (id == (int)account.Config.Server)
-                //{
-                //    server.Id = id;
-                //    server.Name = account.Config.Server.ToString();
-                //    server.State = serverState;
-                //    account.Logger.Info($"Le serveur {account.Config.Server} est {account.Game.Server.State}");
+                /// A REVOIR EN DESSOUS
+                if (id == 609)
+                {
+                    server.Id = 609;
+                    server.Name = "Bilby"; // NEED TO USE CFG
+                    server.State = serverState;
+                    hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, $"Le serveur Bilby est {account.Server.State}", tcpId), tcpId).Wait();
 
-                //    if (serverState != ServerState.ONLINE)
-                //        firstTime = false;
-                //}
+                    if (serverState != ServerState.ONLINE)
+                        firstTime = false;
+                }
             }
 
-            //if (!firstTime && server.State == ServerState.ONLINE)
-            hub.SendPackage("Ax", tcpId);
+            if (!firstTime && server.State == ServerState.ONLINE)
+                hub.SendPackage("Ax", tcpId);
         }
 
         [Receiver("AxK")]
@@ -78,7 +82,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 string[] _loc10_ = loc5[counter].Split(',');
                 int serverId = int.Parse(_loc10_[0]);
 
-                if (serverId == account.Server.Id)
+                if (serverId == 609)
                 {
                     if (account.Server.State == ServerState.ONLINE)
                     {
