@@ -15,7 +15,7 @@ namespace DeepBot.CLI.Model
     public class Account
     {
         private HttpClient Client;
-        private Dictionary<short, TcpHandler> Clients;
+        private Dictionary<string, TcpHandler> Clients;
         public TalkHubService TalkingService;
         public string access_token;
         public string ApiKey;
@@ -23,7 +23,7 @@ namespace DeepBot.CLI.Model
 
         public Account()
         {
-            Clients = new Dictionary<short, TcpHandler>();
+            Clients = new Dictionary<string, TcpHandler>();
             Identification = new Login();
         }
 
@@ -66,28 +66,30 @@ namespace DeepBot.CLI.Model
             TalkingService.JoinRoom().Wait();
             TalkingService.PackageBuild += SendPackage;
             TalkingService.ConnexionHandler += DispatchConnect;
-            TalkingService.CreateTcpHandler += CreateTcpHandler;
         }
 
-        private void DispatchConnect(string ip, short port, bool isSwitch, short tcpId)
+        private void DispatchConnect(string ip, int port, bool isSwitch, string tcpId)
         {
-            var TcpClient = Clients[tcpId];
             if (isSwitch)
+            {
+                var TcpClient = Clients[tcpId];
                 TcpClient.Disconnect();
-            TcpClient.Connect(ip, port);
+                TcpClient.Connect(ip, port);
+
+            }
+            else
+            {
+                Clients.TryAdd(tcpId, new TcpHandler(this, tcpId));
+                var TcpClient = Clients[tcpId];
+                TcpClient.Connect(ip, port);
+            }
         }
 
-        private void SendPackage(string package, bool needResponse, short tcpId)
+        private void SendPackage(string package, bool needResponse, string tcpId)
         {
             var TcpClient = Clients[tcpId];
+            Console.WriteLine($"[Bot] {package}");
             TcpClient.SendPackage(package, needResponse);
-        }
-
-        public void CreateTcpHandler()
-        {
-            short tcpId = (short)(Clients.Count + 1);
-            TcpHandler tcp = new TcpHandler(this, tcpId);
-            Clients.TryAdd(tcpId, tcp);
         }
 
         public async Task<bool> Login()

@@ -18,12 +18,14 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { TalkService } from './Services/TalkService';
 import { AuthModule } from './pages/pages/auth/auth.modules';
+import { BotModule } from './pages/pages/bot/bot.modules';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AuthModule,
+    BotModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
