@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using DeepBot.Data.Driver;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
@@ -6,17 +7,24 @@ using System.Text;
 
 namespace DeepBot.Data.Database
 {
-    public class GroupDB
+    public class GroupDB : Document<int>
     {
         [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid GroupId { get; set; }
+        public Guid Id { get; set; }
+        public Guid Fk_Leader { get; set; } 
+        public List<Guid> Fk_Followers { get; set; } 
+        public Guid Fk_Configuration { get; set; } 
+        public Guid Fk_Trajet { get; set; }
+
         [BsonIgnore]
-        public CharacterDB Leader { get; set; }
+        public Character Leader { get; set; } 
         [BsonIgnore]
-        public List<CharacterDB> Followers { get; set; }
-        public Guid LeaderId { get; set; }
-        public List<Guid> FollowersId { get; set; }
-        public Guid AccountId { get; set; }
+        public List<Character> Followers { get; set; }
+        [BsonIgnore]
+        public ConfigGroupDB Config { get; set; }
+        [BsonIgnore]
+        public TrajetDB Trajet { get; set; }
+
         [BsonIgnore]
         public int Prospection { get; set; }
         [BsonIgnore]
