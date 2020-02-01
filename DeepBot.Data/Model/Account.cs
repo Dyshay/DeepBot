@@ -12,35 +12,26 @@ using DeepBot.Data.Model.GameServer;
 
 namespace DeepBot.Data.Database
 {
-    public class AccountDB : Document<int>
+    public class Account
     {
 
-        public Guid AccountId { get; set; } = new Guid();
-        public int MaxCharacter { get; set; } = 5;
+        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
+        public Guid Id { get; set; }
+        public List<Character> Characters { get; set; }
+        public Proxy Proxy { get; set; }
+        public ConfigAccount Config { get; set; }
         public DateTime EndAnakamaSubscribe { get; set; }
         public string AnkamaPseudo { get; set; }
-        [BsonIgnore]
-        public List<CharacterDB> Characters { get; set; }
         public bool isBan { get; set; }
         public DateTime ExpirationDateBan { get; set; }
-        public AutoCreateCharacterConfig AutoCreateCharacterConfig { get; set; }
         public string NickName { get; set; }
         public string Username { get; set; }
-        public TimeSpan ConnectedHour { get; set; } /* total temps de connection sur site */
-
-
-
-
-        public string PrincipalCharacterName { get; set; } = string.Empty;
+        public string Password { get; set; }
         public int ServerId { get; set; }
-
-
-        [BsonIgnore] /* a verif <= serializable mais non stocké */
+        [BsonIgnore]
         public string WelcomeKey { get; set; }
         [BsonIgnore]
         public string AnkamaNickName { get; set; }
-        [BsonIgnore]
-        public string Password { get; set; } = string.Empty;
         [BsonIgnore]
         public string GameTicket { get; set; }
         [BsonIgnore]
@@ -57,7 +48,7 @@ namespace DeepBot.Data.Database
 
         //public TcpClient Connexion { get; set; } <= @Dyshay ? 
         [BsonConstructor]
-        public AccountDB()
+        public Account()
         {
             Server = new Server();
         }

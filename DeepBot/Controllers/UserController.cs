@@ -67,12 +67,24 @@ namespace DeepBot.Controllers
         public async Task<IActionResult> Register(RegisterUserModel model)
         {
             var apiKey = Guid.NewGuid();
+            ApiKey apiKeyDebug = null;
+
+#if DEBUG
+            apiKeyDebug = new ApiKey()
+            {
+                CreationDate = DateTime.Now,
+                EndDate = DateTime.Now.AddYears(1),
+                Id = Guid.NewGuid(),
+                MaxAccount = 99
+            };
+#endif
+
 
             var user = new UserDB()
             {
                 UserName = model.UserName,
                 Email = model.UserEmail,
-                ApiKey = apiKey.EncodeBase64String(),
+                ApiKey = apiKeyDebug
             };
 
             var result = await _userManager.CreateAsync(user, model.UserPassword);
@@ -129,7 +141,7 @@ namespace DeepBot.Controllers
     new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
     new Claim(_options.ClaimsIdentity.RoleClaimType, role),
                             new Claim("UserID", user.Id),
-                            new Claim("ApiKey", user.ApiKey)
+                            new Claim("ApiKey", user.ApiKey.Id.ToString())
 }),
 
                             Expires = DateTime.UtcNow.AddDays(7),
