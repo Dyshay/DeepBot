@@ -1,5 +1,8 @@
 import { EventEmitter, Injectable } from '@angular/core';
-import { HubConnection, HubConnectionBuilder } from '@aspnet/signalr';
+import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/signalr';
+import { Store } from '@ngrx/store';
+import * as fromBot from '../pages/pages/bot/reducers';
+import { BotActions } from '../pages/pages/bot/actions';
 
 @Injectable()
 export class TalkService {
@@ -9,9 +12,9 @@ export class TalkService {
     private connectIsEstablished = false;
     private _hubConnection: HubConnection;
 
-    constructor() {
+    constructor(private store: Store<fromBot.State>) {
         this.createConnection();
-        this.startConnection();
+        // this.startConnection();
     }
 
     sendMessage(message: string) {
@@ -20,38 +23,45 @@ export class TalkService {
 
     private createConnection(): void {
         this._hubConnection = new HubConnectionBuilder()
-            .withUrl("https://localhost:44319/deeptalk")
+            .withUrl("https://localhost:44319/deeptalk", {
+                accessTokenFactory: () => {
+                    return localStorage.getItem('DeepBot');
+                }, skipNegotiation: true, transport: HttpTransportType.WebSockets
+            })
             .build();
     }
 
-    joinRoom() {
-        this._hubConnection.invoke('JoinRoomClient', '500');
+    createConnexion() {
+        this._hubConnection.invoke('CreateConnexion', 'test','test');
     }
 
-    sendPackage() {
-        this._hubConnection.invoke('SendPackage', 'test', '500')
-    }
-
-    private startConnection(): void {
+    public startConnection(): void {
         this._hubConnection
             .start()
             .then(() => {
                 this.connectIsEstablished = true;
                 console.log('Init connection on DeepTalk');
                 this.connectionEstablished.emit(true);
-                this._hubConnection.invoke('JoinRoomClient', '500');
             })
             .catch(err => {
-                console.log('Error on initialize connection with DeepTalk, retrying...');
+                console.log('Error on initialize connection with DeepTalk, retrying...', err);
                 setTimeout(function () {
                     this.startConnection();
                 }, 5000);
             });
+        this.GetClientMessage();
     }
 
     private registerOnServerEvents(): void {
         this._hubConnection.on('ConsoleSend', (data: string) => {
             this.messageReceived.emit(data);
         });
+    }
+
+    private GetClientMessage(): void {
+        this._hubConnection.on("DispatchClient", (network, tcpId) => {
+            // if()
+            this.store.dispatch(BotActions.receveidLogs({network}))
+        })
     }
 }

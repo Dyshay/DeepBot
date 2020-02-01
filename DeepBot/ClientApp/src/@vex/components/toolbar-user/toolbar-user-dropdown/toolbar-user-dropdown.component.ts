@@ -3,10 +3,6 @@ import { MenuItem } from '../interfaces/menu-item.interface';
 import { trackById } from '../../../utils/track-by';
 import icPerson from '@iconify/icons-ic/twotone-person';
 import icSettings from '@iconify/icons-ic/twotone-settings';
-import icAccountCircle from '@iconify/icons-ic/twotone-account-circle';
-import icMoveToInbox from '@iconify/icons-ic/twotone-move-to-inbox';
-import icListAlt from '@iconify/icons-ic/twotone-list-alt';
-import icTableChart from '@iconify/icons-ic/twotone-table-chart';
 import icCheckCircle from '@iconify/icons-ic/twotone-check-circle';
 import icAccessTime from '@iconify/icons-ic/twotone-access-time';
 import icDoNotDisturb from '@iconify/icons-ic/twotone-do-not-disturb';
@@ -14,11 +10,21 @@ import icOfflineBolt from '@iconify/icons-ic/twotone-offline-bolt';
 import icChevronRight from '@iconify/icons-ic/twotone-chevron-right';
 import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import icBusiness from '@iconify/icons-ic/twotone-business';
+import icAccountCircle from '@iconify/icons-ic/twotone-account-circle';
+import icMoveToInbox from '@iconify/icons-ic/twotone-move-to-inbox';
+import icListAlt from '@iconify/icons-ic/twotone-list-alt';
+import icTableChart from '@iconify/icons-ic/twotone-table-chart';
 import icVerifiedUser from '@iconify/icons-ic/twotone-verified-user';
 import icLock from '@iconify/icons-ic/twotone-lock';
 import icNotificationsOff from '@iconify/icons-ic/twotone-notifications-off';
 import { Icon } from '@visurel/iconify-angular';
 import { PopoverRef } from '../../popover/popover-ref';
+import checkCircle from '@iconify/icons-fa-solid/check-circle';
+import exclamationCircle from '@iconify/icons-fa-solid/exclamation-circle';
+import keyIcon from '@iconify/icons-fa-solid/key';
+import * as fromAuth from '../../../../app/pages/pages/auth/reducers';
+import { Store, select } from '@ngrx/store';
+import { AuthActions } from 'src/app/pages/pages/auth/actions';
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -99,18 +105,29 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   activeStatus: OnlineStatus = this.statuses[0];
 
+  isCopy: boolean = false;
+  checkCircle = checkCircle;
   trackById = trackById;
   icPerson = icPerson;
   icSettings = icSettings;
   icChevronRight = icChevronRight;
   icArrowDropDown = icArrowDropDown;
+  exclamationCircle = exclamationCircle;
   icBusiness = icBusiness;
   icVerifiedUser = icVerifiedUser;
   icLock = icLock;
+  keyIcon = keyIcon;
   icNotificationsOff = icNotificationsOff;
 
+  user = this.store.pipe(select(fromAuth.getUser));
+
   constructor(private cd: ChangeDetectorRef,
-              private popoverRef: PopoverRef<ToolbarUserDropdownComponent>) { }
+              private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
+              private store: Store<fromAuth.State>,
+          ) { 
+                this.store.dispatch(AuthActions.getUser());
+
+              }
 
   ngOnInit() {
   }

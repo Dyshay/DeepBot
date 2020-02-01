@@ -169,21 +169,27 @@
 
     <div class="px-1">
       <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
-        <mat-icon [icIcon]="emojioneUS"></mat-icon>
+        <mat-icon [icIcon]="emojioneFR"></mat-icon>
       </button>
     </div>
 
     <div class="px-1">
-      <vex-toolbar-user></vex-toolbar-user>
+      <div *ngIf="(user$ | async) as Account">
+        <vex-toolbar-user [username]="user$ | async"></vex-toolbar-user>
+      </div>
     </div>
 
     <mat-menu #languageMenu="matMenu" overlapTrigger="false" xPosition="before" yPosition="below">
       <button mat-menu-item>
+        <mat-icon [icIcon]="emojioneFR"></mat-icon>
+        <span>Français</span>
+      </button>
+      <button mat-menu-item disabled>
         <mat-icon [icIcon]="emojioneUS"></mat-icon>
         <span>English</span>
       </button>
 
-      <button mat-menu-item>
+      <button mat-menu-item disabled>
         <mat-icon [icIcon]="emojioneDE"></mat-icon>
         <span>German</span>
       </button>

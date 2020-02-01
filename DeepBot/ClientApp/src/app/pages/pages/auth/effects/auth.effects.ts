@@ -3,14 +3,15 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.services';
 import { AuthActions } from '../actions';
 import { User } from 'src/webModel/UserModel';
 import { Account } from '../models/account';
-import { TalkService } from "src/app/service/TalkService";
+import { TalkService } from "src/app/Services/TalkService";
+import { AuthService } from "src/app/services/auth.services";
 
 @Injectable()
 export class AuthEffects {
+    static isConnectedTalker = false;
 
     login$ = createEffect(() =>
         this.actions$.pipe(
@@ -62,7 +63,10 @@ export class AuthEffects {
             ofType(AuthActions.getUserSuccess),
             map(action => action.account),
             tap((account: any) => {
-                this.deeptalk.startConnection();
+                if(!AuthEffects.isConnectedTalker){
+                    this.deeptalk.startConnection();
+                    AuthEffects.isConnectedTalker = true;
+                }
             })
         ),
         { dispatch: false }
