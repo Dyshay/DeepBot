@@ -80,6 +80,7 @@ namespace DeepBot.CLI.Model
         private void SendPackage(string package, bool needResponse, short tcpId)
         {
             var TcpClient = Clients[tcpId];
+            Console.WriteLine($"[Bot] {package}");
             TcpClient.SendPackage(package, needResponse);
         }
 
