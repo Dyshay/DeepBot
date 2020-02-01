@@ -8,11 +8,13 @@ namespace DeepBot.Data.Enums
     {
         CONNECTING,
         CONNECTED,
-        FIGTHING,
+        FIGHTING,
         DISCONNECTED,
-        HARVEST,
+        GATHERING,
         BANK,
-        MOVING,
+        WALKING,
         HEALING,
+        IDLE,
+        DIALOGING
     }
 }

@@ -4,10 +4,10 @@ namespace DeepBot.CLI.Network.Packages
 {
     public class PackageReceiver
     {
-        public static async void Receive(string package, Account acc, short tcpId)
+        public static void Receive(string package, Account acc, string tcpId)
         {
-            System.Console.WriteLine($"[Dofus] {package}");
-            await acc.TalkingService.SendHandlePackageToServer(package, tcpId);
+            System.Console.WriteLine($"[{tcpId} | [Dofus] {package}");
+            acc.TalkingService.SendHandlePackageToServer(package, tcpId).Wait();
         }
     }
 }

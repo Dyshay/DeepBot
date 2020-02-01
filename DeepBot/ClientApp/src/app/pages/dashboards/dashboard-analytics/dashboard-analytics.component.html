@@ -1,1 +1,9 @@
 <div class="ml-5"> test dashboard</div>
+<li *ngFor="let log of logs$ | async">
+    <span>{{log.message}}</span>
+</li>
+
+<button 
+color="primary"
+mat-raised-button
+type="button" (click)="init()">ADD NEW CLIENT</button>
