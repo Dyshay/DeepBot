@@ -13,10 +13,10 @@ using System.Threading.Tasks;
 
 namespace DeepBot.Core.Handlers.AuthPlatform
 {
-    public class AccountHandler
+    public class AccountHandler : IHandler
     {
         [Receiver("HC")]
-        public void GetWelcomeKeyAsync(DeepTalk hub, string package, AccountDB account, short tcpId)
+        public void GetWelcomeKeyAsync(DeepTalk hub, string package, AccountDB account, string tcpId)
         {
             //account dispatch value (connecting)
             account.State = AccountState.CONNECTING;
@@ -32,13 +32,13 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         }
 
         [Receiver("Ad")]
-        public void GetAccountUserName(DeepTalk hub, string package, AccountDB account, short tcpId) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
+        public void GetAccountUserName(DeepTalk hub, string package, AccountDB account, string tcpId) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
 
         [Receiver("Af")]
-        public void GetLoginQueue(DeepTalk hub, string package, AccountDB account, short tcpId) => hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "[File d'attente] Position " + package[2] + "/" + package[4], tcpId), tcpId).Wait();
+        public void GetLoginQueue(DeepTalk hub, string package, AccountDB account, string tcpId) => hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "[File d'attente] Position " + package[2] + "/" + package[4], tcpId), tcpId).Wait();
 
         [Receiver("AH")]
-        public void GetServerState(DeepTalk hub, string package, AccountDB account, short tcpId)
+        public void GetServerState(DeepTalk hub, string package, AccountDB account, string tcpId)
         {
             string[] serverList = package.Substring(2).Split('|');
             Server server = account.Server;
@@ -70,14 +70,14 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         }
 
         [Receiver("AQ")]
-        public void GetSecretQuestion(DeepTalk hub, string package, AccountDB account, short tcpId)
+        public void GetSecretQuestion(DeepTalk hub, string package, AccountDB account, string tcpId)
         {
             if (account.Server.State == ServerState.ONLINE)
                 hub.SendPackage("Ax", tcpId, true);
         }
 
         [Receiver("AxK")]
-        public async void GetServerList(DeepTalk hub, string package, AccountDB account, short tcpId)
+        public async void GetServerList(DeepTalk hub, string package, AccountDB account, string tcpId)
         {
             //AM.Account account = prmClient.Account;
             string[] loc5 = package.Substring(3).Split('|');
@@ -113,17 +113,17 @@ namespace DeepBot.Core.Handlers.AuthPlatform
 
 
         [Receiver("AXEf")]
-        public void NotSubscribe(DeepTalk hub, string package, AccountDB account, short tcpId)
+        public void NotSubscribe(DeepTalk hub, string package, AccountDB account, string tcpId)
         {
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Vous n'êtes pas abonnée", tcpId), tcpId).Wait();
         }
 
         [Receiver("AXK")]
-        public void GetServerWorld(DeepTalk hub, string package, AccountDB account, short tcpId)
+        public void GetServerWorld(DeepTalk hub, string package, AccountDB account, string tcpId)
         {
             account.GameTicket = package.Substring(14);
-            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()));
-            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world", tcpId), tcpId).Wait();
+            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId);
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
         }
     }
 }

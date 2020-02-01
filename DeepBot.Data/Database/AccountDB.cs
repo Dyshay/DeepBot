@@ -52,7 +52,7 @@ namespace DeepBot.Data.Database
         /// CLI Informations attached to account
         /// </summary>
         [BsonIgnore]
-        public short TcpId { get; set; }
+        public string TcpId { get; set; }
 
 
         //public TcpClient Connexion { get; set; } <= @Dyshay ? 
