@@ -35,10 +35,6 @@ export class TalkService {
         this._hubConnection.invoke('CreateConnexion', 'test','test');
     }
 
-    InitTcpCli() {
-        this._hubConnection.invoke('InitTcpCli')
-    }
-
     public startConnection(): void {
         this._hubConnection
             .start()
