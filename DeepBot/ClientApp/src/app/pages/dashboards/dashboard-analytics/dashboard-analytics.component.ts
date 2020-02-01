@@ -111,7 +111,6 @@ export class DashboardAnalyticsComponent implements OnInit {
   }
 
   init(){
-    this.deepTalk.InitTcpCli();
     this.deepTalk.createConnexion();
   }
 
