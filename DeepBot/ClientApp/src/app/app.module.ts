@@ -14,16 +14,18 @@ import { StoreModule } from '@ngrx/store';
 import { ROOT_REDUCERS, metaReducers } from './reducers';
 import { StoreRouterConnectingModule, RouterState } from '@ngrx/router-store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { ROOT_REDUCERS, metaReducers } from './reducers';
-import { AuthEffects } from './Component/auth/effects/auth.effects';
-import { reducers } from './Component/auth/reducers';
-import { AuthModule } from './Component/auth.module';
-import { TalkService } from './service/TalkService';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { TalkService } from './Services/TalkService';
+import { AuthModule } from './pages/pages/auth/auth.modules';
+import { BotModule } from './pages/pages/bot/bot.modules';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
+    AuthModule,
+    BotModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
@@ -47,28 +49,16 @@ import { TalkService } from './service/TalkService';
       name: 'DeepBot',
       logOnly: environment.production
 
-            // In a production build you would want to disable the Store Devtools
-            // logOnly: environment.production,
-        }),
-        EffectsModule.forRoot([]),
-        RouterModule.forRoot([
-            {
-                path: 'login', component: LoginComponent, pathMatch: 'full',
-            },
-            {
-                path: 'register', component: RegisterComponent, pathMatch: 'full',
-            },
-            {
-                path: '', component: HomeComponent, pathMatch: 'full', canActivate: [AuthGuard]
-            }
-        ])
-
-    ],
-    providers: [UserService, {
-        provide: HTTP_INTERCEPTORS,
-        useClass: AuthInterceptor,
-        multi: true
-    }, TalkService],
-    bootstrap: [AppComponent]
+      // In a production build you would want to disable the Store Devtools
+      // logOnly: environment.production,
+    }),
+    EffectsModule.forRoot([]),
+  ],
+  providers: [UserService, {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true
+  }, TalkService],
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

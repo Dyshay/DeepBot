@@ -9,7 +9,6 @@ import { checkRouterChildsData } from '../utils/check-router-childs-data';
 import { DOCUMENT } from '@angular/common';
 import { ConfigService } from '../services/config.service';
 import theme from '../utils/tailwindcss';
-import { TalkService } from 'src/app/service/TalkService';
 
 @Component({
   selector: 'vex-layout',
@@ -56,7 +55,7 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
               private breakpointObserver: BreakpointObserver,
               private layoutService: LayoutService,
               private configService: ConfigService,
-              private router: Router,private hub : TalkService,
+              private router: Router,
               @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit() {
@@ -81,13 +80,13 @@ export class LayoutComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe(() => this.sidenav.close());
   }
 
-  callServerInitTcp(){
-    this.hub.initNewTcp();
-  }
+  // callServerInitTcp(){
+  //   this.hub.initNewTcp();
+  // }
 
-  callAuth(){
-    this.hub.callAuth();
-  }
+  // callAuth(){
+  //   this.hub.callAuth();
+  // }
 
   ngAfterViewInit(): void {
     this.router.events.pipe(
