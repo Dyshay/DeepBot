@@ -15,7 +15,7 @@ namespace DeepBot.CLI.Network.Tcp
     {
         private Socket Socket { get; set; }
         private byte[] Buffer { get; set; }
-        private short TcpId { get; set; }
+        private string TcpId { get; set; }
         private SemaphoreSlim Semaphore { get; set; }
 
         public event Action<string> PacketReceivedEvent;
@@ -24,7 +24,7 @@ namespace DeepBot.CLI.Network.Tcp
         private bool Disposed;
         private Account Account;
 
-        public TcpHandler(Account account, short tcpId)
+        public TcpHandler(Account account, string tcpId)
         {
             Account = account;
             TcpId = tcpId;
@@ -90,7 +90,6 @@ namespace DeepBot.CLI.Network.Tcp
 
                 foreach (var packet in datas.Replace("\x0a", string.Empty).Split('\0').Where(x => x != string.Empty))
                 {
-                    PacketReceivedEvent?.Invoke(packet);
                     PackageReceiver.Receive(packet, Account, TcpId);
                 }
 

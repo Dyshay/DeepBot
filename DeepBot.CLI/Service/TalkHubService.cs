@@ -10,9 +10,8 @@ namespace DeepBot.CLI.Service
     {
         private HubConnection Connection;
 
-        public event Action<string, bool, short> PackageBuild;
-        public event Action<string, short, bool, short> ConnexionHandler;
-        public event Action CreateTcpHandler;
+        public event Action<string, bool, string> PackageBuild;
+        public event Action<string, int, bool, string> ConnexionHandler;
 
         public TalkHubService(string token)
         {
@@ -43,10 +42,9 @@ namespace DeepBot.CLI.Service
         {
             GetPackage();
             InitConnectionTcp();
-            HandleCreateTcp();
         }
 
-        public async Task SendHandlePackageToServer(string package, short tcpId)
+        public async Task SendHandlePackageToServer(string package, string tcpId)
         {
             await Connection.InvokeAsync("ReceivedHandler", package, tcpId);
         }
@@ -56,19 +54,14 @@ namespace DeepBot.CLI.Service
             await Connection.InvokeAsync("JoinRoomCLI");
         }
 
-        public void HandleCreateTcp()
-        {
-            Connection.On("CreateTcp", () => CreateTcpHandler?.Invoke());
-        }
-
         public void InitConnectionTcp()
         {
-            Connection.On<string, short, bool, short>("NewConnection", (ip, port, @switch, tcpId) => ConnexionHandler?.Invoke(ip, port, @switch, tcpId));
+            Connection.On<string, int, bool, string>("NewConnection", (ip, port, @switch, tcpId) => ConnexionHandler?.Invoke(ip, port, @switch, tcpId));
         }
 
         public void GetPackage()
         {
-            Connection.On<string, bool, short>("SendPackage", (c, o, tcpId) => PackageBuild?.Invoke(c, o, tcpId));
+            Connection.On<string, bool, string>("SendPackage", (c, o, tcpId) => PackageBuild?.Invoke(c, o, tcpId));
         }
     }
 }
