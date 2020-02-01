@@ -8,8 +8,9 @@ namespace DeepBot.Data.Enums
     {
         LOG,
         INVENTORY,
-        CHARACTER,
+        GROUPS,
         GUILD,
+        BANK,
         MAP,
     }
 }

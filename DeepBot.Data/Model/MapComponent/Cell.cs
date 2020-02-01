@@ -19,10 +19,11 @@ namespace DeepBot.Data.Model
         public int X { get; set; }
         public int Y { get; set; }
 
-        public static readonly int[] TeleportTexturesSpritesId = { 1030, 1029, 1764, 2298, 745 };
+        private static readonly int[] TeleportTexturesSpritesId = { 1030, 1029, 1764, 2298, 745 };
+        public bool IsWalkable => IsActive && Type != CellTypes.NOT_WALKABLE && !IsInLineOfSight && !IsInteractiveCell;
+        public bool IsTeleportCell => TeleportTexturesSpritesId.Contains(LayerObject1) || TeleportTexturesSpritesId.Contains(LayerObject2);
+        public bool IsInteractiveCell => Type == CellTypes.INTERACTIVE_OBJECT || InteractiveObject != -1;
 
-        public bool IsTeleportCell() => TeleportTexturesSpritesId.Contains(LayerObject1) || TeleportTexturesSpritesId.Contains(LayerObject2);
-        public bool IsInteractiveCell() => Type == CellTypes.INTERACTIVE_OBJECT || InteractiveObject != -1;
-        public bool IsWalkable() => IsActive && Type != CellTypes.NOT_WALKABLE && !IsInLineOfSight && !IsInteractiveCell();
+
     }
 }

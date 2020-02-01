@@ -1,6 +1,7 @@
 ﻿using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage;
 using DeepBot.Data.Database;
+using DeepBot.Data.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -20,7 +21,7 @@ namespace DeepBot.Core.Hubs
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
         private string CliID => Users.FirstOrDefault(c => c.Id == userId).CliConnectionId;
 
-        public void ReceivedHandler(string package, short tcpId)
+        public void ReceivedHandler(string package, string tcpId)
         {
             Receiver.Receive(this, package, Users.FirstOrDefault(c => c.Id == userId).Accounts.FirstOrDefault(c => c.TcpId == tcpId), tcpId);
         }
@@ -49,7 +50,7 @@ namespace DeepBot.Core.Hubs
 
         public async Task CreateConnexion(string userName, string password)
         {
-            short tcpId = (short)(Users.FirstOrDefault(c => c.Id == userId).Accounts.Count + 1);
+            string tcpId = GetTcpId();
 
             Users.FirstOrDefault(c => c.Id == userId)
                 .Accounts.Add(new AccountDB { TcpId = tcpId, Username = userName, Password = password });
@@ -57,7 +58,13 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }
 
-        public async Task DispatchToClient(NetworkMessage network, short tcpId)
+        private string GetTcpId()
+        {
+            Guid tcpId = Guid.NewGuid();
+            return tcpId.EncodeBase64String();
+        }
+
+        public async Task DispatchToClient(NetworkMessage network, string tcpId)
         {
             await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("DispatchClient", network, tcpId);
         }
@@ -69,7 +76,7 @@ namespace DeepBot.Core.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            if (Users.Any(c => c.Id != userId))
+            if (!Users.Select(c => c.Id).Contains(userId))
                 Users.Add(await Manager.FindByIdAsync(userId));
 
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());

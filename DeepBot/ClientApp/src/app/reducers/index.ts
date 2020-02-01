@@ -10,6 +10,7 @@ import {
   import { environment } from '../../environments/environment';
   import * as fromRouter from '@ngrx/router-store';
 import * as fromAuth from '../pages/pages/auth/reducers';
+import * as fromBot from '../pages/pages/bot/reducers';
   
   /**
    * Every reducer module's default export is the reducer function itself. In
@@ -26,7 +27,8 @@ import * as fromAuth from '../pages/pages/auth/reducers';
    */
   export interface State {
     router: fromRouter.RouterReducerState<any>;
-    auth: fromAuth.AuthState
+    auth: fromAuth.AuthState;
+    bot: fromBot.BotState;
   }
   
   /**
@@ -39,7 +41,8 @@ import * as fromAuth from '../pages/pages/auth/reducers';
   >('Root reducers token', {
     factory: () => ({
       router: fromRouter.routerReducer,
-      auth: fromAuth.reducers
+      auth: fromAuth.reducers,
+      bot: fromBot.reducers
     }),
   });
   
