@@ -59,7 +59,7 @@ namespace DeepBot.Data.Database
         [BsonConstructor]
         public AccountDB()
         {
-
+            Server = new Server();
         }
 
 
