@@ -26,12 +26,27 @@ export class CreateGroupComponent implements OnInit {
   groupstep3: FormGroup;
   icDoneAll = icDoneAll;
   phonePrefixOptions = ['+1', '+27', '+44', '+49', '+61', '+91'];
-  characterList: Character[] = [
-    { characterName: 'Teucerius', level: 200, classe: Classe.Cra },
-    { characterName: 'Dyshay', level: 200, classe: Classe.Xelor },
-    { characterName: 'Pedro', level: 200, classe: Classe.Enutrof },
-    { characterName: 'Netfu', level: 45, classe: Classe.Osamodas },
-    { characterName: 'Gobotify', level: 3, classe: Classe.Iop },
+  characterList: Character[] = [{
+    name: "Dyshay",
+    level: 200,
+    breedId: Classe.Cra,
+    id: 1,
+    sex: 0
+  },
+  {
+    name: "Pedro",
+    level: 200,
+    breedId: Classe.Enutrof,
+    id: 2,
+    sex: 0
+  },
+  {
+    name: "Teucerius",
+    level: 200,
+    breedId: Classe.Xelor,
+    id: 3,
+    sex: 0
+  }
   ];
     /** create-group ctor */
   constructor(private fb: FormBuilder) {

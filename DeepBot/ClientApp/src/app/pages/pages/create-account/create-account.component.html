@@ -15,7 +15,7 @@
 
           <mat-form-field>
             <mat-label>Mot de passe du compte</mat-label>
-            <input [type]="inputType" matInput required value="" formControlName="password" >
+            <input [type]="inputType" matInput required value="" formControlName="password">
             <button (click)="togglePassword()" mat-icon-button matSuffix type="button">
               <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
               <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
@@ -26,19 +26,19 @@
           <mat-form-field class="mt-1">
             <mat-label>Serveur</mat-label>
             <mat-select formControlName="server">
-              <mat-option [value] ="1">Arty</mat-option>
-              <mat-option [value] ="2">Ayuto</mat-option>
-              <mat-option [value] ="3">Bilby</mat-option>
-              <mat-option [value] ="4">Clustus</mat-option>
+              <mat-option [value]="1">Arty</mat-option>
+              <mat-option [value]="2">Ayuto</mat-option>
+              <mat-option [value]="3">Bilby</mat-option>
+              <mat-option [value]="4">Clustus</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="mt-2">
             <mat-label>Associer à un groupe existant</mat-label>
-            <mat-select  formControlName="group" >
-              <mat-option *ngFor="let group of groupList" [value]="group.groupId" style="height: 5em !important;">
-                <b>Leader : {{group.leader.characterName}}</b>
-                ( Nbr perso dans groupe : {{group.groupTotal}}, &nbsp; groupe lvl {{group.groupLevel}}, &nbsp;  PP : {{group.groupProspection}})
+            <mat-select formControlName="group">
+              <mat-option *ngFor="let group of groupList" [value]="group.id">
+                <b>Leader : {{group.leader.name}}</b>
+                ( groupetotal : a faire! ,  &nbsp; groupe lvl {{group.level}}, &nbsp;  PP : {{group.prospection}})
               </mat-option>
             </mat-select>
           </mat-form-field>
@@ -51,7 +51,9 @@
           <mat-form-field *ngIf="ischaractersfound" class="mt-2">
             <mat-label>Choisisez votre personnage</mat-label>
             <mat-select formControlName="character">
-              <mat-option *ngFor="let character of characterList" [value]="character.characterName"><b>{{character.characterName}} </b> (Classe : {{character.classe}}, Level : {{character.level}} )</mat-option>
+              <mat-option *ngFor="let character of characterList" [value]="character">
+                <b>{{character.name}} </b> (Classe : {{character.breedId}}, Level : {{character.level}} )
+              </mat-option>
             </mat-select>
           </mat-form-field>
 

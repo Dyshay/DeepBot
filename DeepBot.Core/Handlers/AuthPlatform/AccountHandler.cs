@@ -27,7 +27,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             hub.SendPackage("1.30.14", tcpId);
 
             // USE THE ACCOUNT AND PASSWORD FROM account
-            hub.SendPackage($"{account.Username}\n{Hash.EncryptPassword(account.Password, account.WelcomeKey)}", tcpId);
+            hub.SendPackage($"{account.AccountName}\n{Hash.EncryptPassword(account.Password, account.WelcomeKey)}", tcpId);
             hub.SendPackage($"Af", tcpId);
         }
 

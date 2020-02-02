@@ -3,6 +3,7 @@ using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
+using DeepBot.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
