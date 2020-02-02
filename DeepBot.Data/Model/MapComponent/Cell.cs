@@ -7,7 +7,7 @@ namespace DeepBot.Data.Model
 {
     public class Cell
     {
-        public short CellId { get; set; }
+        public short Id { get; set; }
         public bool IsActive { get; set; }
         public CellTypes Type { get; set; }
         public bool IsInLineOfSight { get; set; }

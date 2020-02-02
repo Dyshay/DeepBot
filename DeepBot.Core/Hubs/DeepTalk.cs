@@ -29,7 +29,7 @@ namespace DeepBot.Core.Hubs
         public void JoinRoomCLI()
         {
             Users.FirstOrDefault(c => c.Id == userId).CliConnectionId = Context.ConnectionId;
-            Users.FirstOrDefault(c => c.Id == userId).Accounts = new List<AccountDB>();
+            Users.FirstOrDefault(c => c.Id == userId).Accounts = new List<Account>();
         }
 
         public async Task JoinRoomClient()
@@ -53,7 +53,7 @@ namespace DeepBot.Core.Hubs
             string tcpId = GetTcpId();
 
             Users.FirstOrDefault(c => c.Id == userId)
-                .Accounts.Add(new AccountDB { TcpId = tcpId, Username = userName, Password = password });
+                .Accounts.Add(new Account { TcpId = tcpId, Username = userName, Password = password });
 
             await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }
