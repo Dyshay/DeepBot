@@ -132,6 +132,8 @@ namespace DeepBot
             //Launch Handler Core
             Receiver.Initialize();
 
+            //DataInit.SeedAndCreateRoles();
+
             app.UseRouting();
             //Identity
             app.UseAuthentication();

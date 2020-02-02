@@ -110,8 +110,4 @@ export class DashboardAnalyticsComponent implements OnInit {
     }, 3000);
   }
 
-  init(){
-    this.deepTalk.createConnexion();
-  }
-
 }
