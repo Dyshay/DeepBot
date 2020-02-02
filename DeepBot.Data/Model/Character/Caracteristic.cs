@@ -8,7 +8,7 @@ namespace DeepBot.Data.Model.Character
     {
         public double ExperienceActual { get; set; } = 0;
         public double ExperienceMinLevel { get; set; } = 0;
-        public double ExperienceNextLevel { get; set; } = 0;
+        public double ExperienceLevelUp { get; set; } = 0;
         public int EnergyActual { get; set; } = 0;
         public int EnergyMax { get; set; } = 0;
         public int VitalityActual { get; set; } = 0;

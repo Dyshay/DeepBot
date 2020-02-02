@@ -9,21 +9,28 @@ using System.Text;
 
 namespace DeepBot.Data.Database
 {
-    public class CharacterDB
+    public class Character
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid CharacterId { get; set; }
-        public Guid AccountId { get; set; } /* FK */
-        public int CharacterAnkamaId { get; set; }
+        public int Id { get; set; } /* ANKAMA ID */ 
+        public Guid Fk_IA { get; set; }
+        public Guid Fk_Group { get; set; }
+        public Guid Fk_Configuration { get; set; }
+        public Guid Fk_Trajet { get; set; }
         public string CharacterName { get; set; }
-        public TimeSpan ConnectedHour { get; set; } /* total temps de connection sur character */
+        public byte CharacterLevel { get; set; }
+        public byte CharacterBreedId { get; set; }
+
 
         [BsonIgnore]
-        public byte CharacterLevel { get; set; }
+        public TrajetDB Trajet { get; set; }
+        [BsonIgnore]
+        public ConfigCharacterDB Config { get; set; }
+        [BsonIgnore]
+        public GroupDB Group { get; set; }
+        [BsonIgnore]
+        public IADB IA { get; set; }
         [BsonIgnore]
         public byte CharacterSex { get; set; }
-        [BsonIgnore]
-        public byte CharacterBreedId { get; set; }
         [BsonIgnore]
         public int CharacterKamas { get; set; }
         [BsonIgnore]
@@ -45,7 +52,7 @@ namespace DeepBot.Data.Database
         [BsonIgnore]
         public GroupDB CharacterGroup { get; set; }
         [BsonIgnore]
-        public AccountDB CharacterAccount { get; set; }
+        public Account CharacterAccount { get; set; }
 
         [BsonIgnore]
         private CharacterState _State;
@@ -71,7 +78,7 @@ namespace DeepBot.Data.Database
 
 
         [BsonConstructor]
-        public CharacterDB(AccountDB account)
+        public Character(Account account)
         {
 
         }

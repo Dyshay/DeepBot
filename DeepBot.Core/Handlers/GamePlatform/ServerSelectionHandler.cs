@@ -12,17 +12,17 @@ namespace DeepBot.Core.Handlers.GamePlatform
     public class ServerSelectionHandler : IHandler
     {
         [Receiver("HG")]
-        public void WelcomeGame(DeepTalk hub, string package, AccountDB account, string tcpId) => hub.SendPackage($"AT{account.GameTicket}", tcpId);
+        public void WelcomeGame(DeepTalk hub, string package, Account account, string tcpId) => hub.SendPackage($"AT{account.GameTicket}", tcpId);
 
         [Receiver("ATK0")]
-        public void ResultServerSelection(DeepTalk hub, string package, AccountDB account, string tcpId)
+        public void ResultServerSelection(DeepTalk hub, string package, Account account, string tcpId)
         {
             hub.SendPackage("Ak0", tcpId);
             hub.SendPackage("AV", tcpId);
         }
         
         [Receiver("AV0")]
-        public void GetListCharacters(DeepTalk hub, string package, AccountDB account, string tcpId)
+        public void GetListCharacters(DeepTalk hub, string package, Account account, string tcpId)
         {
             hub.SendPackage("Ages", tcpId);
             hub.SendPackage("AL", tcpId);
@@ -30,7 +30,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ALK")]
-        public void SelectCharacter(DeepTalk hub, string package, AccountDB account, string tcpId)
+        public void SelectCharacter(DeepTalk hub, string package, Account account, string tcpId)
         {
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
@@ -54,10 +54,10 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("GCK")]
-        public void ConnectPackageHandle(DeepTalk hub, string package, AccountDB account, string tcpId) => hub.SendPackage("GI", tcpId);
+        public void ConnectPackageHandle(DeepTalk hub, string package, Account account, string tcpId) => hub.SendPackage("GI", tcpId);
 
         [Receiver("ASK")]
-        public void SelectedCharacterPackageHandle(DeepTalk hub, string package, AccountDB account, string tcpId)
+        public void SelectedCharacterPackageHandle(DeepTalk hub, string package, Account account, string tcpId)
         {
             string[] splittedData = package.Substring(4).Split('|');
             //TODO ADD Dispatch to AccountDB value
