@@ -1,4 +1,4 @@
-﻿using DeepBot.Data.Model.Character;
+﻿using DeepBot.Data.Model.CharacterInfo;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -1,5 +1,4 @@
-﻿using DeepBot.Data.Model;
-using DeepBot.Data.Model.Character;
+﻿using DeepBot.Data.Database;
 using DeepBot.Data.Model.MapComponent;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
@@ -7,8 +6,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DeepBot.Data.Database
+namespace DeepBot.Data.Model.CharacterInfo
 {
+
     public class Character
     {
         public int Id { get; set; } /* ANKAMA ID */ 
@@ -16,9 +16,9 @@ namespace DeepBot.Data.Database
         public Guid Fk_Group { get; set; }
         public Guid Fk_Configuration { get; set; }
         public Guid Fk_Trajet { get; set; }
-        public string CharacterName { get; set; }
-        public byte CharacterLevel { get; set; }
-        public byte CharacterBreedId { get; set; }
+        public string Name { get; set; }
+        public byte Level { get; set; }
+        public int BreedId { get; set; }
 
 
         [BsonIgnore]
@@ -26,33 +26,31 @@ namespace DeepBot.Data.Database
         [BsonIgnore]
         public ConfigCharacterDB Config { get; set; }
         [BsonIgnore]
-        public GroupDB Group { get; set; }
-        [BsonIgnore]
         public IADB IA { get; set; }
         [BsonIgnore]
-        public byte CharacterSex { get; set; }
+        public byte Sex { get; set; }
         [BsonIgnore]
-        public int CharacterKamas { get; set; }
+        public int Kamas { get; set; }
         [BsonIgnore]
-        public int CharacterAvailableCharactericsPoints { get; set; }
+        public int AvailableCharactericsPts { get; set; }
         [BsonIgnore]
-        public int CharacterAvailableSpellPoints { get; set; }
+        public int AvailableSpellPts { get; set; }
         [BsonIgnore]
-        public Cell CharacterCell { get; set; }
+        public Cell Cell { get; set; }
         [BsonIgnore]
-        public List<Spell> CharacterSpells { get; set; }
+        public List<Spell> Spells { get; set; }
         [BsonIgnore]
-        public Caracteristic CharacterCharacteristic { get; set; }
+        public Caracteristic Characteristic { get; set; }
         [BsonIgnore]
-        public Inventory CharacterInventory { get; set; }
+        public Inventory Inventory { get; set; }
         [BsonIgnore]
-        public List<Job> CharacterJobs { get; set; }
+        public List<Job> Jobs { get; set; }
         [BsonIgnore]
-        public Map CharacterMap { get; set; }
+        public Map  Map { get; set; }
         [BsonIgnore]
-        public GroupDB CharacterGroup { get; set; }
+        public GroupDB Group { get; set; }
         [BsonIgnore]
-        public Account CharacterAccount { get; set; }
+        public Account Account { get; set; }
 
         [BsonIgnore]
         private CharacterState _State;
@@ -65,9 +63,9 @@ namespace DeepBot.Data.Database
         //[BsonIgnore]
         //public G.Game Game { get; set; }
         [BsonIgnore]
-        public bool HasGroup => CharacterGroup != null;
+        public bool HasGroup => Group != null;
         [BsonIgnore]
-        public bool IsGroupLeader => !HasGroup || CharacterGroup.Leader == this;
+        public bool IsGroupLeader => !HasGroup || Group.Leader == this;
 
         public event Action CharacterStateUpdate;
         public event Action CharacterSelected;
@@ -77,11 +75,7 @@ namespace DeepBot.Data.Database
         public event Action JobsUpdate;
 
 
-        [BsonConstructor]
-        public Character(Account account)
-        {
 
-        }
     }
 
 

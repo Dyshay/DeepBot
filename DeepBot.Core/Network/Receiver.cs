@@ -1,6 +1,7 @@
 ﻿using DeepBot.Core.Handlers;
 using DeepBot.Core.Hubs;
-using DeepBot.Data.Database;
+using DeepBot.Data.Model;
+using DeepBot.Data.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;

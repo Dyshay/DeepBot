@@ -4,6 +4,8 @@ using DeepBot.ControllersModel;
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Data.Database;
+using DeepBot.Data.Model;
+using DeepBot.Data.Model.CharacterInfo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson.Serialization;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -41,6 +44,12 @@ namespace DeepBot
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            /* object nested */ 
+            BsonClassMap.RegisterClassMap<Account>();
+            BsonClassMap.RegisterClassMap<Character>();
+            BsonClassMap.RegisterClassMap<Proxy>();
+            BsonClassMap.RegisterClassMap<ConfigAccount>();
 
             services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
             {

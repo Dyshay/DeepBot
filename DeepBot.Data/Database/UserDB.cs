@@ -17,15 +17,16 @@ namespace DeepBot.Data.Database
             Logins = new List<IdentityUserLogin<string>>();
             Tokens = new List<IdentityUserToken<string>>();
             RecoveryCodes = new List<TwoFactorRecoveryCode>();
+            Accounts = new List<Account>();
         }
         public List<Account> Accounts { get; set; }
         public ApiKey ApiKey { get; set; }
         public ConfigUser Config { get; set; }
-        public ConfigUser MyProperty { get; set; }
         public string AddressIP { get; set; }
         public short AppCliOnline { get; set; }
         [BsonIgnore]
         public string CliConnectionId { get; set; }
 
     }
+ 
 }

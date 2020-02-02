@@ -1,6 +1,7 @@
 import { props, createAction } from '@ngrx/store';
-import { Account } from '../models/account';
-import { User } from 'src/webModel/UserModel';
+import { Account } from '../../../../../webModel/Account';
+import { User } from '../../../../../webModel/User';
+
 
 export const loginSuccess = createAction('[AUTH/LOGIN] Login Success', props<{user: any}>());
 export const login = createAction('[AUTH/LOGIN] Login', props<{user: User}>());

@@ -24,6 +24,17 @@ export class NavigationService {
     this.items.push(item);
   }
 
+  //addItemToGroup(item: NavigationLink,item2:NavigationDropdown) {
+    
+  //}
+
+  //createGroup(item: NavigationDropdown) {
+  //  this.items.push(item);
+
+  //}
+
+  
+
   triggerOpenChange(item: NavigationDropdown) {
     this._openChangeSubject.next(item);
   }
