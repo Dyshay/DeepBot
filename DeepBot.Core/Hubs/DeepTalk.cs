@@ -54,7 +54,7 @@ namespace DeepBot.Core.Hubs
             string tcpId = GetTcpId();
 
             Users.FirstOrDefault(c => c.Id == userId)
-                .Accounts.Append(new Account { TcpId = tcpId, AccountName = userName, Password = password });
+                .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password });
 
             await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }

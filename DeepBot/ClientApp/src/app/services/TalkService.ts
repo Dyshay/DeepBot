@@ -31,8 +31,9 @@ export class TalkService {
             .build();
     }
 
-    createConnexion() {
-        this._hubConnection.invoke('CreateConnexion', 'test','test');
+    createConnexionBot(accountName, accountPassword) {
+        console.log(accountName);
+        this._hubConnection.invoke('CreateConnexion', accountName, accountPassword);
     }
 
     public startConnection(): void {
@@ -61,7 +62,7 @@ export class TalkService {
     private GetClientMessage(): void {
         this._hubConnection.on("DispatchClient", (network, tcpId) => {
             // if()
-            this.store.dispatch(BotActions.receveidLogs({network}))
+            this.store.dispatch(BotActions.receveidLogs({ network }))
         })
     }
 }

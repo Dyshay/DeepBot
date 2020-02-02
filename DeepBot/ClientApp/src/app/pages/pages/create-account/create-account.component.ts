@@ -13,6 +13,7 @@ import { Account } from '../../../../webModel/Account';
 import { AccountState } from '../../../../webModel/Enum/AccountState';
 import { AccountService } from '../auth/services/account.service';
 import { environment } from '../../../../environments/environment';
+import { TalkService } from 'src/app/Services/TalkService';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -102,7 +103,7 @@ export class CreateAccountComponent implements OnInit{
   icVisibilityOff = icVisibilityOff;
   icMoreVert = icMoreVert;
     /** create-account ctor */
-  constructor(private navigationService: NavigationService, private fb: FormBuilder, private accountService: AccountService, private http: HttpClient) {
+  constructor(private navigationService: NavigationService, private fb: FormBuilder, private accountService: AccountService, private http: HttpClient, private deeptalk: TalkService) {
 
   }
 
@@ -134,6 +135,7 @@ export class CreateAccountComponent implements OnInit{
        // Apelle de la liste des perso sur le serv au client et renseigné les infos ci dessous
     this.accountCreated.ankamaPseudo = "";
     this.accountCreated.endAnakamaSubscribe = new Date();
+    this.deeptalk.createConnexionBot(this.form.controls["accountName"].value, this.form.controls["password"].value);
 
     this.ischaractersfound = true;
 
