@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import * as fromAuth from '../reducers';
 import { AuthActions } from '../actions';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
-import { User } from '../../../../../webModel/UserModel';
+import { User } from '../../../../../webModel/User';
 import { environment } from '../../../../../environments/environment';
 
 const httpOptions = {

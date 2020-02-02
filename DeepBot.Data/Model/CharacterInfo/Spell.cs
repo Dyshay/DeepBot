@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.Json;
 
-namespace DeepBot.Data.Model.Character
+namespace DeepBot.Data.Model.CharacterInfo
 {
     public class Spell
     {

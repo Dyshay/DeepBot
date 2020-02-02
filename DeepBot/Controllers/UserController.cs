@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 
 namespace DeepBot.Controllers
 {
@@ -28,13 +29,15 @@ namespace DeepBot.Controllers
         private SignInManager<UserDB> _signInManager;
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
+        readonly IMongoCollection<UserDB> _userCollection;
 
-        public UserController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager)
+        public UserController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
+            _userCollection = userCollection;
         }
 
 
@@ -57,6 +60,23 @@ namespace DeepBot.Controllers
 
             return user;
 
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(UserDB user)
+        {
+            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+
+            return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var user = await _userCollection.DeleteOneAsync(x => x.Id == id);
+            return null;
         }
 
 

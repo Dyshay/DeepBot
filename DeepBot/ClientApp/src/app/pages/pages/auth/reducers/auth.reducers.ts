@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { AuthActions } from '../actions';
-import { Account } from '../models/account';
+import { Account } from '../../../../../webModel/Account';
+
 
 export interface State {
     account: Account | null;
