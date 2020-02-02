@@ -5,9 +5,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Store, select } from '@ngrx/store';
 import * as fromAuth from '../reducers';
 import * as fromRoot from '../reducers';
-import { User } from 'src/webModel/UserModel';
 import { environment } from './../../environments/environment';
-import { Account } from './../../webModel/Account';
+import { Account } from '../../webModel/Account';
+import { User } from '../../webModel/User';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })

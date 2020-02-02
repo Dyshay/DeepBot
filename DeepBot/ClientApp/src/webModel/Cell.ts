@@ -1,5 +1,5 @@
 import { Classe } from './Enum/Classe';
-import { CellTypes } from './Enum/AccountState';
+import { CellTypes } from './Enum/CellTypes';
 
 export class Cell {
   id: string;

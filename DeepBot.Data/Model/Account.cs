@@ -9,15 +9,18 @@ using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model.GameServer;
+using DeepBot.Data.Model.CharacterInfo;
 
-namespace DeepBot.Data.Database
+namespace DeepBot.Data.Model
 {
+
     public class Account
     {
 
         [BsonId(IdGenerator = typeof(CombGuidGenerator))]
         public Guid Id { get; set; }
-        public List<Character> Characters { get; set; }
+        //public List<Character> Characters { get; set; }
+        public Character CurrentCharacter { get; set; }
         public Proxy Proxy { get; set; }
         public ConfigAccount Config { get; set; }
         public DateTime EndAnakamaSubscribe { get; set; }
@@ -50,7 +53,6 @@ namespace DeepBot.Data.Database
         [BsonConstructor]
         public Account()
         {
-            Server = new Server();
         }
 
 

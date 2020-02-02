@@ -2,6 +2,7 @@
 using DeepBot.Core.Network.HubMessage;
 using DeepBot.Data.Database;
 using DeepBot.Data.Extensions;
+using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -53,7 +54,7 @@ namespace DeepBot.Core.Hubs
             string tcpId = GetTcpId();
 
             Users.FirstOrDefault(c => c.Id == userId)
-                .Accounts.Add(new Account { TcpId = tcpId, Username = userName, Password = password });
+                .Accounts.Append(new Account { TcpId = tcpId, AccountName = userName, Password = password });
 
             await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
         }

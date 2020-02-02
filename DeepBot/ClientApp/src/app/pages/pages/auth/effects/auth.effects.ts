@@ -4,8 +4,8 @@ import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthActions } from '../actions';
-import { User } from 'src/webModel/UserModel';
-import { Account } from '../models/account';
+import { Account } from '../../../../../webModel/Account';
+import { User } from '../../../../../webModel/User';
 import { TalkService } from "src/app/Services/TalkService";
 import { AuthService } from "src/app/services/auth.services";
 

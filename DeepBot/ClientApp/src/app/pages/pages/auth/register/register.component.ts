@@ -5,7 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
-import { User } from '../../../../../webModel/UserModel';
+import { User } from '../../../../../webModel/User';
 import { environment } from '../../../../../environments/environment';
 
 const httpOptions = {

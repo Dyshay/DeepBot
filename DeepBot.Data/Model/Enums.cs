@@ -461,4 +461,16 @@ namespace DeepBot.Data.Model
         RIGHT,
     }
     #endregion
+
+    #region Classe
+    public enum Classe
+    {
+        Cra  =0,
+        Enutrof =1,
+        Osamodas = 2,
+        Iop = 3,
+        Xelor = 4,
+    }
+
+    #endregion
 }

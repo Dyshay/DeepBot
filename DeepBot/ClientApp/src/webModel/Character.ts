@@ -8,27 +8,28 @@ import { Spell } from './Spell';
 import { Caracteristic } from './Caracteristic';
 import { Inventory } from './Inventory';
 import { Job } from './Job';
+import { CharacterMap } from './CharacterMap';
 
 export class Character {
-  id: string;
-  CharacterName: string;
-  CharacterLevel: number;
-  CharacterBreedId: number;
+  id: number;
+  name: string;
+  level: number;
+  breedId: number;
   sex: number;
-  kamas: number;
-  availableCharactericsPts: number;
-  availableSpellPts: number;
-  cell: Cell;
-  trajet: Trajet;
-  config: ConfigCharacter;
-  group: Group;
-  ia: IA;
-  spells: Spell[];
-  caracteristic: Caracteristic;
-  inventory: Inventory;
-  jobs: Job[];
-  map: CharacterMap;
-
+  kamas?: number;
+  fk_Group?: string;
+  availableCharactericsPts?: number;
+  availableSpellPts?: number;
+  cell?: Cell;
+  trajet?: Trajet;
+  config?: ConfigCharacter;
+  group?: Group;
+  ia?: IA;
+  spells?: Spell[];
+  caracteristic?: Caracteristic;
+  inventory?: Inventory;
+  jobs?: Job[];
+  map?: CharacterMap;
 }
 
 
