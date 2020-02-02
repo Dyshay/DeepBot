@@ -11,14 +11,11 @@ namespace DeepBot.Data.Database
 {
     public class Character
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid Id { get; set; }
+        public int Id { get; set; } /* ANKAMA ID */ 
         public Guid Fk_IA { get; set; }
         public Guid Fk_Group { get; set; }
         public Guid Fk_Configuration { get; set; }
         public Guid Fk_Trajet { get; set; }
-        public int MyProperty { get; set; }
-        public int CharacterAnkamaId { get; set; }
         public string CharacterName { get; set; }
         public byte CharacterLevel { get; set; }
         public byte CharacterBreedId { get; set; }

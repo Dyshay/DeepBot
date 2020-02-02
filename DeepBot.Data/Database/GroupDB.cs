@@ -15,6 +15,8 @@ namespace DeepBot.Data.Database
         public List<Guid> Fk_Followers { get; set; } 
         public Guid Fk_Configuration { get; set; } 
         public Guid Fk_Trajet { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
 
         [BsonIgnore]
         public Character Leader { get; set; } 
