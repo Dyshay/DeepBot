@@ -8,6 +8,14 @@ import { Character } from '../../../../webModel/Character';
 import { Classe } from '../../../../webModel/Enum/Classe';
 import { fadeInUp400ms } from '../../../../@vex/animations/fade-in-up.animation';
 import { Group } from '../../../../webModel/Group';
+import { HttpHeaders } from '@angular/common/http';
+
+const httpOptions = {
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+};
+
+
+
 
 @Component({
     selector: 'app-create-account',

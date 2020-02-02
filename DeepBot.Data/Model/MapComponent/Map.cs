@@ -83,7 +83,7 @@ namespace DeepBot.Data.Model.MapComponent
 
             Cell cell = new Cell()
             {
-                CellId = cellId,
+                Id = cellId,
                 Type = (CellTypes)((cellInformations[2] & 56) >> 3),
                 IsActive = (cellInformations[0] & 32) >> 5 != 0,
                 IsInLineOfSight = (cellInformations[0] & 1) != 1,

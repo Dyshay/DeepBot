@@ -137,12 +137,12 @@ namespace DeepBot.Controllers
                         tokenDescriptor = new SecurityTokenDescriptor
                         {
                             Subject = new ClaimsIdentity(new Claim[]
-{
-    new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
-    new Claim(_options.ClaimsIdentity.RoleClaimType, role),
-                            new Claim("UserID", user.Id),
-                            new Claim("ApiKey", user.ApiKey.Id.ToString())
-}),
+                                {
+                                    new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
+                                    new Claim(_options.ClaimsIdentity.RoleClaimType, role),
+                                    new Claim("UserID", user.Id),
+                                    new Claim("ApiKey", user.ApiKey.Id.ToString())
+                                }),
 
                             Expires = DateTime.UtcNow.AddDays(7),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)

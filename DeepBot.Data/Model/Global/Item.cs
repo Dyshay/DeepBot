@@ -7,8 +7,8 @@ namespace DeepBot.Data.Model.Global
 {
     public class Item
     {
-        public uint Id { get; set; }
-        public int GuidItem { get; set; }
+        public uint IdInventory { get; set; }
+        public int IdModel { get; set; }
         public string Name { get; set; }
         public short Level { get; set; }
         public ItemTypeEnum Type { get; set; }
@@ -19,7 +19,7 @@ namespace DeepBot.Data.Model.Global
         public int EstimedPrice { get; set; }
         public List<Effect> Effects { get; set; }
         public bool IsEquippable => IsEquippabled();
-        public Pet Pet => GetPet(Id); /* EXCLURE MONTURE */
+        public Pet Pet => GetPet(IdInventory); /* EXCLURE MONTURE */
 
         
 

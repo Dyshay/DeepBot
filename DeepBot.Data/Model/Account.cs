@@ -25,7 +25,7 @@ namespace DeepBot.Data.Database
         public bool isBan { get; set; }
         public DateTime ExpirationDateBan { get; set; }
         public string NickName { get; set; }
-        public string Username { get; set; }
+        public string AccountName { get; set; }
         public string Password { get; set; }
         public int ServerId { get; set; }
         [BsonIgnore]
