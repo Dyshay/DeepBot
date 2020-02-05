@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
@@ -35,7 +36,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ALK")]
-        public void SelectCharacter(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public async Task SelectCharacter(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
         {
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
@@ -48,6 +49,11 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 int id = int.Parse(_loc11_[0]);
                 string characterName = _loc11_[1];
                 // STOP IF isScan HERE :  send characters data 
+                await hub.CallCheck(tcpId);
+                if (DeepTalk.IsScans[tcpId])
+                {
+
+                }
                 byte Level = byte.Parse(_loc11_[3]);
                 short model = short.Parse(_loc11_[4]);
                 characters.Add(new Character() { BreedId = model, Id = id, Name = characterName, Level = Level });

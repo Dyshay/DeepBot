@@ -33,7 +33,7 @@ export class TalkService {
 
     createConnexionBot(accountName, accountPassword,isScan) {
         console.log(accountName);
-        this._hubConnection.invoke('CreateConnexion', accountName, accountPassword);
+        this._hubConnection.invoke('CreateConnexion', accountName, accountPassword, isScan);
     }
 
     public startConnection(): void {

@@ -68,6 +68,12 @@ namespace DeepBot.CLI.Model
             TalkingService.PackageBuild += SendPackage;
             TalkingService.ConnexionHandler += DispatchConnect;
             TalkingService.DisconnectHandler += Disconnect;
+            TalkingService.CheckScan += HandleScanCheck;
+        }
+
+        private void HandleScanCheck(string tcpId)
+        {
+            TalkingService.CallCallBackCheck(tcpId, IsScan);
         }
 
         private void DispatchConnect(string ip, int port, bool isSwitch, string tcpId,bool _isScan=false)
