@@ -31,21 +31,15 @@ namespace DeepBot.Data.Model
         public string AccountName { get; set; }
         public string Password { get; set; }
         public int ServerId { get; set; }
-        [BsonIgnore]
         public string WelcomeKey { get; set; }
-        [BsonIgnore]
         public string AnkamaNickName { get; set; }
-        [BsonIgnore]
         public string GameTicket { get; set; }
-        [BsonIgnore]
         public AccountState State { get; set; } = AccountState.DISCONNECTED;
-        [BsonIgnore]
         public Server Server { get; set; }
 
         /// <summary>
         /// CLI Informations attached to account
         /// </summary>
-        [BsonIgnore]
         public string TcpId { get; set; }
 
 

@@ -18,14 +18,14 @@ namespace DeepBot.Core.Hubs
     [Authorize]
     public class DeepTalk : Hub
     {
-        private UserManager<UserDB> Manager;
+        private readonly UserManager<UserDB> Manager;
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
         private Task<UserDB> UserDB => Manager.FindByIdAsync(userId);
         private string CliID => Manager.FindByIdAsync(userId).Result.CliConnectionId;
+        public static Dictionary<string, bool> IsScans = new Dictionary<string, bool>();
+        public readonly IMongoCollection<UserDB> _userCollection;
 
-        readonly IMongoCollection<UserDB> _userCollection;
-
-        public async void ReceivedHandler(string package, string tcpId)
+        public async Task ReceivedHandler(string package, string tcpId)
         {
             var CurrentUser = await UserDB;
             Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
@@ -55,7 +55,7 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("CreateTcp");
         }
 
-        public async Task CreateConnexion(string userName, string password,bool isScan=false)
+        public async Task CreateConnexion(string userName, string password, bool isScan = false)
         {
             string tcpId = GetTcpId();
 
@@ -74,6 +74,11 @@ namespace DeepBot.Core.Hubs
             return tcpId.EncodeBase64String();
         }
 
+        public void ScanCallBack(bool isScan, string tcpId)
+        {
+            IsScans.Add(tcpId, isScan);
+        }
+
         public async Task DisconnectCli(string tcpId)
         {
             await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
@@ -84,6 +89,11 @@ namespace DeepBot.Core.Hubs
             await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("DispatchClient", network, tcpId);
         }
 
+        public async Task CallCheck(string tcpId)
+        {
+            await Clients.Client(userId).SendAsync("CheckCliScan", tcpId);
+        }
+
         private string GetApiKey()
         {
             return Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
@@ -91,9 +101,6 @@ namespace DeepBot.Core.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            if (!Users.Select(c => c.Id).Contains(userId))
-                Users.Add(await Manager.FindByIdAsync(userId));
-
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
