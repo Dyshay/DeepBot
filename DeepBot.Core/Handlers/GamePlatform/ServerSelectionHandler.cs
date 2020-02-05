@@ -4,8 +4,11 @@ using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
+using Microsoft.AspNetCore.Identity;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DeepBot.Core.Handlers.GamePlatform
@@ -13,17 +16,17 @@ namespace DeepBot.Core.Handlers.GamePlatform
     public class ServerSelectionHandler : IHandler
     {
         [Receiver("HG")]
-        public void WelcomeGame(DeepTalk hub, string package, Account account, string tcpId) => hub.SendPackage($"AT{account.GameTicket}", tcpId);
+        public void WelcomeGame(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) => hub.SendPackage($"AT{user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket}", tcpId);
 
         [Receiver("ATK0")]
-        public void ResultServerSelection(DeepTalk hub, string package, Account account, string tcpId)
+        public void ResultServerSelection(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.SendPackage("Ak0", tcpId);
             hub.SendPackage("AV", tcpId);
         }
-        
+
         [Receiver("AV0")]
-        public void GetListCharacters(DeepTalk hub, string package, Account account, string tcpId)
+        public void GetListCharacters(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.SendPackage("Ages", tcpId);
             hub.SendPackage("AL", tcpId);
@@ -31,7 +34,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ALK")]
-        public void SelectCharacter(DeepTalk hub, string package, Account account, string tcpId)
+        public void SelectCharacter(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
         {
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
@@ -55,15 +58,16 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("GCK")]
-        public void ConnectPackageHandle(DeepTalk hub, string package, Account account, string tcpId) => hub.SendPackage("GI", tcpId);
+        public void ConnectPackageHandle(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager) => hub.SendPackage("GI", tcpId);
 
         [Receiver("ASK")]
-        public void SelectedCharacterPackageHandle(DeepTalk hub, string package, Account account, string tcpId)
+        public void SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             string[] splittedData = package.Substring(4).Split('|');
             //TODO ADD Dispatch to AccountDB value
 
-            account.State = AccountState.IDLE;
+            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = AccountState.IDLE;
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }
     }
