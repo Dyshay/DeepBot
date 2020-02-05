@@ -25,3 +25,4 @@ export const selectBotStatusState = createSelector(
 );
 
 export const getLogs = createSelector(selectBotStatusState, fromBot.getLogs);
+export const getCharacters = createSelector(selectBotStatusState, fromBot.getCharacters);

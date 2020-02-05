@@ -5,7 +5,7 @@ using System.Text;
 
 namespace DeepBot.Data.Model
 {
-    public class Cell
+    public class MapCell
     {
         public short Id { get; set; }
         public bool IsActive { get; set; }

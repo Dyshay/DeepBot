@@ -19,7 +19,7 @@ namespace DeepBot.Data.Model
 
         [BsonId(IdGenerator = typeof(CombGuidGenerator))]
         public Guid Id { get; set; }
-        //public List<Character> Characters { get; set; }
+        public List<Character> Characters { get; set; }
         public Character CurrentCharacter { get; set; }
         public Proxy Proxy { get; set; }
         public ConfigAccount Config { get; set; }
