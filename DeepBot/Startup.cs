@@ -38,14 +38,22 @@ namespace DeepBot
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
-            services.AddControllersWithViews();
+            services.AddCors();
+            services.AddAuthorization();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            /* object nested */ 
+
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .AddJsonOptions (opt => {
+                    opt.JsonSerializerOptions.MaxDepth = 5;
+                    opt.JsonSerializerOptions.WriteIndented = true;
+                });
+
+            /* object nested */
             BsonClassMap.RegisterClassMap<Account>();
             BsonClassMap.RegisterClassMap<Character>();
             BsonClassMap.RegisterClassMap<Proxy>();

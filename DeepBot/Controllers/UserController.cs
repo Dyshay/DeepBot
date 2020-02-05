@@ -9,6 +9,7 @@ using AspNetCore.Identity.Mongo.Model;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Data.Model;
 using DeepBot.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;

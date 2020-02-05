@@ -4,9 +4,7 @@ using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent
 {
-    public class Player : Entity
+    public class MapCharacter : MapPlayer
     {
-        public string Name { get; set; }
-        public byte Sex { get; set; }
     }
 }

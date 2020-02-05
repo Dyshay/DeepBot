@@ -11,13 +11,12 @@ import { Group } from '../../../../webModel/Group';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Account } from '../../../../webModel/Account';
 import { AccountState } from '../../../../webModel/Enum/AccountState';
-import { AccountService } from '../auth/services/account.service';
 import { environment } from '../../../../environments/environment';
 import { TalkService } from 'src/app/Services/TalkService';
-
-const httpOptions = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
+import { BotActions } from '../bot/actions';
+import { Store } from '@ngrx/store';
+import * as fromBot from '../bot/reducers';
+import { AccountService } from '../../../services/account.service';
 
 
 
@@ -36,7 +35,8 @@ export class CreateAccountComponent implements OnInit{
   form: FormGroup;
   ischaractersfound: boolean = false;
   isformValid: boolean = false;
-  accountCreated: Account = new Account();
+  accountToCreate: Account = new Account();
+  accountToCheck: Account = new Account();
   characterCreated: Character;
   hourchecked: boolean = false;
 
@@ -103,7 +103,7 @@ export class CreateAccountComponent implements OnInit{
   icVisibilityOff = icVisibilityOff;
   icMoreVert = icMoreVert;
     /** create-account ctor */
-  constructor(private navigationService: NavigationService, private fb: FormBuilder, private accountService: AccountService, private http: HttpClient, private deeptalk: TalkService) {
+  constructor(private navigationService: NavigationService, private fb: FormBuilder, private accountService: AccountService, private http: HttpClient, private deeptalk: TalkService, private store: Store<fromBot.State>) {
 
   }
 
@@ -127,17 +127,17 @@ export class CreateAccountComponent implements OnInit{
 
    // Apelle de la groupList sur serv
 
+
+
   }
   
 
 
   findCharacter() {
        // Apelle de la liste des perso sur le serv au client et renseigné les infos ci dessous
-    this.accountCreated.ankamaPseudo = "";
-    this.accountCreated.endAnakamaSubscribe = new Date();
-    this.deeptalk.createConnexionBot(this.form.controls["accountName"].value, this.form.controls["password"].value);
-
+    //this.deeptalk.createConnexionBot(this.accountToCheck.accountName, this.accountToCreate.password, true);
     this.ischaractersfound = true;
+   
 
   }
 
@@ -145,20 +145,16 @@ export class CreateAccountComponent implements OnInit{
     
     if (this.validateCredential())
     {
-      this.accountCreated.accountName = this.form.controls["accountName"].value;
-      this.accountCreated.characters = this.characterList;
-      this.accountCreated.currentCharacter = this.form.controls["character"].value as Character;
-      this.accountCreated.currentCharacter.fk_Group = this.form.controls["group"].value;
-      this.accountCreated.password = this.form.controls["password"].value;
-      
-      let body = JSON.stringify(this.accountCreated);
-      this.http.post<Account>(`${environment.apiURL}Account/CreateAccount`, body, httpOptions).subscribe(
-        (result: any) => {
-          console.log(result);
-        },
-        (err) => { }
-      );
-     // this.accountService.createAccount(this.accountCreated);
+      this.accountToCreate.accountName = this.form.controls["accountName"].value;
+      this.accountToCreate.currentCharacter = this.form.controls["character"].value as Character;
+      this.accountToCreate.currentCharacter.fK_Group = this.form.controls["group"].value;
+      this.accountToCreate.password = this.form.controls["password"].value;
+      this.accountToCreate.characters = [this.form.controls["character"].value as Character];
+      this.accountToCreate.state = AccountState.DISCONNECTED;
+      this.accountToCreate.serverId = 610;
+      this.accountToCreate.isBan = false;
+      let account = this.accountToCreate;
+      this.store.dispatch(BotActions.createAccount({ account  }));
     };
     
     this.navigationService.addLink({
