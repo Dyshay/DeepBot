@@ -10,9 +10,6 @@ export class UserService {
     constructor(private http: HttpClient) {
 
     }
-
-
-
     roleMatch(allowedRoles): boolean {
         var isMatch = false;
         var payLoad = JSON.parse(window.atob(localStorage.getItem('DeepBot').split('.')[1]));

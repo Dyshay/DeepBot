@@ -55,7 +55,7 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("CreateTcp");
         }
 
-        public async Task CreateConnexion(string userName, string password)
+        public async Task CreateConnexion(string userName, string password,bool isScan=false)
         {
             string tcpId = GetTcpId();
 
@@ -65,13 +65,18 @@ namespace DeepBot.Core.Hubs
 
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
 
-            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
+            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId, isScan);
         }
 
         private string GetTcpId()
         {
             Guid tcpId = Guid.NewGuid();
             return tcpId.EncodeBase64String();
+        }
+
+        public async Task DisconnectCli(string tcpId)
+        {
+            await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
         }
 
         public async Task DispatchToClient(NetworkMessage network, string tcpId)
@@ -86,6 +91,9 @@ namespace DeepBot.Core.Hubs
 
         public override async Task OnConnectedAsync()
         {
+            if (!Users.Select(c => c.Id).Contains(userId))
+                Users.Add(await Manager.FindByIdAsync(userId));
+
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 

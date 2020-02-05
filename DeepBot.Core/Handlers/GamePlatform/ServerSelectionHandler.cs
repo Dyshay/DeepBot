@@ -31,6 +31,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             hub.SendPackage("Ages", tcpId);
             hub.SendPackage("AL", tcpId);
             hub.SendPackage("Af", tcpId);
+
         }
 
         [Receiver("ALK")]
@@ -39,14 +40,20 @@ namespace DeepBot.Core.Handlers.GamePlatform
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
             bool found = false;
+            List<Character> characters = new List<Character>();
             //TODO STOCK INFO IN account.Character
             while (count < splittedData.Length && !found)
             {
                 string[] _loc11_ = splittedData[count].Split(';');
                 int id = int.Parse(_loc11_[0]);
                 string characterName = _loc11_[1];
+                // STOP IF isScan HERE :  send characters data 
+                byte Level = byte.Parse(_loc11_[3]);
+                short model = short.Parse(_loc11_[4]);
+                characters.Add(new Character() { BreedId = model, Id = id, Name = characterName, Level = Level });
 
-                if (characterName.ToLower().Equals("")) //TODO USE THE Name in cfg
+
+                if (characterName.ToLower().Equals("")  /*&& !isScan*/) //TODO USE THE Name in cfg
                 {
                     hub.SendPackage($"AS{id}", tcpId, true);
                     hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
@@ -54,7 +61,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 }
                 count++;
             }
-
+            if(/*iscan*/true)
+            hub.DispatchToClient(new CharactersMessage(characters),tcpId).Wait();
         }
 
         [Receiver("GCK")]

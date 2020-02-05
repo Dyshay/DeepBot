@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent
 {
-    public class Npc : Entity
+    public class MapNpc : MapEntity
     {
         public int TemplateId { get; set; }
     }

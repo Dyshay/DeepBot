@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using static DeepBot.ControllersModel.AccountModel;
 
 namespace DeepBot.Controllers
 {
@@ -38,48 +39,48 @@ namespace DeepBot.Controllers
         [HttpPost]
         [Authorize]
         [Route("CreateAccount")]
-        public async Task<IdentityResult> CreateAccount(Account account)
+        public async Task<IdentityResult> CreateAccount([FromBody] Account account)
         {
+            var tt = this.Request.Body;
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            account.Id = Guid.NewGuid();
-            if(user.Accounts == null)
-            {
-                user.Accounts = new List<Account>() { account };
-                try
-                {
-                    await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
-                    //var res= await _userManager.UpdateAsync(user);
-                    return IdentityResult.Success;
-                }
-                catch (Exception ex )
-                {
-                    return null;
-                }
-            }
-
-            if (user.ApiKey.MaxAccount >= user.Accounts?.Count() + 1)
-            {
-                if (user.Accounts.Select(o => o.AccountName.ToUpper()).Contains(account.AccountName.ToUpper()))
-                {
-                    return IdentityResult.Failed(new IdentityError() { Code = "AlreadyCreated" }); 
-                }
-                else
-                {
-                    user.Accounts.Add(account);
-                    try
-                    {
-                        await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
-                        //var res= await _userManager.UpdateAsync(user);
-                        return IdentityResult.Success;
-                    }
-                    catch (Exception ex)
-                    {
-                        return null;
-                    }
-                }
-            }
-            else
+         //   account.Id = Guid.NewGuid();
+            //if(user.Accounts == null)
+            //{
+            //    user.Accounts = new List<Account>() { account };
+            //    try
+            //    {
+            //        await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+            //        //var res= await _userManager.UpdateAsync(user);
+            //        return IdentityResult.Success;
+            //    }
+            //    catch (Exception ex )
+            //    {
+            //        return null;
+            //    }
+            //}
+            //if (user.ApiKey.MaxAccount >= user.Accounts?.Count() + 1)
+            //{
+            //    if (user.Accounts.Select(o => o.AccountName.ToUpper()).Contains(account.AccountName.ToUpper()))
+            //    {
+            //        return IdentityResult.Failed(new IdentityError() { Code = "AlreadyCreated" }); 
+            //    }
+            //    else
+            //    {
+            //        user.Accounts.Add(account);
+            //        try
+            //        {
+            //            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+            //            //var res= await _userManager.UpdateAsync(user);
+            //            return IdentityResult.Success;
+            //        }
+            //        catch (Exception ex)
+            //        {
+            //            return null;
+            //        }
+            //    }
+            //}
+            //else
                 return IdentityResult.Failed(new IdentityError() { Code = "MaxAccount" });
         }
     }
