@@ -24,7 +24,6 @@ namespace DeepBot.Data.Database
         public ConfigUser Config { get; set; }
         public string AddressIP { get; set; }
         public short AppCliOnline { get; set; }
-        [BsonIgnore]
         public string CliConnectionId { get; set; }
 
     }
