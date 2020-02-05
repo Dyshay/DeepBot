@@ -9,15 +9,19 @@ import { Caracteristic } from './Caracteristic';
 import { Inventory } from './Inventory';
 import { Job } from './Job';
 import { CharacterMap } from './CharacterMap';
+import { LogType } from './Enum/LogType';
 
 export class Character {
   id: number;
+  fK_IA?: string;
+  fK_Group?: string;
+  fK_Configuration?: string;
+  fK_Trajet?: string;
   name: string;
   level: number;
   breedId: number;
   sex: number;
   kamas?: number;
-  fk_Group?: string;
   availableCharactericsPts?: number;
   availableSpellPts?: number;
   cell?: Cell;
@@ -33,3 +37,7 @@ export class Character {
 }
 
 
+export interface CharacterMessage {
+  characters: Character[],
+  tcpId: string
+}

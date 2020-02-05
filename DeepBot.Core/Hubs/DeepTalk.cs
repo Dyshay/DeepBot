@@ -49,20 +49,25 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("CreateTcp");
         }
 
-        public async Task CreateConnexion(string userName, string password)
+        public async Task CreateConnexion(string userName, string password,bool isScan=false)
         {
             string tcpId = GetTcpId();
 
             Users.FirstOrDefault(c => c.Id == userId)
                 .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password });
 
-            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
+            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId,isScan);
         }
 
         private string GetTcpId()
         {
             Guid tcpId = Guid.NewGuid();
             return tcpId.EncodeBase64String();
+        }
+
+        public async Task DisconnectCli(string tcpId)
+        {
+            await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
         }
 
         public async Task DispatchToClient(NetworkMessage network, string tcpId)

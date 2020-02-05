@@ -1,12 +1,14 @@
 ﻿using DeepBot.Data.Database;
+using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.MapComponent;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
-namespace DeepBot.Data.Model.CharacterInfo
+namespace DeepBot.Data.Model
 {
 
     public class Character
@@ -18,9 +20,7 @@ namespace DeepBot.Data.Model.CharacterInfo
         public Guid Fk_Trajet { get; set; }
         public string Name { get; set; }
         public byte Level { get; set; }
-        public int BreedId { get; set; }
-
-
+        public short BreedId { get; set; }
         [BsonIgnore]
         public TrajetDB Trajet { get; set; }
         [BsonIgnore]
@@ -36,7 +36,7 @@ namespace DeepBot.Data.Model.CharacterInfo
         [BsonIgnore]
         public int AvailableSpellPts { get; set; }
         [BsonIgnore]
-        public Cell Cell { get; set; }
+        public MapCell Cell { get; set; }
         [BsonIgnore]
         public List<Spell> Spells { get; set; }
         [BsonIgnore]
@@ -50,6 +50,7 @@ namespace DeepBot.Data.Model.CharacterInfo
         [BsonIgnore]
         public GroupDB Group { get; set; }
         [BsonIgnore]
+        [JsonIgnore]
         public Account Account { get; set; }
 
         [BsonIgnore]

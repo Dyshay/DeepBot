@@ -20,9 +20,9 @@ namespace DeepBot.Data.Model.MapComponent
         public int Width { get; set; }
         public int Height { get; set; }
         public string Coordinate { get; set; }
-        public Cell[] Cells { get; set; }
+        public MapCell[] Cells { get; set; }
         public Dictionary<MovementDirection, List<short>> CellsTeleport;
-        public Dictionary<int, Entity> Entities;
+        public Dictionary<int, MapEntity> Entities;
         public Dictionary<int, InteractivObject> Interactives;
 
         public event Action EntitiesUpdate;
@@ -55,7 +55,7 @@ namespace DeepBot.Data.Model.MapComponent
 
         public static Map DecompressMap(Map map)
         {
-            map.Cells = new Cell[map.MapData.Length / 10];
+            map.Cells = new MapCell[map.MapData.Length / 10];
             map.Interactives = new Dictionary<int, InteractivObject>();
             string cellsValues;
 
@@ -68,7 +68,7 @@ namespace DeepBot.Data.Model.MapComponent
             return map;
         }
 
-        public static Cell DecompressCell(Map map, string cellData, short cellId)
+        public static MapCell DecompressCell(Map map, string cellData, short cellId)
         {
             byte[] cellInformations = new byte[cellData.Length];
 
@@ -81,7 +81,7 @@ namespace DeepBot.Data.Model.MapComponent
             int loc7 = loc6 % mapWidth;
             short interactiv = ((cellInformations[7] & 2) >> 1) != 0 ? Convert.ToInt16(((cellInformations[0] & 2) << 12) + ((cellInformations[7] & 1) << 12) + (cellInformations[8] << 6) + cellInformations[9]) : Convert.ToInt16(-1);
 
-            Cell cell = new Cell()
+            MapCell cell = new MapCell()
             {
                 Id = cellId,
                 Type = (CellTypes)((cellInformations[2] & 56) >> 3),
@@ -115,7 +115,7 @@ namespace DeepBot.Data.Model.MapComponent
                 MapId = MapId,
                 Width = Width,
                 Interactives = Interactives,
-                Entities = new Dictionary<int, Entity>(),
+                Entities = new Dictionary<int, MapEntity>(),
             };
         }
     }

@@ -13,11 +13,6 @@ import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animati
 import { User } from '../../../../../webModel/User';
 import { environment } from '../../../../../environments/environment';
 
-const httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-};
-
-
 @Component({
   selector: 'vex-login',
   templateUrl: './login.component.html',
@@ -55,11 +50,12 @@ export class LoginComponent implements OnInit {
 
 
   send() {
-    let user : User  = {
-        userName : this.form.controls["email"].value,
-        userPassword : this.form.controls["password"].value,
-        userEmail : '',
-    }
+    let user: User = {
+      userName: this.form.controls["email"].value,
+      userPassword: this.form.controls["password"].value,
+      userEmail: '',
+      accounts:[]
+    };
 
     // let body = JSON.stringify({ 'UserName': user.userName, 'Password': user.userPassword })
     console.log(user);
