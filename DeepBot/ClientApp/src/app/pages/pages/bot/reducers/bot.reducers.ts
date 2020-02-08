@@ -24,6 +24,7 @@ export const reducer = createReducer(initialState,
   on(BotActions.createAccount, (state) => ({ ...state })),
   on(BotActions.createAccountSuccess, (state, { account }) => ({ ...state, account: account })),
   on(BotActions.createAccountFailure, (state, { error }) => ({ ...state, error })),
+  on(BotActions.receveidCharacters, (state, { network }) => ({...state, characters: network.characters})),
 )
 
 
