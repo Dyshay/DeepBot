@@ -36,7 +36,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ALK")]
-        public async Task SelectCharacter(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public async Task SelectCharacter(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
@@ -54,7 +54,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 // STOP IF isScan HERE :  send characters data 
                 byte Level = byte.Parse(_loc11_[3]);
                 short model = short.Parse(_loc11_[4]);
-                characters.Add(new Character() { BreedId = model, Id = id, Name = characterName, Level = Level });
+
+                if (isScan)
+                    characters.Add(new Character() { BreedId = model, Id = id, Name = characterName, Level = Level });
 
 
                 if (characterName.ToLower().Equals("")  /*&& !isScan*/) //TODO USE THE Name in cfg
@@ -65,8 +67,12 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 }
                 count++;
             }
-            if(isScan)
-            hub.DispatchToClient(new CharactersMessage(characters),tcpId).Wait();
+            if (isScan)
+            {
+                user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Characters = characters;
+                manager.ReplaceOneAsync(c => c.Id == user.Id, user).Wait();
+                hub.DispatchToClient(new CharactersMessage(characters), tcpId).Wait();
+            }
         }
 
         [Receiver("GCK")]
