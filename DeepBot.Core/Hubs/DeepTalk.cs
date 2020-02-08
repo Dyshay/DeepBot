@@ -3,6 +3,7 @@ using DeepBot.Core.Network.HubMessage;
 using DeepBot.Data.Database;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
+using DeepBot.Data.Model.GameServer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -28,6 +29,7 @@ namespace DeepBot.Core.Hubs
         public async Task ReceivedHandler(string package, string tcpId)
         {
             var CurrentUser = await UserDB;
+
             Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
         }
 
@@ -55,13 +57,14 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("CreateTcp");
         }
 
-        public async Task CreateConnexion(string userName, string password, bool isScan = false)
+        public async Task CreateConnexion(string userName, string password, short serverId, bool isScan = false)
         {
             string tcpId = GetTcpId();
 
             var CurrentUser = await UserDB;
+
             CurrentUser
-                .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password });
+                .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
 
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
 
@@ -91,7 +94,7 @@ namespace DeepBot.Core.Hubs
 
         public async Task CallCheck(string tcpId)
         {
-            await Clients.Client(userId).SendAsync("CheckCliScan", tcpId);
+            await Clients.Client(CliID).SendAsync("CheckCliScan", tcpId);
         }
 
         private string GetApiKey()

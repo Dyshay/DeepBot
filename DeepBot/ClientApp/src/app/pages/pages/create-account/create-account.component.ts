@@ -135,7 +135,7 @@ export class CreateAccountComponent implements OnInit{
 
   findCharacter() {
        // Apelle de la liste des perso sur le serv au client et renseigné les infos ci dessous
-    this.deeptalk.createConnexionBot(this.accountToCheck.accountName, this.accountToCreate.password, true);
+    this.deeptalk.createConnexionBot(this.form.controls["accountName"].value, this.form.controls["password"].value, 609, true);
     this.ischaractersfound = true;
    
 

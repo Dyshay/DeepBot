@@ -36,6 +36,7 @@ namespace DeepBot.Data.Model
         public string GameTicket { get; set; }
         public AccountState State { get; set; } = AccountState.DISCONNECTED;
         public Server Server { get; set; }
+        public bool isScan { get; set; }
 
         /// <summary>
         /// CLI Informations attached to account
