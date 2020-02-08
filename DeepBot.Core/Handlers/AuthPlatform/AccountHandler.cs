@@ -24,6 +24,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             //account dispatch value (connecting)
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = AccountState.CONNECTING;
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey = package.Substring(2);
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
 
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Connexion au serveur d'auth", tcpId), tcpId).Wait();
 
@@ -32,7 +33,6 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             // USE THE ACCOUNT AND PASSWORD FROM account
             hub.SendPackage($"{user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).AccountName}\n{Hash.EncryptPassword(user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Password, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey)}", tcpId);
             hub.SendPackage($"Af", tcpId);
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
         }
 
         [Receiver("Ad")]
@@ -57,7 +57,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
 
                 //if (id == (int)account.Config.Server)
                 /// A REVOIR EN DESSOUS
-                if (id == 609)
+                if (id == user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.Id)
                 {
                     server.Id = 609;
                     server.Name = "Bilby"; // NEED TO USE CFG
@@ -128,7 +128,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Substring(14);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId);
+            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
         }
     }

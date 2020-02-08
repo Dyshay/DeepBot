@@ -43,17 +43,15 @@ namespace DeepBot.Core.Handlers.GamePlatform
             bool found = false;
             List<Character> characters = new List<Character>();
             //TODO STOCK INFO IN account.Character
+            await hub.CallCheck(tcpId);
+            var isScan = DeepTalk.IsScans[tcpId];
+
             while (count < splittedData.Length && !found)
             {
                 string[] _loc11_ = splittedData[count].Split(';');
                 int id = int.Parse(_loc11_[0]);
                 string characterName = _loc11_[1];
                 // STOP IF isScan HERE :  send characters data 
-                await hub.CallCheck(tcpId);
-                if (DeepTalk.IsScans[tcpId])
-                {
-
-                }
                 byte Level = byte.Parse(_loc11_[3]);
                 short model = short.Parse(_loc11_[4]);
                 characters.Add(new Character() { BreedId = model, Id = id, Name = characterName, Level = Level });
@@ -67,7 +65,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 }
                 count++;
             }
-            if(/*iscan*/true)
+            if(isScan)
             hub.DispatchToClient(new CharactersMessage(characters),tcpId).Wait();
         }
 
