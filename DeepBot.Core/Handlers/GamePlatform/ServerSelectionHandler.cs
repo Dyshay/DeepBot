@@ -44,22 +44,24 @@ namespace DeepBot.Core.Handlers.GamePlatform
             List<Character> characters = new List<Character>();
             //TODO STOCK INFO IN account.Character
             await hub.CallCheck(tcpId);
-            var isScan = DeepTalk.IsScans[tcpId];
+
+            await Task.Delay(1000);
+
+            DeepTalk.IsScans.TryGetValue(tcpId, out bool isScan);
 
             while (count < splittedData.Length && !found)
             {
                 string[] _loc11_ = splittedData[count].Split(';');
                 int id = int.Parse(_loc11_[0]);
                 string characterName = _loc11_[1];
-                // STOP IF isScan HERE :  send characters data 
-                byte Level = byte.Parse(_loc11_[3]);
-                short model = short.Parse(_loc11_[4]);
+                byte Level = byte.Parse(_loc11_[2]);
+                short model = short.Parse(_loc11_[3]);
 
                 if (isScan)
                     characters.Add(new Character() { BreedId = model, Id = id, Name = characterName, Level = Level });
 
 
-                if (characterName.ToLower().Equals("")  /*&& !isScan*/) //TODO USE THE Name in cfg
+                if (characterName.ToLower().Equals("") && !isScan) //TODO USE THE Name in cfg
                 {
                     hub.SendPackage($"AS{id}", tcpId, true);
                     hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
