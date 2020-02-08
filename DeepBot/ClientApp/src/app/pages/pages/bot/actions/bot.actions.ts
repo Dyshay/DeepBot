@@ -1,10 +1,10 @@
 import { props, createAction } from '@ngrx/store';
 import { LogMessage } from 'src/webModel/LogMessage';
-import { Character } from 'src/webModel/Character';
+import { CharacterMessage } from 'src/webModel/Character';
 import { Account } from '../../../../../webModel/Account';
 
 export const receveidLogs = createAction('[BOT/TALK] SEND LOG', props<{ network: LogMessage }>());
-export const receveidCharacters = createAction('[BOT/TALK] RECEIVE CHARACTERS', props<{ network: Character }>());
+export const receveidCharacters = createAction('[BOT/TALK] RECEIVE CHARACTERS', props<{ network: CharacterMessage }>());
 
 export const createAccount = createAction('[BOT/TALK] SEND ACCOUNT', props<{  account: Account  }>());
 export const createAccountSuccess = createAction('[BOT/TALK] SEND ACCOUNT SUCCESS', props<{ account: any }>());
