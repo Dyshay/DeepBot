@@ -77,10 +77,6 @@ namespace DeepBot.Core.Hubs
             return tcpId.EncodeBase64String();
         }
 
-        public void ScanCallBack(bool isScan, string tcpId)
-        {
-            IsScans.Add(tcpId, isScan);
-        }
 
         public async Task DisconnectCli(string tcpId)
         {
@@ -92,10 +88,18 @@ namespace DeepBot.Core.Hubs
             await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("DispatchClient", network, tcpId);
         }
 
+        #region CheckScan
+        public void ScanCallBack(bool isScan, string tcpId)
+        {
+            IsScans.Add(tcpId, isScan);
+        }
+
         public async Task CallCheck(string tcpId)
         {
             await Clients.Client(CliID).SendAsync("CheckCliScan", tcpId);
         }
+
+        #endregion
 
         private string GetApiKey()
         {
