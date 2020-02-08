@@ -14,7 +14,7 @@ import { AccountState } from '../../../../webModel/Enum/AccountState';
 import { environment } from '../../../../environments/environment';
 import { TalkService } from 'src/app/Services/TalkService';
 import { BotActions } from '../bot/actions';
-import { Store } from '@ngrx/store';
+import { Store, select } from '@ngrx/store';
 import * as fromBot from '../bot/reducers';
 import { AccountService } from '../../../services/account.service';
 
@@ -38,6 +38,7 @@ export class CreateAccountComponent implements OnInit{
   accountToCreate: Account = new Account();
   accountToCheck: Account = new Account();
   characterCreated: Character;
+  charaters$ = this.store.pipe(select(fromBot.getCharacters));
   hourchecked: boolean = false;
 
   characterList: Character[] = [{

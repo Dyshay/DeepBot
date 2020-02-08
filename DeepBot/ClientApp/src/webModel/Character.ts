@@ -38,6 +38,7 @@ export class Character {
 
 
 export interface CharacterMessage {
+  type: LogType,
   characters: Character[],
   tcpId: string
 }
