@@ -43,9 +43,11 @@ namespace DeepBot.Core.Handlers.GamePlatform
             bool found = false;
             List<Character> characters = new List<Character>();
             //TODO STOCK INFO IN account.Character
-            await hub.CallCheck(tcpId);
+            hub.CallCheck(tcpId).Wait();
 
-            await Task.Delay(1000);
+            //await Task.Delay(1000);
+
+            //bool isScan = true;
 
             DeepTalk.IsScans.TryGetValue(tcpId, out bool isScan);
 
@@ -73,7 +75,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
             {
                 user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Characters = characters;
                 manager.ReplaceOneAsync(c => c.Id == user.Id, user).Wait();
-                hub.DispatchToClient(new CharactersMessage(characters), tcpId).Wait();
+                hub.DispatchToClient(new CharactersMessage(characters, tcpId), tcpId).Wait();
+                hub.DisconnectCli(tcpId).Wait();
             }
         }
 
