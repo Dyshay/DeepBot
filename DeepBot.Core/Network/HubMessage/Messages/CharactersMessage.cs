@@ -9,11 +9,12 @@ namespace DeepBot.Core.Network.HubMessage.Messages
     public class CharactersMessage : NetworkMessage
     {
         public override NetworkType Type => NetworkType.CHARACTERS;
-        public List<Character> Characters { get; set; }
+        public Character[] Characters { get; set; }
 
-        public CharactersMessage(List<Character> characters)
+        public CharactersMessage(List<Character> characters, string tcpId)
         {
-            Characters = characters;
+            Characters = characters.ToArray();
+            TcpId = tcpId;
         }
 
     }

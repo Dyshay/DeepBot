@@ -69,6 +69,9 @@ namespace DeepBot.Core.Hubs
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
 
             await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId, isScan);
+
+            if (isScan)
+                IsScans.Add(tcpId, isScan);
         }
 
         private string GetTcpId()
@@ -91,7 +94,7 @@ namespace DeepBot.Core.Hubs
         #region CheckScan
         public void ScanCallBack(bool isScan, string tcpId)
         {
-            IsScans.Add(tcpId, isScan);
+            //IsScans.Add(tcpId, isScan);
         }
 
         public async Task CallCheck(string tcpId)

@@ -61,12 +61,14 @@ export class TalkService {
 
   private GetClientMessage(): void {
     this._hubConnection.on("DispatchClient", (network, tcpId) => {
+          console.log(network);
       switch (network.type) {
         case 0:
           this.store.dispatch(BotActions.receveidLogs({ network }));
           break;
         case 6:
           this.store.dispatch(BotActions.receveidCharacters({ network }));
+          break;
         default:
           break;
       }
