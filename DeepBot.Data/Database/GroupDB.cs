@@ -11,10 +11,10 @@ namespace DeepBot.Data.Database
 {
     public class GroupDB : Document<int>
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
+        [BsonId]
         public Guid Id { get; set; }
-        public Guid Fk_Leader { get; set; } 
-        public List<Guid> Fk_Followers { get; set; } 
+        public int Fk_Leader { get; set; } 
+        public List<int> Fk_Followers { get; set; } 
         public Guid Fk_Configuration { get; set; } 
         public Guid Fk_Trajet { get; set; }
         public string Name { get; set; }

@@ -10,6 +10,7 @@ import { AuthService } from "src/app/services/auth.services";
 import { BotActions } from '../actions';
 import { Character } from '../../../../../webModel/Character';
 import { AccountService } from '../../../../services/account.service';
+import { Group } from '../../../../../webModel/Group';
 
 @Injectable()
 export class BotEffects {
@@ -47,6 +48,7 @@ export class BotEffects {
     )
   );
 
+
   getAllCharacters$ = createEffect(() =>
     this.actions$.pipe(
       ofType(BotActions.getAllCharacters),
@@ -74,6 +76,38 @@ export class BotEffects {
 
     )
   );
+
+
+  createGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.createGroup),
+      map(action => action.group),
+      exhaustMap((group: Group) =>
+        this.accountService.createGroup(group).pipe(
+          map(group => BotActions.createGroupSuccess({ group })),
+          catchError(error => of(BotActions.createGroupFailure({ error }))))
+      )
+    )
+  );
+  createGroupSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.createGroupSuccess),
+      map(action => action.group),
+      tap((group: any) => {
+        console.log(group);
+      })
+    ),
+    { dispatch: false }
+  );
+
+  createGroupFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.createGroupFailure),
+      map(action => action.error),
+
+    )
+  );
+
 
     constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService) { }
 }
