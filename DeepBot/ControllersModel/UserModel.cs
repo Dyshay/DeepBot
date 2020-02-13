@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeepBot.ControllersModel.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,5 +27,19 @@ namespace DeepBot.ControllersModel
     {
         public string UserId { get; set; }
         public string RoleId { get; set; }
+    }
+
+
+    public class SideNav
+    { 
+       public List<SideNavItem> items { get; set; }
+    }
+    public class SideNavItem
+    {
+        public string Id { get; set; }
+        public bool isGroup { get; set; }
+        public string Name { get; set; }
+        public SideNavState State { get; set; }
+        public List<SideNavItem> Childrens { get; set; }
     }
 }

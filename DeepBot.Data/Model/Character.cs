@@ -20,6 +20,7 @@ namespace DeepBot.Data.Model
         public Guid Fk_Trajet { get; set; }
         public string Name { get; set; }
         public byte Level { get; set; }
+        public int ServerId { get; set; }
         public short BreedId { get; set; }
         [BsonIgnore]
         public TrajetDB Trajet { get; set; }
@@ -27,14 +28,6 @@ namespace DeepBot.Data.Model
         public ConfigCharacterDB Config { get; set; }
         [BsonIgnore]
         public IADB IA { get; set; }
-        [BsonIgnore]
-        public byte Sex { get; set; }
-        [BsonIgnore]
-        public int Kamas { get; set; }
-        [BsonIgnore]
-        public int AvailableCharactericsPts { get; set; }
-        [BsonIgnore]
-        public int AvailableSpellPts { get; set; }
         [BsonIgnore]
         public MapCell Cell { get; set; }
         [BsonIgnore]
@@ -50,8 +43,13 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public GroupDB Group { get; set; }
         [BsonIgnore]
-        [JsonIgnore]
-        public Account Account { get; set; }
+        public byte Sex { get; set; }
+        [BsonIgnore]
+        public int Kamas { get; set; }
+        [BsonIgnore]
+        public int AvailableCharactericsPts { get; set; }
+        [BsonIgnore]
+        public int AvailableSpellPts { get; set; }
 
         [BsonIgnore]
         private CharacterState _State;

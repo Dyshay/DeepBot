@@ -71,7 +71,9 @@ export class AppComponent {
          footer: {
           visible: false
          }
-      });
+       });
+
+    this.navigationService.GenerateNavigation();
      
 
     /**
