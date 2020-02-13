@@ -53,6 +53,7 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
       startHour: [null, Validators.max(23)],
       endHour: [null, Validators.max(23)],
       trajet: [],
+      description : []
     });
     this.groupstep2 = this.fb.group({
       leader: [Character, Validators.required],
@@ -83,12 +84,15 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
 
   submit() {
     this.groupToCreate.name = this.groupstep1.controls["groupName"].value;
+    this.groupToCreate.description = this.groupstep1.controls["description"].value;
     this.groupToCreate.fk_Leader = this.Leader.id;
     this.groupToCreate.fk_Followers = [];
     for (var i = 0; i < this.followers.length; i++) {
       this.groupToCreate.fk_Followers.push(this.followers[i].id);
     }
-    console.log(this.groupToCreate);
+    let group = this.groupToCreate;
+    console.log(group);
+    this.store.dispatch(BotActions.createGroup({ group }));
   }
 
 
