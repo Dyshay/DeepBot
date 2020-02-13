@@ -212,6 +212,71 @@ namespace DeepBot.Controllers
         }
 
 
+        [HttpGet]
+        [Authorize]
+        [Route("CreateSideNavUser")]
+        public async Task<SideNav> CreateSideNavUserAsync()
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            List<Guid> listGroup = new List<Guid>();
+            List<Guid> listAccount = new List<Guid>();
+            SideNav sidenav = new SideNav();
+            sidenav.items = new List<SideNavItem>();
+
+            foreach (var account in user.Accounts)
+            {
+                if(account.CurrentCharacter != null)
+                {
+                    if (account.CurrentCharacter.Fk_Group != Guid.Empty && !listGroup.Contains(account.CurrentCharacter.Fk_Group))
+                        listGroup.Add(account.CurrentCharacter.Fk_Group);
+                    else if (account.CurrentCharacter.Fk_Group == Guid.Empty)
+                    {
+                        SideNavItem item = new SideNavItem()
+                        {
+                            Id = account.CurrentCharacter.Id.ToString(),
+                            isGroup = false,
+                            Name = account.CurrentCharacter.Name,
+                            State = ControllersModel.Enum.SideNavState.CONNECTED
+                        };
+                        sidenav.items.Add(item);
+                    }
+                }
+            }
+            foreach (var groupId in listGroup)
+            {
+               GroupDB group= await Database.Groups.FindAsync(o => o.Id == groupId) as GroupDB;
+                SideNavItem item = new SideNavItem()
+                {
+                    Id = groupId.ToString(),
+                    Name = group.Name,
+                    isGroup = true,
+                    State = ControllersModel.Enum.SideNavState.CONNECTED,
+                    Childrens = new List<SideNavItem>()
+                };
+                
+                foreach (var account in user.Accounts)
+                {
+                    if(account.CurrentCharacter != null)
+                    {
+                        if(account.CurrentCharacter.Fk_Group == groupId)
+                        {
+                            SideNavItem ChildItem = new SideNavItem()
+                            {
+                                Id = account.CurrentCharacter.Id.ToString(),
+                                isGroup = false,
+                                Name = account.CurrentCharacter.Name,
+                                State = ControllersModel.Enum.SideNavState.CONNECTED
+                            };
+                            item.Childrens.Add(ChildItem);
+                        }
+                    }
+                }
+                sidenav.items.Add(item);
+            }
+
+            return sidenav;
+        }
 
 
 

@@ -24,3 +24,8 @@ export class Account {
   state: AccountState;
   server?: Server;
 }
+
+export class CreateAccount {
+  accountName: string;
+  password: string;
+}

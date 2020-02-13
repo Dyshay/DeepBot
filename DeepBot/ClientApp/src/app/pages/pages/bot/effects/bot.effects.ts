@@ -3,7 +3,7 @@ import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Account } from '../../../../../webModel/Account';
+import { Account, CreateAccount } from '../../../../../webModel/Account';
 import { User } from '../../../../../webModel/User';
 import { TalkService } from "src/app/Services/TalkService";
 import { AuthService } from "src/app/services/auth.services";
@@ -15,7 +15,7 @@ import { AccountService } from '../../../../services/account.service';
 export class BotEffects {
     static isConnectedTalker = false;
 
-    createAccounts$ = createEffect(() =>
+    createAccount$ = createEffect(() =>
         this.actions$.pipe(
           ofType(BotActions.createAccount),
             map(action => action.account),
@@ -32,20 +32,48 @@ export class BotEffects {
         this.actions$.pipe(
             ofType(BotActions.createAccountSuccess),
             map(action => action.account),
-            tap((account: Account) => {
+            tap((account: any) => {
               console.log(account);
             })
         ),
         { dispatch: false }
-    );
+  );
 
-    receveidCharactersFailure$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(BotActions.createAccountFailure),
-            map(action => action.error),
-            
-        )
+  createAccountFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.createAccountFailure),
+      map(action => action.error),
+
     )
+  );
+
+  getAllCharacters$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.getAllCharacters),
+      map(action => action),
+      exhaustMap(() =>
+        this.accountService.getAllCharacters().pipe(
+          map(characters => BotActions.getAllCharactersSuccess({ characters })),
+        )))
+  );
+
+  getAllCharactersSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.getAllCharactersSuccess),
+      map(action => action.characters),
+      tap((account: any) => {
+      })
+    ),
+    { dispatch: false }
+  );
+
+  getAllCharactersFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.getAllCharactersFailure),
+      map(action => action.error),
+
+    )
+  );
 
     constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService) { }
 }
