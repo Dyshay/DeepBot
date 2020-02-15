@@ -8,18 +8,19 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
-import { CreateGroupRoutingModule } from './create-group-routing.module';
-import { CreateGroupComponent } from './create-group.component';
+
 import { ColorFadeModule } from '../../../../@vex/pipes/color/color-fade.module';
 import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
+import { UpdateAccountComponent } from './update-account.component';
+import { UpdateAccountRoutingModule } from './update-account-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
-  declarations: [CreateGroupComponent],
+  declarations: [UpdateAccountComponent],
   imports: [
     CommonModule,
-    CreateGroupRoutingModule,
+    UpdateAccountRoutingModule,
     MatSnackBarModule,
     MatIconModule,
     ReactiveFormsModule,
@@ -36,7 +37,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ColorFadeModule,
     PageLayoutModule,
     MatTableModule,
-    TranslateModule
+    TranslateModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
