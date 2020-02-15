@@ -19,6 +19,7 @@ export interface NavigationLink {
 export interface NavigationDropdown {
   type: 'dropdown';
   label: string;
+  route?: string | any;
   icon?: Icon;
   children: Array<NavigationLink | NavigationDropdown>;
   badge?: {

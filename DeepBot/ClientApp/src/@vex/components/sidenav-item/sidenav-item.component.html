@@ -31,7 +31,7 @@
 </div>
 
 <ng-container *ngIf="isDropdown(item)">
-  <div (click)="toggleOpen()"
+  <div 
        [class.active]="isOpen || isActive"
        [class.open]="isOpen"
        class="item"
@@ -44,7 +44,10 @@
           [style.color]="item.badge.color"
           class="item-badge"
           fxFlex="none">{{ item.badge.value }}</span>
-    <mat-icon [icIcon]="icKeyboardArrowRight" class="item-dropdown-icon" fxFlex="none"></mat-icon>
+    <div style="min-width:4rem;" fxLayout="row" fxLayoutAlign="end center" (click)="toggleOpen()">
+      <mat-icon [icIcon]="icKeyboardArrowRight" class="item-dropdown-icon" fxFlex="none" ></mat-icon>
+    </div>
+    
   </div>
   <div [@dropdown]="isOpen" class="item-dropdown">
     <vex-sidenav-item *ngFor="let subItem of item.children" [item]="subItem" [level]="level + 1"></vex-sidenav-item>
