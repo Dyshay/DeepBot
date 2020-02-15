@@ -105,7 +105,8 @@ namespace DeepBot.Controllers
             {
                 UserName = model.UserName,
                 Email = model.UserEmail,
-                ApiKey = apiKeyDebug
+                ApiKey = apiKeyDebug,
+                Langue = model.Langue
             };
 
             var result = await _userManager.CreateAsync(user, model.UserPassword);

@@ -23,6 +23,7 @@ namespace DeepBot.Controllers
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
+        private readonly IMongoCollection<GroupDB> _group;
 
         public GroupController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -31,6 +32,7 @@ namespace DeepBot.Controllers
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
             _userCollection = userCollection;
+
         }
 
 
@@ -39,8 +41,7 @@ namespace DeepBot.Controllers
         [Route("CreateGroup")]
         public GroupDB CreateGroup(GroupDB group)
         {
-            group.Id = Guid.NewGuid();
-            Database.Insert(group);
+            Database.Groups.InsertOneAsync(group);
 
             return null;
         }

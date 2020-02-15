@@ -11,6 +11,7 @@ import theme from '../../../../@vex/utils/tailwindcss';
 import { Store, select } from '@ngrx/store';
 import * as fromBot from '../../pages/bot/reducers';
 import { TalkService } from 'src/app/Services/TalkService';
+import { NavigationService } from '../../../../@vex/services/navigation.service';
 
 @Component({
   selector: 'vex-dashboard-analytics',

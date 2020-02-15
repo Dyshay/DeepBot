@@ -14,6 +14,14 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
+import { HttpClient } from '@angular/common/http';
+import { MyMissingTranslationHandler } from '../../../../modules/my-missing-translation-handler.module';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, 'src/assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [LoginComponent],
@@ -30,7 +38,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatButtonModule,
     MatCheckboxModule,
     MatDividerModule,
-    MatCardModule
+    MatCardModule,
+    TranslateModule,
   ]
 })
 export class LoginModule {

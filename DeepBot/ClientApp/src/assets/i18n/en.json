@@ -1,0 +1,15 @@
+{
+  "LOGIN": {
+    "SECONNECTER": "LOGIN",
+    "MDPOUBLIER": "Forgotten password ?",
+    "CREATEACCOUNT": "Click here to create an account",
+    "WELCOME": "Welcome",
+    "WELCOMEMESSAGE": "Connect using the form below",
+    "USERNAMEREQUIRED": "E-Mail or UserName required",
+    "USERNAMELABEL": "Nom d'utilisateur ou E-Mail",
+    "PASSWORD": "Mot de passe",
+    "PASSWORDVISIBILITY": "Appuyez pour afficher le mot de passe",
+    "MEORIZEID": "Mémoriser mes Identifiants",
+    "PASSWORDREQUIRED": "Votre mot de passe est requis"
+  }
+}

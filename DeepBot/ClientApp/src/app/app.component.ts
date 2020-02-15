@@ -35,6 +35,9 @@ import { Style, StyleService } from '../@vex/services/style.service';
 import theme from '../@vex/utils/tailwindcss';
 import icChromeReaderMode from '@iconify/icons-ic/twotone-chrome-reader-mode';
 import { ConfigName } from '../@vex/interfaces/config-name.model';
+import { TraductionService } from './services/traduction-service.module';
+import { NgSelectConfig } from '@ng-select/ng-select';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'vex-root',
@@ -52,8 +55,24 @@ export class AppComponent {
               @Inject(LOCALE_ID) private localeId: string,
               private layoutService: LayoutService,
               private route: ActivatedRoute,
-              private navigationService: NavigationService,
-              private splashScreenService: SplashScreenService) {
+    private navigationService: NavigationService,
+    tradService: TraductionService,
+    private translate: TranslateService,
+    config: NgSelectConfig,
+    private splashScreenService: SplashScreenService) {
+
+    //// Permet d'afficher des traductions sur les éléments des ng-select utilisés dans l'application
+    //tradService.translate.get(['GLOBAL.NO_ITEM_FOUND', 'GLOBAL.CLEAR_ALL', 'GLOBAL.AJOUTER']).subscribe(traduction => {
+    //  config.notFoundText = traduction['GLOBAL.NO_ITEM_FOUND'];
+    //  config.clearAllText = traduction['GLOBAL.CLEAR_ALL'];
+    //  config.addTagText = traduction['GLOBAL.AJOUTER'];
+    //});
+
+    translate.setDefaultLang('fr');
+    translate.currentLang = 'fr';
+    translate.use('fr');
+
+
     Settings.defaultLocale = this.localeId;
 
     if (this.platform.BLINK) {
@@ -73,8 +92,7 @@ export class AppComponent {
          }
        });
 
-    this.navigationService.GenerateNavigation();
-     
+    
 
     /**
      * Config Related Subscriptions

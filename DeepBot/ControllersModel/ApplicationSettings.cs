@@ -9,4 +9,5 @@ namespace DeepBot.ControllersModel
     {
         public string JWT_Secret { get; set; }
     }
+
 }

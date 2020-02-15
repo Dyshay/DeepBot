@@ -3,7 +3,7 @@ import { Trajet } from './Trajet';
 import { ConfigGroup } from './ConfigGroup';
 
 export class Group {
-  id: string;
+  Id: string;
   name: string;
   description: string;
   fk_Leader?: number;

@@ -22,6 +22,7 @@ namespace DeepBot.Data.Database
         public List<Account> Accounts { get; set; }
         public ApiKey ApiKey { get; set; }
         public ConfigUser Config { get; set; }
+        public string Langue { get; set; } 
         public string AddressIP { get; set; }
         public short AppCliOnline { get; set; }
         public string CliConnectionId { get; set; }
