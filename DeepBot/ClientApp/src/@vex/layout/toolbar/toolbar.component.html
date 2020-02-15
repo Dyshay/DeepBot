@@ -52,7 +52,7 @@
       <span>{{ 'TOOLBAR.CREATEACCOUNT' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/updateAccount']">
       <mat-icon [icIcon]="icAssignment"></mat-icon>
       <span>{{ 'TOOLBAR.UPDATEACCOUNT' | translate}}</span>
     </button>

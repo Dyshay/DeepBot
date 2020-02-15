@@ -63,13 +63,7 @@ export class AppComponent {
     config: NgSelectConfig,
     private splashScreenService: SplashScreenService) {
 
-    //// Permet d'afficher des traductions sur les éléments des ng-select utilisés dans l'application
-    //tradService.translate.get(['GLOBAL.NO_ITEM_FOUND', 'GLOBAL.CLEAR_ALL', 'GLOBAL.AJOUTER']).subscribe(traduction => {
-    //  config.notFoundText = traduction['GLOBAL.NO_ITEM_FOUND'];
-    //  config.clearAllText = traduction['GLOBAL.CLEAR_ALL'];
-    //  config.addTagText = traduction['GLOBAL.AJOUTER'];
-    //});
-
+ 
     translate.setDefaultLang('fr');
     translate.currentLang = 'fr';
     translate.use('fr');
@@ -94,7 +88,7 @@ export class AppComponent {
          }
        });
 
-    
+    this.navigationService.GenerateNavigation();
 
     /**
      * Config Related Subscriptions

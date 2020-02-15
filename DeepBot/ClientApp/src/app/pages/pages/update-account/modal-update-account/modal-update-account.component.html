@@ -1,0 +1,56 @@
+<form (ngSubmit)="save()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <img *ngIf="contact?.imageSrc" [src]="contact?.imageSrc" class="avatar ltr:mr-5 rtl:ml-5">
+    <h2 class="headline m-0" fxFlex="auto">{{'UPDATEACCOUNTMODAL.UPDATEACCOUNTLABEL' | translate}}</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field class="mt-6">
+      <mat-label>{{'GLOBAL.ACCOUNTNAME' | translate}}</mat-label>
+      <input cdkFocusInitial formControlName="accountName" matInput>
+
+      <mat-icon [icIcon]="icPerson" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{'CREATEACCOUNT.PASSWORDACCOUNT' | translate}}</mat-label>
+      <input formControlName="password" matInput>
+
+      <mat-icon [icIcon]="icPhone" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{'GLOBAL.SERVER' | translate}}</mat-label>
+      <input formControlName="server" matInput>
+
+      <mat-icon [icIcon]="icEmail" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{'CREATEACCOUNT.ASSOCIATETOGROUP' | translate}}</mat-label>
+      <input formControlName="group" matInput>
+
+      <mat-icon [icIcon]="icBusiness" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{'CREATEACCOUNT.CHOSECHARACTER' | translate}}</mat-label>
+      <input [matDatepicker]="datepickerRef" formControlName="character" matInput>
+      <mat-datepicker-toggle [for]="datepickerRef" class="block" matPrefix></mat-datepicker-toggle>
+      <mat-datepicker #datepickerRef></mat-datepicker>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">{{'GLOBAL.CANCEL' | translate}}</button>
+    <button color="primary" mat-button type="submit">{{'GLOBAL.SAVE' | translate}}</button>
+  </mat-dialog-actions>
+</form>
+

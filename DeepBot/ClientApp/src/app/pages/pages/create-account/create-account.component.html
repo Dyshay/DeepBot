@@ -39,10 +39,7 @@
           <mat-form-field class="mt-1">
             <mat-label>{{ 'GLOBAL.SERVER' | translate}}</mat-label>
             <mat-select formControlName="server">
-              <mat-option [value]="1">Arty</mat-option>
-              <mat-option [value]="2">Ayuto</mat-option>
-              <mat-option [value]="3">Bilby</mat-option>
-              <mat-option [value]="4">Clustus</mat-option>
+              <mat-option *ngFor="let server of serverList" [value]="server.id">{{server.name}}</mat-option>
             </mat-select>
           </mat-form-field>
 

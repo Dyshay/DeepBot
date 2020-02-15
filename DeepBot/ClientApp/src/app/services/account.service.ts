@@ -32,7 +32,6 @@ export class AccountService {
   }
 
   createGroup(group: Group): Observable<any> {
-
     return this.http.post<Group>(`${environment.apiURL}Group/CreateGroup`, group, httpOptions)
   }
 

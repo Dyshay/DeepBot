@@ -59,7 +59,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 /// A REVOIR EN DESSOUS
                 if (id == user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.Id)
                 {
-                    server.Id = 609;
+                    server.Id = 607;
                     server.Name = "Bilby"; // NEED TO USE CFG
                     server.State = serverState;
                     manager.ReplaceOneAsync(c => c.Id == user.Id, user);
@@ -94,7 +94,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 string[] _loc10_ = loc5[counter].Split(',');
                 int serverId = int.Parse(_loc10_[0]);
 
-                if (serverId == 609)
+                if (serverId == 607)
                 {
                     if (user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.State == ServerState.ONLINE)
                     {

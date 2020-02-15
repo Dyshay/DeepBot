@@ -20,3 +20,9 @@
   border-spacing: 0;
   width: 100%;
 }
+
+.avatar {
+  object-fit: contain !important;
+  height: 3.5rem !important;
+  width: 3.5rem !important;
+}

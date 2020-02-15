@@ -35,7 +35,6 @@ export class AuthEffects {
                 let token = user.token;
                 localStorage.setItem('DeepBot', token);
               this.router.navigate(['/']);
-              this.navigationService.GenerateNavigation();
             })
         ),
         { dispatch: false }
@@ -68,7 +67,7 @@ export class AuthEffects {
                 if(!AuthEffects.isConnectedTalker){
                     this.deeptalk.startConnection();
                     AuthEffects.isConnectedTalker = true;
-                }
+              }
             })
         ),
         { dispatch: false }
