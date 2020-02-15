@@ -169,7 +169,9 @@
 
     <div class="px-1">
       <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
-        <mat-icon [icIcon]="emojioneFR"></mat-icon>
+        <mat-icon *ngIf="(user$ | async)?.langue == 'fr'" [icIcon]="emojioneFR"></mat-icon>
+        <mat-icon *ngIf="(user$ | async)?.langue == 'es'" [icIcon]="emojioneES"></mat-icon>
+        <mat-icon *ngIf="(user$ | async)?.langue == 'en'" [icIcon]="emojioneEN"></mat-icon>
       </button>
     </div>
 
@@ -180,18 +182,18 @@
     </div>
 
     <mat-menu #languageMenu="matMenu" overlapTrigger="false" xPosition="before" yPosition="below">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="changeLanguage('fr')">
         <mat-icon [icIcon]="emojioneFR"></mat-icon>
         <span>Français</span>
       </button>
-      <button mat-menu-item disabled>
-        <mat-icon [icIcon]="emojioneUS"></mat-icon>
+      <button mat-menu-item (click)="changeLanguage('en')" >
+        <mat-icon [icIcon]="emojioneEN"></mat-icon>
         <span>English</span>
       </button>
 
-      <button mat-menu-item disabled>
-        <mat-icon [icIcon]="emojioneDE"></mat-icon>
-        <span>German</span>
+      <button mat-menu-item (click)="changeLanguage('es')">
+        <mat-icon [icIcon]="emogioneES"></mat-icon>
+        <span>Espanol</span>
       </button>
     </mat-menu>
   </div>

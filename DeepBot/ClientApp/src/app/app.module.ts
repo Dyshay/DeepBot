@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { VexModule } from '../@vex/vex.module';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { CustomLayoutModule } from './custom-layout/custom-layout.module';
 import { AuthInterceptor } from './interceptor/auth.incerpetor';
 import { UserService } from './services/user.service';
@@ -19,6 +19,13 @@ import { EffectsModule } from '@ngrx/effects';
 import { TalkService } from './Services/TalkService';
 import { AuthModule } from './pages/pages/auth/auth.modules';
 import { BotModule } from './pages/pages/bot/bot.modules';
+import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MyMissingTranslationHandler } from './modules/my-missing-translation-handler.module';
+
+export function createTranslateLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,6 +41,15 @@ import { BotModule } from './pages/pages/bot/bot.modules';
     // Vex
     VexModule,
     CustomLayoutModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: (createTranslateLoader),
+        deps: [HttpClient]
+      },
+      missingTranslationHandler: { provide: MissingTranslationHandler, useClass: MyMissingTranslationHandler },
+      useDefaultLang: true
+    }),
     StoreModule.forRoot(ROOT_REDUCERS, {
       metaReducers, runtimeChecks: {
         strictStateImmutability: true,

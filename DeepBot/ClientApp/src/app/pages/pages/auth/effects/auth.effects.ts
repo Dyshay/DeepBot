@@ -8,6 +8,7 @@ import { Account } from '../../../../../webModel/Account';
 import { User } from '../../../../../webModel/User';
 import { TalkService } from "src/app/Services/TalkService";
 import { AuthService } from "src/app/services/auth.services";
+import { NavigationService } from '../../../../../@vex/services/navigation.service';
 
 @Injectable()
 export class AuthEffects {
@@ -33,7 +34,8 @@ export class AuthEffects {
             tap((user: any) => {
                 let token = user.token;
                 localStorage.setItem('DeepBot', token);
-                this.router.navigate(['/']);
+              this.router.navigate(['/']);
+              this.navigationService.GenerateNavigation();
             })
         ),
         { dispatch: false }
@@ -72,5 +74,5 @@ export class AuthEffects {
         { dispatch: false }
     );
 
-    constructor(private actions$: Actions, private authService: AuthService, private router: Router, private deeptalk: TalkService) { }
+    constructor(private actions$: Actions, private authService: AuthService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
 }

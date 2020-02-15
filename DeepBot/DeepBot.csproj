@@ -68,6 +68,6 @@
     </ItemGroup>
   </Target>
 
-  <ProjectExtensions><VisualStudio><UserProperties clientapp_4package_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+  <ProjectExtensions><VisualStudio><UserProperties clientapp_4src_4assets_4i18n_4fr_1json__JsonSchema="http://json.schemastore.org/bootstraprc" clientapp_4package_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

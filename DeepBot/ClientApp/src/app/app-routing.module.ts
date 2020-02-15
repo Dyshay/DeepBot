@@ -3,6 +3,10 @@ import { RouterModule, Routes } from '@angular/router';
 import { VexRoutes } from '../@vex/interfaces/vex-route.interface';
 import { CustomLayoutComponent } from './custom-layout/custom-layout.component';
 import { AuthGuard } from './guard/auth-guard.component';
+import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
+import { MyMissingTranslationHandler } from './modules/my-missing-translation-handler.module';
+import { HttpClient } from '@angular/common/http';
+import { createTranslateLoader } from './app.module';
 
 const childrenRoutes: VexRoutes = [
   {

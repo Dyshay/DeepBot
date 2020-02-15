@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { User } from '../../webModel/User';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class UserService {
 
-    user: User = new User();
+  private _user = new Subject<User>();
+
+  user: User = new User();
 
     constructor(private http: HttpClient) {
 
