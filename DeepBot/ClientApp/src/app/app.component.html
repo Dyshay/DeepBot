@@ -1,2 +1,10 @@
-<router-outlet></router-outlet>
+<ng-http-loader [backdrop]="false"
+                [backgroundColor]="'#ff0000'"
+                [debounceDelay]="100"
+                [extraDuration]="300"
+                [minDuration]="500"
+                [opacity]=".6"
+                [spinner]="spinkit.skSpinnerPulse">
+  </ng-http-loader>
+  <router-outlet></router-outlet>
 

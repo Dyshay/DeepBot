@@ -38,6 +38,7 @@ import { ConfigName } from '../@vex/interfaces/config-name.model';
 import { TraductionService } from './services/traduction-service.module';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
+import { Spinkit } from 'ng-http-loader';
 
 @Component({
   selector: 'vex-root',
@@ -46,6 +47,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class AppComponent {
   title = 'DeppBot';
+  public spinkit = Spinkit;
 
   constructor(private configService: ConfigService,
               private styleService: StyleService,

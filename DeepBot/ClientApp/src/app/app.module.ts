@@ -22,6 +22,7 @@ import { BotModule } from './pages/pages/bot/bot.modules';
 import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MyMissingTranslationHandler } from './modules/my-missing-translation-handler.module';
+import { NgHttpLoaderModule } from 'ng-http-loader';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -58,6 +59,7 @@ export function createTranslateLoader(http: HttpClient) {
         strictActionSerializability: true,
       }
     }),
+    NgHttpLoaderModule.forRoot(),
     StoreRouterConnectingModule.forRoot({
       routerState: RouterState.Minimal,
     }),
