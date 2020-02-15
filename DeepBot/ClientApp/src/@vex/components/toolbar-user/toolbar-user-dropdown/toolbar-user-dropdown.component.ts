@@ -25,6 +25,7 @@ import keyIcon from '@iconify/icons-fa-solid/key';
 import * as fromAuth from '../../../../app/pages/pages/auth/reducers';
 import { Store, select } from '@ngrx/store';
 import { AuthActions } from 'src/app/pages/pages/auth/actions';
+import { TranslateService } from '@ngx-translate/core';
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -45,32 +46,24 @@ export class ToolbarUserDropdownComponent implements OnInit {
     {
       id: '1',
       icon: icAccountCircle,
-      label: 'My Profile',
-      description: 'Personal Information',
+      label: this.translate.instant('USERPANEL.PROFIL'),
+      description: this.translate.instant('USERPANEL.PROFILDESCRIPTION'),
       colorClass: 'text-teal-500',
       route: '/pages/profile'
     },
     {
       id: '2',
       icon: icMoveToInbox,
-      label: 'My Inbox',
-      description: 'Messages & Latest News',
+      label: this.translate.instant('USERPANEL.INBOX'),
+      description: this.translate.instant('USERPANEL.INBOXDESCRIPTION'),
       colorClass: 'text-primary-500',
       route: '/apps/chat'
     },
     {
-      id: '3',
-      icon: icListAlt,
-      label: 'My Projects',
-      description: 'Tasks & Active Projects',
-      colorClass: 'text-amber-500',
-      route: '/apps/scrumboard'
-    },
-    {
       id: '4',
       icon: icTableChart,
-      label: 'Billing Information',
-      description: 'Pricing & Current Plan',
+      label: this.translate.instant('USERPANEL.SUBSCRIPTION'),
+      description: this.translate.instant('USERPANEL.SUBSCRIPTIONDESCRIPTION'),
       colorClass: 'text-purple-500',
       route: '/pages/pricing'
     }
@@ -123,7 +116,8 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   constructor(private cd: ChangeDetectorRef,
               private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
-              private store: Store<fromAuth.State>,
+    private store: Store<fromAuth.State>,
+    private translate: TranslateService
           ) { 
                 this.store.dispatch(AuthActions.getUser());
 

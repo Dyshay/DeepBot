@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -11,6 +11,9 @@ import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-to
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ColorFadeModule } from '../../../../@vex/pipes/color/color-fade.module';
+import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -34,8 +37,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSlideToggleModule,
     SecondaryToolbarModule,
     BreadcrumbsModule,
-    ContainerModule
-  ]
+    ContainerModule,
+    ColorFadeModule,
+    PageLayoutModule,
+    TranslateModule
+  ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CreateAccountModule {
 }

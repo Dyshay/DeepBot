@@ -18,59 +18,48 @@
           color="primary"
           mat-raised-button
           type="button">
-    Gestion du bot
+    {{ 'TOOLBAR.BOTHANDLE' | translate}}
   </button>
 
   <mat-menu #addNewMenu="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below">
 
     <button [matMenuTriggerFor]="AccountMenu" mat-menu-item>
       <mat-icon [icIcon]="icPersonAdd"></mat-icon>
-      <span>Gerer mes comptes Dofus</span>
+      <span>{{ 'TOOLBAR.HANDLEACCOUNT' | translate}}</span>
     </button>
 
     <button [matMenuTriggerFor]="GroupMenu" mat-menu-item>
       <mat-icon [icIcon]="icDoneAll"></mat-icon>
-      <span>Gérer mes groupes</span>
+      <span>{{ 'TOOLBAR.HANDLEGROUP' | translate}}</span>
     </button>
 
     <button [matMenuTriggerFor]="PathMenu" mat-menu-item>
       <mat-icon [icIcon]="icAssignmentTurnedIn"></mat-icon>
-      <span>Gérer mes trajets</span>
+      <span>{{ 'TOOLBAR.HANDLEPATH' | translate}}</span>
     </button>
 
     <button [matMenuTriggerFor]="IAMenu" mat-menu-item>
       <mat-icon [icIcon]="icBallot"></mat-icon>
-      <span>Gérer mes IA</span>
+      <span>{{ 'TOOLBAR.HANDLEIA' | translate}}</span>
     </button>
   </mat-menu>
 
-  <mat-menu #IAMenu="matMenu">
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Creer un trajet</span>
-    </button>
-
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un trajet</span>
-    </button>
-  </mat-menu>
 
   <!--menu account-->
   <mat-menu #AccountMenu="matMenu">
     <button mat-menu-item [routerLink]="['/createAccount']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Ajouter un compte Dofus</span>
+      <span>{{ 'TOOLBAR.CREATEACCOUNT' | translate}}</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un compte Dofus</span>
+      <span>{{ 'TOOLBAR.UPDATEACCOUNT' | translate}}</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer un compte Dofus</span>
+      <span>{{ 'TOOLBAR.DELETEACCOUNT' | translate}}</span>
     </button>
   </mat-menu>
 
@@ -78,17 +67,17 @@
   <mat-menu #GroupMenu="matMenu">
     <button mat-menu-item [routerLink]="['/createGroup']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Créer un groupe de bot</span>
+      <span>{{ 'TOOLBAR.CREATEGROUP' | translate}}</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un groupe</span>
+      <span>{{ 'TOOLBAR.UPDATEGROUP' | translate}}</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer un groupe</span>
+      <span>{{ 'TOOLBAR.DELETEGROUP' | translate}}</span>
     </button>
   </mat-menu>
 
@@ -96,16 +85,16 @@
   <mat-menu #PathMenu="matMenu">
     <button mat-menu-item>
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Creer un trajet</span>
+      <span>{{ 'TOOLBAR.CREATEPATH' | translate}}</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un trajet</span>
+      <span>{{ 'TOOLBAR.UPDATEPATH' | translate}}</span>
     </button>
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer un trajet</span>
+      <span>{{ 'TOOLBAR.DELETEPATH' | translate}}</span>
     </button>
   </mat-menu>
 
@@ -113,16 +102,16 @@
   <mat-menu #IAMenu="matMenu">
     <button mat-menu-item>
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Creer une IA</span>
+      <span>{{ 'TOOLBAR.CREATEIA' | translate}}</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier une IA</span>
+      <span>{{ 'TOOLBAR.UPDATEIA' | translate}}</span>
     </button>
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer une IA</span>
+      <span>{{ 'TOOLBAR.DELETEIA' | translate}}</span>
     </button>
   </mat-menu>
 
