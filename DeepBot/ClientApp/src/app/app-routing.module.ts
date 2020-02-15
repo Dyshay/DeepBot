@@ -31,6 +31,10 @@ const childrenRoutes: VexRoutes = [
     loadChildren: () => import('./pages/pages/update-account/update-account.module').then(m => m.UpdateAccountModule),
   },
   {
+    path: 'bot-dashboard/:id',
+    loadChildren: () => import('./pages/pages/bot-dashboard/bot-dashboard.module').then(m => m.BotDashboardModule),
+  },
+  {
     path: 'apps',
     children: [
       {

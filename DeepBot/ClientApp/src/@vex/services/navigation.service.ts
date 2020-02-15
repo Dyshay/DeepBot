@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { NavigationDropdown, NavigationItem, NavigationLink, NavigationSubheading } from '../interfaces/navigation-item.interface';
-import { Subject } from 'rxjs';
+import { Subject, concat } from 'rxjs';
 import { LayoutService } from './layout.service';
 import { User } from '../../webModel/User';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
@@ -68,7 +68,7 @@ export class NavigationService {
           type: 'link',
           label: 'Tableau de bord',
           route: '/dashboards',
-          icon: icLayers
+          icon: icLayers,
         });
         this.items.push({
           type: 'subheading',
@@ -85,6 +85,7 @@ export class NavigationService {
               this.itemGroup = {label:null,route:null,type:null,badge:null,fragment:null}
               this.itemGroup.label = this.group.children[j].label;
               this.group.children.push(this.itemGroup);
+              this.group.route = '/group-dashboard/:' + result.items[i].id;
               this.items.push(this.group);
             }
           }
@@ -92,12 +93,11 @@ export class NavigationService {
             this.item = { label: null, route: null, type: null, badge: null, fragment: null };
             this.item.label = result.items[i].name;
             this.item.type = 'link';
-            this.item.icon = icLayers
-            this.item.route = () => '/bot' + result.items[i].id
+            this.item.icon = icLayers;
+            this.item.route = '/bot-dashboard/:' + result.items[i].id;
             this.items.push(this.item);
           }
         }
-
         this.items.push({
           type: 'subheading',
           label: 'Customiser',
