@@ -9,7 +9,8 @@
     "PSEUDO": "Pseudo",
     "GROUPLEVEL": "Level du groupe",
     "GROUPPP": "Prospection du group",
-    "ADD": "Ajouter"
+    "ADD": "Ajouter",
+    "DISCONNECT": "Se déconnecter"
   },
   "TOOLBAR": {
     "BOTHANDLE": "Gestion du bot",
@@ -19,16 +20,24 @@
     "HANDLEIA": "Gérer mes IA",
     "CREATEPATH": "Creer un trajet",
     "UPDATEPATH": "Modifier un trajet",
-    "ADDACCOUNT": "Ajouter un compte Dofus",
+    "DELETEPATH": "Supprimer un trajet",
+    "CREATEACCOUNT": "Ajouter un compte Dofus",
     "UPDATEACCOUNT": "Modifier un compte Dofus",
     "DELETEACCOUNT": "Supprimer un compte Dofus",
     "CREATEGROUP": "Créer un groupe de bot",
     "UPDATEGROUP": "Modifier un groupe",
-    "DELETEG¨ROUP": "Supprimer un groupe",
+    "DELETEGROUP": "Supprimer un groupe",
     "CREATEIA": "Creer une IA",
     "UPDATEIA": "Modifier une IA",
     "DELETEIA": "Supprimer une IA"
-
+  },
+  "USERPANEL": {
+    "PROFIL": "Mon profil",
+    "PROFILDESCRIPTION": "Information Personnel",
+    "INBOX": "Boîte de réception",
+    "INBOXDESCRIPTION": "Messages et Dernières News",
+    "SUBSCRIPTION": "Mon abonnements",
+    "SUBSCRIPTIONDESCRIPTION": "Acheter, Renouveller, Modifier mon abonnement"
   },
 
   "LOGIN": {
@@ -77,5 +86,10 @@
     "ASSOCIATETOGROUP": "Associer à un groupe existant",
     "SEARCHCHARACTERS": "Rechercher les personnages sur le compte",
     "CHOSECHARACTER": "Choisisez votre personnage"
+  },
+  "UPDATEACCOUNT": {
+    "DESCRIPTION1": "Modifier vos comptes Dofus",
+    "DESCRIPTION2": "- Ces modifications sera sauvegardé sur votre compte.",
+    "DESCRIPTION3": "- description 3"
   }
 }

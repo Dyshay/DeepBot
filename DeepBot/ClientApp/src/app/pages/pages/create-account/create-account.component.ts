@@ -19,6 +19,8 @@ import * as fromBot from '../bot/reducers';
 import { AccountService } from '../../../services/account.service';
 import { error } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs';
+import { Server } from '../../../../webModel/Server';
+import { ServerState } from '../../../../webModel/Enum/ServerState';
 
 
 
@@ -42,6 +44,18 @@ export class CreateAccountComponent implements OnInit{
   characterCreated: Character;
   charaters$ = this.store.pipe(select(fromBot.getCharacters));
   hourchecked: boolean = false;
+  serverList: { id: number, name:string}[]=[
+    { id: 609, name: 'Bilby' },
+    { id: 601, name: 'Eratz' },
+    { id: 602, name: 'Henual' },
+    { id: 604, name: 'Arty' },
+    { id: 605, name: 'Algathe' },
+    { id: 606, name: 'Hogmeiser' },
+    { id: 607, name: 'Droupik' },
+    { id: 608, name: 'Ayuto' },
+    { id: 610, name: 'Clustus' },
+    { id: 611, name: 'Issering' },
+  ]
 
    
   groupList: Group[] = [ ]
@@ -66,8 +80,8 @@ export class CreateAccountComponent implements OnInit{
     this.form = this.fb.group({
       accountName: [, Validators.required],
       password: ['', Validators.required],
-      server : ['', Validators.required],
-      group: [Group, Validators.required],
+      server : ['', Validators.required], 
+      group: [Group,null],
       character: [Character, Validators.required]
     });
 
@@ -81,7 +95,7 @@ export class CreateAccountComponent implements OnInit{
 
   findCharacter() {
        // Apelle de la liste des perso sur le serv au client et renseigné les infos ci dessous
-    this.deeptalk.createConnexionBot(this.form.controls["accountName"].value, this.form.controls["password"].value, 609, true);
+    this.deeptalk.createConnexionBot(this.form.controls["accountName"].value, this.form.controls["password"].value, this.form.controls["server"].value, true);
     this.ischaractersfound = true;
    
 
@@ -97,7 +111,7 @@ export class CreateAccountComponent implements OnInit{
 
 
       this.accountToCreate.state = AccountState.DISCONNECTED;
-      this.accountToCreate.serverId = 610;
+      this.accountToCreate.serverId = this.form.controls["server"].value;
       this.accountToCreate.isBan = false;
       let account = this.accountToCreate;
       this.store.dispatch(BotActions.createAccount({ account  }));

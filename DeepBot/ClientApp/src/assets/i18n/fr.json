@@ -2,6 +2,7 @@
   "GLOBAL": {
     "CANCEL": "Annuler",
     "NEXT": "Suivant",
+    "SAVE": "Sauvegarder",
     "BACK": "Retour",
     "BREED": "Classe",
     "LEVEL": "Level",
@@ -10,7 +11,11 @@
     "GROUPLEVEL": "Level du groupe",
     "GROUPPP": "Prospection du group",
     "ADD": "Ajouter",
-    "DISCONNECT": "Se déconnecter"
+    "DISCONNECT": "Se déconnecter",
+    "ACCOUNTNAME": "Nom de compte",
+    "PRINCIPALCHARACTER": "Personnage principal",
+    "CREATIONDATE": "Date de création",
+    "ISLEADER" : "Leader"
   },
   "TOOLBAR": {
     "BOTHANDLE": "Gestion du bot",
@@ -86,5 +91,16 @@
     "ASSOCIATETOGROUP": "Associer à un groupe existant",
     "SEARCHCHARACTERS": "Rechercher les personnages sur le compte",
     "CHOSECHARACTER": "Choisisez votre personnage"
+  },
+  "UPDATEACCOUNT": {
+    "ACCOUNTS": "Mes Compes dofus",
+    "SEARCHACCOUNT": "Rechercher un compte",
+    "DESCRIPTION1": "Modifier vos comptes Dofus",
+    "DESCRIPTION2": "- Ces modifications sera sauvegardé sur votre compte.",
+    "DESCRIPTION3": "- description 3",
+    "NOACCOUNTFOUND": "Aucun compte ne correspond à votre filtre"
+  },
+  "UPDATEACCOUNTMODAL": {
+    "UPDATEACCOUNTLABEL" : "Modifier le compte"
   }
 }

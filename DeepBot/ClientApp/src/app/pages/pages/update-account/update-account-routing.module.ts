@@ -9,7 +9,7 @@ const routes: VexRoutes = [
     path: '',
     component: UpdateAccountComponent ,
     data: {
-      containerEnabled: true,
+      scrollDisabled:true,
       toolbarShadowEnabled: true
     }
   }
