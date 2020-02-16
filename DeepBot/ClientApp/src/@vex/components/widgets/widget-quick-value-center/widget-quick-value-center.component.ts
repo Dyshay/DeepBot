@@ -8,6 +8,8 @@ import { MatBottomSheet } from '@angular/material';
 import { ShareBottomSheetComponent } from '../../share-bottom-sheet/share-bottom-sheet.component';
 import { scaleInOutAnimation } from '../../../animations/scale-in-out.animation';
 import { ColorDef } from '../../../utils/tailwindcss.interface';
+import { Link } from '../../../interfaces/link.interface';
+
 
 @Component({
   selector: 'vex-widget-quick-value-center',
@@ -16,7 +18,7 @@ import { ColorDef } from '../../../utils/tailwindcss.interface';
   animations: [scaleInOutAnimation]
 })
 export class WidgetQuickValueCenterComponent implements OnInit {
-
+  
   @Input() icon: Icon;
   @Input() value: string;
   @Input() label: string;

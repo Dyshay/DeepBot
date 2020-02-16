@@ -8,6 +8,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatButtonModule } from '@angular/material/button';
 import { ShareBottomSheetModule } from '../../share-bottom-sheet/share-bottom-sheet.module';
 import { ColorFadeModule } from '../../../pipes/color/color-fade.module';
+import { MatProgressBarModule, MatTabsModule } from '@angular/material';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { ColorFadeModule } from '../../../pipes/color/color-fade.module';
     MatTooltipModule,
     MatButtonModule,
     ShareBottomSheetModule,
-    ColorFadeModule
+    ColorFadeModule,
+    MatProgressBarModule,
+    MatTabsModule
   ],
   exports: [WidgetQuickValueCenterComponent]
 })
