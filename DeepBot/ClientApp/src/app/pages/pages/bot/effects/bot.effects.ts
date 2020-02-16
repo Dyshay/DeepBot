@@ -38,8 +38,7 @@ export class BotEffects {
             map(action => action.account),
             tap((account: any) => {
               this.navigationService.GenerateNavigation();
-              console.log(account);
-              this.toastr.success('', 'Compte ' + account.accountName + 'ajouté avec succéss');
+              this.toastr.success('', 'Compte ' + account.accountName + ' ajouté avec succés');
               this.router.navigateByUrl('/');
 
             })
@@ -102,6 +101,7 @@ export class BotEffects {
       map(action => action.group),
       tap((group: any) => {
         this.navigationService.GenerateNavigation();
+        this.toastr.success('', 'Groupe ' + group.name + ' ajouté avec succés');
       })
     ),
     { dispatch: false }

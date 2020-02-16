@@ -14,6 +14,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { ModalUpdateAccountComponent } from './modal-update-account.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { MatSelectModule } from '@angular/material/select';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [ModalUpdateAccountComponent],
@@ -31,7 +32,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     MatNativeDateModule,
     MatSelectModule,
-    TranslateModule,
+    TranslateModule
 
   ],
   entryComponents: [ModalUpdateAccountComponent]

@@ -13,7 +13,10 @@ import { Group } from '../../../../../webModel/Group';
 import icPerson from '@iconify/icons-ic/person';
 import icVisibility from '@iconify/icons-ic/twotone-visibility';
 import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
-
+import icPaswword from '@iconify/icons-ic/baseline-keyboard-hide';
+import icServer from '@iconify/icons-ic/baseline-cloud-upload';
+import icClose from '@iconify/icons-ic/close'
+import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'app-modal-update-account',
     templateUrl: './modal-update-account.component.html',
@@ -28,6 +31,9 @@ export class ModalUpdateAccountComponent implements OnInit {
   icPerson = icPerson;
   icVisibility = icVisibility;
   icVisibilityOff = icVisibilityOff;
+  icPaswword = icPaswword;
+  icClose = icClose;
+  icServer = icServer
   inputType = 'password';
   visible = false;
 
@@ -36,6 +42,7 @@ export class ModalUpdateAccountComponent implements OnInit {
     private store2: Store<fromBot.State>,
     private store: Store<fromAuth.State>,
     private dialogRef: MatDialogRef<ModalUpdateAccountComponent>,
+    private toastr: ToastrService,
     private cd: ChangeDetectorRef,
     @Inject(MAT_DIALOG_DATA) private accountName: AccountInterface['accountName'], private fb: FormBuilder) {
      
@@ -60,6 +67,41 @@ export class ModalUpdateAccountComponent implements OnInit {
         });
       }
     );
+  }
+
+  updateAccount() {
+
+    this.store.pipe(select(fromAuth.getUserConnected)).subscribe(
+      (result: User) => {
+        if (this.ValidateCredential()) {
+          this.account.accountName = this.form.controls["accountName"].value;
+          this.account.password = this.form.controls["password"].value;
+          this.account.serverId = this.form.controls["password"].value;
+          if (this.account.currentCharacter.key != this.form.controls["character"].value) {
+            var index = this.groups.find(o => o.key == this.account.currentCharacter.fk_Group).fk_Followers.findIndex(o => o == this.account.currentCharacter.key)
+            this.groups.find(o => o.key == this.account.currentCharacter.fk_Group).fk_Followers.splice(index, 1)
+
+            this.account.currentCharacter.fk_Group == null;
+            this.account.currentCharacter = result.accounts.find(o => o.accountName == this.account.accountName).characters.find(o => o.key == this.form.controls["character"].value);
+          }
+          this.account.currentCharacter.fk_Group = this.form.controls["group"].value;
+        }
+        else {
+          this.toastr.error('Vous ne pouvez pas modifier le personnage acutel, celui ci est leader d"un autre groupe', 'Erreur');
+        }
+
+      
+      });
+  }
+  ValidateCredential() {
+    if (this.account.currentCharacter.key != this.form.controls["character"].value || this.account.currentCharacter.fk_Group != this.form.controls["group"].value) {
+      for (var i = 0; i < this.groups.length; i++) {
+        if (this.groups[i].fk_Leader == this.account.currentCharacter.key)
+          return false;
+      }
+    }
+    return true;
+
   }
 
   toggleVisibility() {
