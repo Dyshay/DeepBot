@@ -62,6 +62,7 @@ namespace DeepBot.Controllers
             user.Accounts.RemoveAll(o=> o.isScan == true);
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
+            account.isScan = false;
             if (user.Accounts == null)
             {
                 user.Accounts = new List<Account>() { account };
