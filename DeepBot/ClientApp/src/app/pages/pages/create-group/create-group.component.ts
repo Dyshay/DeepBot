@@ -85,10 +85,10 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
   submit() {
     this.groupToCreate.name = this.groupstep1.controls["groupName"].value;
     this.groupToCreate.description = this.groupstep1.controls["description"].value;
-    this.groupToCreate.fk_Leader = this.Leader.id;
+    this.groupToCreate.fk_Leader = this.Leader.key;
     this.groupToCreate.fk_Followers = [];
     for (var i = 0; i < this.followers.length; i++) {
-      this.groupToCreate.fk_Followers.push(this.followers[i].id);
+      this.groupToCreate.fk_Followers.push(this.followers[i].key);
     }
     let group = this.groupToCreate;
     console.log(group);
@@ -115,7 +115,7 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
       this.followers.push(row);
     }
     else {
-      var index = this.followers.findIndex(o => o.id == row.id);
+      var index = this.followers.findIndex(o => o.key == row.key);
       console.log(this.followers);
       console.log(row);
       this.followers.splice(index,1);

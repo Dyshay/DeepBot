@@ -12,7 +12,7 @@ import { CharacterMap } from './CharacterMap';
 import { LogType } from './Enum/LogType';
 
 export class Character {
-  id: number;
+  key: number;
   fK_IA?: string;
   fK_Group?: string;
   fK_Configuration?: string;

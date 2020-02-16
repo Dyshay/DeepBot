@@ -1,4 +1,5 @@
 ﻿using DeepBot.Data.Database;
+using DeepBot.Data.Driver;
 using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.MapComponent;
 using MongoDB.Bson.Serialization.Attributes;
@@ -11,9 +12,8 @@ using System.Text.Json.Serialization;
 namespace DeepBot.Data.Model
 {
 
-    public class Character
+    public class Character : Document<int>
     {
-        public int Id { get; set; } /* ANKAMA ID */ 
         public Guid Fk_IA { get; set; }
         public Guid Fk_Group { get; set; }
         public Guid Fk_Configuration { get; set; }

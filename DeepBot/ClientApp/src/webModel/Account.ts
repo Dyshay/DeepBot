@@ -5,7 +5,7 @@ import { AccountState } from './Enum/AccountState';
 import { Server } from './Server';
 
 export class Account {
-  id: string;
+  key: string;
   characters: Character[];
   currentCharacter: Character;
   proxy?: Proxy;

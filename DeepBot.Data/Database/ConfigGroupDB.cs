@@ -7,9 +7,8 @@ using System.Text;
 
 namespace DeepBot.Data.Database
 {
-    public class ConfigGroupDB : Document<int>
+    public class ConfigGroupDB : Document<Guid>
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid Id { get; set; }
+        public int MyProperty { get; set; }
     }
 }

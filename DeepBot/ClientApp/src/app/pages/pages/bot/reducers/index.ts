@@ -25,5 +25,6 @@ export const selectBotStatusState = createSelector(
 );
 
 export const getLogs = createSelector(selectBotStatusState, fromBot.getLogs);
-export const getCharacters = createSelector(selectBotStatusState, fromBot.getCharacters);
+export const getScanCharacters = createSelector(selectBotStatusState, fromBot.getScanCharacters);
 export const getAllCharacters = createSelector(selectBotStatusState, fromBot.getAllCharacters);
+export const getAllGroups = createSelector(selectBotStatusState, fromBot.getAllGroups);

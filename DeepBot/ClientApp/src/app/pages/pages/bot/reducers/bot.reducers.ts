@@ -7,9 +7,10 @@ import { Group } from '../../../../../webModel/Group';
 
 export interface State {
   logs: LogMessage[];
-  characters: Character[];
+  scanCharacters: Character[];
   allCharacters: Character[],
   account: Account | null;
+  allGroups: Group[],
   error: string | null;
   pending: boolean,
   group: Group | null;
@@ -17,8 +18,9 @@ export interface State {
 
 export const initialState: State = {
   logs: [],
-  characters: [],
+  scanCharacters: [],
   allCharacters: [],
+  allGroups: [],
   group:null,
   account: null,
   error: null,
@@ -33,7 +35,7 @@ export const reducer = createReducer(initialState,
   on(BotActions.createAccountSuccess, (state, { account }) => ({ ...state, account: account ,pending:false})),
   on(BotActions.createAccountFailure, (state, { error }) => ({ ...state, error, pending: false })),
 
-  on(BotActions.receveidCharacters, (state, { network }) => ({ ...state, characters: network.characters })),
+  on(BotActions.receveidCharacters, (state, { network }) => ({ ...state, scanCharacters: network.characters })),
 
   on(BotActions.getAllCharacters, (state) => ({ ...state, pending: true })),
   on(BotActions.getAllCharactersSuccess, (state, { characters }) => ({ ...state, allCharacters: characters, pending: false })),
@@ -42,10 +44,17 @@ export const reducer = createReducer(initialState,
   on(BotActions.createGroup, (state) => ({ ...state, pending: true })),
   on(BotActions.createGroupSuccess, (state, { group }) => ({ ...state, group: group, pending: false })),
   on(BotActions.createGroupFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+  on(BotActions.updateCharacterFKGroup, (state, { fk_group, key }) => ({ ...state, scanCharacters: [{ ...state.scanCharacters.find(c => c.key === key), fK_Group: fk_group }], pending: false })),
+
+  on(BotActions.getAllGroups, (state) => ({ ...state, pending: true })),
+  on(BotActions.getAllGroupsSuccess, (state, { groups }) => ({ ...state, allGroups: groups, pending: false })),
+  on(BotActions.getAllGroupsFailure, (state, { error }) => ({ ...state, error, pending: false })),
 )
 
 
 export const getLogs = (state: State) => state.logs;
-export const getCharacters = (state: State) => state.characters;
+export const getScanCharacters = (state: State) => state.scanCharacters;
 export const getAccount = (state: State) => state.account;
 export const getAllCharacters = (State: State) => State.allCharacters;
+export const getAllGroups = (State: State) => State.allGroups;

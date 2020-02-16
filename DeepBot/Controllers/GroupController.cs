@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -23,7 +24,8 @@ namespace DeepBot.Controllers
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
-        private readonly IMongoCollection<GroupDB> _group;
+        private  IMongoCollection<GroupDB> _group;
+        
 
         public GroupController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -32,16 +34,46 @@ namespace DeepBot.Controllers
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
             _userCollection = userCollection;
-
+            _group = Database.Groups;
         }
 
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetAllGroups")]
+        public  List<GroupDB> GetAllGroups()
+        {
+
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+
+            return _group.Find(o => o.FK_User.ToString() == userId).ToList();
+
+        }
 
         [HttpPost]
         [Authorize]
         [Route("CreateGroup")]
-        public GroupDB CreateGroup(GroupDB group)
+        public async Task<GroupDB> CreateGroupAsync(GroupDB group)
         {
-            Database.Groups.InsertOneAsync(group);
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            group.Key = Guid.NewGuid();
+            group.FK_User = Guid.Parse(userId);
+
+            foreach (var charactersId in group.Fk_Followers)
+            {
+                foreach (Account account in user.Accounts)
+                {
+                    var character = account.Characters.FirstOrDefault(o => o.Key == charactersId);
+                   
+                    if (character != null)
+                    {
+                        character.Fk_Group = group.Key;
+                    } 
+                }
+            }
+            await _userManager.UpdateAsync(user);
+            await Database.Groups.InsertOneAsync(group);
 
             return null;
         }

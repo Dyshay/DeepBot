@@ -14,11 +14,8 @@ using DeepBot.Data.Model.CharacterInfo;
 namespace DeepBot.Data.Model
 {
 
-    public class Account
+    public class Account: Document<Guid>
     {
-
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid Id { get; set; }
         public List<Character> Characters { get; set; }
         public Character CurrentCharacter { get; set; }
         public Proxy Proxy { get; set; }

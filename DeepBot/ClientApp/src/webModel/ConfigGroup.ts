@@ -1,7 +1,7 @@
 import { Classe } from './Enum/Classe';
 
 export class ConfigGroup {
-  id: string;
+  key: string;
   CharacterName: string;
   CharacterLevel: number;
   CharacterBreedId: number;
