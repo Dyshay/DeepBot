@@ -10,6 +10,7 @@ import icContacts from '@iconify/icons-ic/twotone-contacts';
 import icSearch from '@iconify/icons-ic/twotone-search';
 import icStar from '@iconify/icons-ic/twotone-star';
 import icMenu from '@iconify/icons-ic/twotone-menu';
+
 import { MatDialog } from '@angular/material';
 import { ContactsEditComponent } from '../../apps/contacts/components/contacts-edit/contacts-edit.component';
 import { TranslateService } from '@ngx-translate/core';
@@ -42,7 +43,7 @@ export class UpdateAccountComponent implements OnInit {
 
   menuOpen = false;
 
-  activeCategory: 'frequently' | 'starred' | 'all' | 'family' | 'friends' | 'colleagues' | 'business' = 'all';
+
   tableData = [];
 
   columns: TableColumn<AccountInterface>[] = [
@@ -62,19 +63,19 @@ export class UpdateAccountComponent implements OnInit {
       label: this.translateService.instant('GLOBAL.PRINCIPALCHARACTER'),
       property: 'characterName',
       type: 'text',
-      cssClasses: ['text-secondary']
+      cssClasses: ['font-medium']
     },
     {
       label: this.translateService.instant('CREATEGROUP.GROUPNAME'),
       property: 'groupName',
       type: 'text',
-      cssClasses: ['text-secondary']
+      cssClasses: ['font-medium']
     },
     {
       label: this.translateService.instant('GLOBAL.CREATIONDATE'),
       property: 'creationDate',
       type: 'text',
-      cssClasses: ['text-secondary']
+      cssClasses: ['font-medium']
     },
     {
       label: this.translateService.instant('GLOBAL.ISLEADER'),
@@ -88,6 +89,7 @@ export class UpdateAccountComponent implements OnInit {
   icSearch = icSearch;
   icContacts = icContacts;
   icMenu = icMenu;
+
 
   constructor(private dialog: MatDialog, private translateService: TranslateService, private store: Store<fromAuth.State>, private store2: Store<fromBot.State>) { }
 

@@ -55,7 +55,7 @@
             <mat-label>{{ 'CREATEACCOUNT.ASSOCIATETOGROUP' | translate}}</mat-label>
             <mat-select formControlName="group">
               <mat-option *ngFor="let group of groups$ | async" [value]="group.key">
-                <b>Leader : {{group?.leader.name}}</b>
+                <b>Leader : {{group.leader?.name}}</b>
                 ( groupetotal : a faire! ,  &nbsp; {{ 'GLOBAL.GROUPLEVEL' | translate}} {{group.level}}, &nbsp;  {{ 'GLOBAL.GROUPPP' | translate}} : {{group.prospection}})
               </mat-option>
             </mat-select>
