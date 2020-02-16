@@ -37,13 +37,13 @@
        class="item"
        fxLayout="row"
        matRipple>
-    <mat-icon *ngIf="level === 0" [icIcon]="item.icon" class="item-icon" fxFlex="none"></mat-icon>
-    <span class="item-label" fxFlex="auto">{{ item.label }}</span>
+    <mat-icon *ngIf="level === 0" [icIcon]="item.icon" class="item-icon" fxFlex="none" (click)="dropdownLink(item.route)"></mat-icon>
+    <span class="item-label" fxFlex="auto" (click)="dropdownLink(item.route)">{{ item.label }}</span>
     <span *ngIf="item.badge"
           [style.background]="item.badge.background"
           [style.color]="item.badge.color"
           class="item-badge"
-          fxFlex="none">{{ item.badge.value }}</span>
+          fxFlex="none" (click)="dropdownLink(item.route)">{{ item.badge.value }}</span>
     <div style="min-width:4rem;" fxLayout="row" fxLayoutAlign="end center" (click)="toggleOpen()">
       <mat-icon [icIcon]="icKeyboardArrowRight" class="item-dropdown-icon" fxFlex="none" ></mat-icon>
     </div>

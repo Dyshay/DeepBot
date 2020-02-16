@@ -24,8 +24,8 @@ namespace DeepBot.Controllers
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
-        private  IMongoCollection<GroupDB> _group;
-        
+        private List<GroupDB> _groups = Database.Groups.Find(FilterDefinition<GroupDB>.Empty).ToList();
+
 
         public GroupController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -34,20 +34,29 @@ namespace DeepBot.Controllers
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
             _userCollection = userCollection;
-            _group = Database.Groups;
         }
 
 
         [HttpGet]
         [Authorize]
         [Route("GetAllGroups")]
-        public  List<GroupDB> GetAllGroups()
+        public async Task<List<GroupDB>> GetAllGroups()
         {
-
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
-
-            return _group.Find(o => o.FK_User.ToString() == userId).ToList();
-
+            List<GroupDB> ListGroup = _groups.Where(o => o.FK_User.ToString() == userId).ToList();
+            var user = await _userManager.FindByIdAsync(userId);
+            foreach (GroupDB item in ListGroup)
+            {
+                item.Followers = new List<Character>();
+                foreach (var account in user.Accounts)
+                {
+                    if (account.CurrentCharacter.Key == item.Fk_Leader)
+                        item.Leader = account.CurrentCharacter;
+                    if (item.Fk_Followers.Contains(account.CurrentCharacter.Key))
+                        item.Followers.Add(account.CurrentCharacter);
+                }
+            }
+                return ListGroup;
         }
 
         [HttpPost]
@@ -65,17 +74,29 @@ namespace DeepBot.Controllers
                 foreach (Account account in user.Accounts)
                 {
                     var character = account.Characters.FirstOrDefault(o => o.Key == charactersId);
-                   
+                    var principalChaarcter = account.CurrentCharacter;
                     if (character != null)
                     {
                         character.Fk_Group = group.Key;
+                        principalChaarcter.Fk_Group = group.Key;
                     } 
                 }
             }
+            var idLeader = group.Fk_Leader;
+            foreach (var account in user.Accounts)
+            {
+                var leader = account.Characters.FirstOrDefault(o => o.Key == idLeader);
+                if(leader != null)
+                {
+                    leader.Fk_Group = group.Key;
+                    account.CurrentCharacter.Fk_Group = group.Key;
+                }
+            }
+
             await _userManager.UpdateAsync(user);
             await Database.Groups.InsertOneAsync(group);
 
-            return null;
+            return group;
         }
     }
 }

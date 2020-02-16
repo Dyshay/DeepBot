@@ -13,14 +13,18 @@ import icMenu from '@iconify/icons-ic/twotone-menu';
 import { MatDialog } from '@angular/material';
 import { ContactsEditComponent } from '../../apps/contacts/components/contacts-edit/contacts-edit.component';
 import { TranslateService } from '@ngx-translate/core';
-import { Account } from '../../../../webModel/Interface/account.interface';
+import { AccountInterface } from '../../../../webModel/Interface/account.interface';
 import { Store, select } from '@ngrx/store';
 import * as fromAuth from '../auth/reducers';
 import { ModalUpdateAccountComponent } from './modal-update-account/modal-update-account.component';
+import { pipe } from 'rxjs';
+import { User } from '../../../../webModel/User';
+import * as fromBot from '../bot/reducers';
+import { Group } from '../../../../webModel/Group';
 
 @Component({
-    selector: 'app-update-account',
-    templateUrl: './update-account.component.html',
+  selector: 'app-update-account',
+  templateUrl: './update-account.component.html',
   styleUrls: ['./update-account.component.scss'],
   animations: [
     stagger40ms,
@@ -39,31 +43,9 @@ export class UpdateAccountComponent implements OnInit {
   menuOpen = false;
 
   activeCategory: 'frequently' | 'starred' | 'all' | 'family' | 'friends' | 'colleagues' | 'business' = 'all';
-  tableData = [
-    {
-      accountName: 'Nom de compte',
-      characterName: 'pseudo perso',
-      creationDate: new Date(),
-      imageSrc: 'assets/img/classe/m_cra.png',
-      isLeader: true
-    },
-    {
-      accountName: 'Nom de compte2',
-      characterName: 'pseudo perso2',
-      creationDate: new Date(),
-      imageSrc: 'assets/img/classe/m_enutrof.png',
-      isLeader: true
-    },
-    {
-      accountName: 'Nom de compte3',
-      characterName: 'pseudo perso3',
-      creationDate: new Date(),
-      imageSrc: 'assets/img/classe/f_iop.png',
-      isLeader: false
-    },
-  ];
+  tableData = [];
 
-  columns: TableColumn<Account>[] = [
+  columns: TableColumn<AccountInterface>[] = [
     {
       label: '',
       property: 'imageSrc',
@@ -79,6 +61,12 @@ export class UpdateAccountComponent implements OnInit {
     {
       label: this.translateService.instant('GLOBAL.PRINCIPALCHARACTER'),
       property: 'characterName',
+      type: 'text',
+      cssClasses: ['text-secondary']
+    },
+    {
+      label: this.translateService.instant('CREATEGROUP.GROUPNAME'),
+      property: 'groupName',
       type: 'text',
       cssClasses: ['text-secondary']
     },
@@ -101,16 +89,53 @@ export class UpdateAccountComponent implements OnInit {
   icContacts = icContacts;
   icMenu = icMenu;
 
-  constructor(private dialog: MatDialog, private translateService: TranslateService, private store: Store<fromAuth.State>) { }
+  constructor(private dialog: MatDialog, private translateService: TranslateService, private store: Store<fromAuth.State>, private store2: Store<fromBot.State>) { }
 
 
   ngOnInit() {
+    this.store2.pipe(select(fromBot.getAllGroups)).subscribe(
+      (result0: Group[]) => {
+        console.log(result0);
+        this.store.pipe(select(fromAuth.getUserConnected)).subscribe(
+          (result: User) => {
+            for (var i = 0; i < result.accounts.length; i++) {
+              if (result0.findIndex(o => o.key == result.accounts[i].currentCharacter.fk_Group) != -1) {
+                var isleader = false;
+                if (result0.findIndex(o => o.fk_Leader == result.accounts[i].currentCharacter.key) != -1)
+                  isleader = true;
+                this.tableData.push(
+                  {
+                    accountName: result.accounts[i].accountName,
+                    characterName: result.accounts[i].currentCharacter.name,
+                    creationDate: result.accounts[i].creationDate,
+                    groupName: result0.find(o => o.key == result.accounts[i].currentCharacter.fk_Group).name,
+                    imageSrc: 'assets/img/classe/m_cra.png',
+                    isLeader: isleader
+                  }
+                )
+              }
+
+              else
+                this.tableData.push(
+                  {
+                    accountName: result.accounts[i].accountName,
+                    characterName: result.accounts[i].currentCharacter.name,
+                    creationDate: result.accounts[i].creationDate,
+                    groupName: 'Aucun groupe',
+                    imageSrc: 'assets/img/classe/m_cra.png',
+                    isLeader: false
+                  }
+                )
+            }
+          }
+        );
+      }
+    );
+
+
   }
 
   openAccount(accountName?: Account['accountName']) {
-
-
-
     this.dialog.open(ModalUpdateAccountComponent, {
       data: accountName || null,
       width: '600px'

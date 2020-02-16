@@ -35,6 +35,10 @@ const childrenRoutes: VexRoutes = [
     loadChildren: () => import('./pages/pages/bot-dashboard/bot-dashboard.module').then(m => m.BotDashboardModule),
   },
   {
+    path: 'group-dashboard/:id',
+    loadChildren: () => import('./pages/pages/group-dashboard/group-dashboard.module').then(m => m.GroupDashboardModule),
+  },
+  {
     path: 'apps',
     children: [
       {

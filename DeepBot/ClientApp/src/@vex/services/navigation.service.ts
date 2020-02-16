@@ -81,13 +81,18 @@ export class NavigationService {
 
           if (result.items[i].isGroup) {
             this.group.label = result.items[i].name;
-            for (var j = 0; j < this.group.children.length; j++) {
+            this.group.route = '/group-dashboard/:' + result.items[i].id;
+            this.group.type = 'dropdown';
+            this.group.icon = icLayers;
+            for (var j = 0; j < result.items[i].children.length; j++) {
               this.itemGroup = {label:null,route:null,type:null,badge:null,fragment:null}
-              this.itemGroup.label = this.group.children[j].label;
-              this.group.children.push(this.itemGroup);
-              this.group.route = '/group-dashboard/:' + result.items[i].id;
-              this.items.push(this.group);
+              this.itemGroup.label = result.items[i].children[j].name;
+              this.itemGroup.route = '/bot-dashboard/:' + result.items[i].children[j].id;
+              this.itemGroup.icon = icLayers;
+              this.itemGroup.type = 'link';
+              this.group.children.push(this.itemGroup); 
             }
+            this.items.push(this.group);
           }
           else {
             this.item = { label: null, route: null, type: null, badge: null, fragment: null };
@@ -562,24 +567,6 @@ export class NavigationService {
         console.log(this.items);
       }
     );
-
-    //this.items = [
-    //  {
-    //    type: 'link',
-    //    label: 'Tableau de bord',
-    //    route: '/dashboards',
-    //    icon: icLayers
-    //  },
-    //  {
-    //    type: 'subheading',
-    //    label: 'Customiser',
-    //    children: [{
-    //      type: 'link',
-    //      label: 'Configuration',
-    //      route: () => this.layoutService.openConfigpanel(),
-    //      icon: icSettings
-    //    }]
-    //  }];
  }
 
   

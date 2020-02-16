@@ -54,13 +54,14 @@ namespace DeepBot.Controllers
         [HttpPost]
         [Authorize]
         [Route("CreateAccount")]
-        public async Task<IdentityResult> CreateAccount(Account account)
+        public async Task<IActionResult> CreateAccount(Account account)
         {
             var tt = this.Request.Body;
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
             user.Accounts.RemoveAll(o=> o.isScan == true);
             account.Key = Guid.NewGuid();
+            account.CreationDate = DateTime.Now;
             if (user.Accounts == null)
             {
                 user.Accounts = new List<Account>() { account };
@@ -68,7 +69,7 @@ namespace DeepBot.Controllers
                 {
                     await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
                     //var res= await _userManager.UpdateAsync(user);
-                    return IdentityResult.Success;
+                    return Ok(account);
                 }
                 catch (Exception ex)
                 {
@@ -79,7 +80,7 @@ namespace DeepBot.Controllers
             {
                 if (user.Accounts.Select(o => o.AccountName.ToUpper()).Contains(account.AccountName.ToUpper()))
                 {
-                    return IdentityResult.Failed(new IdentityError() { Code = "AlreadyCreated" });
+                    return ValidationProblem("AlreadyCreated");
                 }
                 else
                 {
@@ -88,7 +89,7 @@ namespace DeepBot.Controllers
                     {
                         await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
                         //var res= await _userManager.UpdateAsync(user);
-                        return IdentityResult.Success;
+                        return Ok(account);
                     }
                     catch (Exception ex)
                     {
@@ -97,7 +98,7 @@ namespace DeepBot.Controllers
                 }
             }
             else
-                return IdentityResult.Failed(new IdentityError() { Code = "MaxAccount" });
+                return ValidationProblem("MaxAccount");
         }
     }
 }
