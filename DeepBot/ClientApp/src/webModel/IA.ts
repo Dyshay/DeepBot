@@ -1,7 +1,7 @@
 import { Classe } from './Enum/Classe';
 
 export class IA {
-  id: string;
+  key: string;
   description: string;
   creationDate: Date;
   updatedDate: Date;

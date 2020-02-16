@@ -9,14 +9,13 @@ using System.Text;
 
 namespace DeepBot.Data.Database
 {
-    public class GroupDB : Document<int>
+    public class GroupDB : Document<Guid>
     {
-        [BsonId]
-        public Guid Id { get; set; }
         public int Fk_Leader { get; set; } 
         public List<int> Fk_Followers { get; set; } 
         public Guid Fk_Configuration { get; set; } 
         public Guid Fk_Trajet { get; set; }
+        public Guid FK_User { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
 

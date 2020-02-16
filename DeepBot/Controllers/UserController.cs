@@ -95,7 +95,7 @@ namespace DeepBot.Controllers
             {
                 CreationDate = DateTime.Now,
                 EndDate = DateTime.Now.AddYears(1),
-                Id = Guid.NewGuid(),
+                Key = Guid.NewGuid(),
                 MaxAccount = 99
             };
 #endif
@@ -163,7 +163,7 @@ namespace DeepBot.Controllers
                                     new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
                                     new Claim(_options.ClaimsIdentity.RoleClaimType, role),
                                     new Claim("UserID", user.Id),
-                                    new Claim("ApiKey", user.ApiKey.Id.ToString())
+                                    new Claim("ApiKey", user.ApiKey.Key.ToString())
                                 }),
 
                             Expires = DateTime.UtcNow.AddDays(7),
@@ -235,7 +235,7 @@ namespace DeepBot.Controllers
                     {
                         SideNavItem item = new SideNavItem()
                         {
-                            Id = account.CurrentCharacter.Id.ToString(),
+                            Id = account.CurrentCharacter.Key.ToString(),
                             isGroup = false,
                             Name = account.CurrentCharacter.Name,
                             State = ControllersModel.Enum.SideNavState.CONNECTED
@@ -246,7 +246,7 @@ namespace DeepBot.Controllers
             }
             foreach (var groupId in listGroup)
             {
-               GroupDB group= await Database.Groups.FindAsync(o => o.Id == groupId) as GroupDB;
+               GroupDB group= await Database.Groups.FindAsync(o => o.Key == groupId) as GroupDB;
                 SideNavItem item = new SideNavItem()
                 {
                     Id = groupId.ToString(),
@@ -264,7 +264,7 @@ namespace DeepBot.Controllers
                         {
                             SideNavItem ChildItem = new SideNavItem()
                             {
-                                Id = account.CurrentCharacter.Id.ToString(),
+                                Id = account.CurrentCharacter.Key.ToString(),
                                 isGroup = false,
                                 Name = account.CurrentCharacter.Name,
                                 State = ControllersModel.Enum.SideNavState.CONNECTED

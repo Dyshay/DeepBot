@@ -60,7 +60,7 @@ namespace DeepBot.Controllers
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
             user.Accounts.RemoveAll(o=> o.isScan == true);
-            account.Id = Guid.NewGuid();
+            account.Key = Guid.NewGuid();
             if (user.Accounts == null)
             {
                 user.Accounts = new List<Account>() { account };

@@ -42,7 +42,8 @@ export class CreateAccountComponent implements OnInit{
   accountToCreate: Account = new Account();
   accountToCheck: Account = new Account();
   characterCreated: Character;
-  charaters$ = this.store.pipe(select(fromBot.getCharacters));
+  charaters$ = this.store.pipe(select(fromBot.getScanCharacters));
+  groups$ = this.store.pipe(select(fromBot.getAllGroups));
   hourchecked: boolean = false;
   serverList: { id: number, name:string}[]=[
     { id: 609, name: 'Bilby' },
@@ -56,9 +57,6 @@ export class CreateAccountComponent implements OnInit{
     { id: 610, name: 'Clustus' },
     { id: 611, name: 'Issering' },
   ]
-
-   
-  groupList: Group[] = [ ]
   icVisibility = icVisibility;
   icVisibilityOff = icVisibilityOff;
   icMoreVert = icMoreVert;
@@ -77,6 +75,9 @@ export class CreateAccountComponent implements OnInit{
 
 
   ngOnInit(): void {
+
+    this.store.dispatch(BotActions.getAllGroups());
+
     this.form = this.fb.group({
       accountName: [, Validators.required],
       password: ['', Validators.required],
@@ -105,7 +106,19 @@ export class CreateAccountComponent implements OnInit{
     
     if (this.validateCredential())
     {
-      await this.setCharacters();
+      this.charaters$.subscribe(
+        (result) => {
+          this.accountToCreate.characters = result;
+        }
+      );
+
+      this.store.dispatch(BotActions.updateCharacterFKGroup({ fk_group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
+
+      this.charaters$.subscribe(
+        (result) => {
+          this.accountToCreate.currentCharacter = result.find(o => o.key == this.form.controls["character"].value);
+        }
+      );
       this.accountToCreate.accountName = this.form.controls["accountName"].value;
       this.accountToCreate.password = this.form.controls["password"].value;
 
@@ -130,12 +143,9 @@ export class CreateAccountComponent implements OnInit{
   }
 
   setCharacters(): any {
-    this.charaters$.subscribe(
-      (result) => {
-        this.accountToCreate.characters = result;
-        this.accountToCreate.currentCharacter = result.find(o => o.id == this.form.controls["character"].value);
-       //   this.accountToCreate.currentCharacter.fK_Group = this.form.controls["character"].value  // objet dans store , voir comment modif
-      }
-    )
+
+    this.store.dispatch(BotActions.updateCharacterFKGroup({ fk_group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
+
+
   }
 }

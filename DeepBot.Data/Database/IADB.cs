@@ -7,10 +7,8 @@ using System.Text;
 
 namespace DeepBot.Data.Database
 {
-    public class IADB : Document<int>
+    public class IADB : Document<Guid>
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid Id { get; set; }
         public string Description { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime UpdatedDate { get; set; }

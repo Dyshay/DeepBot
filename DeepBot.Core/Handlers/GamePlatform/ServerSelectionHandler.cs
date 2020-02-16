@@ -60,7 +60,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 short model = short.Parse(_loc11_[3]);
 
                 if (isScan)
-                    characters.Add(new Character() { BreedId = model, Id = id, Name = characterName, Level = Level });
+                    characters.Add(new Character() { BreedId = model, Key = id, Name = characterName, Level = Level });
 
 
                 if (characterName.ToLower().Equals("") && !isScan) //TODO USE THE Name in cfg

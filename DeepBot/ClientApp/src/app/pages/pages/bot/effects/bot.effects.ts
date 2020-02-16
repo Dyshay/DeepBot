@@ -11,6 +11,7 @@ import { BotActions } from '../actions';
 import { Character } from '../../../../../webModel/Character';
 import { AccountService } from '../../../../services/account.service';
 import { Group } from '../../../../../webModel/Group';
+import { GroupsService } from '../../../../services/group.service';
 
 @Injectable()
 export class BotEffects {
@@ -109,5 +110,34 @@ export class BotEffects {
   );
 
 
-    constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService) { }
+  getAllGroups$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.getAllGroups),
+      map(action => action),
+      exhaustMap(() =>
+        this.groupService.getAllgroups().pipe(
+          map(groups => BotActions.getAllGroupsSuccess({ groups })),
+        )))
+  );
+
+  getAllGroupsSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.getAllGroupsSuccess),
+      map(action => action.groups),
+      tap((groups: any) => {
+      })
+    ),
+    { dispatch: false }
+  );
+
+  getAllGroupsFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(BotActions.getAllGroupsFailure),
+      map(action => action.error),
+
+    )
+  );
+
+
+    constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService,private groupService : GroupsService) { }
 }

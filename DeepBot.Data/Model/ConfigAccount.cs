@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
+﻿using DeepBot.Data.Driver;
+using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
@@ -6,9 +7,8 @@ using System.Text;
 
 namespace DeepBot.Data.Model
 {
-    public class ConfigAccount
+    public class ConfigAccount : Document<Guid>
     {
-        [BsonId(IdGenerator = typeof(CombGuidGenerator))]
-        public Guid Id { get; set; }
+        public int MyProperty { get; set; }
     }
 }
