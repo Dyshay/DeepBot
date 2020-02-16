@@ -135,7 +135,7 @@ export class UpdateAccountComponent implements OnInit {
 
   }
 
-  openAccount(accountName?: Account['accountName']) {
+  openAccount(accountName?: AccountInterface['accountName']) {
     this.dialog.open(ModalUpdateAccountComponent, {
       data: accountName || null,
       width: '600px'

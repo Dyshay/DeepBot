@@ -18,11 +18,23 @@
       <mat-icon [icIcon]="icPerson" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field >
       <mat-label>{{'CREATEACCOUNT.PASSWORDACCOUNT' | translate}}</mat-label>
-      <input formControlName="password" matInput>
-
-      <mat-icon [icIcon]="icPhone" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+      <input [type]="inputType"
+             formControlName="password"
+             matInput
+             required />
+      <button (click)="toggleVisibility()"
+              mat-icon-button
+              matSuffix
+              matTooltip="Toggle Visibility"
+              type="button">
+        <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+        <mat-icon *ngIf="!visible"
+                  [icIcon]="icVisibilityOff"></mat-icon>
+      </button>
+      <mat-hint>{{'LOGIN.PASSWORDVISIBILITY' | translate }}</mat-hint>
+      <mat-error *ngIf="form.get('password').hasError('required')">{{'LOGIN.PASSWORDREQUIRED' | translate }}</mat-error>
     </mat-form-field>
 
     <mat-form-field>

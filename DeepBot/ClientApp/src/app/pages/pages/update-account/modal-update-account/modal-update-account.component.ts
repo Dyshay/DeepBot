@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, ChangeDetectorRef } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { AccountInterface } from '../../../../../webModel/Interface/account.interface';
@@ -10,6 +10,9 @@ import * as fromBot from '../../bot/reducers';
 import { User } from '../../../../../webModel/User';
 import { Character } from '../../../../../webModel/Character';
 import { Group } from '../../../../../webModel/Group';
+import icPerson from '@iconify/icons-ic/person';
+import icVisibility from '@iconify/icons-ic/twotone-visibility';
+import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
 
 @Component({
     selector: 'app-modal-update-account',
@@ -22,9 +25,19 @@ export class ModalUpdateAccountComponent implements OnInit {
   form;
   charaters: Character[];
   groups: Group[];
+  icPerson = icPerson;
+  icVisibility = icVisibility;
+  icVisibilityOff = icVisibilityOff;
+  inputType = 'password';
+  visible = false;
 
     /** modal-update-account ctor */
-  constructor(private translateService: TranslateService, private store2: Store<fromBot.State>, private store: Store<fromAuth.State>, private dialogRef: MatDialogRef<ModalUpdateAccountComponent>, @Inject(MAT_DIALOG_DATA) private accountName: AccountInterface['accountName'], private fb: FormBuilder) {
+  constructor(private translateService: TranslateService,
+    private store2: Store<fromBot.State>,
+    private store: Store<fromAuth.State>,
+    private dialogRef: MatDialogRef<ModalUpdateAccountComponent>,
+    private cd: ChangeDetectorRef,
+    @Inject(MAT_DIALOG_DATA) private accountName: AccountInterface['accountName'], private fb: FormBuilder) {
      
     }
   ngOnInit() {
@@ -47,5 +60,17 @@ export class ModalUpdateAccountComponent implements OnInit {
         });
       }
     );
+  }
+
+  toggleVisibility() {
+    if (this.visible) {
+      this.inputType = 'password';
+      this.visible = false;
+      this.cd.markForCheck();
+    } else {
+      this.inputType = 'text';
+      this.visible = true;
+      this.cd.markForCheck();
+    }
   }
 }
