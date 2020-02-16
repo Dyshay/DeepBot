@@ -7,5 +7,9 @@ export const loginSuccess = createAction('[AUTH/LOGIN] Login Success', props<{us
 export const login = createAction('[AUTH/LOGIN] Login', props<{user: User}>());
 export const loginFailure = createAction('[AUTH/LOGIN] Login Failure', props<{error: any}>());
 
-export const getUser = createAction('[AUTH] GET USER')
-export const getUserSuccess = createAction('[AUTH] GET USER SUCCESS', props<{account: Account}>());
+export const getUser = createAction('[AUTH] GET ACCOUNT')
+export const getUserSuccess = createAction('[AUTH] GET ACCOUNT SUCCESS', props<{account: Account}>());
+
+export const getUserConnected = createAction('[AUTH/USER] GET USER ');
+export const getUserConnectedSuccess = createAction('[AUTH/USER] GET USER SUCCESS', props<{userConnected: User }>());
+export const getUserConnectedFailure = createAction('[AUTH/USER] GET USER FAILURE', props<{ error: any }>());

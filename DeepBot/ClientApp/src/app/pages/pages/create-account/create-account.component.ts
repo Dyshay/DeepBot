@@ -44,6 +44,7 @@ export class CreateAccountComponent implements OnInit{
   characterCreated: Character;
   charaters$ = this.store.pipe(select(fromBot.getScanCharacters));
   groups$ = this.store.pipe(select(fromBot.getAllGroups));
+
   hourchecked: boolean = false;
   serverList: { id: number, name:string}[]=[
     { id: 609, name: 'Bilby' },
@@ -75,9 +76,6 @@ export class CreateAccountComponent implements OnInit{
 
 
   ngOnInit(): void {
-
-    this.store.dispatch(BotActions.getAllGroups());
-
     this.form = this.fb.group({
       accountName: [, Validators.required],
       password: ['', Validators.required],
@@ -130,11 +128,7 @@ export class CreateAccountComponent implements OnInit{
       this.store.dispatch(BotActions.createAccount({ account  }));
     };
     
-    this.navigationService.addLink({
-      type: 'link',
-      label: 'bot 1',
-      route: '/bot'
-    });
+   this.navigationService.GenerateNavigation();
   }
 
   validateCredential() {

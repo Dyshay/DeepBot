@@ -31,7 +31,7 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(AuthActions.loginSuccess),
             map(action => action.user),
-            tap((user: any) => {
+          tap((user: any) => {
                 let token = user.token;
                 localStorage.setItem('DeepBot', token);
               this.router.navigate(['/']);
@@ -71,7 +71,39 @@ export class AuthEffects {
             })
         ),
         { dispatch: false }
-    );
+  );
+
+
+
+  getUserConnected$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.getUserConnected),
+      map(action => action),
+      exhaustMap(() =>
+        this.authService.getUserConnected().pipe(
+          map(userConnected => AuthActions.getUserConnectedSuccess({ userConnected })),
+          catchError(error => of(AuthActions.getUserConnectedFailure({ error })))
+        )))
+  );
+
+  getUserConnectedSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.getUserConnectedSuccess),
+      map(action => action.userConnected),
+      tap((userConnected: any) => {
+        console.log(userConnected);
+      })
+    ),
+    { dispatch: false }
+  );
+
+  getUserConnectedFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AuthActions.getUserConnectedFailure),
+      map(action => action.error),
+
+    )
+  )
 
     constructor(private actions$: Actions, private authService: AuthService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
 }

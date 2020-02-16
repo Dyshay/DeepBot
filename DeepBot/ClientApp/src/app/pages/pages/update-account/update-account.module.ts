@@ -27,6 +27,7 @@ import { ContainerModule } from '../../../../@vex/directives/container/container
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSelectModule,
     MatSortModule,
     MatCheckboxModule,
     MatIconModule,

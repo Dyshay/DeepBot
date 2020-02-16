@@ -47,11 +47,13 @@ namespace DeepBot.Controllers
             {
                 foreach (var item in user.Accounts)
                 {
-                    characters.AddRange(item.Characters);
+                    if (item.Characters.Count > 1)
+                        characters.AddRange(item.Characters);
+                    else
+                        characters.Add(item.Characters.First());
                 }
                 return characters;
             }
-            else
                 return null;
         }
     }

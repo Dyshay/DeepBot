@@ -11,4 +11,5 @@ export class SideNavItem {
   isGroup: boolean;
   name: string;
   state: SideNavState;
+  children: SideNavItem[];
 }
