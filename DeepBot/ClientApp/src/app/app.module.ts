@@ -37,8 +37,10 @@ export function createTranslateLoader(http: HttpClient) {
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ToastrModule.forRoot(),
-
+    ToastrModule.forRoot({
+      timeOut: 5000,
+      progressBar: true
+    }),
     // Vex
     VexModule,
     CustomLayoutModule,

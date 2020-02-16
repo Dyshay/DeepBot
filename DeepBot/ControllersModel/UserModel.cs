@@ -41,6 +41,6 @@ namespace DeepBot.ControllersModel
         public bool isGroup { get; set; }
         public string Name { get; set; }
         public SideNavState State { get; set; }
-        public List<SideNavItem> Childrens { get; set; }
+        public List<SideNavItem> Children { get; set; }
     }
 }

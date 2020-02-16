@@ -13,10 +13,10 @@ import { LogType } from './Enum/LogType';
 
 export class Character {
   key: number;
-  fK_IA?: string;
-  fK_Group?: string;
-  fK_Configuration?: string;
-  fK_Trajet?: string;
+  fk_IA?: string;
+  fk_Group?: string;
+  fk_Configuration?: string;
+  fk_Trajet?: string;
   name: string;
   level: number;
   breedId: number;

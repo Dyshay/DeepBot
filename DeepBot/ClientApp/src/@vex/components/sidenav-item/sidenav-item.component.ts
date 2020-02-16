@@ -125,5 +125,10 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
     return prop instanceof Function;
   }
 
+  dropdownLink(route: string) {
+    console.log(route);
+    this.router.navigateByUrl(route)
+  }
+
   ngOnDestroy(): void {}
 }

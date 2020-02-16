@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import icVisibility from '@iconify/icons-ic/twotone-visibility';
 import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
@@ -44,6 +44,7 @@ export class CreateAccountComponent implements OnInit{
   characterCreated: Character;
   charaters$ = this.store.pipe(select(fromBot.getScanCharacters));
   groups$ = this.store.pipe(select(fromBot.getAllGroups));
+
   hourchecked: boolean = false;
   serverList: { id: number, name:string}[]=[
     { id: 609, name: 'Bilby' },
@@ -57,11 +58,14 @@ export class CreateAccountComponent implements OnInit{
     { id: 610, name: 'Clustus' },
     { id: 611, name: 'Issering' },
   ]
+  inputType = 'password';
+  visible = false;
+
   icVisibility = icVisibility;
   icVisibilityOff = icVisibilityOff;
   icMoreVert = icMoreVert;
     /** create-account ctor */
-  constructor(private navigationService: NavigationService, private fb: FormBuilder, private accountService: AccountService, private http: HttpClient, private deeptalk: TalkService, private store: Store<fromBot.State>) {
+  constructor(private navigationService: NavigationService, private cd: ChangeDetectorRef, private fb: FormBuilder, private accountService: AccountService, private http: HttpClient, private deeptalk: TalkService, private store: Store<fromBot.State>) {
 
   }
 
@@ -75,9 +79,6 @@ export class CreateAccountComponent implements OnInit{
 
 
   ngOnInit(): void {
-
-    this.store.dispatch(BotActions.getAllGroups());
-
     this.form = this.fb.group({
       accountName: [, Validators.required],
       password: ['', Validators.required],
@@ -130,22 +131,26 @@ export class CreateAccountComponent implements OnInit{
       this.store.dispatch(BotActions.createAccount({ account  }));
     };
     
-    this.navigationService.addLink({
-      type: 'link',
-      label: 'bot 1',
-      route: '/bot'
-    });
+   this.navigationService.GenerateNavigation();
   }
 
   validateCredential() {
     //check account non existant en base
     return true;
   }
+  toggleVisibility() {
+    if (this.visible) {
+      this.inputType = 'password';
+      this.visible = false;
+      this.cd.markForCheck();
+    } else {
+      this.inputType = 'text';
+      this.visible = true;
+      this.cd.markForCheck();
+    }
+  }
 
   setCharacters(): any {
-
     this.store.dispatch(BotActions.updateCharacterFKGroup({ fk_group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
-
-
   }
 }
