@@ -10,6 +10,7 @@ export class Account {
   currentCharacter: Character;
   proxy?: Proxy;
   config?: ConfigAccount;
+  creationDate?: Date;
   endAnakamaSubscribe?: Date;
   ankamaPseudo?: string;
   isBan: boolean;

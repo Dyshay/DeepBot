@@ -7,6 +7,7 @@ import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ng
 import { MyMissingTranslationHandler } from './modules/my-missing-translation-handler.module';
 import { HttpClient } from '@angular/common/http';
 import { createTranslateLoader } from './app.module';
+import { ToastrModule } from 'ngx-toastr';
 
 const childrenRoutes: VexRoutes = [
   {
@@ -33,6 +34,10 @@ const childrenRoutes: VexRoutes = [
   {
     path: 'bot-dashboard/:id',
     loadChildren: () => import('./pages/pages/bot-dashboard/bot-dashboard.module').then(m => m.BotDashboardModule),
+  },
+  {
+    path: 'group-dashboard/:id',
+    loadChildren: () => import('./pages/pages/group-dashboard/group-dashboard.module').then(m => m.GroupDashboardModule),
   },
   {
     path: 'apps',
@@ -178,7 +183,8 @@ const routes: Routes = [
     scrollPositionRestoration: 'enabled',
     relativeLinkResolution: 'corrected',
     anchorScrolling: 'enabled'
-  })],
+  })
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

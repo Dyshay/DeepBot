@@ -12,6 +12,8 @@ import { Character } from '../../../../../webModel/Character';
 import { AccountService } from '../../../../services/account.service';
 import { Group } from '../../../../../webModel/Group';
 import { GroupsService } from '../../../../services/group.service';
+import { NavigationService } from '../../../../../@vex/services/navigation.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class BotEffects {
@@ -35,7 +37,10 @@ export class BotEffects {
             ofType(BotActions.createAccountSuccess),
             map(action => action.account),
             tap((account: any) => {
-              console.log(account);
+              this.navigationService.GenerateNavigation();
+              this.toastr.success('', 'Compte ' + account.accountName + ' ajouté avec succés');
+              this.router.navigateByUrl('/');
+
             })
         ),
         { dispatch: false }
@@ -95,7 +100,8 @@ export class BotEffects {
       ofType(BotActions.createGroupSuccess),
       map(action => action.group),
       tap((group: any) => {
-        console.log(group);
+        this.navigationService.GenerateNavigation();
+        this.toastr.success('', 'Groupe ' + group.name + ' ajouté avec succés');
       })
     ),
     { dispatch: false }
@@ -139,5 +145,5 @@ export class BotEffects {
   );
 
 
-    constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService,private groupService : GroupsService) { }
+  constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr:ToastrService) { }
 }
