@@ -1,1 +1,88 @@
-<div style="border: 1px solid red">bot-dashboard Component</div>
+<div class="container py-gutter">
+  <div class="card overflow-hidden">
+    <div class="h-44 relative overflow-hidden bg-pattern">
+      <div class="absolute bg-contrast-black opacity-25 top-0 right-0 bottom-0 left-0 w-full h-full z-0"></div>
+
+      <button class="rounded-full h-10 mt-3 ml-3" style=" min-width: 154px !important;" color="primary" mat-raised-button type="button">
+        <ic-icon [icon]="icToConnect"
+                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2"
+                 inline="true"
+                 size="16px"></ic-icon>
+        <span class="mr-3">Se connecter</span>
+      </button>
+      <div flLayout="row" fxLayoutAlign="start end" fxFlex="20">
+          <mat-progress-bar mode="determinate" [value]="40" class="my-2" color="warn"></mat-progress-bar> 
+      </div>
+      <div fxLayout="row" fxFlex="fill" fxLayoutAlign="end center" class="mr-20 h-full">
+        <div fxFlex="40" class="my-10">
+          <div gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="10px">
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight>
+                <p class="m-0 body-2">Level : 60</p>
+              </div>
+            </div>
+
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight>
+                <p class="m-0 body-2"> Classe : Feca</p>
+              </div>
+            </div>
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight>
+                <p class="m-0 body-2"> fin abonnement  : date</p>
+              </div>
+            </div>
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight>
+                <p class="m-0 body-2"> Group actuel : aucun</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="z-10 relative -mt-16 px-gutter" fxLayout="row" fxLayoutAlign="start center">
+
+      <img @scaleIn
+           class="avatar h-24 w-24"
+           fxFlex="none"
+           fxFlexAlign="start"
+           fxHide.xs
+           src="assets/img/classe/m_feca.png">
+
+      <div [ngClass.gt-xs]="['ltr:ml-6 rtl:mr-6']" class="max-w-full" fxFlex="auto">
+        <div class="h-16" fxLayout="row" fxLayoutAlign="start center">
+          <h1 @fadeInRight class="headline text-contrast-black m-0">{{character?.name}}</h1>
+        </div>
+        <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" mat-align-tabs="center">
+          <mat-tab *ngFor="let link of links">
+            <ng-template mat-tab-label>
+              <ic-icon [icon]="link.icon" size="20px" class="mx-3"></ic-icon>
+              <span> {{ link.label }}</span>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3"
+       fxLayout="row"
+       fxLayout.lt-md="column"
+       fxLayoutAlign="start start"
+       fxLayoutAlign.lt-md="start stretch"
+       fxLayoutGap="24px">
+    <div fxFlex="calc(70% - 12px)" fxFlex.lt-md="auto">
+      <app-dashboard *ngIf="indexSelected == 0"></app-dashboard>
+      <app-character *ngIf="indexSelected == 1"></app-character>
+      <app-fight *ngIf="indexSelected == 2"></app-fight>
+      <app-job *ngIf="indexSelected == 3"></app-job>
+      <app-inventory *ngIf="indexSelected == 4"></app-inventory>
+      <app-map *ngIf="indexSelected == 5"></app-map>
+      <app-parameters *ngIf="indexSelected == 6"></app-parameters>
+    </div>
+  </div>
+</div>
