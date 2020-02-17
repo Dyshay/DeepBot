@@ -36,6 +36,7 @@ import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-to
   imports: [
     CommonModule,
     BotDashboardRoutingModule,
+    MatIconModule,
     PageLayoutModule,
     FlexLayoutModule,
     MatTabsModule,
@@ -59,7 +60,9 @@ import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-to
     SecondaryToolbarModule,
     MatButtonModule,
     PageLayoutModule,
+    MatInputModule,
     ContainerModule,
+    MatSelectModule,
     TranslateModule,
       MatDividerModule
   ],
