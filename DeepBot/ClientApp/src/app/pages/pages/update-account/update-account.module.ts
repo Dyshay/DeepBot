@@ -15,6 +15,7 @@ import { UpdateAccountDataTableComponent } from './update-account-data-table/upd
 import { ModalUpdateAccountComponent } from './modal-update-account/modal-update-account.component';
 import { ModalUpdateAccountModule } from './modal-update-account/modal-update-account-module.module';
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
+import { ToastrModule } from 'ngx-toastr';
 
 
 @NgModule({
@@ -27,6 +28,7 @@ import { ContainerModule } from '../../../../@vex/directives/container/container
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
+    MatSelectModule,
     MatSortModule,
     MatCheckboxModule,
     MatIconModule,

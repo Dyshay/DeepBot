@@ -60,17 +60,7 @@ export class LoginComponent implements OnInit {
       accounts: [],
       langue: this.tradService.translate.currentLang
     };
-
-    // let body = JSON.stringify({ 'UserName': user.userName, 'Password': user.userPassword })
-    console.log(user);
     this.store.dispatch(AuthActions.login({ user }))
-    //  this.http.post<User>(environment.apiURL + 'User/Login', body, httpOptions).subscribe(
-    //      (result: any) => {
-    //          localStorage.setItem('DeepBot', result.token);
-    //          this.router.navigateByUrl('');
-    //      },
-    //      (err) => { }
-    //  );
   }
   changerLangue(langue: string) {
     this.tradService.changLang(langue, false);

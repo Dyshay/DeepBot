@@ -26,3 +26,28 @@
   height: 3.5rem !important;
   width: 3.5rem !important;
 }
+
+@media (min-width: 1780px) {
+  .container {
+    max-width: 1650px !important;
+  }
+}
+
+.border-2 {
+  border: 2px solid #dee2e6 !important;
+}
+
+.rounded-2 {
+  border-radius: .8rem !important;
+}
+
+.mat-progress-bar{
+    height:9px !important;
+}
+
+.full-width{
+    width:100% !important;
+}
+.mat-divider {
+  border-top-width: 2px !important;
+}
