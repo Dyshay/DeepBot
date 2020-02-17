@@ -29,6 +29,7 @@
     "@iconify/icons-fa-solid": "^1.0.1",
     "@iconify/icons-ic": "^1.0.0",
     "@iconify/icons-logos": "^1.0.0",
+    "@iconify/icons-mdi": "^1.0.69",
     "@ng-select/ng-select": "^3.7.2",
     "@ngrx/effects": "^8.6.0",
     "@ngrx/router-store": "^8.6.0",

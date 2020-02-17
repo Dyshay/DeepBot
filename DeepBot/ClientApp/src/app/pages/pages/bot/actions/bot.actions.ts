@@ -24,4 +24,9 @@ export const getAllGroupsSuccess = createAction('[BOT/CHARACTER] GET ALLGROUP SU
 export const getAllGroupsFailure = createAction('[BOT/CHARACTER] GET ALLGROUP ERROR', props<{ error: any }>())
 
 
-export const updateCharacterFKGroup = createAction('[BOT/CHARACTER] UPDATE FK_GROUP CHARACTER', props<{fk_group: string, key: number}>());
+export const updateCharacterFKGroup = createAction('[BOT/CHARACTER] UPDATE FK_GROUP CHARACTER', props<{ fk_group: string, key: number }>());
+
+export const updateAccountAccountName = createAction('[BOT/ACCOUNT] UPDATE ACCOUNTNAME ACCOUNT', props<{ accountName: string, key: number }>());
+export const updateAccountPassword = createAction('[BOT/ACCOUNT] UPDATE PASSWORD ACCOUNT', props<{ password: string, key: number }>());
+export const updateAccountServerId = createAction('[BOT/ACCOUNT] UPDATE SERVERID ACCOUNT', props<{ serverId: string, key: number }>());
+export const updateAccountCurrentCharacter = createAction('[BOT/ACCOUNT] UPDATE SERVERID ACCOUNT', props<{ currentCharacter: Character, key: number }>());

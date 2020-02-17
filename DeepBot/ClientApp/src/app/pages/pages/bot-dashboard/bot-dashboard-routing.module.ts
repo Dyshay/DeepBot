@@ -9,7 +9,7 @@ const routes: VexRoutes = [
     path: '',
     component: BotDashboardComponent ,
     data: {
-      scrollDisabled:true,
+      containerEnabled: true,
       toolbarShadowEnabled: true
     }
   }

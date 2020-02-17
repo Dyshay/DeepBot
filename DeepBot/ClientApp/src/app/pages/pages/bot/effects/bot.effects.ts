@@ -102,6 +102,7 @@ export class BotEffects {
       tap((group: any) => {
         this.navigationService.GenerateNavigation();
         this.toastr.success('', 'Groupe ' + group.name + ' ajouté avec succés');
+        this.router.navigateByUrl('/');
       })
     ),
     { dispatch: false }

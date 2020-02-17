@@ -50,6 +50,8 @@ export const reducer = createReducer(initialState,
   on(BotActions.getAllGroups, (state) => ({ ...state, pending: true })),
   on(BotActions.getAllGroupsSuccess, (state, { groups }) => ({ ...state, allGroups: groups, pending: false })),
   on(BotActions.getAllGroupsFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+
 )
 
 

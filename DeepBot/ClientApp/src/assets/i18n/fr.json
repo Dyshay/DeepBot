@@ -15,7 +15,8 @@
     "ACCOUNTNAME": "Nom de compte",
     "PRINCIPALCHARACTER": "Personnage principal",
     "CREATIONDATE": "Date de création",
-    "ISLEADER" : "Leader"
+    "ISLEADER": "Leader",
+    "DASHBOARD": "Tableau de bord"
   },
   "TOOLBAR": {
     "BOTHANDLE": "Gestion du bot",
@@ -101,6 +102,14 @@
     "NOACCOUNTFOUND": "Aucun compte ne correspond à votre filtre"
   },
   "UPDATEACCOUNTMODAL": {
-    "UPDATEACCOUNTLABEL" : "Modifier le compte"
+    "UPDATEACCOUNTLABEL": "Modifier le compte"
+  },
+  "DASHBOARDBOT": {
+    "CHARACTER": "Personnage",
+    "FIGHT": "Combat",
+    "JOB": "Métier",
+    "INVENTORY": "Inventaire",
+    "MAP": " Carte",
+    "PARAMETERS" :  "Paramétres"
   }
 }

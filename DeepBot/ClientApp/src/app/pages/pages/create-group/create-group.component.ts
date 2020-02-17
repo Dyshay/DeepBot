@@ -116,8 +116,6 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
     }
     else {
       var index = this.followers.findIndex(o => o.key == row.key);
-      console.log(this.followers);
-      console.log(row);
       this.followers.splice(index,1);
     }
    
