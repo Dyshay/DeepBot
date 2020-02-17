@@ -7,11 +7,14 @@
         <ic-icon [icon]="icToConnect"
                  class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2"
                  inline="true"
-                 size="16px"></ic-icon>
+                 size="25px"></ic-icon>
         <span class="mr-3">Se connecter</span>
       </button>
+      <button color="primary" mat-mini-fab type="button" class="ml-4 mt-3" matTooltip=" Mettre en pause le bot" matTooltipPosition="right">
+        <mat-icon [icIcon]="icPause"></mat-icon>
+      </button>
       <div flLayout="row" fxLayoutAlign="start end" fxFlex="20">
-          <mat-progress-bar mode="determinate" [value]="40" class="my-2" color="warn"></mat-progress-bar> 
+        <mat-progress-bar mode="determinate" [value]="40" class="my-2" color="warn"></mat-progress-bar>
       </div>
       <div fxLayout="row" fxFlex="fill" fxLayoutAlign="end center" class="mr-20 h-full">
         <div fxFlex="40" class="my-10">

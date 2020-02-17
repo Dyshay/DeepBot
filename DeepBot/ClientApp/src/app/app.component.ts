@@ -91,8 +91,8 @@ export class AppComponent {
            showCollapsePin: false
          },
          footer: {
-          visible: false
-         }
+           visible: false
+         }         
        });
     // a mettre dans le ngoninit du dashboard // 
     this.store.dispatch(AuthActions.getUserConnected());
