@@ -22,6 +22,7 @@ import icMap from '@iconify/icons-fa-solid/map-marked-alt';
 import icSetting from '@iconify/icons-ic/outline-settings';
 import icToConnect from '@iconify/icons-ic/baseline-log-in';
 import icToDisconnect from '@iconify/icons-ic/baseline-log-out'
+import icPause from '@iconify/icons-ic/outline-pause-circle-outline'
 
 import { Link } from '../../../../@vex/interfaces/link.interface';
 import { Store, select } from '@ngrx/store';
@@ -127,6 +128,7 @@ export class BotDashboardComponent implements OnInit {
   icSetting = icSetting;
   icToConnect = icToConnect;
   icToDisconnect = icToDisconnect;
+  icPause = icPause;
 
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
     switch (tabChangeEvent.index) {

@@ -32,13 +32,15 @@ import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-to
 
 
 @NgModule({
-  declarations: [BotDashboardComponent,DashboardComponent,CharacterComponent,FightComponent,InventoryComponent,MapComponent,ParametersComponent,JobComponent],
+  declarations: [BotDashboardComponent,DashboardComponent,CharacterComponent,FightComponent,InventoryComponent,MapComponent,ParametersComponent,JobComponent,],
   imports: [
     CommonModule,
     BotDashboardRoutingModule,
     MatIconModule,
+    MatSlideToggleModule,
     PageLayoutModule,
     FlexLayoutModule,
+    MatSliderModule,
     MatTabsModule,
     IconModule,
     MatButtonModule,
