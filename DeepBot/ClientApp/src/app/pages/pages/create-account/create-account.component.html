@@ -25,15 +25,23 @@
             <input matInput required formControlName="accountName">
           </mat-form-field>
 
-
           <mat-form-field>
-            <mat-label>{{ 'CREATEACCOUNT.PASSWORDACCOUNT' | translate}}</mat-label>
-            <input [type]="inputType" matInput required value="" formControlName="password">
-            <button (click)="togglePassword()" mat-icon-button matSuffix type="button">
+            <mat-label>{{'CREATEACCOUNT.PASSWORDACCOUNT' | translate}}</mat-label>
+            <input [type]="inputType"
+                   formControlName="password"
+                   matInput
+                   required />
+            <button (click)="toggleVisibility()"
+                    mat-icon-button
+                    matSuffix
+                    matTooltip="Toggle Visibility"
+                    type="button">
               <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
-              <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+              <mat-icon *ngIf="!visible"
+                        [icIcon]="icVisibilityOff"></mat-icon>
             </button>
-            <mat-hint>{{ 'CREATEACCOUNT.PASSWORDACCOUNTHINT' | translate}}</mat-hint>
+            <mat-hint>{{'LOGIN.PASSWORDVISIBILITY' | translate }}</mat-hint>
+            <mat-error *ngIf="form.get('password').hasError('required')">{{'LOGIN.PASSWORDREQUIRED' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="mt-1">
@@ -46,8 +54,8 @@
           <mat-form-field class="mt-2">
             <mat-label>{{ 'CREATEACCOUNT.ASSOCIATETOGROUP' | translate}}</mat-label>
             <mat-select formControlName="group">
-              <mat-option *ngFor="let group of groups$ | async" [value]="group.id">
-                <b>Leader : {{group?.leader.name}}</b>
+              <mat-option *ngFor="let group of groups$ | async" [value]="group.key">
+                <b>Leader : {{group.leader?.name}}</b>
                 ( groupetotal : a faire! ,  &nbsp; {{ 'GLOBAL.GROUPLEVEL' | translate}} {{group.level}}, &nbsp;  {{ 'GLOBAL.GROUPPP' | translate}} : {{group.prospection}})
               </mat-option>
             </mat-select>
@@ -61,7 +69,7 @@
           <mat-form-field *ngIf="ischaractersfound" class="mt-2">
             <mat-label>{{ 'CREATEACCOUNT.CHOSECHARACTER' | translate}}</mat-label>
             <mat-select formControlName="character">
-              <mat-option *ngFor="let character of charaters$ | async" [value]="character.id">
+              <mat-option *ngFor="let character of charaters$ | async" [value]="character.key">
                 <b>{{character.name}} </b> ({{ 'GLOBAL.BREED' | translate}} : {{character.breedId}}, {{ 'GLOBAL.LEVEL' | translate}} : {{character.level}} )
               </mat-option>
             </mat-select>

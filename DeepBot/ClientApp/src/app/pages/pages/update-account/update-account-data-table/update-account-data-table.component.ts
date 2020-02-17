@@ -10,7 +10,7 @@ import icDeleteForever from '@iconify/icons-ic/twotone-delete-forever';
 import { stagger20ms } from '../../../../../@vex/animations/stagger.animation';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
 import { scaleFadeIn400ms } from '../../../../../@vex/animations/scale-fade-in.animation';
-import { Account } from '../../../../../webModel/Interface/account.interface';
+import { AccountInterface } from '../../../../../webModel/Interface/account.interface';
 
 @Component({
     selector: 'app-update-account-data-table',
@@ -39,7 +39,7 @@ export class UpdateAccountDataTableComponent<T> implements OnInit, OnChanges, Af
   @Input() pageSizeOptions = [10, 20, 50];
   @Input() searchStr: string;
 
-  @Output() openAccount = new EventEmitter<Account['accountName']>();
+  @Output() openAccount = new EventEmitter<AccountInterface['accountName']>();
 
   visibleColumns: Array<keyof T | string>;
   dataSource = new MatTableDataSource<T>();

@@ -21,6 +21,7 @@ namespace DeepBot.Data.Model
         public Proxy Proxy { get; set; }
         public ConfigAccount Config { get; set; }
         public DateTime EndAnakamaSubscribe { get; set; }
+        public DateTime CreationDate { get; set; }
         public string AnkamaPseudo { get; set; }
         public bool isBan { get; set; }
         public DateTime ExpirationDateBan { get; set; }

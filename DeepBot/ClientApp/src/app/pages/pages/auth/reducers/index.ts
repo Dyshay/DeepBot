@@ -27,5 +27,6 @@ export const selectAuthStatusState = createSelector(
 export const getUser = createSelector(selectAuthStatusState, fromAuth.getUser);
 export const getError = createSelector(selectAuthStatusState, fromAuth.getError);
 export const getPending = createSelector(selectAuthStatusState, fromAuth.getPending);
+export const getUserConnected = createSelector(selectAuthStatusState, fromAuth.getUserConnected);
 
 

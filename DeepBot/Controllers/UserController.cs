@@ -31,6 +31,7 @@ namespace DeepBot.Controllers
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
+        private List<GroupDB> _groups = Database.Groups.Find(FilterDefinition<GroupDB>.Empty).ToList();
 
         public UserController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -54,6 +55,19 @@ namespace DeepBot.Controllers
             return user;
 
         }
+        [HttpGet]
+        [Authorize]
+        [Route("getUserConnected")]
+        public async Task<UserDB> getUserConnected()
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+
+            return user;
+
+        }
+
+
         public async Task<UserDB> getUserDB()
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
@@ -220,17 +234,17 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            List<Guid> listGroup = new List<Guid>();
+            List<Guid> listGroupId = new List<Guid>();
             List<Guid> listAccount = new List<Guid>();
             SideNav sidenav = new SideNav();
             sidenav.items = new List<SideNavItem>();
 
             foreach (var account in user.Accounts)
             {
-                if(account.CurrentCharacter != null)
+                if (account.CurrentCharacter != null)
                 {
-                    if (account.CurrentCharacter.Fk_Group != Guid.Empty && !listGroup.Contains(account.CurrentCharacter.Fk_Group))
-                        listGroup.Add(account.CurrentCharacter.Fk_Group);
+                    if (account.CurrentCharacter.Fk_Group != Guid.Empty && _groups.FindIndex(o => o.Key == account.CurrentCharacter.Fk_Group) != -1 && !listGroupId.Contains(account.CurrentCharacter.Fk_Group))
+                        listGroupId.Add(account.CurrentCharacter.Fk_Group);
                     else if (account.CurrentCharacter.Fk_Group == Guid.Empty)
                     {
                         SideNavItem item = new SideNavItem()
@@ -244,23 +258,23 @@ namespace DeepBot.Controllers
                     }
                 }
             }
-            foreach (var groupId in listGroup)
+            foreach (var groupId in listGroupId)
             {
-               GroupDB group= await Database.Groups.FindAsync(o => o.Key == groupId) as GroupDB;
+                GroupDB group = _groups.Find(o => o.Key == groupId) as GroupDB;
                 SideNavItem item = new SideNavItem()
                 {
                     Id = groupId.ToString(),
                     Name = group.Name,
                     isGroup = true,
                     State = ControllersModel.Enum.SideNavState.CONNECTED,
-                    Childrens = new List<SideNavItem>()
+                    Children = new List<SideNavItem>()
                 };
-                
+
                 foreach (var account in user.Accounts)
                 {
-                    if(account.CurrentCharacter != null)
+                    if (account.CurrentCharacter != null)
                     {
-                        if(account.CurrentCharacter.Fk_Group == groupId)
+                        if (account.CurrentCharacter.Fk_Group == groupId)
                         {
                             SideNavItem ChildItem = new SideNavItem()
                             {
@@ -269,7 +283,7 @@ namespace DeepBot.Controllers
                                 Name = account.CurrentCharacter.Name,
                                 State = ControllersModel.Enum.SideNavState.CONNECTED
                             };
-                            item.Childrens.Add(ChildItem);
+                            item.Children.Add(ChildItem);
                         }
                     }
                 }
