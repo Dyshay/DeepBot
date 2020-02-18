@@ -35,15 +35,16 @@ import { Style, StyleService } from '../@vex/services/style.service';
 import theme from '../@vex/utils/tailwindcss';
 import icChromeReaderMode from '@iconify/icons-ic/twotone-chrome-reader-mode';
 import { ConfigName } from '../@vex/interfaces/config-name.model';
-import { TraductionService } from './services/traduction-service.module';
+import { TraductionService } from './services/traduction.service';
 import { NgSelectConfig } from '@ng-select/ng-select';
 import { TranslateService } from '@ngx-translate/core';
 import { Spinkit } from 'ng-http-loader';
 import { Store } from '@ngrx/store';
-import * as fromAuth from './pages/pages/auth/reducers';
-import * as fromBot from './pages/pages/bot/reducers';
-import { AuthActions } from './pages/pages/auth/actions';
-import { BotActions } from './pages/pages/bot/actions';
+import * as fromwebuser from './app-reducers/webUser/reducers';
+import * as fromAccount from './app-reducers/account/reducers';
+import { webUserActions } from './app-reducers/webUser/actions';
+import { AccountActions } from './app-reducers/account/actions';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'vex-root',
@@ -65,9 +66,10 @@ export class AppComponent {
     private navigationService: NavigationService,
     tradService: TraductionService,
     private translate: TranslateService,
+    private userService : UserService,
     config: NgSelectConfig,
-    private store: Store<fromAuth.State>,
-    private store2: Store<fromBot.State>,
+    private storeUser: Store<fromwebuser.State>,
+    private storeAccount: Store<fromAccount.State>,
     private splashScreenService: SplashScreenService) {
 
  
@@ -94,10 +96,14 @@ export class AppComponent {
            visible: false
          }         
        });
-    // a mettre dans le ngoninit du dashboard // 
-    this.store.dispatch(AuthActions.getUserConnected());
-    this.store2.dispatch(BotActions.getAllGroups());
-    this.navigationService.GenerateNavigation();
+
+
+    if (this.userService.isConnected()) {
+      this.storeUser.dispatch(webUserActions.getUser());
+      this.store2.dispatch(BotActions.getAllGroups());
+      this.navigationService.GenerateNavigation();
+    }
+
 
     /**
      * Config Related Subscriptions

@@ -7,7 +7,7 @@ import {
 import * as fromAccount from '../reducers/account.reducers';
 
 export interface AccountState {
-  accountStatus: fromAccount.State;
+  status: fromAccount.State;
 }
 
 export interface State {
@@ -15,13 +15,13 @@ export interface State {
 }
 
 export function reducers(state: AccountState | undefined, action: Action) {
-  return combineReducers({ accountStatus: fromAccount.reducer })(state, action);
+  return combineReducers({ status: fromAccount.reducer })(state, action);
 }
 
 export const selectAccountState = createFeatureSelector<State, AccountState>('account');
 export const selectAccountStatusState = createSelector(
     selectAccountState,
-  (state: AccountState) => state.accountStatus
+  (state: AccountState) => state.status
 );
 
 

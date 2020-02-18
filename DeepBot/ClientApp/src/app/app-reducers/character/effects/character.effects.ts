@@ -5,7 +5,6 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { TalkService } from "src/app/Services/TalkService";
-import { AuthService } from "src/app/services/auth.services";
 import { CharacterActions } from '../actions';
 
 import { ToastrService } from 'ngx-toastr';
@@ -16,7 +15,6 @@ import { NavigationService } from '../../../../@vex/services/navigation.service'
 @Injectable()
 export class CharacterEffects {
     static isConnectedTalker = false;
-
 
 
   getAllCharacters$ = createEffect(() =>
