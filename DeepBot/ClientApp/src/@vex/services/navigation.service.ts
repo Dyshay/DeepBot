@@ -88,7 +88,7 @@ export class NavigationService {
             for (var j = 0; j < result.items[i].children.length; j++) {
               this.itemGroup = {label:null,route:null,type:null,badge:null,fragment:null}
               this.itemGroup.label = result.items[i].children[j].name;
-              this.itemGroup.route = '/bot-dashboard/:' + result.items[i].children[j].id;
+              this.itemGroup.route = '/bot-dashboard/' + result.items[i].children[j].id;
               this.itemGroup.icon = icLayers;
               this.itemGroup.type = 'link';
               this.group.children.push(this.itemGroup); 

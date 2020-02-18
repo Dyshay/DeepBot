@@ -5,8 +5,8 @@ import { AccountInterface } from '../../../../../webModel/Interface/account.inte
 import { FormBuilder } from '@angular/forms';
 import { Account } from '../../../../../webModel/Account';
 import { Store, select } from '@ngrx/store';
-import * as fromAuth from '../../auth/reducers';
-import * as fromBot from '../../bot/reducers';
+import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
+import * as fromGroup from 'src/app/app-reducers/group/reducers';
 import { User } from '../../../../../webModel/User';
 import { Character } from '../../../../../webModel/Character';
 import { Group } from '../../../../../webModel/Group';
@@ -39,8 +39,8 @@ export class ModalUpdateAccountComponent implements OnInit {
 
     /** modal-update-account ctor */
   constructor(private translateService: TranslateService,
-    private store2: Store<fromBot.State>,
-    private store: Store<fromAuth.State>,
+    private storeGroup: Store<fromGroup.State>,
+    private storeUser: Store<fromwebUser.State>,
     private dialogRef: MatDialogRef<ModalUpdateAccountComponent>,
     private toastr: ToastrService,
     private cd: ChangeDetectorRef,
@@ -48,13 +48,13 @@ export class ModalUpdateAccountComponent implements OnInit {
      
     }
   ngOnInit() {
-    this.store2.pipe(select(fromBot.getAllGroups)).subscribe(
+    this.storeGroup.pipe(select(fromGroup.getAllGroups)).subscribe(
       (result) => {
         this.groups = result;
       }
     );
 
-    this.store.pipe(select(fromAuth.getUserConnected)).subscribe(
+    this.storeUser.pipe(select(fromwebUser.getUser)).subscribe(
       (result: User) => {
         this.account = result.accounts.find(o => o.accountName == this.accountName);
         this.charaters = this.account.characters;
@@ -71,7 +71,7 @@ export class ModalUpdateAccountComponent implements OnInit {
 
   updateAccount() {
 
-    this.store.pipe(select(fromAuth.getUserConnected)).subscribe(
+    this.storeUser.pipe(select(fromwebUser.getUser)).subscribe(
       (result: User) => {
         if (this.ValidateCredential()) {
           this.account.accountName = this.form.controls["accountName"].value;

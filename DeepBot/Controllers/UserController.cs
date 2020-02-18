@@ -56,26 +56,29 @@ namespace DeepBot.Controllers
 
         }
         [HttpGet]
-        [Authorize]
-        [Route("getUserConnected")]
-        public async Task<UserDB> getUserConnected()
+        [AllowAnonymous]
+        [Route("isActive")]
+        public async Task<bool> isActive()
         {
+            bool retour = false;
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
 
-            return user;
+            if(user != null)
+            {
+                
+                if(user.EmailConfirmed && !user.LockoutEnabled)
+                {
+                    retour = true;
+                }
+#if DEBUG
+                retour = true;
+#endif
+            }
+            return retour;
 
         }
 
-
-        public async Task<UserDB> getUserDB()
-        {
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userId);
-
-            return user;
-
-        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]

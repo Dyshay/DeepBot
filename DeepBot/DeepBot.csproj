@@ -41,7 +41,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\pages\dashboards\dashboard\" />
+    <Folder Include="ClientApp\src\app\pages\pages\bot\" />
     <Folder Include="ClientApp\src\assets\img\classe\" />
   </ItemGroup>
 
