@@ -7,11 +7,11 @@ import {
 import * as fromCharacter from '../reducers/character.reducers';
 
 export interface CharacterState {
-  status: fromCharacter.State;
+  status: fromCharacter.State
 }
 
 export interface State {
-  character: CharacterState;
+  character: CharacterState
 }
 
 export function reducers(state: CharacterState | undefined, action: Action) {
@@ -26,4 +26,4 @@ export const selectCharacterStatusState = createSelector(
 
 export const getScanCharacters = createSelector(selectCharacterStatusState, fromCharacter.getScanCharacters);
 export const getAllCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCharacters);
-export const getAllCurrentCharacters = createSelector(selectCharacterStatusState,fromCharacter.getAllCurrentCharacters)
+export const getAllCurrentCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCurrentCharacters);

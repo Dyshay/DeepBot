@@ -14,7 +14,6 @@ import { GroupsService } from '../../../services/group.service';
 
 @Injectable()
 export class GroupEffects {
-    static isConnectedTalker = false;
 
   createGroup$ = createEffect(() =>
     this.actions$.pipe(

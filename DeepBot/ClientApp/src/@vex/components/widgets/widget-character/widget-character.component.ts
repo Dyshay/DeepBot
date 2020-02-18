@@ -8,15 +8,17 @@ import { MatBottomSheet } from '@angular/material';
 import { ShareBottomSheetComponent } from '../../share-bottom-sheet/share-bottom-sheet.component';
 import { scaleInOutAnimation } from '../../../animations/scale-in-out.animation';
 import { ColorDef } from '../../../utils/tailwindcss.interface';
+import { Link } from '../../../interfaces/link.interface';
+
 
 @Component({
-  selector: 'vex-widget-quick-value-center',
-  templateUrl: './widget-quick-value-center.component.html',
+  selector: 'vex-widget-character',
+  templateUrl: './widget-character.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [scaleInOutAnimation]
 })
-export class WidgetQuickValueCenterComponent implements OnInit {
-
+export class WidgetCharacterComponent implements OnInit {
+  
   @Input() icon: Icon;
   @Input() value: string;
   @Input() label: string;

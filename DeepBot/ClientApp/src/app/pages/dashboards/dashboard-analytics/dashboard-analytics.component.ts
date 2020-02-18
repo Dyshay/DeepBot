@@ -9,7 +9,6 @@ import { TableColumn } from '../../../../@vex/interfaces/table-column.interface'
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import theme from '../../../../@vex/utils/tailwindcss';
 import { Store, select } from '@ngrx/store';
-import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
 import { TalkService } from 'src/app/Services/TalkService';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
 
@@ -20,7 +19,7 @@ import { NavigationService } from '../../../../@vex/services/navigation.service'
 })
 export class DashboardAnalyticsComponent implements OnInit {
 
-  logs$ = this.store.pipe(select(fromwebUser.getLogs));
+
 
   tableColumns: TableColumn<Order>[] = [
     {
@@ -95,7 +94,7 @@ export class DashboardAnalyticsComponent implements OnInit {
 
   theme = theme;
 
-  constructor(private cd: ChangeDetectorRef, private store: Store<fromwebUser.State>, private deepTalk: TalkService) { }
+  constructor(private cd: ChangeDetectorRef,private deepTalk: TalkService) { }
 
   ngOnInit() {
     setTimeout(() => {

@@ -22,25 +22,24 @@ export class webUserEffects {
 
     login$ = createEffect(() =>
         this.actions$.pipe(
-          ofType(webUserActions.login),
+            ofType(webUserActions.login),
             map(action => action.user),
             exhaustMap((user: User) =>
-              this.userService.login(user).pipe(
-                  map(user => webUserActions.loginSuccess({ user })),
-                  catchError(error => of(webUserActions.loginFailure({ error }))))
+                this.userService.login(user).pipe(
+                    map(user => webUserActions.loginSuccess({ user })),
+                    catchError(error => of(webUserActions.loginFailure({ error }))))
             )
         )
-
     );
 
     loginSuccess$ = createEffect(() =>
         this.actions$.pipe(
-          ofType(webUserActions.loginSuccess),
+            ofType(webUserActions.loginSuccess),
             map(action => action.user),
-          tap((user: any) => {
+            tap((user: any) => {
                 let token = user.token;
                 localStorage.setItem('DeepBot', token);
-              this.router.navigate(['/']);
+                this.router.navigate(['/']);
             })
         ),
         { dispatch: false }
@@ -48,63 +47,78 @@ export class webUserEffects {
 
     loginFailure$ = createEffect(() =>
         this.actions$.pipe(
-          ofType(webUserActions.loginFailure),
+            ofType(webUserActions.loginFailure),
             map(action => action.error),
+        )
+    );
+
+
+    debug$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(webUserActions.DEBUG),
+            map(action => action),
+            tap(() => {
+                console.log('test Effecct')
+            })
+        ),
+        { dispatch: false }
+    );
+
+
+
+    getUser$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(webUserActions.getUser),
+            map(action => action),
+            exhaustMap(() =>
+                this.userService.getUser().pipe(
+                    map(user => webUserActions.getUserSuccess({ user })),
+                    catchError(error => of(webUserActions.getUserFailure({ error })))
+                )))
+    );
+
+    getUserSuccess$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(webUserActions.getUserSuccess),
+            map(action => action.user),
+            tap((user: any) => {
+                if (!webUserEffects.isConnectedTalker) {
+                    this.deeptalk.startConnection();
+                    webUserEffects.isConnectedTalker = false;
+                }
+              let allAccounts = user.accounts;
+              this.accountStore.dispatch(AccountActions.getAllAccount({ allAccounts }));
+   
+                let allCurrentCharacters = [];
+                let allCharacters = []
+              for (var i = 0; i < user.accounts.length; i++) {
+                if (user.accounts[i].currentCharacter !== null)
+                    allCurrentCharacters.push(user.accounts[i].currentCharacter);
+                  for (var j = 0; j < user.accounts[i].characters.length; j++) {
+                    if (user.accounts[i].characters[j] !== null)
+                        allCharacters.push(user.accounts[i].characters[j]);
+                    }
+              }
+              console.log(allCharacters);
+              console.log(allCurrentCharacters);
+                this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }));
+                this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({ allCurrentCharacters }));
+            })
+        ),
+        { dispatch: false }
+    );
+
+    getUserFailure$ = createEffect(() =>
+        this.actions$.pipe(
+            ofType(webUserActions.getUserFailure),
+            map(action => action.error),
+            tap((error: any) => {
+
+            })
 
         )
-    )
+    );
 
-
-
-
-  getUser$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(webUserActions.getUser),
-      map(action => action),
-      exhaustMap(() =>
-        this.userService.getUser().pipe(
-          map(user => webUserActions.getUserSuccess({ user })),
-          catchError(error => of(webUserActions.getUserFailure({ error })))
-        )))
-  );
-
-  getUserSuccess$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(webUserActions.getUserSuccess),
-      map(action => action.user),
-      tap((user: User) => {
-        if (!webUserEffects.isConnectedTalker) {
-          this.deeptalk.startConnection();
-          webUserEffects.isConnectedTalker = false;
-        }
-        let allAccounts = user.accounts;
-        this.accountStore.dispatch(AccountActions.getAllAccount({ allAccounts }));
-        let allCurrentCharacters = [];
-        let allCharacters = []
-        for (var i = 0; i < user.accounts.length; i++) {
-          allCurrentCharacters.push(user.accounts[i].currentCharacter);
-          for (var j = 0; j < user.accounts[i].characters.length; j++) {          
-            allCharacters.push(user.accounts[i].characters[j]);
-          }
-        }
-        this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }));
-        this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({ allCurrentCharacters }));
-      })
-    ),
-    { dispatch: false }
-  );
-
-  getUserFailure$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(webUserActions.getUserFailure),
-      map(action => action.error),
-      tap((error: any) => {
-
-      })
-
-    )
-  )
-
-    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService,
-private accountStore: Store<fromAccount.State>, private characterStore:Store<fromCharacter.State>) { }
+    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService, private navigationService: NavigationService,
+        private accountStore: Store<fromAccount.State>, private characterStore: Store<fromCharacter.State>) { }
 }

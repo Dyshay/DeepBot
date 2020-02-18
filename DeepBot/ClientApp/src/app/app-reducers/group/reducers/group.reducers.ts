@@ -5,7 +5,7 @@ import { Group } from '../../../../webModel/Group';
 
 export interface State {
   allGroups: Group[],
-  createdGroup: Group | null;
+  createdGroup: Group | null,
   error: string | null,
   pending: boolean,
 }

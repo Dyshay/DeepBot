@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { StoreModule } from '@ngrx/store';
-import { reducers } from '../account/reducers';
+import { reducers } from '../character/reducers'; /* NIQUE SA MERE */ 
 import { EffectsModule } from '@ngrx/effects';
 import { CharacterEffects } from './effects/character.effects';
 

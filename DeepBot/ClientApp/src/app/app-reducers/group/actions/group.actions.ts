@@ -5,9 +5,9 @@ import { Group } from '../../../../webModel/Group';
 
 export const createGroup = createAction('[BOT/GROUP] CREATE GROUP', props<{ createdGroup: Group }>());
 export const createGroupSuccess = createAction('[BOT/GROUP] CREATE GROUP SUCCESS', props<{ createdGroup: Group }>());
-export const createGroupFailure = createAction('[BOT/GROUP] CREATE GROUP ERROR', props<{ error: any }>())
+export const createGroupFailure = createAction('[BOT/GROUP] CREATE GROUP ERROR', props<{ error: any }>());
 
 export const getAllGroups = createAction('[BOT/CHARACTER] GET ALLGROUP')
-export const getAllGroupsSuccess = createAction('[BOT/CHARACTER] GET ALLGROUP SUCCESS', props<{ groups: Group[] }>())
-export const getAllGroupsFailure = createAction('[BOT/CHARACTER] GET ALLGROUP ERROR', props<{ error: any }>())
+export const getAllGroupsSuccess = createAction('[BOT/CHARACTER] GET ALLGROUP SUCCESS', props<{ groups: Group[] }>());
+export const getAllGroupsFailure = createAction('[BOT/CHARACTER] GET ALLGROUP ERROR', props<{ error: any }>());
 

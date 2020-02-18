@@ -50,10 +50,14 @@ namespace DeepBot.Controllers
                 item.Followers = new List<Character>();
                 foreach (var account in user.Accounts)
                 {
-                    if (account.CurrentCharacter.Key == item.Fk_Leader)
-                        item.Leader = account.CurrentCharacter;
-                    if (item.Fk_Followers.Contains(account.CurrentCharacter.Key))
-                        item.Followers.Add(account.CurrentCharacter);
+                    if(account.CurrentCharacter != null)
+                    {
+                        if (account.CurrentCharacter.Key == item.Fk_Leader)
+                            item.Leader = account.CurrentCharacter;
+                        if (item.Fk_Followers.Contains(account.CurrentCharacter.Key))
+                            item.Followers.Add(account.CurrentCharacter);
+                    }
+
                 }
             }
                 return ListGroup;

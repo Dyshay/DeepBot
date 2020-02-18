@@ -3,11 +3,11 @@ import { CharacterActions } from '../actions';
 import { Character } from 'src/webModel/Character';
 
 export interface State {
-  scanCharacters: Character[];
+  scanCharacters: Character[],
   allCharacters: Character[],
   allCurrentCharacters: Character[],
-  error: string | null;
-  pending: boolean,
+  error: string | null,
+  pending: boolean
 }
 
 export const initialState: State = {

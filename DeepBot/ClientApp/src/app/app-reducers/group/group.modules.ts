@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { StoreModule } from '@ngrx/store';
-import { reducers } from '../webUser/reducers';
+import { reducers } from '../group/reducers';
 import { EffectsModule } from '@ngrx/effects';
 import { GroupEffects } from './effects/group.effects'
 
