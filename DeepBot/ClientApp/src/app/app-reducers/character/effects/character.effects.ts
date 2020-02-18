@@ -15,7 +15,6 @@ import { CharacterService } from '../../../services/character.service';
 
 @Injectable()
 export class CharacterEffects {
-    static isConnectedTalker = false;
 
 
 

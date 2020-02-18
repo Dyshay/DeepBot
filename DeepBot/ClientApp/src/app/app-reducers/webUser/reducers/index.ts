@@ -7,11 +7,11 @@ import {
 import * as fromwebUser from '../reducers/webUser.reducers';
 
 export interface webUserState {
-  status: fromwebUser.State;
+  status: fromwebUser.State
 }
 
 export interface State {
-  webUser: webUserState;
+  webUser: webUserState
 }
 
 export function reducers(state: webUserState | undefined, action: Action) {
@@ -28,6 +28,5 @@ export const getUser = createSelector(selectwebUserStatusState, fromwebUser.getU
 export const getError = createSelector(selectwebUserStatusState, fromwebUser.getError);
 export const getPending = createSelector(selectwebUserStatusState, fromwebUser.getPending);
 
-export const getLogs = createSelector(selectwebUserStatusState, fromwebUser.getLogs);
 
 

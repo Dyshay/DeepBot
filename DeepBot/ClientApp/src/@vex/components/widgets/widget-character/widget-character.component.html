@@ -1,0 +1,46 @@
+<div (mouseenter)="showButton = true" (mouseleave)="showButton = false"
+  class="card p-6 relative hover:shadow-16 trans-shadow" fxLayout="column">
+  <img class="l-8" src="../../../../assets/img/classe/f_cra.png" style="width: 25%;align-self: center;">
+  <div fxLayout="column" fxLayoutAlign="start center">
+
+    <h5 class="font-bold mt-4 mb-2">{{ value }}</h5>
+  </div>
+  <!-- <div *ngIf="color" [style.background-color]="color['500'] | colorFade:0.9" [style.color]="color['500']"
+    class="rounded-full w-12 h-12 flex items-center justify-center">
+    <mat-icon [icIcon]="icon"></mat-icon>
+  </div> -->
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h3 class="subheading-2 font-medium text-secondary m-0">Status</h3>
+    <h3 class="subheading-2 font-medium text-secondary m-0">DECONNECTER</h3>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h3 class="subheading-2 font-medium text-secondary m-0">Kamas</h3>
+    <h3 class="subheading-2 font-medium text-secondary m-0">5 000 000</h3>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h3 class="subheading-2 font-medium text-secondary m-0">Level</h3>
+    <h3 class="subheading-2 font-medium text-secondary m-0">152</h3>
+  </div>
+  <div fxLayout="row" fxLayoutAlign="space-between">
+    <h3 class="subheading-2 font-medium text-secondary m-0">Experience</h3>
+    <div fxFlex="50" class="mt-3 ml-3">
+      <mat-progress-bar value="85"></mat-progress-bar>
+    </div>
+  </div>
+
+  <!-- <h4 [class.text-green-500]="change > 0" [class.text-red-500]="change <= 0" class="subheading-1 font-medium mt-4 mb-0">
+    <ic-icon *ngIf="change > 0" [icon]="faCaretUp" [inline]="true" height="20px" width="20px"></ic-icon>
+    <ic-icon *ngIf="change <= 0" [icon]="faCaretDown" [inline]="true" height="20px" width="20px"></ic-icon>
+    <span>{{ change }}%</span>
+  </h4> -->
+
+  <!-- <button *ngIf="helpText" [matTooltip]="helpText" class="absolute top-0 left-0 mt-2 ml-2 text-hint" mat-icon-button
+    matTooltipPosition="after" type="button">
+    <mat-icon [icIcon]="icHelp" height="18px" width="18px"></mat-icon>
+  </button>
+
+  <button (click)="openSheet()" *ngIf="showButton" @scaleInOut class="absolute -top-3 -right-3 bg-card shadow-8"
+    color="primary" mat-icon-button type="button">
+    <mat-icon [icIcon]="icShare" height="24px" width="24px"></mat-icon>
+  </button> -->
+</div>

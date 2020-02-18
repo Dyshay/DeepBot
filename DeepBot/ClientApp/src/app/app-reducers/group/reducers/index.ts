@@ -7,11 +7,11 @@ import {
 import * as fromgroup from '../reducers/group.reducers';
 
 export interface groupState {
-  status: fromgroup.State;
+  status: fromgroup.State
 }
 
 export interface State {
-  group: groupState;
+  group: groupState
 }
 
 export function reducers(state: groupState | undefined, action: Action) {

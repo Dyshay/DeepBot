@@ -15,7 +15,6 @@ import { NavigationService } from '../../../../@vex/services/navigation.service'
 
 @Injectable()
 export class AccountEffects {
-    static isConnectedTalker = false;
 
     createAccount$ = createEffect(() =>
         this.actions$.pipe(

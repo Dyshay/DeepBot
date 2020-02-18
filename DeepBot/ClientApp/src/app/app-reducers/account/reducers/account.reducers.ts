@@ -5,14 +5,16 @@ import { Character } from 'src/webModel/Character';
 import { Account } from 'src/webModel/Account';
 
 export interface State {
-  allAccounts: Account[] | null;
-  accountCreated: Account | null;
-  error: string | null;
+  logs: LogMessage[],
+  allAccounts: Account[] | null,
+  accountCreated: Account | null,
+  error: string | null,
   pending: boolean,
 
 }
 
 export const initialState: State = {
+  logs: [],
   allAccounts: null,
   accountCreated: null,
   error: null,
@@ -21,6 +23,7 @@ export const initialState: State = {
 
 
 export const reducer = createReducer(initialState,
+  on(AccountActions.receveidLogs, (state, { network }) => ({ ...state, logs: state.logs.concat(network) })),
 
   on(AccountActions.createAccount, (state) => ({ ...state, pending: true  })),
   on(AccountActions.createAccountSuccess, (state, { accountCreated }) => ({ ...state, accountCreated: accountCreated ,pending:false})),
@@ -32,4 +35,5 @@ export const reducer = createReducer(initialState,
 
 export const getAccountCreated = (state: State) => state.accountCreated;
 export const getAllAccounts = (state: State) => state.allAccounts;
+export const getLogs = (state: State) => state.logs;
 

@@ -1,7 +1,10 @@
 import { props, createAction } from '@ngrx/store';
 import { Account } from '../../../../webModel/Account';
+import { LogMessage } from '../../../../webModel/LogMessage';
 
 
+
+export const receveidLogs = createAction('[BOT/TALK] RECEIVED LOG', props<{ network: LogMessage }>());
 
 export const createAccount = createAction('[BOT/ACCOUNT] CREATE ACCOUNT', props<{ accountCreated: Account  }>());
 export const createAccountSuccess = createAction('[BOT/ACCOUNT] CREATE ACCOUNT SUCCESS', props<{ accountCreated: Account }>());
