@@ -42,8 +42,10 @@ import { Spinkit } from 'ng-http-loader';
 import { Store } from '@ngrx/store';
 import * as fromwebuser from './app-reducers/webUser/reducers';
 import * as fromAccount from './app-reducers/account/reducers';
+import * as fromGroup from './app-reducers/group/reducers';
 import { webUserActions } from './app-reducers/webUser/actions';
 import { AccountActions } from './app-reducers/account/actions';
+import { GroupActions } from './app-reducers/group/actions';
 import { UserService } from './services/user.service';
 
 @Component({
@@ -56,27 +58,25 @@ export class AppComponent {
   public spinkit = Spinkit;
 
   constructor(private configService: ConfigService,
-              private styleService: StyleService,
-              private renderer: Renderer2,
-              private platform: Platform,
-              @Inject(DOCUMENT) private document: Document,
-              @Inject(LOCALE_ID) private localeId: string,
-              private layoutService: LayoutService,
-              private route: ActivatedRoute,
+    private styleService: StyleService,
+    private renderer: Renderer2,
+    private platform: Platform,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(LOCALE_ID) private localeId: string,
+    private route: ActivatedRoute,
     private navigationService: NavigationService,
     tradService: TraductionService,
     private translate: TranslateService,
-    private userService : UserService,
+    private userService: UserService,
     config: NgSelectConfig,
     private storeUser: Store<fromwebuser.State>,
+    private storeGroup: Store<fromGroup.State>,
     private storeAccount: Store<fromAccount.State>,
-    private splashScreenService: SplashScreenService) {
+    private splashScreenService: SplashScreenService
+  ) {
 
- 
     translate.setDefaultLang('fr');
     translate.currentLang = 'fr';
-    translate.use('fr');
-
 
     Settings.defaultLocale = this.localeId;
 
@@ -84,50 +84,26 @@ export class AppComponent {
       this.renderer.addClass(this.document.body, 'is-blink');
     }
 
-    
-    
-       this.configService.updateConfig({
-         sidenav: {
-           title: 'DeepBot',
-           imageUrl: 'assets/img/logo/logo-rounded.svg',
-           showCollapsePin: false
-         },
-         footer: {
-           visible: false
-         }         
-       });
+
+
+    this.configService.updateConfig({
+      sidenav: {
+        title: 'DeepBot',
+        imageUrl: 'assets/img/logo/logo-rounded.svg',
+        showCollapsePin: false
+      },
+      footer: {
+        visible: false
+      }
+    });
 
 
     if (this.userService.isConnected()) {
       this.storeUser.dispatch(webUserActions.getUser());
-      this.store2.dispatch(BotActions.getAllGroups());
+      this.storeGroup.dispatch(GroupActions.getAllGroups());
       this.navigationService.GenerateNavigation();
     }
 
 
-    /**
-     * Config Related Subscriptions
-     * You can remove this if you don't need the functionality of being able to enable specific configs with queryParams
-     * Example: example.com/?layout=apollo&style=default
-     */
-    this.route.queryParamMap.pipe(
-      filter(queryParamMap => queryParamMap.has('rtl') && coerceBooleanProperty(queryParamMap.get('rtl')))
-    ).subscribe(queryParamMap => {
-      this.document.body.dir = 'rtl';
-      this.configService.updateConfig({
-        rtl: true
-      });
-    });
-
-    this.route.queryParamMap.pipe(
-      filter(queryParamMap => queryParamMap.has('layout'))
-    ).subscribe(queryParamMap => this.configService.setConfig(queryParamMap.get('layout') as ConfigName));
-
-    this.route.queryParamMap.pipe(
-      filter(queryParamMap => queryParamMap.has('style'))
-    ).subscribe(queryParamMap => this.styleService.setStyle(queryParamMap.get('style') as Style));
-
-
-  
   }
 }

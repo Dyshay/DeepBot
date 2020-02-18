@@ -25,11 +25,12 @@ export class GroupsService {
 
 
   getAllgroups(): Observable<Group[]> {
-
-
     return this.http.get<Group[]>(`${environment.apiURL}Group/GetAllGroups`, httpOptions);
- 
 }
+
+  createGroup(createdGroup: Group): Observable<any> {
+    return this.http.post<Group>(`${environment.apiURL}Group/CreateGroup`, createdGroup, httpOptions)
+  }
 
 
 }

@@ -7,12 +7,12 @@ import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ToastrService } from 'ngx-toastr';
 import { Store } from '@ngrx/store';
-import * as fromAuth from '../reducers';
-import { AuthActions } from '../actions';
+import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
+import { webUserActions } from 'src/app/app-reducers/webUser/actions';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
 import { User } from '../../../../../webModel/User';
 import { environment } from '../../../../../environments/environment';
-import { TraductionService } from '../../../../services/traduction-service.module';
+import { TraductionService } from '../../../../services/traduction.service';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
     private snackbar: MatSnackBar,
     private http: HttpClient,
     private toastr: ToastrService,
-    private store: Store<fromAuth.State>,
+    private store: Store<fromwebUser.State>,
     private tradService: TraductionService 
   ) { }
 
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
       accounts: [],
       langue: this.tradService.translate.currentLang
     };
-    this.store.dispatch(AuthActions.login({ user }))
+    this.store.dispatch(webUserActions.login({ user }))
   }
   changerLangue(langue: string) {
     this.tradService.changLang(langue, false);

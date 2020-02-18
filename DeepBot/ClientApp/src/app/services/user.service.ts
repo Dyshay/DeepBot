@@ -31,13 +31,8 @@ export class UserService {
     return this.http.post<User>(`${environment.apiURL}User/Login`, body, httpOptions);
   }
 
-  isConnected(): boolean {
-    var retour;
-    this.http.get<boolean>(`${environment.apiURL}User/isActive`, httpOptions).subscribe(
-      (result) => {
-        retour= result;
-      }
-    );
+ async isConnected(): Promise<boolean> {
+    let retour = await this.http.get<boolean>(`${environment.apiURL}User/isActive`, httpOptions).toPromise();
     return retour;
   }
 

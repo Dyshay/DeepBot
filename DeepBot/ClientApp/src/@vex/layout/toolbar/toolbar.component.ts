@@ -19,10 +19,10 @@ import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
 import { MegaMenuComponent } from '../../components/mega-menu/mega-menu.component';
 import icSearch from '@iconify/icons-ic/twotone-search';
-import * as fromAuth from '../../../app/pages/pages/auth/reducers';
+import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
 import { Store, select } from '@ngrx/store';
-import { AuthActions } from 'src/app/pages/pages/auth/actions';
-import { TraductionService } from '../../../app/services/traduction-service.module';
+import { webUserActions } from 'src/app/app-reducers/webUser/actions';
+import { TraductionService } from '../../../app/services/traduction.service';
 
 
 @Component({
@@ -32,7 +32,7 @@ import { TraductionService } from '../../../app/services/traduction-service.modu
 })
 export class ToolbarComponent implements OnInit {
 
-  user$ = this.store.pipe(select(fromAuth.getUser));
+  user$ = this.store.pipe(select(fromwebUser.getUser));
   @Input() mobileQuery: boolean;
 
   @Input()
@@ -68,10 +68,9 @@ export class ToolbarComponent implements OnInit {
               private navigationService: NavigationService,
               private popoverService: PopoverService,
               private traductionService : TraductionService,
-              private store: Store<fromAuth.State>
+              private store: Store<fromwebUser.State>
               ) {
 
-                this.store.dispatch(AuthActions.getUser())
                }
 
   ngOnInit() {

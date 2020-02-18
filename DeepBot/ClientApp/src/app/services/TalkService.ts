@@ -1,9 +1,10 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/signalr';
 import { Store } from '@ngrx/store';
-import * as fromBot from '../pages/pages/bot/reducers';
-import { BotActions } from '../pages/pages/bot/actions';
-
+import * as fromwebUser from '../app-reducers/webUser/reducers';
+import { webUserActions } from '../app-reducers/webUser/actions';
+import * as fromCharacter from '../app-reducers/character/reducers';
+import { CharacterActions } from '../app-reducers/character/actions';
 @Injectable()
 export class TalkService {
   messageReceived = new EventEmitter<string>();
@@ -12,7 +13,9 @@ export class TalkService {
   private connectIsEstablished = false;
   private _hubConnection: HubConnection;
 
-  constructor(private store: Store<fromBot.State>) {
+  constructor(private storeUser: Store<fromwebUser.State>,
+    private storeCharacter : Store<fromCharacter.State>
+  ) {
     this.createConnection();
     // this.startConnection();
   }
@@ -64,10 +67,10 @@ export class TalkService {
           console.log(network);
       switch (network.type) {
         case 0:
-          this.store.dispatch(BotActions.receveidLogs({ network }));
+          this.storeUser.dispatch(webUserActions.receveidLogs({ network }));
           break;
         case 6:
-          this.store.dispatch(BotActions.receveidCharacters({ network }));
+          this.storeCharacter.dispatch(CharacterActions.receveidCharacters({ network }));
           break;
         default:
           break;

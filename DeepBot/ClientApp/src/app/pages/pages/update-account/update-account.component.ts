@@ -16,11 +16,11 @@ import { ContactsEditComponent } from '../../apps/contacts/components/contacts-e
 import { TranslateService } from '@ngx-translate/core';
 import { AccountInterface } from '../../../../webModel/Interface/account.interface';
 import { Store, select } from '@ngrx/store';
-import * as fromAuth from '../auth/reducers';
+import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
 import { ModalUpdateAccountComponent } from './modal-update-account/modal-update-account.component';
 import { pipe } from 'rxjs';
 import { User } from '../../../../webModel/User';
-import * as fromBot from '../bot/reducers';
+import * as fromgroup from 'src/app/app-reducers/group/reducers';
 import { Group } from '../../../../webModel/Group';
 
 @Component({
@@ -91,14 +91,14 @@ export class UpdateAccountComponent implements OnInit {
   icMenu = icMenu;
 
 
-  constructor(private dialog: MatDialog, private translateService: TranslateService, private store: Store<fromAuth.State>, private store2: Store<fromBot.State>) { }
+  constructor(private dialog: MatDialog, private translateService: TranslateService, private storeUser: Store<fromwebUser.State>, private storeGroup: Store<fromgroup.State>) { }
 
 
   ngOnInit() {
-    this.store2.pipe(select(fromBot.getAllGroups)).subscribe(
+    this.storeGroup.pipe(select(fromgroup.getAllGroups)).subscribe(
       (result0: Group[]) => {
         console.log(result0);
-        this.store.pipe(select(fromAuth.getUserConnected)).subscribe(
+        this.storeUser.pipe(select(fromwebUser.getUser)).subscribe(
           (result: User) => {
             for (var i = 0; i < result.accounts.length; i++) {
               if (result0.findIndex(o => o.key == result.accounts[i].currentCharacter.fk_Group) != -1) {
