@@ -73,6 +73,10 @@ export class webUserEffects {
       ofType(webUserActions.getUserSuccess),
       map(action => action.user),
       tap((user: User) => {
+        if (!webUserEffects.isConnectedTalker) {
+          this.deeptalk.startConnection();
+          webUserEffects.isConnectedTalker = false;
+        }
         let allAccounts = user.accounts;
         this.accountStore.dispatch(AccountActions.getAllAccount({ allAccounts }));
         let allCurrentCharacters = [];
@@ -83,8 +87,8 @@ export class webUserEffects {
             allCharacters.push(user.accounts[i].characters[j]);
           }
         }
-        this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }))
-        this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({allCurrentCharacters}))
+        this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }));
+        this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({ allCurrentCharacters }));
       })
     ),
     { dispatch: false }
