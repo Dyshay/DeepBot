@@ -9,6 +9,10 @@ import { TalkService } from "src/app/Services/TalkService";
 import { UserService } from "src/app/services/user.service";
 import { User } from '../../../../webModel/User';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
+import * as fromAccount from '../../account/reducers';
+import * as fromCharacter from '../../character/reducers';
+import { Store } from '@ngrx/store';
+import { AccountActions } from '../../account/actions';
 
 @Injectable()
 export class webUserEffects {
@@ -67,7 +71,9 @@ export class webUserEffects {
       ofType(webUserActions.getUserSuccess),
       map(action => action.user),
       tap((user: any) => {
-
+        //this.accountStore.dispatch(AccountActions.)
+        //this.characterStore.dispatch(CharacterActions.)
+        // IT'S EXEMPLE
       })
     ),
     { dispatch: false }
@@ -84,5 +90,5 @@ export class webUserEffects {
     )
   )
 
-    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
+    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService, private accountStore: Store<fromAccount.State>, private characterStore:Store<fromCharacter.State>) { }
 }
