@@ -2,13 +2,13 @@ import { NgModule } from "@angular/core";
 import { StoreModule } from '@ngrx/store';
 import { reducers } from '../webUser/reducers';
 import { EffectsModule } from '@ngrx/effects';
-import { webUserEffects } from './effects/webUser.effects'
+import { GroupEffects } from './effects/group.effects'
 
 
 @NgModule({
     imports: [
-    StoreModule.forFeature('webUser', reducers),
-    EffectsModule.forFeature([webUserEffects])
+    StoreModule.forFeature('group', reducers),
+    EffectsModule.forFeature([GroupEffects])
     ],
 })
-export class webUserModule {}
+export class groupModule {}

@@ -11,14 +11,14 @@ export interface webUserState {
 }
 
 export interface State {
-  auth: webUserState;
+  webUser: webUserState;
 }
 
 export function reducers(state: webUserState | undefined, action: Action) {
   return combineReducers({ status: fromwebUser.reducer })(state, action);
 }
 
-export const selectAuthState = createFeatureSelector<State, webUserState>('auth');
+export const selectAuthState = createFeatureSelector<State, webUserState>('webUser');
 export const selectAuthStatusState = createSelector(
     selectAuthState,
   (state: webUserState) => state.status

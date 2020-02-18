@@ -31,6 +31,16 @@ export class UserService {
     return this.http.post<User>(`${environment.apiURL}User/Login`, body, httpOptions);
   }
 
+  isConnected(): boolean {
+    var retour;
+    this.http.get<boolean>(`${environment.apiURL}User/isActive`, httpOptions).subscribe(
+      (result) => {
+        retour= result;
+      }
+    );
+    return retour;
+  }
+
   getUser(): Observable<any> {
     return this.http.get<Account>(`${environment.apiURL}User/getUser`);
   }
