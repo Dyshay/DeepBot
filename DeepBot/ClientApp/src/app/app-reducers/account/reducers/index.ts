@@ -26,4 +26,4 @@ export const selectAccountStatusState = createSelector(
 
 
 export const getAccountCreated = createSelector(selectAccountStatusState, fromAccount.getAccountCreated);
-
+export const getAllAccounts = createSelector(selectAccountStatusState, fromAccount.getAllAccounts);

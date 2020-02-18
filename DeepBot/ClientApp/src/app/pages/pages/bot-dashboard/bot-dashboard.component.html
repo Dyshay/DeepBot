@@ -61,8 +61,8 @@
           <h1 @fadeInRight class="headline text-contrast-black m-0">{{character?.name}}</h1>
         </div>
         <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" mat-align-tabs="center">
-          <mat-tab *ngFor="let link of links">
-            <ng-template mat-tab-label fxLayoutAlign="center center">
+          <mat-tab *ngFor="let link of links" fxLayoutAlign="center center">
+            <ng-template mat-tab-label >
               <ic-icon [icon]="link.icon" size="20px" class="mx-3"></ic-icon>
               <span> {{ link.label }}</span>
             </ng-template>
