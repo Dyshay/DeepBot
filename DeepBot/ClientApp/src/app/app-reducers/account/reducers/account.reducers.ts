@@ -25,9 +25,11 @@ export const reducer = createReducer(initialState,
   on(AccountActions.createAccount, (state) => ({ ...state, pending: true  })),
   on(AccountActions.createAccountSuccess, (state, { accountCreated }) => ({ ...state, accountCreated: accountCreated ,pending:false})),
   on(AccountActions.createAccountFailure, (state, { error }) => ({ ...state, error, pending: false })),
+  on(AccountActions.getAllAccount, (state, { allAccounts }) => ({ ...state, allAccounts :allAccounts, pending:false}))
 
 
 )
 
 export const getAccountCreated = (state: State) => state.accountCreated;
+export const getAllAccounts = (state: State) => state.allAccounts;
 

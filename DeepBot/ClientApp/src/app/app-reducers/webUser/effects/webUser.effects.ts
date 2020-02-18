@@ -9,6 +9,12 @@ import { TalkService } from "src/app/Services/TalkService";
 import { UserService } from "src/app/services/user.service";
 import { User } from '../../../../webModel/User';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
+import * as fromAccount from '../../account/reducers';
+import * as fromCharacter from '../../character/reducers';
+import { Store } from '@ngrx/store';
+import { AccountActions } from '../../account/actions';
+import { Character } from '../../../../webModel/Character';
+import { CharacterActions } from '../../character/actions';
 
 @Injectable()
 export class webUserEffects {
@@ -66,8 +72,19 @@ export class webUserEffects {
     this.actions$.pipe(
       ofType(webUserActions.getUserSuccess),
       map(action => action.user),
-      tap((user: any) => {
-
+      tap((user: User) => {
+        let allAccounts = user.accounts;
+        this.accountStore.dispatch(AccountActions.getAllAccount({ allAccounts }));
+        let allCurrentCharacters = [];
+        let allCharacters = []
+        for (var i = 0; i < user.accounts.length; i++) {
+          allCurrentCharacters.push(user.accounts[i].currentCharacter);
+          for (var j = 0; j < user.accounts[i].characters.length; j++) {          
+            allCharacters.push(user.accounts[i].characters[j]);
+          }
+        }
+        this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }))
+        this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({allCurrentCharacters}))
       })
     ),
     { dispatch: false }
@@ -84,5 +101,6 @@ export class webUserEffects {
     )
   )
 
-    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
+    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService,
+private accountStore: Store<fromAccount.State>, private characterStore:Store<fromCharacter.State>) { }
 }

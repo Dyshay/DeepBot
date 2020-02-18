@@ -26,3 +26,4 @@ export const selectCharacterStatusState = createSelector(
 
 export const getScanCharacters = createSelector(selectCharacterStatusState, fromCharacter.getScanCharacters);
 export const getAllCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCharacters);
+export const getAllCurrentCharacters = createSelector(selectCharacterStatusState,fromCharacter.getAllCurrentCharacters)
