@@ -18,37 +18,6 @@ export class CharacterEffects {
     static isConnectedTalker = false;
 
 
-  getAllCharacters$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CharacterActions.getAllCharacters),
-      map(action => action),
-      exhaustMap(() =>
-        this.characterService.getAllCharacters().pipe(
-          map(characters => CharacterActions.getAllCharactersSuccess({ characters })),
-        )))
-  );
-
-  getAllCharactersSucces$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CharacterActions.getAllCharactersSuccess),
-      map(action => action.characters),
-      tap((account: any) => {
-      })
-    ),
-    { dispatch: false }
-  );
-
-  getAllCharactersFailure$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(CharacterActions.getAllCharactersFailure),
-      map(action => action.error),
-
-    )
-  );
-
-
-  
-
 
   constructor(private actions$: Actions, private characterService: CharacterService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr:ToastrService) { }
 }
