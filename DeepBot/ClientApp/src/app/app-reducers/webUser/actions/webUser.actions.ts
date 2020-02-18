@@ -1,7 +1,9 @@
 import { props, createAction } from '@ngrx/store';
 import { User } from '../../../../webModel/User';
+import { LogMessage } from '../../../../webModel/LogMessage';
 
 
+export const receveidLogs = createAction('[BOT/TALK] SEND LOG', props<{ network: LogMessage }>());
 
 export const loginSuccess = createAction('[AUTH/LOGIN] Login Success', props<{user: any}>());
 export const login = createAction('[AUTH/LOGIN] Login', props<{user: User}>());

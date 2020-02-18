@@ -21,7 +21,7 @@ export class GroupEffects {
       ofType(GroupActions.createGroup),
       map(action => action.createdGroup),
       exhaustMap((createdGroup: Group) =>
-        this.accountService.createGroup(createdGroup).pipe(
+        this.groupService.createGroup(createdGroup).pipe(
           map(createdGroup => GroupActions.createGroupSuccess({ createdGroup })),
           catchError(error => of(GroupActions.createGroupFailure({ error }))))
       )

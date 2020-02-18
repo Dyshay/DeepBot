@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 import { webUserActions } from '../actions';
 
 import { TalkService } from "src/app/Services/TalkService";
-import { AuthService } from "src/app/services/auth.services";
+import { UserService } from "src/app/services/user.service";
 import { User } from '../../../../webModel/User';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
 
@@ -19,7 +19,7 @@ export class webUserEffects {
           ofType(webUserActions.login),
             map(action => action.user),
             exhaustMap((user: User) =>
-                this.authService.login(user).pipe(
+              this.userService.login(user).pipe(
                   map(user => webUserActions.loginSuccess({ user })),
                   catchError(error => of(webUserActions.loginFailure({ error }))))
             )
@@ -56,7 +56,7 @@ export class webUserEffects {
       ofType(webUserActions.getUser),
       map(action => action),
       exhaustMap(() =>
-        this.authService.getUserConnected().pipe(
+        this.userService.getUser().pipe(
           map(user => webUserActions.getUserSuccess({ user })),
           catchError(error => of(webUserActions.getUserFailure({ error })))
         )))
@@ -84,5 +84,5 @@ export class webUserEffects {
     )
   )
 
-    constructor(private actions$: Actions, private authService: AuthService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
+    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
 }

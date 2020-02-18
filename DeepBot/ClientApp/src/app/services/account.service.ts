@@ -26,17 +26,4 @@ export class AccountService {
   createAccount(account: Account): Observable<any> {
     return this.http.post<Account>(`${environment.apiURL}Account/CreateAccount`, account, httpOptions);
   }
-
-  getAllCharacters(): Observable<any> {
-    return this.http.get<Character[]>(`${environment.apiURL}Character/GetAllCharacters`, httpOptions)
-  }
-
-  createGroup(group: Group): Observable<any> {
-    return this.http.post<Group>(`${environment.apiURL}Group/CreateGroup`, group, httpOptions)
-  }
-
-
-
-
-
 }

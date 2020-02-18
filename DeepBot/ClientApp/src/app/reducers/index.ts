@@ -9,8 +9,10 @@ import {
   } from '@ngrx/store';
   import { environment } from '../../environments/environment';
   import * as fromRouter from '@ngrx/router-store';
-import * as fromAuth from '../pages/pages/auth/reducers';
-import * as fromBot from '../pages/pages/bot/reducers';
+import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
+import * as fromAccount from 'src/app/app-reducers/account/reducers';
+import * as fromGroup from 'src/app/app-reducers/group/reducers';
+import * as fromCharacter from 'src/app/app-reducers/character/reducers'
   
   /**
    * Every reducer module's default export is the reducer function itself. In
@@ -27,8 +29,10 @@ import * as fromBot from '../pages/pages/bot/reducers';
    */
   export interface State {
     router: fromRouter.RouterReducerState<any>;
-    auth: fromAuth.AuthState;
-    bot: fromBot.BotState;
+    webUser: fromwebUser.webUserState;
+    account: fromAccount.AccountState;
+    group: fromGroup.groupState;
+    character: fromCharacter.CharacterState;
   }
   
   /**
@@ -41,8 +45,10 @@ import * as fromBot from '../pages/pages/bot/reducers';
   >('Root reducers token', {
     factory: () => ({
       router: fromRouter.routerReducer,
-      auth: fromAuth.reducers,
-      bot: fromBot.reducers
+      webUser: fromwebUser.reducers,
+      account: fromAccount.reducers,
+      character: fromCharacter.reducers,
+      group : fromGroup.reducers
     }),
   });
   

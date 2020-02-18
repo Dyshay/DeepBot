@@ -5,7 +5,6 @@ import { catchError, exhaustMap, map, tap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 
 import { TalkService } from "src/app/Services/TalkService";
-import { AuthService } from "src/app/services/auth.services";
 import { AccountActions } from '../actions';
 
 import { ToastrService } from 'ngx-toastr';
