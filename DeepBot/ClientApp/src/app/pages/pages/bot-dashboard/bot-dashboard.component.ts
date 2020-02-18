@@ -80,7 +80,7 @@ export class BotDashboardComponent implements OnInit {
     {
       label: this.translateService.instant('DASHBOARDBOT.CHARACTER'),
       route: 'character',
-      icon: icPersonnage
+      icon: icPersonnage      
     },
     {
       label: this.translateService.instant('DASHBOARDBOT.FIGHT'),
