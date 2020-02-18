@@ -17,8 +17,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { TalkService } from './Services/TalkService';
-import { AuthModule } from './pages/pages/auth/auth.modules';
-import { BotModule } from './pages/pages/bot/bot.modules';
+import { webUserModule } from './app-reducers/webUser/webUser.modules';
+import { AccountModule } from './app-reducers/account/account.modules';
+import { CharacterModule } from './app-reducers/character/character.modules';
+import { groupModule } from './app-reducers/group/group.modules';
 import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MyMissingTranslationHandler } from './modules/my-missing-translation-handler.module';
@@ -32,8 +34,10 @@ export function createTranslateLoader(http: HttpClient) {
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    AuthModule,
-    BotModule,
+    webUserModule,
+    AccountModule,
+    CharacterModule,
+    groupModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,

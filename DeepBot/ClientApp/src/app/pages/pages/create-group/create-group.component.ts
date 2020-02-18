@@ -8,8 +8,9 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Character } from '../../../../webModel/Character';
 import { Classe } from '../../../../webModel/Enum/Classe';
 import { Store } from '@ngrx/store';
-import * as fromBot from '../bot/reducers';
-import { BotActions } from '../bot/actions';
+import * as fromgroup from 'src/app/app-reducers/group/reducers'
+import { GroupActions } from 'src/app/app-reducers/group/actions';
+import * as fromcharacter from 'src/app/app-reducers/character/reducers'
 import { MatTableDataSource } from '@angular/material';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Group } from '../../../../webModel/Group';
@@ -43,7 +44,8 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
   groupToCreate: Group = new Group();
   followers: Character[] = [];
     /** create-group ctor */
-  constructor(private fb: FormBuilder, private store: Store<fromBot.State>) {
+  constructor(private fb: FormBuilder, private storeGroup: Store<fromgroup.State>,
+    private storeCharacter: Store<fromcharacter.State>) {
 
   }
   ngOnInit() {
@@ -67,8 +69,7 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
   }
 
   InitiateList() {
-    this.store.dispatch(BotActions.getAllCharacters());
-    this.store.select(fromBot.getAllCharacters)
+    this.storeCharacter.select(fromcharacter.getAllCharacters)
       .subscribe(result => {
         Object.assign(this.characterList, result);
         this.dataSource = new MatTableDataSource<Character>(result);
@@ -90,9 +91,8 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
     for (var i = 0; i < this.followers.length; i++) {
       this.groupToCreate.fk_Followers.push(this.followers[i].key);
     }
-    let group = this.groupToCreate;
-    console.log(group);
-    this.store.dispatch(BotActions.createGroup({ group }));
+    let createdGroup = this.groupToCreate;
+    this.storeGroup.dispatch(GroupActions.createGroup({ createdGroup }));
   }
 
 

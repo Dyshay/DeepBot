@@ -39,10 +39,6 @@ export class CustomLayoutComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     
-
-    this.layoutService.configpanelOpen$.pipe(
-      untilDestroyed(this)
-    ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());
   }
 
   ngOnDestroy(): void {}

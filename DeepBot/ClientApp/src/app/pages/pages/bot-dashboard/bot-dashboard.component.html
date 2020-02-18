@@ -62,7 +62,7 @@
         </div>
         <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" mat-align-tabs="center">
           <mat-tab *ngFor="let link of links">
-            <ng-template mat-tab-label>
+            <ng-template mat-tab-label fxLayoutAlign="center center">
               <ic-icon [icon]="link.icon" size="20px" class="mx-3"></ic-icon>
               <span> {{ link.label }}</span>
             </ng-template>
