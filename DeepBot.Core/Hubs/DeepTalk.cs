@@ -63,8 +63,13 @@ namespace DeepBot.Core.Hubs
 
             var CurrentUser = await UserDB;
 
-            CurrentUser
-                .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
+            if (isScan)
+                CurrentUser
+                    .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
+
+            else if (!isScan)
+                CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName && tcpId == null).TcpId = tcpId;
+
 
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
 
