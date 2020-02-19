@@ -32,6 +32,8 @@ import { Character } from '../../../../webModel/Character';
 import { TranslateService } from '@ngx-translate/core';
 import { Icon } from '@visurel/iconify-angular';
 import { MatTabChangeEvent } from '@angular/material';
+import { TalkService } from 'src/app/Services/TalkService';
+import * as fromAccount from '../../../app-reducers/account/reducers';
 
 export interface FriendSuggestion {
   name: string;
@@ -53,10 +55,11 @@ export interface FriendSuggestion {
 })
 /** bot-dashboard component*/
 export class BotDashboardComponent implements OnInit {
+  accounts$ = this.accountStore.pipe(select(fromAccount.getAllAccounts));
   character: Character;
   indexSelected: number = 0;
     /** bot-dashboard ctor */
-  constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService : TranslateService) {
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService : TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>) {
   }
 
   ngOnInit() {
@@ -69,6 +72,19 @@ export class BotDashboardComponent implements OnInit {
           }
         })
     });
+  }
+
+  initConnection() {
+    console.log('test');
+    this.accounts$.subscribe((account) => {
+      account.forEach(a => {
+        console.log('isOkay init Connection');
+        if(a.characters.find(relicat => relicat.name === this.character.name) !== undefined){
+          this.deeptalk.createConnexionBot(a.accountName, a.password, a.serverId, false);
+        }
+      }
+      )
+    })
   }
 
   links: Link[] = [
