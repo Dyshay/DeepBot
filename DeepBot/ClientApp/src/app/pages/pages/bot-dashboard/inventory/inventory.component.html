@@ -1,1 +1,24 @@
-﻿<div style="border: 1px solid red">inventory Component</div>
+<div class="card">
+  <div class="px-gutter py-4 border-b">
+    <h2 class="title m-0">Inventaire</h2>
+  </div>
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="Mon equipement">
+      RAF  afficher item équipe +  possible modification de l'equipement' 
+
+    </mat-tab>
+    <mat-tab label="Items">
+      <app-liste class="mt-2" [itemDofus] ="itemDofus" ></app-liste>
+    </mat-tab>
+    <mat-tab label="Consommables">
+      <app-liste class="mt-2" [consommablesDofus]="consommablesDofus"></app-liste>
+    </mat-tab>
+    <mat-tab label="Ressources">
+      <app-liste class="mt-2" [ressourcesDofus] ="ressourcesDofus" ></app-liste>
+    </mat-tab>
+    <mat-tab label="Banque">
+      <app-liste class="mt-2" [banqueDofus] ="banqueDofus" ></app-liste>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>

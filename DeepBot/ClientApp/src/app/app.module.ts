@@ -59,10 +59,10 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     StoreModule.forRoot(ROOT_REDUCERS, {
       metaReducers, runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
-        strictStateSerializability: true,
-        strictActionSerializability: true,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
+        strictStateSerializability: false,
+        strictActionSerializability: false,
       }
     }),
     NgHttpLoaderModule.forRoot(),

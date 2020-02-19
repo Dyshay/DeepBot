@@ -26,7 +26,7 @@ import icPause from '@iconify/icons-ic/outline-pause-circle-outline'
 
 import { Link } from '../../../../@vex/interfaces/link.interface';
 import { Store, select } from '@ngrx/store';
-import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
+import * as fromCharacter from 'src/app/app-reducers/character/reducers';
 import { User } from '../../../../webModel/User';
 import { Character } from '../../../../webModel/Character';
 import { TranslateService } from '@ngx-translate/core';
@@ -56,16 +56,16 @@ export class BotDashboardComponent implements OnInit {
   character: Character;
   indexSelected: number = 0;
     /** bot-dashboard ctor */
-  constructor(private activatedRoute: ActivatedRoute, private store: Store<fromwebUser.State>, private translateService : TranslateService) {
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService : TranslateService) {
   }
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
-      this.store.pipe(select(fromwebUser.getUser)).subscribe(
-        (result: User) => {
-          for (var i = 0; i < result.accounts.length; i++) {
-            if (result.accounts[i].currentCharacter.key.toString() == params.get('id'))
-              this.character = result.accounts[i].currentCharacter;
+      this.store.pipe(select(fromCharacter.getAllCurrentCharacters)).subscribe(
+        (result: Character[]) => {
+          for (var i = 0; i < result.length; i++) {
+            if (result[i].key.toString() == params.get('id'))
+              this.character = result[i];
           }
         })
     });

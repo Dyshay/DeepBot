@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
+import { Character } from '../../../../../webModel/Character';
 
 @Component({
     selector: 'app-fight',
@@ -8,6 +9,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 /** fight component*/
 export class FightComponent {
+  @Input() character: Character
     /** fight ctor */
   constructor(private translateService: TranslateService) {
 

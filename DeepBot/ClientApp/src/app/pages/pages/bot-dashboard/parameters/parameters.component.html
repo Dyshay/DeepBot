@@ -39,6 +39,22 @@
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-slide-toggle color="primary" [checked]="true">Activer la réponse automatique au mp</mat-slide-toggle>
     </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [checked]="true">Déconnexion automatique si modérateur detecté sur le serveur</mat-slide-toggle>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-form-field class="full-width" fxFlex="75">
+        <mat-label>Delai des refus ( échange, defi, guilde)</mat-label>
+        <mat-select>
+          <mat-option value="1">800 - 1250 MS</mat-option>
+          <mat-option value="2">1251 - 1650 MS</mat-option>
+          <mat-option value="3">1651 MS - 2800 MS</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [checked]="true">Envoyer mp aprés refus</mat-slide-toggle>
+    </div>
     <mat-divider gdColumn="1 / 4"></mat-divider>
     <div gdColumn="1 / 4">
       <h3 class="font-medium" fxLayoutAlign="center center">Paramétres de notification</h3>
