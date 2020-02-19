@@ -29,10 +29,12 @@ import { WidgetAssistantModule } from '../../../../@vex/components/widgets/widge
 import { WidgetLargeChartModule } from '../../../../@vex/components/widgets/widget-large-chart/widget-large-chart.module';
 import { WidgetTableModule } from '../../../../@vex/components/widgets/widget-table/widget-table.module';
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
+import { JobPanelComponent } from './job/job-panel/job-panel.component';
+import { ListeComponent } from '../../../generic-components/liste/liste.component';
 
 
 @NgModule({
-  declarations: [BotDashboardComponent,DashboardComponent,CharacterComponent,FightComponent,InventoryComponent,MapComponent,ParametersComponent,JobComponent,],
+  declarations: [BotDashboardComponent, DashboardComponent, CharacterComponent, FightComponent, InventoryComponent, MapComponent, ParametersComponent, JobComponent, JobPanelComponent, ListeComponent],
   imports: [
     CommonModule,
     BotDashboardRoutingModule,
@@ -66,7 +68,11 @@ import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-to
     ContainerModule,
     MatSelectModule,
     TranslateModule,
-      MatDividerModule
+    MatDividerModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatCheckboxModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
