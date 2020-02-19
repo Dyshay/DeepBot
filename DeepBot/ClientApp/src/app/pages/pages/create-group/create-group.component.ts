@@ -69,7 +69,7 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
   }
 
   InitiateList() {
-    this.storeCharacter.select(fromcharacter.getAllCharacters)
+    this.storeCharacter.select(fromcharacter.getAllCurrentCharacters)
       .subscribe(result => {
         Object.assign(this.characterList, result);
         this.dataSource = new MatTableDataSource<Character>(result);

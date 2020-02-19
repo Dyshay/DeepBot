@@ -2,10 +2,10 @@
      gdColumns.lt-md="1fr 1fr 1fr"
      gdColumns.lt-sm="1fr"
      gdGap="16px"
-     vexContainer>
+     vexContainer *ngIf="jobSelected != null">
 
   <div gdColumn="1 / 4">
-    <h3 class="font-medium" fxLayoutAlign="center center">Gestion du métier {{jobSelected.name}}</h3>
+    <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.JOBHANDLE' | translate}} {{jobSelected.name}}</h3>
 
   </div>
 

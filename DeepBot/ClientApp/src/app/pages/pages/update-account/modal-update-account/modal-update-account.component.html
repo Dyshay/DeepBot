@@ -11,10 +11,9 @@
   <mat-divider class="-mx-6 text-border"></mat-divider>
 
   <mat-dialog-content fxLayout="column">
-    <mat-form-field class="mt-6">
+    <mat-form-field class="mt-6" >
       <mat-label>{{'GLOBAL.ACCOUNTNAME' | translate}}</mat-label>
-      <input cdkFocusInitial formControlName="accountName" matInput>
-      
+      <input cdkFocusInitial formControlName="accountName" matInput [disabled]="true">
       <mat-icon [icIcon]="icPerson" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
     </mat-form-field>
 
@@ -38,19 +37,21 @@
       <mat-error *ngIf="form.get('password').hasError('required')">{{'LOGIN.PASSWORDREQUIRED' | translate }}</mat-error>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-label>{{'GLOBAL.SERVER' | translate}}</mat-label>
-      <input formControlName="server" matInput>
 
-      <mat-icon [icIcon]="icServer" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+    <mat-form-field class="mt-1">
+      <mat-label>{{ 'GLOBAL.SERVER' | translate}}</mat-label>
+      <mat-select formControlName="server">
+        <mat-option *ngFor="let server of serverList" [value]="server.id">{{server.name}}</mat-option>
+      </mat-select>
     </mat-form-field>
 
     <mat-form-field class="mt-2">
       <mat-label>{{ 'CREATEACCOUNT.ASSOCIATETOGROUP' | translate}}</mat-label>
       <mat-select formControlName="group">
+        <mat-option>{{ 'GLOBAL.NOGROUP' | translate}}</mat-option>
         <mat-option *ngFor="let group of groups" [value]="group.key">
-          <b>Leader : {{group?.leader.name}}</b>
-          ( groupetotal : a faire! ,  &nbsp; {{ 'GLOBAL.GROUPLEVEL' | translate}} {{group.level}}, &nbsp;  {{ 'GLOBAL.GROUPPP' | translate}} : {{group.prospection}})
+          <b> {{group.name}}</b>
+          ( Leader : {{group?.leader?.name}} ,  &nbsp; {{ 'GLOBAL.GROUPLEVEL' | translate}} : {{group.level}}, &nbsp;  {{ 'GLOBAL.GROUPPP' | translate}} : {{group.prospection}})
         </mat-option>
       </mat-select>
     </mat-form-field>

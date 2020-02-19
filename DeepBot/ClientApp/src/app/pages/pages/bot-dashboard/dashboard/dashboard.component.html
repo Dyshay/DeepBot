@@ -1,6 +1,6 @@
 <div class="card">
   <div class="px-gutter py-4 border-b">
-    <h2 class="title m-0">Tableau de bord</h2>
+    <h2 class="title m-0">{{'GLOBAL.DASHBOARD' | translate}}</h2>
   </div>
 
   <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr 1fr"
@@ -19,18 +19,18 @@
                                    [icon]="icPOD"
                                    [color]="theme.colors.orange"
                                    gdColumn.lt-sm="1"
-                                   label="Inventaire"
+                                   label="{{'DASHBOARDBOT.INVENTORY' | translate}}"
                                    value="5.3K/5.6K"></vex-widget-quick-value-center>
     <vex-widget-quick-value-center [change]="75.5"
                                    [icon]="icExperience"
                                    [color]="theme.colors.orange"
                                    gdColumn.lt-sm="1"
-                                   label="Experience"
+                                   label="{{'DASHBOARDBOT.EXPERIENCE' | translate}}"
                                    value="530K/896K"></vex-widget-quick-value-center>
     <vex-widget-quick-value-center [icon]="icTimer"
                                    [color]="theme.colors.teal"
                                    gdColumn.lt-sm="1"
-                                   label="Durée de connection"
+                                   label="{{'DASHBOARDBOT.CONNECTIONTIME' | translate}}"
                                    value="29h 16m 48s"></vex-widget-quick-value-center>
 
 
@@ -40,7 +40,7 @@
          gdColumn.lt-md="1 / -1"
          gdColumn.lt-sm="1">
       <mat-list class="list mat-elevation-z1">
-        <h3 mat-subheader>Historique d'action</h3>
+        <h3 mat-subheader>{{'DASHBOARDBOT.CONSOLEHISTORY' | translate}}</h3>
         <mat-list-item>
           <h3 matLine>[14:57:10]</h3>
           <p matLine>

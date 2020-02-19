@@ -21,10 +21,12 @@
     <mat-drawer-container class="bg-transparent flex-auto flex">
       <mat-drawer-content class="p-gutter pt-0 flex-auto flex items-start">
         <div class="card h-full overflow-hidden flex-auto mx-5">
-          <app-update-account-data-table (openAccount)="openAccount($event)"
-                                   [columns]="columns"
-                                   [data]="tableData"
-                                   [searchStr]="searchStr$ | async"></app-update-account-data-table>
+         
+            <app-update-account-data-table  (openAccount)="openAccount($event)"
+                                           [columns]="columns"
+                                           [data]="tableData"
+                                           [searchStr]="searchStr$ | async"></app-update-account-data-table>
+         
         </div>
       </mat-drawer-content>
 

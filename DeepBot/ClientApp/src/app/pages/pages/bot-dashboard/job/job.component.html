@@ -66,7 +66,7 @@
                                      [icon]="tailleur"
                                      [color]="theme.colors.primary"
                                      gdColumn.lt-sm="1"
-                                    value="{{job.name}}"
+                                     value="{{job.name}}"
                                      label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
       <vex-widget-quick-value-center *ngIf="job.id ==='11'"
                                      [icon]="sculteur"
@@ -86,12 +86,12 @@
                                      gdColumn.lt-sm="1"
                                      value="{{job.name}}"
                                      label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
-      <vex-id-quick-value-center *ngIf="job.id ==='14'"
-                                 [icon]="cordomage"
-                                 [color]="theme.colors.primary"
-                                 gdColumn.lt-sm="1"
-                                 value="{{job.name}}"
-                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-id-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='14'"
+                                     [icon]="cordomage"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
       <vex-widget-quick-value-center *ngIf="job.id =='15'"
                                      [icon]="costumage"
                                      [color]="theme.colors.primary"
@@ -108,7 +108,7 @@
 
 
     <mat-divider gdColumn="1 / 4" class="mt-2"></mat-divider>
-    <app-job-panel [jobSelected]="jobSelected"  gdColumn="1 / 4" ></app-job-panel>
+    <app-job-panel [jobSelected]="jobSelected" gdColumn="1 / 4"></app-job-panel>
 
   </div>
 </div>

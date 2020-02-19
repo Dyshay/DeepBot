@@ -15,6 +15,10 @@
           <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
           <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] }}</td>
         </ng-container>
+        <ng-container *ngIf="column.type === 'date'" [matColumnDef]="column.property">
+          <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
+          <td *matCellDef="let row" [ngClass]="column.cssClasses" mat-cell>{{ row[column.property] | date:'medium' }}</td>
+        </ng-container>
 
         <ng-container *ngIf="column.type === 'checkbox'" [matColumnDef]="column.property">
           <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
@@ -34,7 +38,7 @@
           <ng-container *ngIf="column.property === 'isLeader'">
             <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
             <td *matCellDef="let row" [ngClass]="column.cssClasses" class="w-10" mat-cell>
-              <button  mat-icon-button type="button" >
+              <button mat-icon-button type="button">
                 <mat-icon *ngIf="row[column.property]" [icIcon]="icStar" class="text-amber-500"></mat-icon>
                 <mat-icon *ngIf="!row[column.property]" [icIcon]="icStarBorder"></mat-icon>
               </button>
@@ -44,7 +48,6 @@
           <ng-container *ngIf="column.property === 'menu'">
             <th *matHeaderCellDef mat-header-cell mat-sort-header> {{ column.label }}</th>
             <td *matCellDef="let row" [ngClass]="column.cssClasses" class="w-10" mat-cell>
-
             </td>
           </ng-container>
         </ng-container>

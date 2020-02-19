@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ViewChild, TemplateRef } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime } from 'rxjs/operators';
 import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.animation';
@@ -21,7 +21,10 @@ import { ModalUpdateAccountComponent } from './modal-update-account/modal-update
 import { pipe } from 'rxjs';
 import { User } from '../../../../webModel/User';
 import * as fromgroup from 'src/app/app-reducers/group/reducers';
+import * as fromCharacter from 'src/app/app-reducers/character/reducers';
 import { Group } from '../../../../webModel/Group';
+import { Character } from '../../../../webModel/Character';
+import { Account } from '../../../../webModel/Account';
 
 @Component({
   selector: 'app-update-account',
@@ -35,14 +38,27 @@ import { Group } from '../../../../webModel/Group';
 })
 /** update-account component*/
 export class UpdateAccountComponent implements OnInit {
+
   searchCtrl = new FormControl();
+  serverList: { id: number, name: string }[] = [
+    { id: 609, name: 'Bilby' },
+    { id: 601, name: 'Eratz' },
+    { id: 602, name: 'Henual' },
+    { id: 604, name: 'Arty' },
+    { id: 605, name: 'Algathe' },
+    { id: 606, name: 'Hogmeiser' },
+    { id: 607, name: 'Droupik' },
+    { id: 608, name: 'Ayuto' },
+    { id: 610, name: 'Clustus' },
+    { id: 611, name: 'Issering' },
+  ]
+
 
   searchStr$ = this.searchCtrl.valueChanges.pipe(
     debounceTime(10)
   );
 
   menuOpen = false;
-
 
   tableData = [];
 
@@ -72,9 +88,15 @@ export class UpdateAccountComponent implements OnInit {
       cssClasses: ['font-medium']
     },
     {
+      label: this.translateService.instant('GLOBAL.SERVER'),
+      property: 'server',
+      type: 'text',
+      cssClasses: ['font-medium']
+    },
+    {
       label: this.translateService.instant('GLOBAL.CREATIONDATE'),
       property: 'creationDate',
-      type: 'text',
+      type: 'date',
       cssClasses: ['font-medium']
     },
     {
@@ -110,19 +132,20 @@ export class UpdateAccountComponent implements OnInit {
                     accountName: result.accounts[i].accountName,
                     characterName: result.accounts[i].currentCharacter.name,
                     creationDate: result.accounts[i].creationDate,
+                    server: this.serverList.find(o=>o.id==  result.accounts[i].serverId).name,
                     groupName: result0.find(o => o.key == result.accounts[i].currentCharacter.fk_Group).name,
                     imageSrc: 'assets/img/classe/m_cra.png',
                     isLeader: isleader
                   }
                 )
               }
-
               else
                 this.tableData.push(
                   {
                     accountName: result.accounts[i].accountName,
                     characterName: result.accounts[i].currentCharacter.name,
                     creationDate: result.accounts[i].creationDate,
+                    server: this.serverList.find(o => o.id == result.accounts[i].serverId).name,
                     groupName: 'Aucun groupe',
                     imageSrc: 'assets/img/classe/m_cra.png',
                     isLeader: false
@@ -141,10 +164,17 @@ export class UpdateAccountComponent implements OnInit {
     this.dialog.open(ModalUpdateAccountComponent, {
       data: accountName || null,
       width: '600px'
-    });
+    }).afterClosed().subscribe(
+      (data: Account) => {
+        if (data != null) {
+          var index = this.tableData.findIndex(o => o.key == data.key);
+          this.tableData[index] = data;
+        }
+
+      }
+
+    );       
   }
-
-
 
   setData(data: Account[]) {
     this.tableData = data;

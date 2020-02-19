@@ -1,6 +1,6 @@
 <div class="card">
   <div class="px-gutter py-4 border-b">
-    <h2 class="title m-0">Paramétres</h2>
+    <h2 class="title m-0"> {{'DASHBOARDBOT.PARAMETERS' | translate}}</h2>
   </div>
   <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr"
        gdColumns.lt-md="1fr 1fr 1fr"
@@ -8,12 +8,12 @@
        gdGap="16px"
        vexContainer>
     <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Paramétres globaux</h3>
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.GLOBALPARAMETERS' | translate}}</h3>
     </div>
     <mat-divider gdColumn="1 / 4"></mat-divider>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Delai des déplacements</mat-label>
+        <mat-label>{{'DASHBOARDBOT.DELAYMOVE' | translate}}</mat-label>
         <mat-select>
           <mat-option value="1">250 - 450 MS</mat-option>
           <mat-option value="2">451 - 650 MS</mat-option>
@@ -23,7 +23,7 @@
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Effectuer une pause</mat-label>
+        <mat-label>{{'DASHBOARDBOT.MAKEPAUSE' | translate}}</mat-label>
         <mat-select>
           <mat-option value="1">40 combats</mat-option>
           <mat-option value="1">60 combats</mat-option>
@@ -33,18 +33,18 @@
       </mat-form-field>
     </div>
     <mat-form-field class="example-full-width">
-      <mat-label>Définir une zone d'agression</mat-label>
+      <mat-label>{{'DASHBOARDBOT.AGRESSIONZONE' | translate}}</mat-label>
       <input matInput placeholder="3">
     </mat-form-field>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Activer la réponse automatique au mp</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true">{{'DASHBOARDBOT.AUTOANSWER' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Déconnexion automatique si modérateur detecté sur le serveur</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true">{{'DASHBOARDBOT.AUTODISCONNECT' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Delai des refus ( échange, defi, guilde)</mat-label>
+        <mat-label>{{'DASHBOARDBOT.REFUSDELAY' | translate}}</mat-label>
         <mat-select>
           <mat-option value="1">800 - 1250 MS</mat-option>
           <mat-option value="2">1251 - 1650 MS</mat-option>
@@ -53,23 +53,23 @@
       </mat-form-field>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Envoyer mp aprés refus</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true">{{'DASHBOARDBOT.MPAFTERREFUS' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Capture automatique des archis monstre</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true">{{'DASHBOARDBOT.AUTOCAPTURE' | translate}}</mat-slide-toggle>
     </div>
     <mat-divider gdColumn="1 / 4" class="mt-2"></mat-divider>
     <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Paramétres de notification Discord</h3>
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.DISCORDPARAMETERS' | translate}}</h3>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Message lors de la connection d'un modérateur (tout serveur confondu)</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true">{{'DASHBOARDBOT.MESSAGEMODO' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Message lors de la réception d'un MP</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true">{{'DASHBOARDBOT.RECEIVEMPMESSAGE' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Message lors de l'arret du bot</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [checked]="true">{{'DASHBOARDBOT.MESSAGEATSTOP' | translate}}</mat-slide-toggle>
     </div>
 
   </div>
