@@ -53,19 +53,19 @@ export class JobComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.character.jobs = [{
-      id:'1',
-      level: 100,
-      name:'Bucheron'
-    },
-      {
-        id: '2',
-        level: 85,
-        name:'Paysan'
-      }
-    ];
+    //this.character.jobs = [{
+    //  id:'1',
+    //  level: 100,
+    //  name:'Bucheron'
+    //},
+    //  {
+    //    id: '2',
+    //    level: 85,
+    //    name:'Paysan'
+    //  }
+    //];
 
-    this.jobSelected = this.character.jobs[0];
+    //this.jobSelected = this.character.jobs[0];
 
   }
   selectJob(job: Job) {

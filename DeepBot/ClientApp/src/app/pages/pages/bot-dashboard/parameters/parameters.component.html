@@ -55,13 +55,21 @@
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-slide-toggle color="primary" [checked]="true">Envoyer mp aprés refus</mat-slide-toggle>
     </div>
-    <mat-divider gdColumn="1 / 4"></mat-divider>
-    <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Paramétres de notification</h3>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [checked]="true">Capture automatique des archis monstre</mat-slide-toggle>
     </div>
+    <mat-divider gdColumn="1 / 4" class="mt-2"></mat-divider>
     <div gdColumn="1 / 4">
-      <p>RAF</p>
-
+      <h3 class="font-medium" fxLayoutAlign="center center">Paramétres de notification Discord</h3>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [checked]="true">Message lors de la connection d'un modérateur (tout serveur confondu)</mat-slide-toggle>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [checked]="true">Message lors de la réception d'un MP</mat-slide-toggle>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [checked]="true">Message lors de l'arret du bot</mat-slide-toggle>
     </div>
 
   </div>
