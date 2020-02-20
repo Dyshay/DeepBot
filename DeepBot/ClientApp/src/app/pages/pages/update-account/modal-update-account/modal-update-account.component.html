@@ -1,6 +1,6 @@
 <form (ngSubmit)="updateAccount()" [formGroup]="form">
   <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
-    <img *ngIf="contact?.imageSrc" [src]="contact?.imageSrc" class="avatar ltr:mr-5 rtl:ml-5">
+    <img *ngIf="account?.imageSrc" [src]="account?.imageSrc" class="avatar ltr:mr-5 rtl:ml-5">
     <h2 class="headline m-0" fxFlex="auto">{{'UPDATEACCOUNTMODAL.UPDATEACCOUNTLABEL' | translate}}</h2>
 
     <button class="text-secondary" mat-dialog-close mat-icon-button type="button">

@@ -76,5 +76,39 @@ export class GroupEffects {
     )
   );
 
+
+  updateGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroup),
+      map(action => action.groupToUpdate),
+      exhaustMap((groupToUpdate: Group) =>
+        this.groupService.updateGroup(groupToUpdate).pipe(
+          map(groupToUpdate => GroupActions.updateGroupSuccess({ groupToUpdate })),
+          catchError(error => of(GroupActions.updateGroupFailure({ error }))))
+      )
+    )
+
+  );
+
+  updateGroupSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroupSuccess),
+      map(action => action.groupToUpdate),
+      tap((group: any) => {
+        this.toastr.success('', 'Group ' + group.name + ' modifié avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  updateGroupFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroupFailure),
+      map(action => action.error),
+
+    )
+  );
+
+
   constructor(private actions$: Actions, private accountService: AccountService, private groupService: GroupsService, private toastr : ToastrService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
 }

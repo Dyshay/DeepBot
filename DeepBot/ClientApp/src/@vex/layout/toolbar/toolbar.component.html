@@ -57,8 +57,8 @@
       <span>{{ 'TOOLBAR.UPDATEACCOUNT' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment" [routerLink]="['/deleteAccount']"></mat-icon>
+    <button mat-menu-item  [routerLink]="['/deleteAccount']">
+      <mat-icon [icIcon]="icAssignment"></mat-icon>
       <span>{{ 'TOOLBAR.DELETEACCOUNT' | translate}}</span>
     </button>
   </mat-menu>
@@ -70,8 +70,8 @@
       <span>{{ 'TOOLBAR.CREATEGROUP' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment" [routerLink]="['/updateGroup']"></mat-icon>
+    <button mat-menu-item [routerLink]="['/updateGroup']">
+      <mat-icon [icIcon]="icAssignment" ></mat-icon>
       <span>{{ 'TOOLBAR.UPDATEGROUP' | translate}}</span>
     </button>
 

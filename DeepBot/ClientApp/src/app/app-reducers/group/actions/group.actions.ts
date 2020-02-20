@@ -11,3 +11,6 @@ export const getAllGroups = createAction('[BOT/CHARACTER] GET ALLGROUP')
 export const getAllGroupsSuccess = createAction('[BOT/CHARACTER] GET ALLGROUP SUCCESS', props<{ groups: Group[] }>());
 export const getAllGroupsFailure = createAction('[BOT/CHARACTER] GET ALLGROUP ERROR', props<{ error: any }>());
 
+export const updateGroup = createAction('[BOT/ACCOUNT] UPDATE  GROUP', props<{ groupToUpdate: Group }>());
+export const updateGroupSuccess = createAction('[BOT/ACCOUNT] UPDATE GROUP SUCCESS', props<{ groupToUpdate: Group }>());
+export const updateGroupFailure = createAction('[BOT/ACCOUNT] UPDATE GROUP ERROR', props<{ error: any }>());

@@ -119,7 +119,6 @@ export class UpdateAccountComponent implements OnInit {
   ngOnInit() {
     this.storeGroup.pipe(select(fromgroup.getAllGroups)).subscribe(
       (result0: Group[]) => {
-        console.log(result0);
         this.storeUser.pipe(select(fromwebUser.getUser)).subscribe(
           (result: User) => {
             for (var i = 0; i < result.accounts.length; i++) {

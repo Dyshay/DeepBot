@@ -15,17 +15,19 @@ import { ContainerModule } from '../../../../@vex/directives/container/container
 import { ToastrModule } from 'ngx-toastr';
 import { UpdateGroupComponent } from './update-group.component';
 import { UpdateGroupDataTableComponent } from './update-group-data-table/update-group-data-table.component';
-import { ModalUpdateAccountModule } from '../update-account/modal-update-account/modal-update-account-module.module';
+import { UpdateGroupRoutingModule } from './update-group-routing.module';
+import { ModalUpdateGroupModule } from './modal-update-group/modal-update-group.module';
 
 
 @NgModule({
   declarations: [UpdateGroupComponent, UpdateGroupDataTableComponent],
   imports: [
     CommonModule,
-    UpdateGroupModule,
+    UpdateGroupRoutingModule,
     FlexLayoutModule,
     IconModule,
     MatButtonModule,
+    MatCheckboxModule,
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
@@ -36,7 +38,7 @@ import { ModalUpdateAccountModule } from '../update-account/modal-update-account
     MatRippleModule,
     MatDialogModule,
     ScrollbarModule,
-    ModalUpdateAccountModule,
+    ModalUpdateGroupModule,
     ReactiveFormsModule,
     ContainerModule,
     MatSidenavModule,

@@ -35,9 +35,10 @@ export class ModalUpdateAccountComponent implements OnInit {
   icVisibilityOff = icVisibilityOff;
   icPaswword = icPaswword;
   icClose = icClose;
-  icServer = icServer
+  icServer = icServer;
   inputType = 'password';
   visible = false;
+
 
 
   serverList: { id: number, name: string }[] = [

@@ -61,7 +61,6 @@ export class UpdateAccountDataTableComponent<T> implements OnInit, OnChanges, Af
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.columns) {
       this.visibleColumns = this.columns.map(column => column.property);
-      console.log(this.visibleColumns);
     }
     if (changes.data) {
       this.dataSource.data = this.data;

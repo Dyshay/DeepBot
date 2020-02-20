@@ -36,7 +36,8 @@ namespace DeepBot.Core.Hubs
         public async Task JoinRoomCLI()
         {
             var CurrentUser = await UserDB;
-            CurrentUser.Accounts = new List<Account>();
+            if(CurrentUser.Accounts == null)
+                CurrentUser.Accounts = new List<Account>();
             CurrentUser.CliConnectionId = Context.ConnectionId;
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
         }

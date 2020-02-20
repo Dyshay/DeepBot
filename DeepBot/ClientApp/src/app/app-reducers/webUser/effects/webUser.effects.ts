@@ -99,8 +99,6 @@ export class webUserEffects {
                         allCharacters.push(user.accounts[i].characters[j]);
                     }
               }
-              console.log(allCharacters);
-              console.log(allCurrentCharacters);
                 this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }));
                 this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({ allCurrentCharacters }));
             })
