@@ -1,1 +1,21 @@
-﻿<div style="border: 1px solid red">map Component</div>
+﻿<div class="card">
+    <div class="px-gutter py-4 border-b">
+        <h2 class="title m-0">Carte du jeu</h2>
+    </div>
+
+    <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr 1fr" gdColumns.lt-md="1fr 1fr" gdColumns.lt-sm="1fr"
+        gdGap="16px" vexContainer id="container">
+
+        <div class="wrapper">
+            <div class="floor">
+                <div *ngFor="let height of mapHeight">
+                    <div class="row">
+                        <div *ngFor="let width of mapWidth">
+                            <div class="tile"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
