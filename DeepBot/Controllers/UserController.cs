@@ -32,7 +32,7 @@ namespace DeepBot.Controllers
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
         private List<GroupDB> _groups = Database.Groups.Find(FilterDefinition<GroupDB>.Empty).ToList();
-
+        private List<ConfigCharacterDB> _configCharacter = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList();
         public UserController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
             _userManager = userManager;
@@ -51,6 +51,10 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
+            foreach (var item in user.Accounts)
+            {
+                item.CurrentCharacter.Config = _configCharacter.FirstOrDefault(o => o.Fk_Character == item.CurrentCharacter.Key);
+            }
 
             return user;
 

@@ -181,7 +181,15 @@
     "NOGROUPFOUND": "Aucun groupe ne correspond à votre filtre"
   },
   "UPDATEGROUPMODAL": {
-    "UPDATEGROUPLABEL": "Modifier le groupe"    
+    "UPDATEGROUPLABEL": "Modifier le groupe"
+  },
+  "MENU": {
+    "FORUM": "Forum",
+    "SUPPORT": "Support",
+    "DOCUMENTATION": "Documentation",
+    "DESCRIPTION": "Retrouvez l'ensemble des section de deepbot sur ce panel",
+    "SECTION": "Section",
+    "NAVIGATION": "Navigation"
   }
 
 }
