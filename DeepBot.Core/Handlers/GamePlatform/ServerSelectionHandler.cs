@@ -36,18 +36,15 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ALK")]
-        public async Task SelectCharacter(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void SelectCharacter(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
+            var currentCharacter = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
             bool found = false;
             List<Character> characters = new List<Character>();
             //TODO STOCK INFO IN account.Character
             hub.CallCheck(tcpId).Wait();
-
-            //await Task.Delay(1000);
-
-            //bool isScan = true;
 
             DeepTalk.IsScans.TryGetValue(tcpId, out bool isScan);
 
@@ -62,12 +59,14 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 if (isScan)
                     characters.Add(new Character() { BreedId = model, Key = id, Name = characterName, Level = Level });
 
-
-                if (characterName.ToLower().Equals("") && !isScan) //TODO USE THE Name in cfg
+                if (!isScan && currentCharacter != null)
                 {
-                    hub.SendPackage($"AS{id}", tcpId, true);
-                    hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
-                    found = true;
+                    if(characterName.ToLower().Equals(currentCharacter.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
+                    {
+                        hub.SendPackage($"AS{id}", tcpId, true);
+                        hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
+                        found = true;
+                    }
                 }
                 count++;
             }

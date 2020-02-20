@@ -21,7 +21,7 @@
           <div gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="5px">
             <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
               <div @fadeInRight>
-                <p class="m-0 body-2">{{'GLOBAL.LEVEL' | translate}} : 60</p>
+                <p class="m-0 body-2">{{'GLOBAL.LEVEL' | translate}} : {{character?.level}}</p>
               </div>
             </div>
 
@@ -49,12 +49,8 @@
 
     <div class="z-10 relative -mt-16 px-gutter" fxLayout="row" fxLayoutAlign="start center">
 
-      <img @scaleIn
-           class="avatar h-24 w-24"
-           fxFlex="none"
-           fxFlexAlign="start"
-           fxHide.xs
-           src="assets/img/classe/m_feca.png">
+      <img @scaleIn class="avatar h-24 w-24" fxFlex="none" fxFlexAlign="start" fxHide.xs
+        src="assets/img/classe/m_feca.png">
 
       <div [ngClass.gt-xs]="['ltr:ml-6 rtl:mr-6']" class="max-w-full" fxFlex="auto">
         <div class="h-16" fxLayout="row" fxLayoutAlign="start center">
@@ -62,7 +58,7 @@
         </div>
         <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" mat-align-tabs="center">
           <mat-tab *ngFor="let link of links" fxLayoutAlign="center center">
-            <ng-template mat-tab-label >
+            <ng-template mat-tab-label>
               <ic-icon [icon]="link.icon" size="20px" class="mx-3"></ic-icon>
               <span> {{ link.label }}</span>
             </ng-template>
