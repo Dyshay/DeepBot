@@ -14,15 +14,15 @@ export class ConfigCharacter {
   discordMsgStop: boolean;
   positionStartFight: number;
   blockSpectate: number;
-  BlockFight: boolean;
-  SpeedFightAction: number;
-  ChallengesToTry: number[];
-  MinLifeRegenerate: number;
-  UseConsommable: boolean;
-  MinLifeToFight: number;
-  AutoBoostStats: { key: string, value: number }[];
-  AutoDeleteRessources: number[];
-  ConsommableToUse: number[];
+  blockFight: boolean;
+  speedFightAction: number;
+  challengesToTry: number[];
+  minLifeRegenerate: number;
+  useConsommable: boolean;
+  minLifeToFight: number;
+  autoBoostStats: { key: string, value: number,order:number }[];
+  autoDeleteRessources: number[];
+  consommableToUse: number[];
 }
 
 

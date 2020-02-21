@@ -5,7 +5,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconModule } from '@visurel/iconify-angular';
 import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule,  MatPaginatorModule, MatSortModule, MatMenuModule, MatRippleModule, MatDialogModule, MatSidenavModule, MatTabsModule, MatDivider, MatDividerModule, MatListModule, MatProgressBarModule, MatTooltipModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollbarModule } from '../../../../@vex/components/scrollbar/scrollbar.module';
@@ -45,6 +45,7 @@ import { ListeComponent } from '../../../generic-components/liste/liste.componen
     MatSliderModule,
     MatTabsModule,
     IconModule,
+    FormsModule,
     MatButtonModule,
     MatIconModule,
     MatTooltipModule,

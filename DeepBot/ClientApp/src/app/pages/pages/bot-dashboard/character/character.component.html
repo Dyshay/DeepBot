@@ -1,6 +1,18 @@
 <div class="card">
   <div class="px-gutter py-4 border-b">
-    <h2 class="title m-0">{{'GLOBAL.CHARACTER' | translate}}</h2>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h2 class="title m-0"> {{'GLOBAL.CHARACTER' | translate}}</h2>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'GLOBAL.SAVE' | translate}}" matTooltipPosition="left" (click)="Save()">
+          <mat-icon [icIcon]="icSave"></mat-icon>
+        </button>
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'DASHBOARDBOT.IMPORTCONFIG' | translate}}" matTooltipPosition="left" (click)="Import()">
+          <mat-icon [icIcon]="icImport"></mat-icon>
+        </button>
+      </div>
+
+    </div>
   </div>
 
   <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr"
@@ -133,37 +145,60 @@
            gdColumns.lt-sm="1fr"
            gdGap="10px" fxFlex="70" fxLayoutAlign="center center">
         <div gdColumn.lt-sm="1">
-          <mat-form-field>
+          <mat-form-field class="full-width">
             <mat-label>{{'DASHBOARDBOT.CARAC' | translate}}</mat-label>
-            <mat-select>
-              <mat-option [value]="vitality">{{'DASHBOARDBOT.VITALITY' | translate}}</mat-option>
-              <mat-option [value]="sagesse">{{'DASHBOARDBOT.WISDOM' | translate}}</mat-option>
-              <mat-option [value]="force">{{'DASHBOARDBOT.STRENGTH' | translate}}</mat-option>
-              <mat-option [value]="intelligence">{{'DASHBOARDBOT.INTEL' | translate}}</mat-option>
-              <mat-option [value]="chance">{{'DASHBOARDBOT.LUCK' | translate}}</mat-option>
-              <mat-option [value]="agilite">{{'DASHBOARDBOT.AGILITY' | translate}}</mat-option>
+            <mat-select [(value)]="autoBoostKey">
+              <mat-option value="VITALITY">{{'DASHBOARDBOT.VITALITY' | translate}}</mat-option>
+              <mat-option value="WISDOM">{{'DASHBOARDBOT.WISDOM' | translate}}</mat-option>
+              <mat-option value="STRENGTH">{{'DASHBOARDBOT.STRENGTH' | translate}}</mat-option>
+              <mat-option value="INTEL">{{'DASHBOARDBOT.INTEL' | translate}}</mat-option>
+              <mat-option value="LUCK">{{'DASHBOARDBOT.LUCK' | translate}}</mat-option>
+              <mat-option value="AGILITY">{{'DASHBOARDBOT.AGILITY' | translate}}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
 
         <div gdColumn.lt-sm="1">
-          <mat-form-field class="example-full-width">
-            <mat-label>Valeur</mat-label>
-            <input matInput placeholder="100">
-          </mat-form-field>
-          <button color="primary" mat-mini-fab type="button" class="ml-2"  matTooltipPosition="right">
-            <mat-icon [icIcon]="icPlus"></mat-icon>
-          </button>
+          <div fxLayout="row" fxLayoutAlign="center start">
+            <mat-form-field class="example-full-width">
+              <mat-label>Valeur</mat-label>
+              <input matInput placeholder="100" type="number" [(ngModel)]="autoBoostValue" [name]="autoBoostValue">
+            </mat-form-field>
+            <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" matTooltipPosition="right" (click)="AddAutoBoost()" >
+              <mat-icon [icIcon]="icPlus"></mat-icon>
+            </button>
+          </div>
+
+
+          </div>
         </div>
-      </div>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-list>
-        <mat-list-item>Intelligence 150</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>Sagesse 300</mat-list-item>
-        <mat-divider></mat-divider>
-        <mat-list-item>Vitalité 100</mat-list-item>
+      <mat-list *ngIf="character.config.autoBoostStats != null" fxFlex="60" fxLayout="column" fxLayoutAlign="center center" >
+        <mat-list-item *ngFor="let item of character.config.autoBoostStats">
+          <div fxLayout="row" fxFlex="100" fxLayoutAlign="center center">
+            <div fxFlex="40" fxLayoutAlign="center center">
+              <div *ngIf="item.key === 'VITALITY'">{{'DASHBOARDBOT.VITALITY' | translate}}</div>
+              <div *ngIf="item.key === 'WISDOM'">{{'DASHBOARDBOT.WISDOM' | translate}}</div>
+              <div *ngIf="item.key === 'STRENGTH'">{{'DASHBOARDBOT.STRENGTH' | translate}}</div>
+              <div *ngIf="item.key === 'INTEL'">{{'DASHBOARDBOT.INTEL' | translate}}</div>
+              <div *ngIf="item.key === 'LUCK'">{{'DASHBOARDBOT.LUCK' | translate}}</div>
+              <div *ngIf="item.key === 'AGILITY'">{{'DASHBOARDBOT.AGILITY' | translate}}</div>
+            </div>
+            <div fxFlex="40" fxLayoutAlign="center center">
+              {{item.value}}
+            </div>
+            <div fxFlex="20" fxLayoutAlign="center center">
+              <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="DeleteAutoBoost(item.order)">
+                <mat-icon [icIcon]="icDelete"></mat-icon>
+              </button>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+
+        </mat-list-item>
+     
+
       </mat-list>
     </div>
     <mat-divider gdColumn="3 / 1" gdColumn.lt-md="1 / -1" gdColumn.lt-sm="1"></mat-divider>
