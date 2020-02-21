@@ -30,7 +30,6 @@ export class AuthGuard implements CanActivate {
           this.router.navigateByUrl('forbiden');
           return false;
         }
-
       }
       else {
         this.router.navigateByUrl('login');

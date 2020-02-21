@@ -178,12 +178,12 @@
         <mat-list-item *ngFor="let item of character.config.autoBoostStats">
           <div fxLayout="row" fxFlex="100" fxLayoutAlign="center center">
             <div fxFlex="40" fxLayoutAlign="center center">
-              <div *ngIf="item.key === 'VITALITY'">{{'DASHBOARDBOT.VITALITY' | translate}}</div>
-              <div *ngIf="item.key === 'WISDOM'">{{'DASHBOARDBOT.WISDOM' | translate}}</div>
-              <div *ngIf="item.key === 'STRENGTH'">{{'DASHBOARDBOT.STRENGTH' | translate}}</div>
-              <div *ngIf="item.key === 'INTEL'">{{'DASHBOARDBOT.INTEL' | translate}}</div>
-              <div *ngIf="item.key === 'LUCK'">{{'DASHBOARDBOT.LUCK' | translate}}</div>
-              <div *ngIf="item.key === 'AGILITY'">{{'DASHBOARDBOT.AGILITY' | translate}}</div>
+              <div *ngIf="item.stat === 'VITALITY'">{{'DASHBOARDBOT.VITALITY' | translate}}</div>
+              <div *ngIf="item.stat === 'WISDOM'">{{'DASHBOARDBOT.WISDOM' | translate}}</div>
+              <div *ngIf="item.stat === 'STRENGTH'">{{'DASHBOARDBOT.STRENGTH' | translate}}</div>
+              <div *ngIf="item.stat === 'INTEL'">{{'DASHBOARDBOT.INTEL' | translate}}</div>
+              <div *ngIf="item.stat === 'LUCK'">{{'DASHBOARDBOT.LUCK' | translate}}</div>
+              <div *ngIf="item.stat === 'AGILITY'">{{'DASHBOARDBOT.AGILITY' | translate}}</div>
             </div>
             <div fxFlex="40" fxLayoutAlign="center center">
               {{item.value}}

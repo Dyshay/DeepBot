@@ -20,7 +20,7 @@ export class ConfigCharacter {
   minLifeRegenerate: number;
   useConsommable: boolean;
   minLifeToFight: number;
-  autoBoostStats: { key: string, value: number,order:number }[];
+  autoBoostStats: { stat: string, value: number,order:number }[];
   autoDeleteRessources: number[];
   consommableToUse: number[];
 }

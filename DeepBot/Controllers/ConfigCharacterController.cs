@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -22,7 +23,7 @@ namespace DeepBot.Controllers
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
-        private List<GroupDB> _groups = Database.Groups.Find(FilterDefinition<GroupDB>.Empty).ToList();
+        private List<ConfigCharacterDB> _configs = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList();
 
         public ConfigCharacterController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -33,7 +34,13 @@ namespace DeepBot.Controllers
             _userCollection = userCollection;
         }
 
-
-
+        [HttpPost]
+        [Authorize]
+        [Route("UpdateConfigCharacter")]
+        public async Task<IActionResult> UpdateConfigCharacter(ConfigCharacterDB config)
+        {
+            await Database.ConfigsCharacter.ReplaceOneAsync(o => o.Key == config.Key, config);
+            return Ok(config);
+        }
     }
 }

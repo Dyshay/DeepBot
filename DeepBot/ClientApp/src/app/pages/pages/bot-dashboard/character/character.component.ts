@@ -3,9 +3,12 @@ import { TranslateService } from '@ngx-translate/core';
 import icPlus from '@iconify/icons-ic/baseline-add';
 import { Character } from '../../../../../webModel/Character';
 import { FormsModule } from '@angular/forms';
+import * as fromCharacter from 'src/app/app-reducers/character/reducers'
+import { CharacterActions } from 'src/app/app-reducers/character/actions';
 import icSave from '@iconify/icons-ic/outline-save';
 import icImport from '@iconify/icons-mdi/file-import-outline';
 import icDelete from '@iconify/icons-fa-solid/trash';
+import { Store } from '@ngrx/store';
 
 @Component({
     selector: 'app-character',
@@ -22,7 +25,7 @@ export class CharacterComponent {
   autoBoostValue =0;
   autoBoostKey;
     /** character ctor */
-  constructor(private translateService: TranslateService) {
+  constructor(private translateService: TranslateService, private storeCharacter: Store<fromCharacter.State>) {
 
   }
   AddAutoBoost() {
@@ -30,7 +33,7 @@ export class CharacterComponent {
 
     if (this.character.config.autoBoostStats == null || this.character.config.autoBoostStats.length === 0) {
       let autoboost = {
-        key: this.autoBoostKey,
+        stat: this.autoBoostKey,
         value: this.autoBoostValue,
         order:0
       }
@@ -40,7 +43,7 @@ export class CharacterComponent {
     else {
       this.character.config.autoBoostStats.push(
         {
-          key: this.autoBoostKey,
+          stat: this.autoBoostKey,
           value: this.autoBoostValue,
           order: this.character.config.autoBoostStats[this.character.config.autoBoostStats.length-1].order +1
         }
@@ -50,6 +53,13 @@ export class CharacterComponent {
   DeleteAutoBoost(order) {
     var index = this.character.config.autoBoostStats.findIndex(o => o.order == order);
     this.character.config.autoBoostStats.splice(index, 1);
+  }
+  Save() {
+    let characterConfigToUpdate = this.character.config;
+    this.storeCharacter.dispatch(CharacterActions.updateCharacterConfig({ characterConfigToUpdate }));
+  }
+  Import() {
+
   }
 
 }

@@ -33,9 +33,16 @@ namespace DeepBot.Data.Database
         public int MinLifeRegenerate { get; set; }
         public bool UseConsommable { get; set; }
         public int MinLifeToFight { get; set; }
-        public List<KeyValuePair<string,int>> AutoBoostStats { get; set; }
+        public List<AutoBoostStats> AutoBoostStats { get; set; }
         public List<int> AutoDeleteRessources { get; set; }
         public List<int> ConsommableToUse { get; set; }
 
+    }
+
+    public class AutoBoostStats
+    {
+        public string Stat { get; set; }
+        public int Value { get; set; }
+        public int Order { get; set; }
     }
 }
