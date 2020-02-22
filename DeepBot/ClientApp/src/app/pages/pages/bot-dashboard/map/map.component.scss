@@ -10,6 +10,7 @@
 .row{
     display: flex;
     flex-direction: row;
+    justify-content: center;
 }
 
 body,
@@ -27,11 +28,10 @@ html {
     // width: 590px;
     // top: 50%;
     // left: 50%;
-    transform: translate(-50%, -50%);
+    // transform: translate(-50%, -50%);
 }
 
 .floor {
-    position: absolute;
     -webkit-transform: rotateX(55deg) rotateZ(45deg);
     -webkit-transform-style: preserve-3d;
     font-size: 0;
@@ -41,12 +41,12 @@ html {
     font-size: 11pt;
     color: #ccc;
     display: inline-block;
-    background: #111;
+    background: #C1C1D7;
     width: 2.2rem;
     height: 2.2rem;
     margin: 0;
     box-shadow: 0 0 0 .1em hsla(0, 0%, 0%, .2);
-    border: solid 1px gray;
+    border: solid 1px white;
     line-height: 48px;
     text-align: center;
     position: relative;
