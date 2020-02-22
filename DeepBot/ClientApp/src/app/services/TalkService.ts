@@ -68,7 +68,6 @@ export class TalkService {
                     break;
                 case 6:
                     this.storeCharacter.dispatch(CharacterActions.receveidCharacters({ network }));
-                    this.storeUser.dispatch(webUserActions.DEBUG());
                     break;
                 default:
                     break;
