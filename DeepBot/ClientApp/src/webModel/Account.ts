@@ -22,6 +22,7 @@ export class Account {
   welcomeKey?: string;
   AnkamaNickName?: string;
   gameTicket?: string;
+  tcpId: string;
   state: AccountState;
   server?: Server;
 }
