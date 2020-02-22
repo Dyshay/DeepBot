@@ -7,7 +7,6 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { ChartModule } from '../../../../@vex/components/chart/chart.module';
 import { MatIconModule } from '@angular/material/icon';
 import { WidgetQuickLineChartModule } from '../../../../@vex/components/widgets/widget-quick-line-chart/widget-quick-line-chart.module';
-import { WidgetQuickValueCenterModule } from '../../../../@vex/components/widgets/widget-quick-value-center/widget-quick-value-center.module';
 import { WidgetQuickValueStartModule } from '../../../../@vex/components/widgets/widget-quick-value-start/widget-quick-value-start.module';
 import { WidgetLargeGoalChartModule } from '../../../../@vex/components/widgets/widget-large-goal-chart/widget-large-goal-chart.module';
 import { IconModule } from '@visurel/iconify-angular';
@@ -19,6 +18,9 @@ import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/bread
 import { MatButtonModule } from '@angular/material/button';
 import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
+import { MatProgressBarModule } from '@angular/material';
+import { WidgetCharacterModule } from '../../../../@vex/components/widgets/widget-character/widget-character.module';
+import { WidgetQuickValueCenterModule } from '../../../../@vex/components/widgets/widget-quick-value-center/widget-quick-value-center.module';
 
 
 @NgModule({
@@ -30,6 +32,7 @@ import { ContainerModule } from '../../../../@vex/directives/container/container
     ChartModule,
     MatIconModule,
     WidgetQuickLineChartModule,
+    WidgetCharacterModule,
     WidgetQuickValueCenterModule,
     WidgetQuickValueStartModule,
     WidgetLargeGoalChartModule,
@@ -41,7 +44,8 @@ import { ContainerModule } from '../../../../@vex/directives/container/container
     BreadcrumbsModule,
     MatButtonModule,
     PageLayoutModule,
-    ContainerModule
+    ContainerModule,
+    MatProgressBarModule,
   ]
 })
 export class DashboardAnalyticsModule {

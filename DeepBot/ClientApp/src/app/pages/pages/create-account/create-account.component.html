@@ -1,66 +1,91 @@
 
+<vex-page-layout>
+
+  <vex-page-layout-header fxLayout="column" fxLayoutAlign="center start">
+    <div vexContainer>
+      <h1 class="title m-0">{{ 'CREATEACCOUNT.DESCRIPTION1' | translate}}</h1>
+      <h4 class="ml-6"> {{ 'CREATEACCOUNT.DESCRIPTION2' | translate}} </h4>
+      <h4 class="ml-6"> {{ 'CREATEACCOUNT.DESCRIPTION3' | translate}} </h4>
+    </div>
+  </vex-page-layout-header>
+
+
+  <vex-page-layout-content vexContainer @fadeInUp>
+
     <div fxLayout="row" fxLayoutAlign="center center" fxFlexFill>
 
       <div @fadeInUp class="card mt-24" fxFlex="60">
         <div class="px-6 py-4 border-b" fxLayout="row" fxLayoutAlign="start center">
-          <h2 class="title m-0">Ajouter un compte Dofus</h2>
+          <h2 class="title m-0">{{ 'CREATEACCOUNT.ADDACCOUNT' | translate}}</h2>
         </div>
 
         <div class="px-6 py-4" fxLayout="column" [formGroup]="form">
           <mat-form-field>
-            <mat-label>Nom de compte</mat-label>
+            <mat-label>{{ 'CREATEACCOUNT.ACCOUNTNAME' | translate}}</mat-label>
             <input matInput required formControlName="accountName">
           </mat-form-field>
 
-
           <mat-form-field>
-            <mat-label>Mot de passe du compte</mat-label>
-            <input [type]="inputType" matInput required value="" formControlName="password" >
-            <button (click)="togglePassword()" mat-icon-button matSuffix type="button">
+            <mat-label>{{'CREATEACCOUNT.PASSWORDACCOUNT' | translate}}</mat-label>
+            <input [type]="inputType"
+                   formControlName="password"
+                   matInput
+                   required />
+            <button (click)="toggleVisibility()"
+                    mat-icon-button
+                    matSuffix
+                    matTooltip="Toggle Visibility"
+                    type="button">
               <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
-              <mat-icon *ngIf="!visible" [icIcon]="icVisibilityOff"></mat-icon>
+              <mat-icon *ngIf="!visible"
+                        [icIcon]="icVisibilityOff"></mat-icon>
             </button>
-            <mat-hint>Cliquez sur l'oeil pour afficher mot de passe</mat-hint>
+            <mat-hint>{{'LOGIN.PASSWORDVISIBILITY' | translate }}</mat-hint>
+            <mat-error *ngIf="form.get('password').hasError('required')">{{'LOGIN.PASSWORDREQUIRED' | translate }}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="mt-1">
-            <mat-label>Serveur</mat-label>
+            <mat-label>{{ 'GLOBAL.SERVER' | translate}}</mat-label>
             <mat-select formControlName="server">
-              <mat-option [value] ="1">Arty</mat-option>
-              <mat-option [value] ="2">Ayuto</mat-option>
-              <mat-option [value] ="3">Bilby</mat-option>
-              <mat-option [value] ="4">Clustus</mat-option>
+              <mat-option *ngFor="let server of serverList" [value]="server.id">{{server.name}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field class="mt-2">
-            <mat-label>Associer à un groupe existant</mat-label>
-            <mat-select  formControlName="group" >
-              <mat-option *ngFor="let group of groupList" [value]="group.groupId" style="height: 5em !important;">
-                <b>Leader : {{group.leader.characterName}}</b>
-                ( Nbr perso dans groupe : {{group.groupTotal}}, &nbsp; groupe lvl {{group.groupLevel}}, &nbsp;  PP : {{group.groupProspection}})
+            <mat-label>{{ 'CREATEACCOUNT.ASSOCIATETOGROUP' | translate}}</mat-label>
+            <mat-select formControlName="group">
+              <mat-option *ngFor="let group of groups$ | async" [value]="group.key">
+                <b>Leader : {{group.leader?.name}}</b>
+                ( groupetotal : a faire! ,  &nbsp; {{ 'GLOBAL.GROUPLEVEL' | translate}} {{group.level}}, &nbsp;  {{ 'GLOBAL.GROUPPP' | translate}} : {{group.prospection}})
               </mat-option>
             </mat-select>
           </mat-form-field>
 
           <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="8px">
-            <button color="primary" mat-raised-button type="button" (click)="findCharacter()">Rechercher les personnages sur le compte</button>
+            <button color="primary" mat-raised-button type="button" (click)="findCharacter()">{{ 'CREATEACCOUNT.SEARCHCHARACTERS' | translate}}</button>
           </div>
 
 
           <mat-form-field *ngIf="ischaractersfound" class="mt-2">
-            <mat-label>Choisisez votre personnage</mat-label>
+            <mat-label>{{ 'CREATEACCOUNT.CHOSECHARACTER' | translate}}</mat-label>
             <mat-select formControlName="character">
-              <mat-option *ngFor="let character of characterList" [value]="character.characterName"><b>{{character.characterName}} </b> (Classe : {{character.classe}}, Level : {{character.level}} )</mat-option>
+              <mat-option *ngFor="let character of charaters$ | async" [value]="character.key">
+                <b>{{character.name}} </b> ({{ 'GLOBAL.BREED' | translate}} : {{character.breedId}}, {{ 'GLOBAL.LEVEL' | translate}} : {{character.level}} )
+              </mat-option>
             </mat-select>
           </mat-form-field>
 
           <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-            <button mat-button type="button">Annuler</button>
-            <button color="primary" mat-raised-button type="button" (click)="addAccount()" [disabled]="!form.valid">Ajouter</button>
+            <button mat-button type="button">{{ 'GLOBAL.CANCEL' | translate}}</button>
+            <button color="primary" mat-raised-button type="button" (click)="addAccount()" [disabled]="!form.valid">{{ 'GLOBAL.ADD' | translate}}</button>
           </div>
 
         </div>
       </div>
     </div>
+  </vex-page-layout-content>
+
+</vex-page-layout>
+
+
 

@@ -20,6 +20,7 @@ namespace DeepBot.CLI.Model
         public string access_token;
         public string ApiKey;
         private Login Identification;
+        private bool IsScan;
 
         public Account()
         {
@@ -66,23 +67,39 @@ namespace DeepBot.CLI.Model
             TalkingService.JoinRoom().Wait();
             TalkingService.PackageBuild += SendPackage;
             TalkingService.ConnexionHandler += DispatchConnect;
+            TalkingService.DisconnectHandler += Disconnect;
+            TalkingService.CheckScan += HandleScanCheck;
         }
 
-        private void DispatchConnect(string ip, int port, bool isSwitch, string tcpId)
+        private void HandleScanCheck(string tcpId)
+        {
+            TalkingService.CallCallBackCheck(tcpId, IsScan);
+        }
+
+        private void DispatchConnect(string ip, int port, bool isSwitch, string tcpId,bool _isScan=false)
         {
             if (isSwitch)
             {
                 var TcpClient = Clients[tcpId];
                 TcpClient.Disconnect();
                 TcpClient.Connect(ip, port);
-
             }
             else
             {
+                if (_isScan)
+                {
+                    IsScan = _isScan;
+                }
+
                 Clients.TryAdd(tcpId, new TcpHandler(this, tcpId));
                 var TcpClient = Clients[tcpId];
                 TcpClient.Connect(ip, port);
             }
+        }
+
+        private void Disconnect(string tcpId)
+        {
+            Clients.Remove(tcpId);
         }
 
         private void SendPackage(string package, bool needResponse, string tcpId)

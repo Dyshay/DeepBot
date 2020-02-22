@@ -9,8 +9,8 @@ import { TableColumn } from '../../../../@vex/interfaces/table-column.interface'
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import theme from '../../../../@vex/utils/tailwindcss';
 import { Store, select } from '@ngrx/store';
-import * as fromBot from '../../pages/bot/reducers';
 import { TalkService } from 'src/app/Services/TalkService';
+import { NavigationService } from '../../../../@vex/services/navigation.service';
 
 @Component({
   selector: 'vex-dashboard-analytics',
@@ -19,7 +19,7 @@ import { TalkService } from 'src/app/Services/TalkService';
 })
 export class DashboardAnalyticsComponent implements OnInit {
 
-  logs$ = this.store.pipe(select(fromBot.getLogs));
+
 
   tableColumns: TableColumn<Order>[] = [
     {
@@ -94,7 +94,7 @@ export class DashboardAnalyticsComponent implements OnInit {
 
   theme = theme;
 
-  constructor(private cd: ChangeDetectorRef, private store: Store<fromBot.State>, private deepTalk: TalkService) { }
+  constructor(private cd: ChangeDetectorRef,private deepTalk: TalkService) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -108,10 +108,6 @@ export class DashboardAnalyticsComponent implements OnInit {
         }
       ];
     }, 3000);
-  }
-
-  init(){
-    this.deepTalk.createConnexion();
   }
 
 }

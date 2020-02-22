@@ -1,9 +1,9 @@
 import { Component, ElementRef, HostBinding, Input, OnInit } from '@angular/core';
 import { LayoutService } from '../../services/layout.service';
 import icBookmarks from '@iconify/icons-ic/twotone-bookmarks';
-import emojioneUS from '@iconify/icons-emojione/flag-for-flag-united-states';
-import emojioneDE from '@iconify/icons-emojione/flag-for-flag-germany';
+import emojioneEN from '@iconify/icons-emojione/flag-for-flag-united-kingdom';
 import emojioneFR from '@iconify/icons-emojione/flag-for-flag-france';
+import emogioneES from '@iconify/icons-emojione/flag-for-flag-spain';
 import icMenu from '@iconify/icons-ic/twotone-menu';
 import { ConfigService } from '../../services/config.service';
 import { map } from 'rxjs/operators';
@@ -19,9 +19,10 @@ import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import { PopoverService } from '../../components/popover/popover.service';
 import { MegaMenuComponent } from '../../components/mega-menu/mega-menu.component';
 import icSearch from '@iconify/icons-ic/twotone-search';
-import * as fromAuth from '../../../app/pages/pages/auth/reducers';
+import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
 import { Store, select } from '@ngrx/store';
-import { AuthActions } from 'src/app/pages/pages/auth/actions';
+import { webUserActions } from 'src/app/app-reducers/webUser/actions';
+import { TraductionService } from '../../../app/services/traduction.service';
 
 
 @Component({
@@ -31,7 +32,7 @@ import { AuthActions } from 'src/app/pages/pages/auth/actions';
 })
 export class ToolbarComponent implements OnInit {
 
-  user$ = this.store.pipe(select(fromAuth.getUser));
+  user$ = this.store.pipe(select(fromwebUser.getUser));
   @Input() mobileQuery: boolean;
 
   @Input()
@@ -47,8 +48,8 @@ export class ToolbarComponent implements OnInit {
 
   icSearch = icSearch;
   icBookmarks = icBookmarks;
-  emojioneUS = emojioneUS;
-  emojioneDE = emojioneDE;
+  emojioneEN = emojioneEN;
+  emogioneES = emogioneES;
   emojioneFR = emojioneFR;
   icMenu = icMenu;
   icPersonAdd = icPersonAdd;
@@ -60,17 +61,23 @@ export class ToolbarComponent implements OnInit {
   icDoneAll = icDoneAll;
   icArrowDropDown = icArrowDropDown;
 
+
+
   constructor(private layoutService: LayoutService,
               private configService: ConfigService,
               private navigationService: NavigationService,
               private popoverService: PopoverService,
-              private store: Store<fromAuth.State>
+              private traductionService : TraductionService,
+              private store: Store<fromwebUser.State>
               ) {
 
-                this.store.dispatch(AuthActions.getUser())
                }
 
   ngOnInit() {
+  }
+
+  changeLanguage(language) {
+    this.traductionService.changLang(language);
   }
 
   openQuickpanel() {

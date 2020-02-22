@@ -1,0 +1,74 @@
+<form (ngSubmit)="updateAccount()" [formGroup]="form">
+  <div fxLayout="row" fxLayoutAlign="start center" mat-dialog-title>
+    <img *ngIf="contact?.imageSrc" [src]="contact?.imageSrc" class="avatar ltr:mr-5 rtl:ml-5">
+    <h2 class="headline m-0" fxFlex="auto">{{'UPDATEACCOUNTMODAL.UPDATEACCOUNTLABEL' | translate}}</h2>
+
+    <button class="text-secondary" mat-dialog-close mat-icon-button type="button">
+      <mat-icon [icIcon]="icClose"></mat-icon>
+    </button>
+  </div>
+
+  <mat-divider class="-mx-6 text-border"></mat-divider>
+
+  <mat-dialog-content fxLayout="column">
+    <mat-form-field class="mt-6">
+      <mat-label>{{'GLOBAL.ACCOUNTNAME' | translate}}</mat-label>
+      <input cdkFocusInitial formControlName="accountName" matInput>
+      
+      <mat-icon [icIcon]="icPerson" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{'CREATEACCOUNT.PASSWORDACCOUNT' | translate}}</mat-label>
+      <input [type]="inputType"
+             formControlName="password"
+             matInput
+             required />
+      <button (click)="toggleVisibility()"
+              mat-icon-button
+              matSuffix
+              matTooltip="Toggle Visibility"
+              type="button">
+        <mat-icon *ngIf="visible" [icIcon]="icVisibility"></mat-icon>
+        <mat-icon *ngIf="!visible"
+                  [icIcon]="icVisibilityOff"></mat-icon>
+      </button>
+      <mat-icon [icIcon]="icPaswword" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+      <mat-hint>{{'LOGIN.PASSWORDVISIBILITY' | translate }}</mat-hint>
+      <mat-error *ngIf="form.get('password').hasError('required')">{{'LOGIN.PASSWORDREQUIRED' | translate }}</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{'GLOBAL.SERVER' | translate}}</mat-label>
+      <input formControlName="server" matInput>
+
+      <mat-icon [icIcon]="icServer" class="ltr:mr-3 rtl:ml-3" matPrefix></mat-icon>
+    </mat-form-field>
+
+    <mat-form-field class="mt-2">
+      <mat-label>{{ 'CREATEACCOUNT.ASSOCIATETOGROUP' | translate}}</mat-label>
+      <mat-select formControlName="group">
+        <mat-option *ngFor="let group of groups" [value]="group.key">
+          <b>Leader : {{group?.leader.name}}</b>
+          ( groupetotal : a faire! ,  &nbsp; {{ 'GLOBAL.GROUPLEVEL' | translate}} {{group.level}}, &nbsp;  {{ 'GLOBAL.GROUPPP' | translate}} : {{group.prospection}})
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="mt-2">
+      <mat-label>{{ 'CREATEACCOUNT.CHOSECHARACTER' | translate}}</mat-label>
+      <mat-select formControlName="character">
+        <mat-option *ngFor="let character of charaters" [value]="character.key">
+          <b>{{character.name}} </b> ({{ 'GLOBAL.BREED' | translate}} : {{character.breedId}}, {{ 'GLOBAL.LEVEL' | translate}} : {{character.level}} )
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close type="button">{{'GLOBAL.CANCEL' | translate}}</button>
+    <button color="primary" mat-button type="submit">{{'GLOBAL.SAVE' | translate}}</button>
+  </mat-dialog-actions>
+</form>
+

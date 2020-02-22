@@ -1,11 +1,19 @@
 import { Character } from './Character';
+import { Trajet } from './Trajet';
+import { ConfigGroup } from './ConfigGroup';
 
-export interface Group {
-    followers: Character[],
-    leader: Character,
-    groupName: string,
-    groupLevel: number,
-    groupProspection: number,
-    groupTotal: number,
-    groupId : number
+export class Group {
+  key: string;
+  name: string;
+  description: string;
+  fk_Leader?: number;
+  fk_Followers?: number[];
+  followers?: Character[];
+  leader?: Character;
+  config?: ConfigGroup;
+  trajet?: Trajet;
+  prospection?: number;
+  level?: number;
 }
+
+

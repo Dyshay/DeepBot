@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconModule } from '@visurel/iconify-angular';
-import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule } from '@angular/material';
+import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatTableModule } from '@angular/material';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
@@ -12,6 +12,7 @@ import { CreateGroupRoutingModule } from './create-group-routing.module';
 import { CreateGroupComponent } from './create-group.component';
 import { ColorFadeModule } from '../../../../@vex/pipes/color/color-fade.module';
 import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -34,6 +35,8 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
     ContainerModule,
     ColorFadeModule,
     PageLayoutModule,
+    MatTableModule,
+    TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

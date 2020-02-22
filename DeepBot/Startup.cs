@@ -4,6 +4,8 @@ using DeepBot.ControllersModel;
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Data.Database;
+using DeepBot.Data.Model;
+using DeepBot.Data.Model.CharacterInfo;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -14,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson.Serialization;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,12 +38,26 @@ namespace DeepBot
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
-            services.AddControllersWithViews();
+            services.AddCors();
+            services.AddAuthorization();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .AddJsonOptions (opt => {
+                    opt.JsonSerializerOptions.MaxDepth =10;
+                    opt.JsonSerializerOptions.WriteIndented = true;
+                });
+
+            /* object nested */
+            BsonClassMap.RegisterClassMap<Account>();
+            BsonClassMap.RegisterClassMap<Character>();
+            BsonClassMap.RegisterClassMap<Proxy>();
+            BsonClassMap.RegisterClassMap<ConfigAccount>();
 
             services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
             {
@@ -122,6 +139,8 @@ namespace DeepBot
 
             //Launch Handler Core
             Receiver.Initialize();
+
+            //DataInit.SeedAndCreateRoles();
 
             app.UseRouting();
             //Identity

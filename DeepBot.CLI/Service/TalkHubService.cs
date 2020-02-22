@@ -11,7 +11,9 @@ namespace DeepBot.CLI.Service
         private HubConnection Connection;
 
         public event Action<string, bool, string> PackageBuild;
-        public event Action<string, int, bool, string> ConnexionHandler;
+        public event Action<string, int, bool, string,bool> ConnexionHandler;
+        public event Action<string> DisconnectHandler;
+        public event Action<string> CheckScan;
 
         public TalkHubService(string token)
         {
@@ -42,6 +44,8 @@ namespace DeepBot.CLI.Service
         {
             GetPackage();
             InitConnectionTcp();
+            InitDisconnect();
+            IsCheckScan();
         }
 
         public async Task SendHandlePackageToServer(string package, string tcpId)
@@ -56,7 +60,22 @@ namespace DeepBot.CLI.Service
 
         public void InitConnectionTcp()
         {
-            Connection.On<string, int, bool, string>("NewConnection", (ip, port, @switch, tcpId) => ConnexionHandler?.Invoke(ip, port, @switch, tcpId));
+            Connection.On<string, int, bool, string,bool>("NewConnection", (ip, port, @switch, tcpId,iscan) => ConnexionHandler?.Invoke(ip, port, @switch, tcpId,iscan));
+        }
+
+        public void IsCheckScan()
+        {
+            Connection.On<string>("CheckCliScan",(c) => CheckScan?.Invoke(c));
+        }
+
+        public void CallCallBackCheck(string tcpId, bool isScan)
+        {
+            Connection.InvokeAsync("ScanCallBack", isScan, tcpId);
+        }
+
+        public void InitDisconnect()
+        {
+            Connection.On<string>("Disconnect", (tcpId) => DisconnectHandler?.Invoke(tcpId));
         }
 
         public void GetPackage()

@@ -1,4 +1,5 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
+using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Identity;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
@@ -16,39 +17,16 @@ namespace DeepBot.Data.Database
             Logins = new List<IdentityUserLogin<string>>();
             Tokens = new List<IdentityUserToken<string>>();
             RecoveryCodes = new List<TwoFactorRecoveryCode>();
+            Accounts = new List<Account>();
         }
-
-        //public string AuthenticatorKey { get; set; }
-
-        //public List<string> Roles { get; set; }
-
-        //public List<IdentityUserClaim<string>> Claims { get; set; }
-
-        //public List<IdentityUserLogin<string>> Logins { get; set; }
-
-        //public List<IdentityUserToken<string>> Tokens { get; set; }
-
-        //public List<TwoFactorRecoveryCode> RecoveryCodes { get; set; }
-
-
-
-        public List<Guid> AccountsId { get; set; }
-        public int MaxAccount { get; set; } /* type d'abonnement => 8 accounts max de base */ 
-        public TimeSpan ConnectedHour { get; set; } /* total temps de connection sur site */
-        public bool IsSubcriber { get; set; } /* sa clé est active ? */ 
-        public DateTime EndDateSubscribe { get; set; } /* fin date clé active */ 
-        public string Pseudo { get; set; } /* pseudo à la anakama*/ 
-        public string ApiKey { get; set; } /* clé api d'identification*/
+        public List<Account> Accounts { get; set; }
+        public ApiKey ApiKey { get; set; }
+        public ConfigUser Config { get; set; }
+        public string Langue { get; set; } 
         public string AddressIP { get; set; }
         public short AppCliOnline { get; set; }
-        [BsonIgnore]
         public string CliConnectionId { get; set; }
-        [BsonIgnore]
-        public List<AccountDB> Accounts { get; set; } /*List account de cet User */
-
-        /*Stats global du user */
-        public Int64 UserKamas { get; set; }
-        public int Userlevel { get; set; }
 
     }
+ 
 }

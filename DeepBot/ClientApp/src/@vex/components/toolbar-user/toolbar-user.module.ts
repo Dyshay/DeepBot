@@ -12,6 +12,7 @@ import { RouterModule } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { IconModule } from '@visurel/iconify-angular';
 import { ColorFadeModule } from '../../pipes/color/color-fade.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import { ColorFadeModule } from '../../pipes/color/color-fade.module';
     RouterModule,
     MatTooltipModule,
     IconModule,
-    ColorFadeModule
+    ColorFadeModule,
+    TranslateModule
   ],
   exports: [ToolbarUserComponent],
   entryComponents: [ToolbarUserDropdownComponent]

@@ -1,9 +1,12 @@
 import { EventEmitter, Injectable } from '@angular/core';
 import { HubConnection, HubConnectionBuilder, HttpTransportType } from '@aspnet/signalr';
 import { Store } from '@ngrx/store';
-import * as fromBot from '../pages/pages/bot/reducers';
-import { BotActions } from '../pages/pages/bot/actions';
-
+import * as fromwebUser from '../app-reducers/webUser/reducers';
+import { webUserActions } from '../app-reducers/webUser/actions';
+import { AccountActions } from '../app-reducers/account/actions';
+import * as fromAccount from '../app-reducers/account/reducers';
+import * as fromCharacter from '../app-reducers/character/reducers';
+import { CharacterActions } from '../app-reducers/character/actions';
 @Injectable()
 export class TalkService {
     messageReceived = new EventEmitter<string>();
@@ -12,7 +15,10 @@ export class TalkService {
     private connectIsEstablished = false;
     private _hubConnection: HubConnection;
 
-    constructor(private store: Store<fromBot.State>) {
+    constructor(private storeUser: Store<fromwebUser.State>,
+        private storeAccount: Store<fromwebUser.State>,
+        private storeCharacter: Store<fromCharacter.State>
+    ) {
         this.createConnection();
         // this.startConnection();
     }
@@ -31,8 +37,9 @@ export class TalkService {
             .build();
     }
 
-    createConnexion() {
-        this._hubConnection.invoke('CreateConnexion', 'test','test');
+    createConnexionBot(accountName, accountPassword, serverId, isScan) {
+        console.log(accountName);
+        this._hubConnection.invoke('CreateConnexion', accountName, accountPassword, serverId, isScan);
     }
 
     public startConnection(): void {
@@ -52,16 +59,19 @@ export class TalkService {
         this.GetClientMessage();
     }
 
-    private registerOnServerEvents(): void {
-        this._hubConnection.on('ConsoleSend', (data: string) => {
-            this.messageReceived.emit(data);
-        });
-    }
-
     private GetClientMessage(): void {
         this._hubConnection.on("DispatchClient", (network, tcpId) => {
-            // if()
-            this.store.dispatch(BotActions.receveidLogs({network}))
+            console.log(network);
+            switch (network.type) {
+                case 0:
+                    this.storeAccount.dispatch(AccountActions.receveidLogs({ network }));
+                    break;
+                case 6:
+                    this.storeCharacter.dispatch(CharacterActions.receveidCharacters({ network }));
+                    break;
+                default:
+                    break;
+            }
         })
     }
 }

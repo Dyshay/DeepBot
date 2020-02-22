@@ -9,6 +9,7 @@ using AspNetCore.Identity.Mongo.Model;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Data.Model;
 using DeepBot.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -16,6 +17,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Driver;
 
 namespace DeepBot.Controllers
 {
@@ -28,13 +30,16 @@ namespace DeepBot.Controllers
         private SignInManager<UserDB> _signInManager;
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
+        readonly IMongoCollection<UserDB> _userCollection;
+        private List<GroupDB> _groups = Database.Groups.Find(FilterDefinition<GroupDB>.Empty).ToList();
 
-        public UserController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager)
+        public UserController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
+            _userCollection = userCollection;
         }
 
 
@@ -50,13 +55,46 @@ namespace DeepBot.Controllers
             return user;
 
         }
-        public async Task<UserDB> getUserDB()
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("isActive")]
+        public async Task<bool> isActive()
         {
+            bool retour = false;
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
 
-            return user;
+            if(user != null)
+            {
+                
+                if(user.EmailConfirmed && !user.LockoutEnabled)
+                {
+                    retour = true;
+                }
+#if DEBUG
+                retour = true;
+#endif
+            }
+            return retour;
 
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Edit(UserDB user)
+        {
+            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+
+            return null;
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Delete(string id)
+        {
+            var user = await _userCollection.DeleteOneAsync(x => x.Id == id);
+            return null;
         }
 
 
@@ -67,12 +105,25 @@ namespace DeepBot.Controllers
         public async Task<IActionResult> Register(RegisterUserModel model)
         {
             var apiKey = Guid.NewGuid();
+            ApiKey apiKeyDebug = null;
+
+#if DEBUG
+            apiKeyDebug = new ApiKey()
+            {
+                CreationDate = DateTime.Now,
+                EndDate = DateTime.Now.AddYears(1),
+                Key = Guid.NewGuid(),
+                MaxAccount = 99
+            };
+#endif
+
 
             var user = new UserDB()
             {
                 UserName = model.UserName,
                 Email = model.UserEmail,
-                ApiKey = apiKey.EncodeBase64String(),
+                ApiKey = apiKeyDebug,
+                Langue = model.Langue
             };
 
             var result = await _userManager.CreateAsync(user, model.UserPassword);
@@ -125,12 +176,12 @@ namespace DeepBot.Controllers
                         tokenDescriptor = new SecurityTokenDescriptor
                         {
                             Subject = new ClaimsIdentity(new Claim[]
-{
-    new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
-    new Claim(_options.ClaimsIdentity.RoleClaimType, role),
-                            new Claim("UserID", user.Id),
-                            new Claim("ApiKey", user.ApiKey)
-}),
+                                {
+                                    new Claim(_options.ClaimsIdentity.UserNameClaimType, user.UserName),
+                                    new Claim(_options.ClaimsIdentity.RoleClaimType, role),
+                                    new Claim("UserID", user.Id),
+                                    new Claim("ApiKey", user.ApiKey.Key.ToString())
+                                }),
 
                             Expires = DateTime.UtcNow.AddDays(7),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
@@ -179,6 +230,71 @@ namespace DeepBot.Controllers
         }
 
 
+        [HttpGet]
+        [Authorize]
+        [Route("CreateSideNavUser")]
+        public async Task<SideNav> CreateSideNavUserAsync()
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            List<Guid> listGroupId = new List<Guid>();
+            List<Guid> listAccount = new List<Guid>();
+            SideNav sidenav = new SideNav();
+            sidenav.items = new List<SideNavItem>();
+
+            foreach (var account in user.Accounts)
+            {
+                if (account.CurrentCharacter != null)
+                {
+                    if (account.CurrentCharacter.Fk_Group != Guid.Empty && _groups.FindIndex(o => o.Key == account.CurrentCharacter.Fk_Group) != -1 && !listGroupId.Contains(account.CurrentCharacter.Fk_Group))
+                        listGroupId.Add(account.CurrentCharacter.Fk_Group);
+                    else if (account.CurrentCharacter.Fk_Group == Guid.Empty)
+                    {
+                        SideNavItem item = new SideNavItem()
+                        {
+                            Id = account.CurrentCharacter.Key.ToString(),
+                            isGroup = false,
+                            Name = account.CurrentCharacter.Name,
+                            State = ControllersModel.Enum.SideNavState.CONNECTED
+                        };
+                        sidenav.items.Add(item);
+                    }
+                }
+            }
+            foreach (var groupId in listGroupId)
+            {
+                GroupDB group = _groups.Find(o => o.Key == groupId) as GroupDB;
+                SideNavItem item = new SideNavItem()
+                {
+                    Id = groupId.ToString(),
+                    Name = group.Name,
+                    isGroup = true,
+                    State = ControllersModel.Enum.SideNavState.CONNECTED,
+                    Children = new List<SideNavItem>()
+                };
+
+                foreach (var account in user.Accounts)
+                {
+                    if (account.CurrentCharacter != null)
+                    {
+                        if (account.CurrentCharacter.Fk_Group == groupId)
+                        {
+                            SideNavItem ChildItem = new SideNavItem()
+                            {
+                                Id = account.CurrentCharacter.Key.ToString(),
+                                isGroup = false,
+                                Name = account.CurrentCharacter.Name,
+                                State = ControllersModel.Enum.SideNavState.CONNECTED
+                            };
+                            item.Children.Add(ChildItem);
+                        }
+                    }
+                }
+                sidenav.items.Add(item);
+            }
+
+            return sidenav;
+        }
 
 
 

@@ -11,15 +11,15 @@ namespace DeepBot.Core.Network.HubMessage.Messages
     {
         public override NetworkType Type => NetworkType.MAP;
 
-        public Cell[] Cells { get; set; }
-        public Entity[] Entitys { get; set; }
+        public MapCell[] Cells { get; set; }
+        public MapEntity[] Entitys { get; set; }
         public InteractivObject[] InteractivObjects { get; set; }
-        public Monster[] Monsters { get; set; }
-        public Character[] Characters { get; set; }
-        public Npc[] Npcs { get; set; }
-        public Player[] Players { get; set; }
+        public MapMonster[] Monsters { get; set; }
+        public MapCharacter[] Characters { get; set; }
+        public MapNpc[] Npcs { get; set; }
+        public MapPlayer[] Players { get; set; }
 
-        public MapMessage(Cell[] cells, Entity[] entitys, InteractivObject[] interactivObjects, Monster[] monsters, Character[] characters, Npc[] npcs, Player[] players, string tcpId)
+        public MapMessage(MapCell[] cells, MapEntity[] entitys, InteractivObject[] interactivObjects, MapMonster[] monsters, MapCharacter[] characters, MapNpc[] npcs, MapPlayer[] players, string tcpId)
         {
             Cells = cells;
             Entitys = entitys;

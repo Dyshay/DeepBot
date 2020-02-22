@@ -1,0 +1,114 @@
+<div class="card">
+  <div class="px-gutter py-4 border-b">
+    <h2 class="title m-0">Métier</h2>
+  </div>
+  <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr"
+       gdColumns.lt-md="1fr 1fr 1fr"
+       gdColumns.lt-sm="1fr"
+       gdGap="16px"
+       vexContainer>
+    <div *ngFor="let job of character.jobs" gdColumn.lt-sm="1">
+      <vex-widget-quick-value-center *ngIf="job.id ==='1'"
+                                     [icon]="bucheron"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='2'"
+                                     [icon]="paysan"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='3'"
+                                     [icon]="mineur"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='4'"
+                                     [icon]="chasseur"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='5'"
+                                     [icon]="pecheur"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='6'"
+                                     [icon]="alchimiste"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='7'"
+                                     [icon]="bricoleur"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='8'"
+                                     [icon]="bijoutier"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='9'"
+                                     [icon]="cordonnier"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='10'"
+                                     [icon]="tailleur"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                    value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='11'"
+                                     [icon]="sculteur"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='12'"
+                                     [icon]="forgeur"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='13'"
+                                     [icon]="forgeurbouclier"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-id-quick-value-center *ngIf="job.id ==='14'"
+                                 [icon]="cordomage"
+                                 [color]="theme.colors.primary"
+                                 gdColumn.lt-sm="1"
+                                 value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-id-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id =='15'"
+                                     [icon]="costumage"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+      <vex-widget-quick-value-center *ngIf="job.id ==='16'"
+                                     [icon]="jaillomage"
+                                     [color]="theme.colors.primary"
+                                     gdColumn.lt-sm="1"
+                                     value="{{job.name}}"
+                                     label="Level {{job.level}}" style="cursor:pointer" (click)="selectJob(job)"></vex-widget-quick-value-center>
+    </div>
+
+
+    <mat-divider gdColumn="1 / 4" class="mt-2"></mat-divider>
+    <app-job-panel [jobSelected]="jobSelected"  gdColumn="1 / 4" ></app-job-panel>
+
+  </div>
+</div>

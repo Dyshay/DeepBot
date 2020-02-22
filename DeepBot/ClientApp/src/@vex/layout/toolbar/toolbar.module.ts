@@ -15,6 +15,7 @@ import { RouterModule } from '@angular/router';
 import { NavigationItemModule } from '../../components/navigation-item/navigation-item.module';
 import { MegaMenuModule } from '../../components/mega-menu/mega-menu.module';
 import { ContainerModule } from '../../directives/container/container.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 @NgModule({
@@ -34,7 +35,8 @@ import { ContainerModule } from '../../directives/container/container.module';
     RouterModule,
     NavigationItemModule,
     MegaMenuModule,
-    ContainerModule
+    ContainerModule,
+    TranslateModule
   ],
   exports: [ToolbarComponent]
 })

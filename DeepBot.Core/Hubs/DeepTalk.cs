@@ -2,9 +2,12 @@
 using DeepBot.Core.Network.HubMessage;
 using DeepBot.Data.Database;
 using DeepBot.Data.Extensions;
+using DeepBot.Data.Model;
+using DeepBot.Data.Model.GameServer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
+using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,20 +19,26 @@ namespace DeepBot.Core.Hubs
     [Authorize]
     public class DeepTalk : Hub
     {
-        private static List<UserDB> Users = new List<UserDB>();
-        private UserManager<UserDB> Manager;
+        private readonly UserManager<UserDB> Manager;
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
-        private string CliID => Users.FirstOrDefault(c => c.Id == userId).CliConnectionId;
+        private Task<UserDB> UserDB => Manager.FindByIdAsync(userId);
+        private string CliID => Manager.FindByIdAsync(userId).Result.CliConnectionId;
+        public static Dictionary<string, bool> IsScans = new Dictionary<string, bool>();
+        public readonly IMongoCollection<UserDB> _userCollection;
 
-        public void ReceivedHandler(string package, string tcpId)
+        public async Task ReceivedHandler(string package, string tcpId)
         {
-            Receiver.Receive(this, package, Users.FirstOrDefault(c => c.Id == userId).Accounts.FirstOrDefault(c => c.TcpId == tcpId), tcpId);
+            var CurrentUser = await UserDB;
+
+            Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
         }
 
-        public void JoinRoomCLI()
+        public async Task JoinRoomCLI()
         {
-            Users.FirstOrDefault(c => c.Id == userId).CliConnectionId = Context.ConnectionId;
-            Users.FirstOrDefault(c => c.Id == userId).Accounts = new List<AccountDB>();
+            var CurrentUser = await UserDB;
+            CurrentUser.Accounts = new List<Account>();
+            CurrentUser.CliConnectionId = Context.ConnectionId;
+            await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
         }
 
         public async Task JoinRoomClient()
@@ -48,14 +57,29 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("CreateTcp");
         }
 
-        public async Task CreateConnexion(string userName, string password)
+        public async Task CreateConnexion(string userName, string password, short serverId, bool isScan = false)
         {
             string tcpId = GetTcpId();
 
-            Users.FirstOrDefault(c => c.Id == userId)
-                .Accounts.Add(new AccountDB { TcpId = tcpId, Username = userName, Password = password });
+            var CurrentUser = await UserDB;
 
-            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId);
+            if (isScan)
+                CurrentUser
+                    .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
+
+            else if (!isScan)
+            {
+                CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
+                CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).Server = new Server() { Id = CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).ServerId };
+            }
+
+
+            await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
+
+            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId, isScan);
+
+            if (isScan)
+                IsScans.Add(tcpId, isScan);
         }
 
         private string GetTcpId()
@@ -64,10 +88,29 @@ namespace DeepBot.Core.Hubs
             return tcpId.EncodeBase64String();
         }
 
+
+        public async Task DisconnectCli(string tcpId)
+        {
+            await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
+        }
+
         public async Task DispatchToClient(NetworkMessage network, string tcpId)
         {
             await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("DispatchClient", network, tcpId);
         }
+
+        #region CheckScan
+        public void ScanCallBack(bool isScan, string tcpId)
+        {
+            //IsScans.Add(tcpId, isScan);
+        }
+
+        public async Task CallCheck(string tcpId)
+        {
+            await Clients.Client(CliID).SendAsync("CheckCliScan", tcpId);
+        }
+
+        #endregion
 
         private string GetApiKey()
         {
@@ -76,27 +119,24 @@ namespace DeepBot.Core.Hubs
 
         public override async Task OnConnectedAsync()
         {
-            if (!Users.Select(c => c.Id).Contains(userId))
-                Users.Add(await Manager.FindByIdAsync(userId));
-
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            if (Users.Any(c => c.Id == userId))
-                Users.Add(await Manager.FindByIdAsync(userId));
-
-            else if (Users.Any(c => c.CliConnectionId == Context.ConnectionId))
+            var CurrentUser = await UserDB;
+            if (CurrentUser.CliConnectionId == Context.ConnectionId)
             {
-                Users.FirstOrDefault(c => c.CliConnectionId == Context.ConnectionId).CliConnectionId = "";
+                CurrentUser.CliConnectionId = "";
+                await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
             }
         }
 
-        public DeepTalk(UserManager<UserDB> manager)
+        public DeepTalk(UserManager<UserDB> manager, IMongoCollection<UserDB> userCollection)
         {
             Manager = manager;
+            _userCollection = userCollection;
         }
     }
 }
