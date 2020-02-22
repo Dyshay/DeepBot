@@ -15,6 +15,7 @@ import { Store } from '@ngrx/store';
 import { AccountActions } from '../../account/actions';
 import { Character } from '../../../../webModel/Character';
 import { CharacterActions } from '../../character/actions';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable()
 export class webUserEffects {
@@ -48,22 +49,21 @@ export class webUserEffects {
     loginFailure$ = createEffect(() =>
         this.actions$.pipe(
             ofType(webUserActions.loginFailure),
-            map(action => action.error),
+          map(action => action.error),
+          tap((error: any) => {
+            console.log(error.error.message);
+            if (error.error.message === "IdOrPwdIncorrect") {
+              this.toastr.error('', 'Identifiants ou mot de passe incorrect.');
+            }
+            else if (error.error.message === "AccountProblemRole") {
+              this.toastr.error('Veuillez contacter le support.', 'Votre compte n"a pas été créé correctement');
+            }
+            else if (error.error.message === "MailNotConfirmed") {
+              this.toastr.error('', 'Veuillez confirmer votre compte via l"email recu sur votre boite mail.');
+            }
+          })
         )
     );
-
-
-    debug$ = createEffect(() =>
-        this.actions$.pipe(
-            ofType(webUserActions.DEBUG),
-            map(action => action),
-            tap(() => {
-                console.log('test Effecct')
-            })
-        ),
-        { dispatch: false }
-    );
-
 
 
     getUser$ = createEffect(() =>
@@ -99,8 +99,6 @@ export class webUserEffects {
                         allCharacters.push(user.accounts[i].characters[j]);
                     }
               }
-              console.log(allCharacters);
-              console.log(allCurrentCharacters);
                 this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }));
                 this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({ allCurrentCharacters }));
             })
@@ -119,6 +117,6 @@ export class webUserEffects {
         )
     );
 
-    constructor(private actions$: Actions, private userService: UserService, private router: Router, private deeptalk: TalkService, private navigationService: NavigationService,
+  constructor(private actions$: Actions, private userService: UserService, private router: Router, private toastr: ToastrService, private deeptalk: TalkService, private navigationService: NavigationService,
         private accountStore: Store<fromAccount.State>, private characterStore: Store<fromCharacter.State>) { }
 }

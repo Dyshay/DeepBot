@@ -14,10 +14,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ngx-translate/core';
+import { TranslateModule  } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
-import { MyMissingTranslationHandler } from '../../../../modules/my-missing-translation-handler.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import {  MatDialogModule } from '@angular/material';
+import { DialogResultRegisterComponent } from '../register/dialog-result-register/dialog-result-register.component';
+import { AuthModule } from '../auth.modules';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, 'src/assets/i18n/', '.json');
@@ -30,6 +32,8 @@ export function createTranslateLoader(http: HttpClient) {
     LoginRoutingModule,
     FlexLayoutModule,
     ReactiveFormsModule,
+    MatDialogModule,
+    AuthModule,
     MatInputModule,
     MatIconModule,
     MatSnackBarModule,
@@ -40,7 +44,8 @@ export function createTranslateLoader(http: HttpClient) {
     MatDividerModule,
     MatCardModule,
     TranslateModule,
-  ]
+  ],
+  entryComponents: [DialogResultRegisterComponent ]
 })
 export class LoginModule {
 }

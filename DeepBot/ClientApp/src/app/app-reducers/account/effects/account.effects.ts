@@ -51,6 +51,40 @@ export class AccountEffects {
   );
 
 
+  updateAccount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.updateAccount),
+      map(action => action.accountToUpdate),
+      exhaustMap((accountToUpdate: Account) =>
+        this.accountService.updateAccount(accountToUpdate).pipe(
+          map(accountToUpdate => AccountActions.updateAccountSuccess({ accountToUpdate })),
+          catchError(error => of(AccountActions.updateAccountFailure({ error }))))
+      )
+    )
+
+  );
+
+  updateAccountSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.updateAccountSuccess),
+      map(action => action.accountToUpdate),
+      tap((account: any) => {
+        this.toastr.success('', 'Compte ' + account.accountName + ' modifié avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  updateAccountFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.updateAccountFailure),
+      map(action => action.error),
+
+    )
+  );
+
+
+  
 
   constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr:ToastrService) { }
 }

@@ -26,6 +26,7 @@ import * as fromWebUser from '../../../../app/app-reducers/webUser/reducers';
 import { Store, select } from '@ngrx/store';
 
 import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../../../../app/services/user.service';
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -117,7 +118,8 @@ export class ToolbarUserDropdownComponent implements OnInit {
   constructor(private cd: ChangeDetectorRef,
               private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
     private store: Store<fromWebUser.State>,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private userService : UserService
           ) { 
                 //this.store.dispatch(AuthActions.getUser());
 
@@ -133,5 +135,6 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   close() {
     this.popoverRef.close();
+    this.userService.logout();
   }
 }

@@ -25,9 +25,14 @@ export const reducer = createReducer(initialState,
   on(CharacterActions.receveidCharacters, (state, { network }) => ({ ...state, scanCharacters: network.characters })),
 
   on(CharacterActions.getAllCharacters, (state, { allCharacters}) => ({ ...state, allCharacters:allCharacters, pending: false })),
-  on(CharacterActions.getAllCurrentCharacters, (state, { allCurrentCharacters }) => ({ ...state, allCurrentCharacters: allCurrentCharacters, pending:false})),
+  on(CharacterActions.getAllCurrentCharacters, (state, { allCurrentCharacters }) => ({ ...state, allCurrentCharacters: allCurrentCharacters, pending: false })),
 
   on(CharacterActions.updateCharacterFKGroup, (state, { fk_group, key }) => ({ ...state, scanCharacters: [{ ...state.scanCharacters.find(c => c.key === key), fK_Group: fk_group }], pending: false })),
+
+
+  on(CharacterActions.updateCharacterConfig, (state) => ({ ...state, pending: true })),
+  on(CharacterActions.updateCharacterConfigSuccess, (state, { characterConfigToUpdate }) => ({ ...state, pending: false })),
+  on(CharacterActions.updateCharacterConfigFailure, (state, { error }) => ({ ...state, error, pending: false })),
 
 
 )

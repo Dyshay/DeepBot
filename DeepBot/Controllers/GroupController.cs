@@ -50,7 +50,7 @@ namespace DeepBot.Controllers
                 item.Followers = new List<Character>();
                 foreach (var account in user.Accounts)
                 {
-                    if(account.CurrentCharacter != null)
+                    if (account.CurrentCharacter != null)
                     {
                         if (account.CurrentCharacter.Key == item.Fk_Leader)
                             item.Leader = account.CurrentCharacter;
@@ -60,7 +60,7 @@ namespace DeepBot.Controllers
 
                 }
             }
-                return ListGroup;
+            return ListGroup;
         }
 
         [HttpPost]
@@ -72,35 +72,67 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             group.Key = Guid.NewGuid();
             group.FK_User = Guid.Parse(userId);
-
+            int level = 0;
             foreach (var charactersId in group.Fk_Followers)
             {
                 foreach (Account account in user.Accounts)
                 {
                     var character = account.Characters.FirstOrDefault(o => o.Key == charactersId);
+                    
                     var principalChaarcter = account.CurrentCharacter;
                     if (character != null)
                     {
+                        level += character.Level;
                         character.Fk_Group = group.Key;
                         principalChaarcter.Fk_Group = group.Key;
-                    } 
+                    }
                 }
             }
             var idLeader = group.Fk_Leader;
             foreach (var account in user.Accounts)
             {
                 var leader = account.Characters.FirstOrDefault(o => o.Key == idLeader);
-                if(leader != null)
+                
+                if (leader != null)
                 {
+                    level += leader.Level;
                     leader.Fk_Group = group.Key;
                     account.CurrentCharacter.Fk_Group = group.Key;
                 }
             }
-
+            group.groupLevel = level;
             await _userManager.UpdateAsync(user);
             await Database.Groups.InsertOneAsync(group);
 
             return group;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("UpdateGroup")]
+        public async Task<IActionResult> UpdateGroup(GroupDB group)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            List<int> listcharacterkeygroup = new List<int>();
+            listcharacterkeygroup.Add(group.Fk_Leader);
+            listcharacterkeygroup.AddRange(group.Fk_Followers);
+
+            foreach (var account in user.Accounts)
+            {
+                if(account.CurrentCharacter.Fk_Group == group.Key && !listcharacterkeygroup.Contains(account.CurrentCharacter.Key))
+                {
+                    account.CurrentCharacter.Fk_Group = Guid.Empty;
+                }
+                else if (account.CurrentCharacter.Fk_Group != group.Key && listcharacterkeygroup.Contains(account.CurrentCharacter.Key))
+                {
+                    account.CurrentCharacter.Fk_Group = group.Key;
+                }
+            }
+            await _userManager.UpdateAsync(user);
+            await Database.Groups.ReplaceOneAsync(o => o.Key == group.Key, group);
+
+            return Ok(group);
         }
     }
 }

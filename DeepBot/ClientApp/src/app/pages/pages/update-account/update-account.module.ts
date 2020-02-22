@@ -13,7 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollbarModule } from '../../../../@vex/components/scrollbar/scrollbar.module';
 import { UpdateAccountDataTableComponent } from './update-account-data-table/update-account-data-table.component';
 import { ModalUpdateAccountComponent } from './modal-update-account/modal-update-account.component';
-import { ModalUpdateAccountModule } from './modal-update-account/modal-update-account-module.module';
+import { ModalUpdateAccountModule } from './modal-update-account/modal-update-account.module';
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
 import { ToastrModule } from 'ngx-toastr';
 

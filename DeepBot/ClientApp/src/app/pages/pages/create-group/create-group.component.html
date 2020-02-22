@@ -89,7 +89,7 @@
                 <mat-form-field class="mt-2" fxFlex="auto">
                   <mat-label>Choisisez votre leader</mat-label>
                   <mat-select formControlName="leader">
-                    <mat-option *ngFor="let character of characterList" [value]="character" (click)="updateList(character)"><b>{{character.name}} </b> ({{ 'GLOBAL.BREED' | translate }} : {{character.breedId}}, {{ 'GLOBAL.LEVEL' | translate }} : {{character.level}} )</mat-option>
+                    <mat-option *ngFor="let character of characterList" [value]="character" ><b>{{character.name}} </b> ({{ 'GLOBAL.BREED' | translate }} : {{character.breedId}}, {{ 'GLOBAL.LEVEL' | translate }} : {{character.level}} )</mat-option>
                   </mat-select>
                   <mat-hint>{{ 'CREATEGROUP.SELECTEDLEADERLABELHINT' | translate }}</mat-hint>
                 </mat-form-field>
@@ -97,7 +97,7 @@
 
               <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
                 <button color="primary" mat-button matStepperPrevious type="button">{{ 'GLOBAL.BACK' | translate }}</button>
-                <button [disabled]="groupstep2.invalid" color="primary" mat-raised-button matStepperNext>
+                <button [disabled]="groupstep2.invalid" color="primary" mat-raised-button matStepperNext (click)="updateList(false)">
                   {{ 'GLOBAL.NEXT' | translate }}
                 </button>
               </div>
@@ -163,7 +163,7 @@
               </div>
 
               <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button color="primary" mat-button matStepperPrevious type="button">{{ 'GLOBAL.BACK' | translate }}</button>
+                <button color="primary" mat-button matStepperPrevious type="button" (click)="updateList(true)">{{ 'GLOBAL.BACK' | translate }}</button>
                 <button (click)="submit()" [disabled]="groupstep3.invalid" color="primary" mat-raised-button
                         matStepperNext>
                   {{ 'CREATEGROUP.CREATEGROUP' | translate }}
