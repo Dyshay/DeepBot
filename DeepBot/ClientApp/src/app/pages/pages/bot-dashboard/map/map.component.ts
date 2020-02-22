@@ -38,6 +38,7 @@ export class MapComponent implements OnInit {
 
     this.InitCells();
     this.SetMap();
+    this.InitEntities(null);
   }
 
   InitCells() {
@@ -57,22 +58,45 @@ export class MapComponent implements OnInit {
       }
       startY--;
     }
-    console.log(this.CELLPOS);
   }
 
   SetMap() {
     let _Canvas = this.GetTempCanvas();
     for (var CellID in this.CELLPOS) {
-      console.log(CellID);
       this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xFFFFFF, 0xBBBBBB); // Affichage de la grille
       // var mask = 0 ? 5 : 1;
       // if (map.cells[q].l & mask === 1){
-      //   this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB);
+      this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB, 'fff');
       // }
       this.DrawTextFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, CellID, "#e74c3c");
     }
     this.Storage.Canvas.Map = _Canvas;
     this._Bind([_Canvas, this.Storage.Canvas.Entities]);
+  }
+
+  InitEntities(EntitiesData) {
+    this.Entities = [];
+    for (var i in EntitiesData) {
+      let data = EntitiesData[i];
+      if (!this.Entities[data.cell]) this.Entities[data.cell] = [];
+      if (data._type == "InteractiveElement") data.color = this.GetColorFromString(data._type + data.elementTypeId)
+      else data.color = this.GetColorFromString(data._type)
+      this.Entities[data.cell].push(data);
+    }
+  }
+
+  SetEntities(EntitiesData) {
+    this.InitEntities(EntitiesData);
+    let _Canvas = this.GetTempCanvas();
+    for (var CellID in this.CELLPOS) {
+      if (this.Entities[CellID] && this.Entities[CellID].length) {
+        if (this.Entities[CellID][0]._type != "InteractiveElement") this.DrawCircleFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, this.Entities[CellID][0].color);
+        else this.DrawSquareFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, this.Entities[CellID][0].color);
+      }
+    }
+    this.Storage.Source.Entities = EntitiesData;
+    this.Storage.Canvas.Entities = _Canvas;
+    this._Bind([this.Storage.Canvas.Map, _Canvas]);
   }
 
   _Bind(Maps) {
@@ -83,12 +107,39 @@ export class MapComponent implements OnInit {
     })
   }
 
-  ScreenToWidth(globalX, globalY){
-    return ((globalX - this.MAP_WIDTH / 2) / this.TileHeight + (globalY - this.MAP_HEIGHT) / this.TileWidth) / 2;
+  GetColorFromString(ElemType) {
+    let i = 0, r = 0, g = 0, b = 0;
+    for (i = 0; ElemType && i < ElemType.length; ++i) {
+      switch (i % 3) {
+        case 0: r += (ElemType.charCodeAt(i)) * 20; g += (ElemType.charCodeAt(i)) * 10; b += (ElemType.charCodeAt(i)) * 40; break;
+        case 1: r += (ElemType.charCodeAt(i)) * 10; g += (ElemType.charCodeAt(i)) * 40; b += (ElemType.charCodeAt(i)) * 20; break;
+        case 2: r += (ElemType.charCodeAt(i)) * 40; g += (ElemType.charCodeAt(i)) * 20; b += (ElemType.charCodeAt(i)) * 10; break;
+      }
+    }
+    r = 0xEE - r % 150;
+    g = 0xEE - g % 150;
+    b = 0xEE - b % 150;
+    return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
   }
 
-  ScreenToHeight(globalX, globalY) {
-    return ((globalY - this.MAP_HEIGHT) / this.TileWidth - (globalX - this.MAP_WIDTH) / this.TileHeight) / 2;
+  Refresh() { this._Bind([this.Storage.Canvas.Map, this.Storage.Canvas.Entities]); }
+
+  DrawCircleFromPos(canvas, x, y, color) {
+    let target = canvas.getContext("2d");
+    if (color != undefined) target.fillStyle = "#" + color.toString(16);
+    target.beginPath();
+    target.arc(x + this.TileWidth / 2, y + this.TileHeight / 2, this.TileHeight / 3, 0, Math.PI * 2, false);
+    target.closePath();
+    if (color != undefined) target.fill();
+  }
+
+  DrawSquareFromPos(canvas, x, y, color) {
+    let target = canvas.getContext("2d");
+    if (color != undefined) target.fillStyle = "#" + color.toString(16);
+    target.beginPath();
+    target.fillRect(x + this.TileHeight * .7, y + this.TileHeight * .2, this.TileHeight * .6, this.TileHeight * .6);
+    target.closePath();
+    if (color != undefined) target.fill();
   }
 
   DrawTextFromPos(canvas, x, y, _text, _fillStyle) {
@@ -127,7 +178,7 @@ export class MapComponent implements OnInit {
     // window.addEventListener('mousemove', this.test);
   }
 
-  test(e){
+  test(e) {
     console.log(e);
   }
 
