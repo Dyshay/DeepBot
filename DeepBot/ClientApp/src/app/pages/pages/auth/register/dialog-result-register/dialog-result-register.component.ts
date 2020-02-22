@@ -29,7 +29,10 @@ export class DialogResultRegisterComponent implements OnInit {
       this.type = "Création du compte échoué";
       this.message = "Une erreur est survenu lors de la création de votre compte, veuillez contacter le support."
     }
-
+    else if (data == "succes") {
+      this.type = "Succés confirmation de l'Email";
+      this.message = "Votre compte a été créé avec succés, vous pouvez maintenant vous connecter";
+    }
   }
 
   ngOnInit() {

@@ -1,7 +1,24 @@
-<h1 mat-dialog-title>{{type}}</h1>
-<div mat-dialog-content>
-  <p>{{message}}</p>
+<div fxLayout="row" fxLayoutAlign="center center" class="mt-4">
+  <div>
+    <h1 mat-dialog-title>{{type}}</h1>
+  </div>
+
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="Close()">Ok</button>
+
+<div mat-dialog-content class="mt-10">
+  <div fxLayout="row" fxLayoutAlign="center center">
+    
+    <blockquote class="blockquote text-center">
+      <p>{{message}}</p>
+      </blockquote>
+  </div>
+
 </div>
+
+<div fxLayout="row" fxLayoutAlign="center end" class="mt-4">
+  <div mat-dialog-actions>
+    <button mat-raised-button color="primary" (click)="Close()">Ok</button>
+  </div>
+
+</div>
+

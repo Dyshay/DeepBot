@@ -249,7 +249,7 @@ namespace DeepBot.Controllers
             if(result == IdentityResult.Success)
             {
               
-                return Redirect("https://localhost:44319/login");
+                return Redirect("https://localhost:44319/login/"+"succes");
             }
             else
             {
@@ -277,7 +277,7 @@ namespace DeepBot.Controllers
 
                 SecurityTokenDescriptor tokenDescriptor;
 
-                if (role != null)
+                if (role != null && user.EmailConfirmed)
                 {
                     try
                     {
@@ -294,6 +294,10 @@ namespace DeepBot.Controllers
                             Expires = DateTime.UtcNow.AddDays(7),
                             SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
                         };
+                        var tokenHandler = new JwtSecurityTokenHandler();
+                        var securityToken = tokenHandler.CreateToken(tokenDescriptor);
+                        var token = tokenHandler.WriteToken(securityToken);
+                        return Ok(new { token });
                     }
                     catch (Exception)
                     {
@@ -303,31 +307,26 @@ namespace DeepBot.Controllers
 
 
                 }
+                else if(role == null)
+                {
+                    return NotFound(new { message = "AccountProblemRole" });
+                }
+                else if (!user.EmailConfirmed)
+                {
+                    return NotFound(new { message = "MailNotConfirmed" });
+                }
                 else
                 {
-                    tokenDescriptor = new SecurityTokenDescriptor
-                    {
-                        Subject = new ClaimsIdentity(new Claim[]
-                   {
-                        new Claim("UserID", user.Id),
-                        new Claim("Username", user.UserName)
-                   }),
-
-                        Expires = DateTime.UtcNow.AddHours(168),
-                        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_appSettings.JWT_Secret)), SecurityAlgorithms.HmacSha256Signature)
-                    };
+                    return NotFound(new { message = "ErrorUnknown" });
                 }
 
 
                 //DAL_Log.Write("User", "Login", user.UserName, "Connection reussie");
 
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-                var token = tokenHandler.WriteToken(securityToken);
-                return Ok(new { token });
+
             }
             else
-                return BadRequest(new { message = "Identifiants ou mot de passe incorrect." });
+                return NotFound(new { message = "IdOrPwdIncorrect" });
         }
 
         [HttpPost]

@@ -59,7 +59,6 @@ export class RegisterComponent implements OnInit {
         let body = JSON.stringify(this.userToCreate);
         this.http.post(environment.apiURL +'User/Register', body, httpOptions).subscribe(
             (result: any) => {
-            console.log("ddd");
             this.dialog.open(DialogResultRegisterComponent, {
               width: '450px',
               height: '300px',

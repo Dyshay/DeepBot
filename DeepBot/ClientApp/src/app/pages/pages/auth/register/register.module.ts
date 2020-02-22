@@ -13,13 +13,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { IconModule } from '@visurel/iconify-angular';
 import { MatDialogModule } from '@angular/material';
 import { DialogResultRegisterComponent } from './dialog-result-register/dialog-result-register.component';
+import { AuthModule } from '../auth.modules';
 
 
 @NgModule({
-  declarations: [RegisterComponent, DialogResultRegisterComponent],
+  declarations: [RegisterComponent],
   imports: [
     CommonModule,
     RegisterRoutingModule,
+    AuthModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     MatInputModule,
