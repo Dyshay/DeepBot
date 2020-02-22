@@ -9,8 +9,8 @@ import { Character } from '../../../../../webModel/Character';
 })
 /** map component*/
 export class MapComponent implements OnInit {
-  TileWidth = 43; // pixels
-  TileHeight = 21.5; // pixels
+  TileWidth = 50; // pixels
+  TileHeight = 25; // pixels
 
   MAP_HEIGHT = 17;
   MAP_WIDTH = 15;
@@ -33,8 +33,8 @@ export class MapComponent implements OnInit {
   init() {
     this.canvas = $('#isocanvas');
     this.context = this.canvas[0].getContext("2d");
-    this.canvas.width = this.TileWidth * (this.MAP_WIDTH + 1);
-    this.canvas.height = this.TileHeight * (this.MAP_HEIGHT + 1);
+    this.context.canvas.width = this.TileWidth * (this.MAP_WIDTH + 1);
+    this.context.canvas.height = this.TileHeight * (this.MAP_HEIGHT + 1);
 
     this.InitCells();
     this.SetMap();
@@ -83,6 +83,14 @@ export class MapComponent implements OnInit {
     })
   }
 
+  ScreenToWidth(globalX, globalY){
+    return ((globalX - this.MAP_WIDTH / 2) / this.TileHeight + (globalY - this.MAP_HEIGHT) / this.TileWidth) / 2;
+  }
+
+  ScreenToHeight(globalX, globalY) {
+    return ((globalY - this.MAP_HEIGHT) / this.TileWidth - (globalX - this.MAP_WIDTH) / this.TileHeight) / 2;
+  }
+
   DrawTextFromPos(canvas, x, y, _text, _fillStyle) {
     let target = canvas.getContext("2d");
     target.font = "10px";
@@ -116,6 +124,11 @@ export class MapComponent implements OnInit {
   /** map ctor */
   constructor(private translateService: TranslateService) {
     window.addEventListener('resize', this.resizeCanvas, false);
+    // window.addEventListener('mousemove', this.test);
+  }
+
+  test(e){
+    console.log(e);
   }
 
   resizeCanvas() {
