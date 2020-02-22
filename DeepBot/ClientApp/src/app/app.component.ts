@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, Renderer2 } from '@angular/core';
+import { Component, Inject, LOCALE_ID, Renderer2, OnInit } from '@angular/core';
 import { ConfigService } from '../@vex/services/config.service';
 import { Settings } from 'luxon';
 import { DOCUMENT } from '@angular/common';
@@ -53,7 +53,7 @@ import { UserService } from './services/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'DeppBot';
   public spinkit = Spinkit;
 
@@ -97,13 +97,12 @@ export class AppComponent {
       }
     });
 
-
-    if (this.userService.isConnected()) {
+  }
+  async ngOnInit() {
+    if (await this.userService.isConnected()) {
       this.storeUser.dispatch(webUserActions.getUser());
       this.storeGroup.dispatch(GroupActions.getAllGroups());
       this.navigationService.GenerateNavigation();
     }
-
-
   }
 }

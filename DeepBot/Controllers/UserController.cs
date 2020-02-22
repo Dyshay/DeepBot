@@ -2,22 +2,26 @@
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Mail;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
-using AspNetCore.Identity.Mongo.Model;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
-using DeepBot.Extensions;
+using Mailjet.Client;
+using Mailjet.Client.Resources;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
+using Newtonsoft.Json.Linq;
 
 namespace DeepBot.Controllers
 {
@@ -65,13 +69,22 @@ namespace DeepBot.Controllers
         public async Task<bool> isActive()
         {
             bool retour = false;
-            string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if(user != null)
+            string userId;
+            UserDB user = null;
+            if (User.Claims.Count() > 0)
             {
-                
-                if(user.EmailConfirmed && !user.LockoutEnabled)
+                if (User.Claims.First(c => c.Type == "UserID") != null)
+                {
+                    userId = User.Claims.First(c => c.Type == "UserID").Value;
+                    user = await _userManager.FindByIdAsync(userId);
+                }
+
+            }
+
+            if (user != null)
+            {
+
+                if (user.EmailConfirmed && !user.LockoutEnabled)
                 {
                     retour = true;
                 }
@@ -101,12 +114,26 @@ namespace DeepBot.Controllers
             return null;
         }
 
+        public async Task<bool> isAlreadyCreatedAsync(string mail,string identifiant)
+        {
+            UserDB userAlreadyCreated = null;
+             userAlreadyCreated = await _userManager.FindByEmailAsync(mail);
+            if (userAlreadyCreated == null)
+                userAlreadyCreated = await _userManager.FindByNameAsync(identifiant);
+            if (userAlreadyCreated == null)
+            {
+                return false;
+            }
+            else
+                return true;
+        }
+
 
         [HttpPost]
         [AllowAnonymous]
         [Route("Register")]
         //POST :/api/User/Register
-        public async Task<IActionResult> Register(RegisterUserModel model)
+        public async Task<string> Register(RegisterUserModel model)
         {
             var apiKey = Guid.NewGuid();
             ApiKey apiKeyDebug = null;
@@ -129,14 +156,31 @@ namespace DeepBot.Controllers
                 ApiKey = apiKeyDebug,
                 Langue = model.Langue
             };
+            bool alreadyCreated = await isAlreadyCreatedAsync(model.UserEmail, model.UserName);
+            if (alreadyCreated)
+            {
+                return JsonSerializer.Serialize("AlreadyCreated");
+            }
 
             var result = await _userManager.CreateAsync(user, model.UserPassword);
 
             if (result.Succeeded)
             {
 
+
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 var IdentityUser = await _userManager.FindByNameAsync(user.UserName);
+
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                string confirmationLink = Url.Action("ConfirmEmail",
+               "User", new
+               {
+                   userid = user.Id,
+                   token = token
+               },
+                protocol: HttpContext.Request.Scheme);
+
+                var isSent = await SendMailAsync(IdentityUser.Email,confirmationLink);
 
 #if DEBUG
 
@@ -148,12 +192,72 @@ namespace DeepBot.Controllers
                 await _roleManager.CreateAsync(new RoleDB("Utilisateur"));
                 await _userManager.AddToRoleAsync(IdentityUser, "Utilisateur");
 #endif     
-                /* ajouter envoi mail confirmation */
-                return Ok("Register reussie");
+               
+                if (isSent)
+                    return JsonSerializer.Serialize("MailSent");
+                else
+                    return JsonSerializer.Serialize("MailFailed");
             }
 
-            return BadRequest();
+            return JsonSerializer.Serialize("RegisterError");
         }
+
+        public async Task<bool> SendMailAsync(string toAdresse,string link)
+        {
+            MailjetClient client = new MailjetClient("1d0df2423ce013e7f969f535fd60172a", "849fdd5b2eee3ec31fedb5e2e2f1a70b")
+            {
+                Version = ApiVersion.V3_1,
+            };
+            MailjetRequest request = new MailjetRequest
+            {
+                Resource = Send.Resource,
+            }
+            .Property(Send.Messages, new JArray {
+                new JObject {
+                 {"From", new JObject {
+                  {"Email", "no-reply@deepbot.eu"},
+                  {"Name", "DeepBot"}
+                  }},
+                 {"To", new JArray {
+                  new JObject {
+                   {"Email", toAdresse},
+                   {"Name", toAdresse}
+                   }
+                  }},
+                 {"Subject", "Confirmation de votre compte DeepBot"},
+                 {"TextPart", "Veuillez confirmer votre compte en cliquant sur le lien suivant : "+ link},
+                 {"HTMLPart", "<h3>Bienvenue sur DeepBot !</h3><br /> Pour valider votre inscription veuillez cliquer sur le lien suivant : <a href="+link+">Lien de confirmation</a>!</h3><br /> Retrouvez nous sur le  <a href=\"https://www.mailjet.com/\">Forum</a> ou  <a href=\"https://www.mailjet.com/\">Discord</a> <br /> Bon booting !"}                 }
+                });
+            MailjetResponse response = await client.PostAsync(request);
+            if (response.IsSuccessStatusCode)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+           
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ConfirmEmail(string userid, string token)
+        {
+            UserDB user = _userManager.FindByIdAsync(userid).Result;
+            IdentityResult result = _userManager. ConfirmEmailAsync(user, token).Result;
+            if(result == IdentityResult.Success)
+            {
+              
+                return Redirect("https://localhost:44319/login");
+            }
+            else
+            {
+                return Redirect("https://localhost:44319/login");
+            }
+        }
+
+
 
         [HttpPost]
         [Route("Login")]
