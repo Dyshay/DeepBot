@@ -27,13 +27,14 @@ import icPause from '@iconify/icons-ic/outline-pause-circle-outline'
 import { Link } from '../../../../@vex/interfaces/link.interface';
 import { Store, select } from '@ngrx/store';
 import * as fromCharacter from 'src/app/app-reducers/character/reducers';
-import { User } from '../../../../webModel/User';
 import { Character } from '../../../../webModel/Character';
 import { TranslateService } from '@ngx-translate/core';
 import { Icon } from '@visurel/iconify-angular';
 import { MatTabChangeEvent } from '@angular/material';
 import { TalkService } from 'src/app/Services/TalkService';
 import * as fromAccount from '../../../app-reducers/account/reducers';
+import { LogMessage } from 'src/webModel/LogMessage';
+import { Account } from 'src/webModel/Account';
 
 export interface FriendSuggestion {
   name: string;
@@ -43,8 +44,8 @@ export interface FriendSuggestion {
 }
 
 @Component({
-    selector: 'app-bot-dashboard',
-    templateUrl: './bot-dashboard.component.html',
+  selector: 'app-bot-dashboard',
+  templateUrl: './bot-dashboard.component.html',
   styleUrls: ['./bot-dashboard.component.scss'],
   animations: [
     fadeInUp400ms,
@@ -55,11 +56,12 @@ export interface FriendSuggestion {
 })
 /** bot-dashboard component*/
 export class BotDashboardComponent implements OnInit {
-  accounts$ = this.accountStore.pipe(select(fromAccount.getAllAccounts));
+  account: Account;
+  logs: LogMessage[];
   character: Character;
   indexSelected: number = 0;
-    /** bot-dashboard ctor */
-  constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService : TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>) {
+  /** bot-dashboard ctor */
+  constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>) {
   }
 
   ngOnInit() {
@@ -72,19 +74,22 @@ export class BotDashboardComponent implements OnInit {
           }
         })
     });
+    this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: Account[]) => {
+      accounts.forEach(acc => {
+        if (acc.characters.find(c => c.name == this.character.name)) {
+          this.account = acc;
+        }
+      })
+    })
+    this.accountStore.pipe(select(fromAccount.getLogs)).subscribe(
+      (logs: LogMessage[]) => {
+        this.logs = logs.filter(c => c.tcpId === this.account.tcpId);
+      }
+    )
   }
 
   initConnection() {
-    console.log('test');
-    this.accounts$.subscribe((account) => {
-      account.forEach(a => {
-        console.log('isOkay init Connection');
-        if(a.characters.find(relicat => relicat.name === this.character.name) !== undefined){
-          this.deeptalk.createConnexionBot(a.accountName, a.password, a.serverId, false);
-        }
-      }
-      )
-    })
+          this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.serverId, false);
   }
 
   links: Link[] = [
@@ -96,7 +101,7 @@ export class BotDashboardComponent implements OnInit {
     {
       label: this.translateService.instant('DASHBOARDBOT.CHARACTER'),
       route: 'character',
-      icon: icPersonnage      
+      icon: icPersonnage
     },
     {
       label: this.translateService.instant('DASHBOARDBOT.FIGHT'),
@@ -174,5 +179,5 @@ export class BotDashboardComponent implements OnInit {
         break;
     }
   }
- 
+
 }
