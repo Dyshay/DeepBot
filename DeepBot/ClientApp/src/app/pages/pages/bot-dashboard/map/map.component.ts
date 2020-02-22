@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Character } from '../../../../../webModel/Character';
+import $ from 'jquery';
 
 @Component({
   selector: 'app-map',
