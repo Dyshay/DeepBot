@@ -5,22 +5,7 @@
 
     <div class="px-gutter py-4 mt-3" gdColumns="2fr 1fr" gdColumns.lt-md="1fr" gdColumns.lt-sm="1fr" gdGap="16px"
         vexContainer id="container">
+        <canvas id="isocanvas" width="700" height="500"></canvas>
 
-        <div class="wrapper">
-            <div class="floor">
-                <div *ngFor="let x of counter((mapHeight * 2) - 1); let i = index">
-                    <div class="row" >
-                        <div *ngFor="let y of counterMapWidth(mapWidth, i); let f = index">
-                                <div class="tile" (click)="test(i,f)"></div>
-                        </div>
-                    </div>
-                    <!-- <ng-template #isNot class="row">
-                        <div *ngFor="let y of counter(mapWidth - 2); let f = index">
-                            <div class="tile" (click)="test(i,f)"></div>
-                        </div>
-                    </ng-template> -->
-                </div>
-            </div>
-        </div>
     </div>
 </div>
