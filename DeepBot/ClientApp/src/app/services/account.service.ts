@@ -30,4 +30,8 @@ export class AccountService {
   updateAccount(account: Account) {
     return this.http.post<Account>(`${environment.apiURL}Account/UpdateAccount`, account, httpOptions);
   }
+
+  deleteAccount(key: string) {
+    return this.http.post<string>(`${environment.apiURL}Account/DeleteAccount`, { key }, httpOptions);
+  }
 }

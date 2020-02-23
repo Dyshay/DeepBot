@@ -30,17 +30,13 @@
     "HANDLEPATH": "Gérer mes trajets",
     "HANDLEIA": "Gérer mes IA",
     "CREATEPATH": "Creer un trajet",
-    "UPDATEPATH": "Modifier un trajet",
-    "DELETEPATH": "Supprimer un trajet",
+    "UPDATEPATH": "Modifier/Supprimer un trajet",
     "CREATEACCOUNT": "Ajouter un compte Dofus",
-    "UPDATEACCOUNT": "Modifier un compte Dofus",
-    "DELETEACCOUNT": "Supprimer un compte Dofus",
+    "UPDATEACCOUNT": "Modifier/Supprimer un compte Dofus",
     "CREATEGROUP": "Créer un groupe de bot",
-    "UPDATEGROUP": "Modifier un groupe",
-    "DELETEGROUP": "Supprimer un groupe",
+    "UPDATEGROUP": "Modifier/Supprimer un groupe",
     "CREATEIA": "Creer une IA",
-    "UPDATEIA": "Modifier une IA",
-    "DELETEIA": "Supprimer une IA"
+    "UPDATEIA": "Modifier/Supprimer une IA"
   },
   "USERPANEL": {
     "PROFIL": "Mon profil",
@@ -50,7 +46,6 @@
     "SUBSCRIPTION": "Mon abonnements",
     "SUBSCRIPTIONDESCRIPTION": "Acheter, Renouveller, Modifier mon abonnement"
   },
-
   "LOGIN": {
     "SECONNECTER": "SE CONNECTER",
     "MDPOUBLIER": "Mot de passe oublier ?",

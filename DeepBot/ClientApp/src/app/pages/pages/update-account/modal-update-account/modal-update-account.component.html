@@ -67,9 +67,19 @@
 
   </mat-dialog-content>
 
-  <mat-dialog-actions align="end">
-    <button mat-button mat-dialog-close type="button">{{'GLOBAL.CANCEL' | translate}}</button>
-    <button color="primary" mat-button type="submit">{{'GLOBAL.SAVE' | translate}}</button>
+  <mat-dialog-actions>
+    <div fxLayout="row" class="full-width" fxLayoutAlign="space-between center">
+      <div>
+        <button mat-raised-button color="warn" (click)="DeleteAccount()" type="button">Supprimer</button>
+      </div>
+      <div>
+        <button mat-raised-button mat-dialog-close type="button">{{'GLOBAL.CANCEL' | translate}}</button>
+        <button mat-raised-button color="primary" type="submit">{{'GLOBAL.SAVE' | translate}}</button>
+      </div>
+      
+    </div>
+
+
   </mat-dialog-actions>
 </form>
 

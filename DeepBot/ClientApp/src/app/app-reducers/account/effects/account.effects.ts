@@ -84,6 +84,38 @@ export class AccountEffects {
   );
 
 
+  deleteAccount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.deleteAccount),
+      map(action => action.accountKeyToDelete),
+      exhaustMap((accountKeyToDelete: string) =>
+        this.accountService.deleteAccount(accountKeyToDelete).pipe(
+          map(accountKeyToDelete => AccountActions.deleteAccountSuccess({ accountKeyToDelete })),
+          catchError(error => of(AccountActions.deleteAccountFailure({ error }))))
+      )
+    )
+
+  );
+
+  deleteAccountSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.deleteAccountSuccess),
+      map(action => action.accountKeyToDelete),
+      tap((accountName: string) => {
+        this.toastr.success('', 'Compte ' + accountName + ' supprimé avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  deleteAccountFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.deleteAccountFailure),
+      map(action => action.error),
+
+    )
+  );
+
   
 
   constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr:ToastrService) { }

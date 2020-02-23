@@ -134,7 +134,22 @@ namespace DeepBot.Controllers
             return Ok(account);
         }
 
-        public async Task CreateConfigAsync(int characterId)
+        [HttpPost]
+        [Authorize]
+        [Route("DeleteAccount")]
+        public async Task<string> DeleteAccount(keymodel accountkey)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            Account accountToDelete = user.Accounts.FirstOrDefault(o => o.Key.ToString() == accountkey.key);
+
+            user.Accounts.Remove(accountToDelete);
+            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+
+            return accountToDelete.AccountName;
+        }
+
+            public async Task CreateConfigAsync(int characterId)
         {
             ConfigCharacterDB config = new ConfigCharacterDB();
             config.Fk_Character = characterId;
@@ -145,5 +160,10 @@ namespace DeepBot.Controllers
             await Database.ConfigsCharacter.InsertOneAsync(config);
 
         }
+    }
+
+    public class keymodel
+    {
+        public string key { get; set; }
     }
 }

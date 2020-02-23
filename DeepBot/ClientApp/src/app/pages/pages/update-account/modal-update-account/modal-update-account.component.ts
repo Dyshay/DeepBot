@@ -132,6 +132,14 @@ export class ModalUpdateAccountComponent implements OnInit {
 
   }
 
+  DeleteAccount() {
+    if (this.ValidateCredential()) {
+      let accountKeyToDelete = this.account.key;
+      this.storeAccount.dispatch(AccountActions.deleteAccount({ accountKeyToDelete }));
+      this.dialogRef.close(this.account);
+    }
+  }
+
   toggleVisibility() {
     if (this.visible) {
       this.inputType = 'password';

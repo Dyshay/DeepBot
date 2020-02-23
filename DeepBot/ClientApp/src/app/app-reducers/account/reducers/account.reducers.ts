@@ -34,6 +34,10 @@ export const reducer = createReducer(initialState,
   on(AccountActions.updateAccount, (state) => ({ ...state, pending: true })),
   on(AccountActions.updateAccountSuccess, (state, { accountToUpdate }) => ({ ...state, pending: false })),
   on(AccountActions.updateAccountFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+  on(AccountActions.deleteAccount, (state) => ({ ...state, pending: true })),
+  on(AccountActions.deleteAccountSuccess, (state, { accountKeyToDelete }) => ({ ...state, pending: false })),
+  on(AccountActions.deleteAccountFailure, (state, { error }) => ({ ...state, error, pending: false })),
 )
 
 export const getAccountCreated = (state: State) => state.accountCreated;
