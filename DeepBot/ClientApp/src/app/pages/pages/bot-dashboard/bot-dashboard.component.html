@@ -70,7 +70,7 @@
   <div class="mt-3" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start"
     fxLayoutAlign.lt-md="start stretch" fxLayoutGap="24px">
     <div fxFlex="calc(70% - 12px)" fxFlex.lt-md="auto">
-      <app-dashboard *ngIf="indexSelected == 0" [character]="character" [account]="account" [logs]="logs"></app-dashboard>
+      <app-dashboard *ngIf="indexSelected == 0" [character]="character" [account]="account" [logs]="logs$ | async"></app-dashboard>
       <app-character *ngIf="indexSelected == 1" [character]="character"></app-character>
       <app-fight *ngIf="indexSelected == 2" [character]="character"></app-fight>
       <app-job *ngIf="indexSelected == 3" [character]="character"></app-job>

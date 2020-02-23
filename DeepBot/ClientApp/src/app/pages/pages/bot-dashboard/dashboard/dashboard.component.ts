@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import theme from '../../../../../@vex/utils/tailwindcss';
 import icKamas from '@iconify/icons-fa-solid/coins';
@@ -15,7 +15,10 @@ import { LogMessage } from 'src/webModel/LogMessage';
     styleUrls: ['./dashboard.component.scss']
 })
 /** dashboard component*/
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
+    ngOnInit(): void {
+      console.log(this.logs);
+    }
 
   @Input() character: Character;
   @Input() account: Account;
