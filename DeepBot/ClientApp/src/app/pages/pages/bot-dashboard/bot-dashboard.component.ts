@@ -57,9 +57,9 @@ export interface FriendSuggestion {
 /** bot-dashboard component*/
 export class BotDashboardComponent implements OnInit {
   account: Account;
-  logs: LogMessage[];
   character: Character;
   indexSelected: number = 0;
+  logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   /** bot-dashboard ctor */
   constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>) {
   }
@@ -80,12 +80,7 @@ export class BotDashboardComponent implements OnInit {
           this.account = acc;
         }
       })
-    })
-    this.accountStore.pipe(select(fromAccount.getLogs)).subscribe(
-      (logs: LogMessage[]) => {
-        this.logs = logs.filter(c => c.tcpId === this.account.tcpId);
-      }
-    )
+    });
   }
 
   initConnection() {
