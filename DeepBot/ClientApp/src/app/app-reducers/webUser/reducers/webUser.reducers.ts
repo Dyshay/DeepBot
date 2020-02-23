@@ -5,7 +5,7 @@ import { LogMessage } from '../../../../webModel/LogMessage';
 
 export interface State {
   user: User | null,
-  error: string | null,
+  error: any | null,
   pending: boolean,
 }
 

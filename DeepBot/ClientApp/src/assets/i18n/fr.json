@@ -192,6 +192,15 @@
     "DESCRIPTION": "Retrouvez l'ensemble des section de deepbot sur ce panel",
     "SECTION": "Section",
     "NAVIGATION": "Navigation"
+  },
+  "REGISTER": {
+    "TYPEFAILED": "Création du compte échoué",
+    "MESSAGEFAILED": "Un compte avec le même E-mail et/ou identifiant a déja été créé.",
+    "TYPESUCCES": "Création du compte avec succés",
+    "MESSAGESUCCES": "Un email de confirmation a été envoyé sur l'adresse mail renseignée.",
+    "MESSAGEMAILFAILED": "L'email de confirmation n'a pas pu être envoyer sur l'adresse mail renseignée, veuillez contacter le support.",
+    "MESSAGEEERROR": "Une erreur est survenu lors de la création de votre compte, veuillez contacter le support.",
+    "TYPESUCESSMAIL": "Succés confirmation de l'Email",
+    "MESSAGESUCCESMAIL": "Votre compte a été créé avec succés, vous pouvez maintenant vous connecter."
   }
-
 }
