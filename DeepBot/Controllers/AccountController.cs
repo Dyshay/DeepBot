@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
@@ -153,9 +154,9 @@ namespace DeepBot.Controllers
 
                 throw;
             }
-        
 
-            return accountToDelete.AccountName;
+
+            return JsonSerializer.Serialize(accountToDelete.AccountName);
         }
 
             public async Task CreateConfigAsync(int characterId)

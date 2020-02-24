@@ -35,7 +35,7 @@ export const reducer = createReducer(initialState,
 
 
   on(GroupActions.deleteGroup, (state) => ({ ...state, pending: true })),
-  on(GroupActions.deleteGroupSuccess, (state, { groupKeyToDelete }) => ({ ...state, pending: false })),
+  on(GroupActions.deleteGroupSuccess, (state, { name }) => ({ ...state, pending: false })),
   on(GroupActions.deleteGroupFailure, (state, { error }) => ({ ...state, error, pending: false })),
 )
 

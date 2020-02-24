@@ -117,7 +117,7 @@ export class GroupEffects {
       map(action => action.groupKeyToDelete),
       exhaustMap((groupKeyToDelete: string) =>
         this.groupService.deleteGroup(groupKeyToDelete).pipe(
-          map(groupKeyToDelete => GroupActions.deleteGroupSuccess({ groupKeyToDelete })),
+          map(name => GroupActions.deleteGroupSuccess({ name })),
           catchError(error => of(GroupActions.deleteGroupFailure({ error }))))
       )
     )
@@ -127,7 +127,7 @@ export class GroupEffects {
   deleteGroupSucces$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GroupActions.deleteGroupSuccess),
-      map(action => action.groupKeyToDelete),
+      map(action => action.name),
       tap((name: string) => {
         this.toastr.success('', 'Group ' + name + ' supprimé avec succés');
       })

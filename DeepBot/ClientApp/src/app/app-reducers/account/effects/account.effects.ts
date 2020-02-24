@@ -90,7 +90,7 @@ export class AccountEffects {
       map(action => action.accountKeyToDelete),
       exhaustMap((accountKeyToDelete: string) =>
         this.accountService.deleteAccount(accountKeyToDelete).pipe(
-          map(accountKeyToDelete => AccountActions.deleteAccountSuccess({ accountKeyToDelete })),
+          map(accontName => AccountActions.deleteAccountSuccess({ accontName })),
           catchError(error => of(AccountActions.deleteAccountFailure({ error }))))
       )
     )
@@ -100,7 +100,7 @@ export class AccountEffects {
   deleteAccountSucces$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AccountActions.deleteAccountSuccess),
-      map(action => action.accountKeyToDelete),
+      map(action => action.accontName),
       tap((accountName: string) => {
         this.toastr.success('', 'Compte ' + accountName + ' supprimé avec succés');
       })

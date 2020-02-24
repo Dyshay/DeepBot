@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
@@ -137,7 +138,7 @@ namespace DeepBot.Controllers
                 throw;
             }
            
-            return grouptoDelete.Name;
+            return JsonSerializer.Serialize(grouptoDelete.Name);
         }
 
         [HttpPost]

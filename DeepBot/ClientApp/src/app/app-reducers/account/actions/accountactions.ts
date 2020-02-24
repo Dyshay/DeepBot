@@ -22,5 +22,5 @@ export const updateAccountFailure = createAction('[BOT/ACCOUNT] UPDATE ACCOUNT E
 
 
 export const deleteAccount = createAction('[BOT/ACCOUNT] DELETE  ACCOUNT', props<{ accountKeyToDelete: string }>());
-export const deleteAccountSuccess = createAction('[BOT/ACCOUNT] UPDATE DELETE SUCCESS', props<{ accountKeyToDelete: string }>());
-export const deleteAccountFailure = createAction('[BOT/ACCOUNT] UPDATE DELETE ERROR', props<{ error: any }>());
+export const deleteAccountSuccess = createAction('[BOT/ACCOUNT] DELETE ACCOUNT SUCCESS', props<{ accontName: string }>());
+export const deleteAccountFailure = createAction('[BOT/ACCOUNT] DELETE ACCOUNT ERROR', props<{ error: any }>());
