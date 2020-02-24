@@ -3,6 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Character } from '../../../../../webModel/Character';
 import $ from 'jquery';
 import { MapMessage } from '../../../../../webModel/MapMessage';
+import { CellTypes } from '../../../../../webModel/Enum/CellTypes';
 
 @Component({
   selector: 'app-map',
@@ -67,12 +68,23 @@ export class MapComponent implements OnInit {
     let _Canvas = this.GetTempCanvas();
     for (var CellID in this.CELLPOS) {
       this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xFFFFFF, 0xBBBBBB); // Affichage de la grille
-      // var mask = 0 ? 5 : 1;
-      // if (map.cells[q].l & mask === 1){
-      this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB, 'fff');
-      // }
-      this.DrawTextFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, CellID, "#e74c3c");
+      this.map.Cells.forEach(cell => {
+        if (cell.id === CellID) {
+          switch (cell.type) {
+            case CellTypes.NOT_WALKABLE:
+              this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB, 'fff');
+              break;
+            default:
+              break;
+          }
+        }
+        this.DrawTextFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, CellID, "#e74c3c");
+        // var mask = 0 ? 5 : 1;
+        // if (map.cells[q].l & mask === 1){
+      })
+
     }
+    // }
     this.Storage.Canvas.Map = _Canvas;
     this._Bind([_Canvas, this.Storage.Canvas.Entities]);
   }
