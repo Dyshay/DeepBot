@@ -45,7 +45,7 @@ namespace DeepBot.Data.Model.MapComponent
         public static void Initialize()
         {
             Maps = new Dictionary<int, Map>();
-            using (StreamReader reader = new StreamReader(@"C:\Users\ABCD\source\repos\DeepBot\DeepBot.Data\Database\ToInstert\Maps.json"))
+            using (StreamReader reader = new StreamReader(@"C:\Users\dylan.crelot\Desktop\Github Repo\DofusRetroBot\DeepBot\Resources\Data\Maps.json"))
             {
                 string result = reader.ReadToEnd();
                 Maps = JsonSerializer.Deserialize<List<Map>>(result).ToDictionary(c => c.MapId, c => DecompressMap(c));

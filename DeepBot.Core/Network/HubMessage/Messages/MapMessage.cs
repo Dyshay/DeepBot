@@ -30,5 +30,11 @@ namespace DeepBot.Core.Network.HubMessage.Messages
             Players = players;
             TcpId = tcpId;
         }
+
+        public MapMessage(MapCell[] cells, string tcpId)
+        {
+            Cells = cells;
+            TcpId = tcpId;
+        }
     }
 }
