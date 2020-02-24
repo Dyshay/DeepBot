@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Character } from '../../../../../webModel/Character';
 import $ from 'jquery';
+import { MapMessage } from '../../../../../webModel/MapMessage';
 
 @Component({
   selector: 'app-map',
@@ -10,6 +11,7 @@ import $ from 'jquery';
 })
 /** map component*/
 export class MapComponent implements OnInit {
+  @Input() map: MapMessage;
   TileWidth = 50; // pixels
   TileHeight = 25; // pixels
 

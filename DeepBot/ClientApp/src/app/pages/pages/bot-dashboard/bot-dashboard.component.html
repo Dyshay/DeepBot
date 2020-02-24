@@ -75,7 +75,7 @@
       <app-fight *ngIf="indexSelected == 2" [character]="character"></app-fight>
       <app-job *ngIf="indexSelected == 3" [character]="character"></app-job>
       <app-inventory *ngIf="indexSelected == 4" [character]="character"></app-inventory>
-      <app-map *ngIf="indexSelected == 5" [character]="character"></app-map>
+      <app-map *ngIf="indexSelected == 5" [character]="character" [map]="map$ | async"></app-map>
       <app-parameters *ngIf="indexSelected == 6" [character]="character"></app-parameters>
     </div>
   </div>

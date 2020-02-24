@@ -60,6 +60,7 @@ export class BotDashboardComponent implements OnInit {
   character: Character;
   indexSelected: number = 0;
   logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
+  map$ = this.accountStore.pipe(select(fromAccount.getMap));
   /** bot-dashboard ctor */
   constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>) {
   }
