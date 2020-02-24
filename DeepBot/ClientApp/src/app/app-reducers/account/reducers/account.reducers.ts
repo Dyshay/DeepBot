@@ -40,4 +40,4 @@ export const reducer = createReducer(initialState,
 export const getAccountCreated = (state: State) => state.accountCreated;
 export const getAllAccounts = (state: State) => state.allAccounts;
 export const getLogs = (state: State) => state.logs;
-
+export const getMap = (state: State) => state.map;
