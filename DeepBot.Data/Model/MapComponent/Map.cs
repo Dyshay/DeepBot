@@ -45,8 +45,7 @@ namespace DeepBot.Data.Model.MapComponent
         public static void Initialize()
         {
             Maps = new Dictionary<int, Map>();
-            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DeepBot.Resources.Data.Maps.json");
-            using (StreamReader reader = new StreamReader(stream))
+            using (StreamReader reader = new StreamReader(@"C:\Users\ABCD\source\repos\DeepBot\DeepBot.Data\Database\ToInstert\Maps.json"))
             {
                 string result = reader.ReadToEnd();
                 Maps = JsonSerializer.Deserialize<List<Map>>(result).ToDictionary(c => c.MapId, c => DecompressMap(c));
@@ -95,8 +94,8 @@ namespace DeepBot.Data.Model.MapComponent
                 X = (cellId - ((mapWidth - 1) * (loc5 - loc7))) / mapWidth,
                 Y = loc5 - loc7
             };
-            if (InteractivObject.InteractivesObjects.ContainsKey(interactiv))
-                map.Interactives.TryAdd(cellId, InteractivObject.InteractivesObjects[interactiv].Clone());
+            //if (InteractivObject.InteractivesObjects.ContainsKey(interactiv))
+            //    map.Interactives.TryAdd(cellId, InteractivObject.InteractivesObjects[interactiv].Clone());
             return cell;
         }
 
