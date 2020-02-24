@@ -89,6 +89,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             //TODO ADD Dispatch to AccountDB value
 
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = AccountState.IDLE;
+            hub.SendPackage("GC1", tcpId);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }

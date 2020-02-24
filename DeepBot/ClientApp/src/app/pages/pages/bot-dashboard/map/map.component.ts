@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Character } from '../../../../../webModel/Character';
 import $ from 'jquery';
+import { MapMessage } from '../../../../../webModel/MapMessage';
+import { CellTypes } from '../../../../../webModel/Enum/CellTypes';
 
 @Component({
   selector: 'app-map',
@@ -10,11 +12,12 @@ import $ from 'jquery';
 })
 /** map component*/
 export class MapComponent implements OnInit {
+  @Input() map: MapMessage;
   TileWidth = 50; // pixels
   TileHeight = 25; // pixels
 
-  MAP_HEIGHT = 17;
-  MAP_WIDTH = 15;
+  //MAP_HEIGHT = 17;
+  //MAP_WIDTH = 15;
 
   CELLPOS = [];
 
@@ -34,8 +37,8 @@ export class MapComponent implements OnInit {
   init() {
     this.canvas = $('#isocanvas');
     this.context = this.canvas[0].getContext("2d");
-    this.context.canvas.width = this.TileWidth * (this.MAP_WIDTH + 1);
-    this.context.canvas.height = this.TileHeight * (this.MAP_HEIGHT + 1);
+    this.context.canvas.width = this.TileWidth * (this.map.MapWidth + 1);
+    this.context.canvas.height = this.TileHeight * (this.map.MapHeight + 1);
 
     this.InitCells();
     this.SetMap();
@@ -45,14 +48,14 @@ export class MapComponent implements OnInit {
   InitCells() {
     this.CELLPOS = [];
     let startX = 0, startY = 0, cell = 0;
-    for (let a = 0; a < this.MAP_HEIGHT; a++) {
-      for (let b = 0; b < this.MAP_WIDTH; b++) {
+    for (let a = 0; a < this.map.MapHeight; a++) {
+      for (let b = 0; b < this.map.MapWidth; b++) {
         let p = this.GetCoordsFromCellID(cell);
         this.CELLPOS[cell] = { x: startX + b, y: startY + b, X: p.X * this.TileWidth + (p.Y % 2 == 1 ? this.TileWidth / 2 : 0), Y: p.Y * this.TileHeight / 2 };
         cell++;
       }
       startX++;
-      for (let b = 0; b < this.MAP_WIDTH; b++) {
+      for (let b = 0; b < this.map.MapWidth; b++) {
         let p = this.GetCoordsFromCellID(cell);
         this.CELLPOS[cell] = { x: startX + b, y: startY + b, X: p.X * this.TileWidth + (p.Y % 2 == 1 ? this.TileWidth / 2 : 0), Y: p.Y * this.TileHeight / 2 };
         cell++;
@@ -65,12 +68,23 @@ export class MapComponent implements OnInit {
     let _Canvas = this.GetTempCanvas();
     for (var CellID in this.CELLPOS) {
       this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xFFFFFF, 0xBBBBBB); // Affichage de la grille
-      // var mask = 0 ? 5 : 1;
-      // if (map.cells[q].l & mask === 1){
-      this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB, 'fff');
-      // }
-      this.DrawTextFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, CellID, "#e74c3c");
+      this.map.Cells.forEach(cell => {
+        if (cell.id === CellID) {
+          switch (cell.type) {
+            case CellTypes.NOT_WALKABLE:
+              this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB, 'fff');
+              break;
+            default:
+              break;
+          }
+        }
+        this.DrawTextFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, CellID, "#e74c3c");
+        // var mask = 0 ? 5 : 1;
+        // if (map.cells[q].l & mask === 1){
+      })
+
     }
+    // }
     this.Storage.Canvas.Map = _Canvas;
     this._Bind([_Canvas, this.Storage.Canvas.Entities]);
   }
@@ -102,7 +116,7 @@ export class MapComponent implements OnInit {
 
   _Bind(Maps) {
     let Context = this.canvas[0].getContext('2d');
-    Context.clearRect(0, 0, this.TileWidth * (this.MAP_WIDTH + 1), this.TileHeight * (this.MAP_HEIGHT + 1));
+    Context.clearRect(0, 0, this.TileWidth * (this.map.MapWidth + 1), this.TileHeight * (this.map.MapHeight + 1));
     Maps.forEach((Value, Index, Elem) => {
       Context.drawImage(Value, 0, 0);
     })
@@ -150,7 +164,7 @@ export class MapComponent implements OnInit {
     target.fillText(_text, (x + this.TileWidth / 2) - (3 * _text.length), (y + this.TileHeight / 2) + (_text.length - 1));
   }
 
-  GetCoordsFromCellID(CellID) { return { X: CellID % this.MAP_WIDTH, Y: Math.floor(CellID / this.MAP_WIDTH) } }
+  GetCoordsFromCellID(CellID) { return { X: CellID % this.map.MapWidth, Y: Math.floor(CellID / this.map.MapWidth) } }
 
   DrawTileFromPos(canvas, x, y, color, borderColor) {
     let target = canvas.getContext("2d");
@@ -192,8 +206,8 @@ export class MapComponent implements OnInit {
 
   GetTempCanvas() {
     let _Canvas = document.createElement('canvas');
-    _Canvas.width = this.TileWidth * (this.MAP_WIDTH + 1);;
-    _Canvas.height = this.TileWidth * (this.MAP_HEIGHT + 1);;
+    _Canvas.width = this.TileWidth * (this.map.MapWidth + 1);;
+    _Canvas.height = this.TileWidth * (this.map.MapHeight + 1);;
     return _Canvas;
   }
 }

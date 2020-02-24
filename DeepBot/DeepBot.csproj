@@ -37,12 +37,20 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\webModel\MapMessage.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DeepBot.Core\DeepBot.Core.csproj" />
     <ProjectReference Include="..\DeepBot.Data\DeepBot.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="ClientApp\src\assets\img\classe\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\webModel\MapMessage.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

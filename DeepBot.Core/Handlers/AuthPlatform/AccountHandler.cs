@@ -94,7 +94,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 string[] _loc10_ = loc5[counter].Split(',');
                 int serverId = int.Parse(_loc10_[0]);
                 var userSelected = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
-                if (serverId == userSelected.ServerId)
+                if (serverId == userSelected.Server.Id)
                 {
                     if (user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.State == ServerState.ONLINE)
                     {
