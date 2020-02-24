@@ -23,14 +23,14 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 {
                     hub.SendPackage($"Gdm{mapId}", tcpId);
                     var map = Database.Maps.Find(FilterDefinition<MapDB>.Empty).ToList().Find(c => c.MapId == mapId);
-                    hub.DispatchToClient(new MapMessage(map.Cells, tcpId), tcpId).Wait();
+                    hub.DispatchToClient(new MapMessage(map.Cells, map.Width, map.Height, map.AreaName, map.Coordinate, tcpId), tcpId).Wait();
                 }
             }
             else
             {
                 if(int.TryParse(package.Substring(4).Split('|')[0], out int mapId)){
                     var map = Database.Maps.Find(FilterDefinition<MapDB>.Empty).ToList().Find(c => c.MapId == mapId);
-                    hub.DispatchToClient(new MapMessage(map.Cells, tcpId), tcpId).Wait();
+                    hub.DispatchToClient(new MapMessage(map.Cells, map.Width, map.Height,map.AreaName, map.Coordinate, tcpId), tcpId).Wait();
                     hub.SendPackage("GI", tcpId);
                 }
             }

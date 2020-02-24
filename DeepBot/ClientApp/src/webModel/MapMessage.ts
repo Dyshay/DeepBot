@@ -1,6 +1,9 @@
 
 export interface MapMessage {
-  mapId: number,
   Cells: [],
+  AreaName: string,
+  MapWidth: number,
+  MapHeight: number,
+  Coordinate: string,
   tcpId: string
 }
