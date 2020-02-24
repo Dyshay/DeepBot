@@ -144,7 +144,16 @@ namespace DeepBot.Controllers
             Account accountToDelete = user.Accounts.FirstOrDefault(o => o.Key.ToString() == accountkey.key);
 
             user.Accounts.Remove(accountToDelete);
-            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+            try
+            {
+                await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        
 
             return accountToDelete.AccountName;
         }

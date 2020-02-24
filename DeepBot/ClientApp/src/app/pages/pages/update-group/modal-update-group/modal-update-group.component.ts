@@ -97,6 +97,7 @@ export class ModalUpdateGroupComponent implements OnInit {
     }
   }
 
+
   updateGroup() {
     this.group.name = this.form.controls["groupName"].value;
     this.group.description = this.form.controls["description"].value;
@@ -109,7 +110,12 @@ export class ModalUpdateGroupComponent implements OnInit {
     this.dialogRef.close(this.group);
   }
 
-
+  DeleteGroup() {
+    let groupKeyToDelete = this.group.key;
+    this.storeGroup.dispatch(GroupActions.deleteGroup({ groupKeyToDelete }));
+    this.dialogRef.close(this.group);
+    
+  }
 
   /* table */
   isAllSelected() {

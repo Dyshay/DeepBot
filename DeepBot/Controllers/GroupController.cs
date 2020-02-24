@@ -109,6 +109,39 @@ namespace DeepBot.Controllers
 
         [HttpPost]
         [Authorize]
+        [Route("DeleteGroup")]
+        public async Task<string> DeleteGroup(keymodel groupkey)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            GroupDB grouptoDelete =  _groups.FirstOrDefault(o => o.Key.ToString() == groupkey.key && o.FK_User.ToString() == userId);
+
+            try
+            {
+                if(grouptoDelete != null)
+                {
+                    foreach (var item in grouptoDelete.Fk_Followers)
+                    {
+                        user.Accounts.FirstOrDefault(o => o.CurrentCharacter.Key == item).CurrentCharacter.Fk_Group = Guid.Empty;
+                    }
+                    user.Accounts.FirstOrDefault(o => o.CurrentCharacter.Key == grouptoDelete.Fk_Leader).CurrentCharacter.Fk_Group = Guid.Empty;
+                    await _userManager.UpdateAsync(user);
+
+                    await Database.Groups.DeleteOneAsync(o => o.Key == grouptoDelete.Key);
+                }
+                  
+            }
+            catch (Exception ex )
+            {
+
+                throw;
+            }
+           
+            return grouptoDelete.Name;
+        }
+
+        [HttpPost]
+        [Authorize]
         [Route("UpdateGroup")]
         public async Task<IActionResult> UpdateGroup(GroupDB group)
         {

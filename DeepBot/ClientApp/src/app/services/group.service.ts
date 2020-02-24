@@ -36,5 +36,9 @@ export class GroupsService {
     return this.http.post<Group>(`${environment.apiURL}Group/UpdateGroup`, group, httpOptions);
   }
 
+  deleteGroup(key: string) {
+    return this.http.post<string>(`${environment.apiURL}Group/DeleteGroup`, { key }, httpOptions);
+  }
+
 
 }

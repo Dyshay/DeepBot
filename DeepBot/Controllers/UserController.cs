@@ -57,7 +57,8 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             foreach (var item in user.Accounts)
             {
-                item.CurrentCharacter.Config = _configCharacter.FirstOrDefault(o => o.Fk_Character == item.CurrentCharacter.Key);
+                if(item.CurrentCharacter != null)
+                  item.CurrentCharacter.Config = _configCharacter.FirstOrDefault(o => o.Fk_Character == item.CurrentCharacter.Key);
             }
 
             return user;

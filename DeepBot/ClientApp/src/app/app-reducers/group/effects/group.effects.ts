@@ -110,5 +110,39 @@ export class GroupEffects {
   );
 
 
+
+  deleteGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.deleteGroup),
+      map(action => action.groupKeyToDelete),
+      exhaustMap((groupKeyToDelete: string) =>
+        this.groupService.deleteGroup(groupKeyToDelete).pipe(
+          map(groupKeyToDelete => GroupActions.deleteGroupSuccess({ groupKeyToDelete })),
+          catchError(error => of(GroupActions.deleteGroupFailure({ error }))))
+      )
+    )
+
+  );
+
+  deleteGroupSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.deleteGroupSuccess),
+      map(action => action.groupKeyToDelete),
+      tap((name: string) => {
+        this.toastr.success('', 'Group ' + name + ' supprimé avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  deleteGroupFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.deleteGroupFailure),
+      map(action => action.error),
+
+    )
+  );
+
+
   constructor(private actions$: Actions, private accountService: AccountService, private groupService: GroupsService, private toastr : ToastrService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
 }

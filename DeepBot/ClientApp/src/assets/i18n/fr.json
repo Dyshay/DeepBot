@@ -21,7 +21,8 @@
     "DATEENDSUBSCRIBEANKAMA": "Date de fin d'abonnement",
     "GROUPACTUAL": "Groupe actuel",
     "CHARACTER": "Personnage",
-    "NOGROUP": "Aucun Groupe"
+    "NOGROUP": "Aucun Groupe",
+    "DELETE": "Supprimer"
   },
   "TOOLBAR": {
     "BOTHANDLE": "Gestion du bot",

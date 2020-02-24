@@ -94,7 +94,7 @@ export class UpdateGroupComponent implements OnInit {
               for (var j = 0; j < result1[i].fk_Followers.length; j++) {
                 if (followers == null)
                   followers = result.find(o => o.key == result1[i].fk_Followers[j]).name + ', ';
-                else
+                else 
                   followers = followers + result.find(o => o.key == result1[i].fk_Followers[j]).name + ', ';
               }
               if (followers != null)
@@ -113,7 +113,6 @@ export class UpdateGroupComponent implements OnInit {
         )
       }
     )
-    console.log(this.tableData);
   }
 
   openGroup(name?: GroupInterface['name']) {
