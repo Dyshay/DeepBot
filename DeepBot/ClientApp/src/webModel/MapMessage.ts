@@ -1,6 +1,7 @@
+import { Cell } from './Cell';
 
 export interface MapMessage {
-  Cells: [],
+  Cells: Cell[],
   AreaName: string,
   MapWidth: number,
   MapHeight: number,
