@@ -24,7 +24,7 @@ export class MapComponent implements OnInit {
   Entities = [];
   Storage = {
     Source: { Map: null, Entities: null },
-    Canvas: { Map: this.GetTempCanvas(), Entities: this.GetTempCanvas() }
+    Canvas: { Map: null, Entities: null }
   };
 
   context = undefined;
@@ -35,55 +35,54 @@ export class MapComponent implements OnInit {
   }
 
   init() {
+    this.Storage.Canvas.Map = this.GetTempCanvas();
     this.canvas = $('#isocanvas');
     this.context = this.canvas[0].getContext("2d");
-    this.context.canvas.width = this.TileWidth * (this.map.MapWidth + 1);
-    this.context.canvas.height = this.TileHeight * (this.map.MapHeight + 1);
+    this.context.canvas.width = this.TileWidth * (this.map.mapWidth + 1);
+    this.context.canvas.height = this.TileHeight * (this.map.mapHeight + 1);
 
     this.InitCells();
-    this.SetMap();
+    this.SetMap(this.map);
     this.InitEntities(null);
   }
 
   InitCells() {
     this.CELLPOS = [];
     let startX = 0, startY = 0, cell = 0;
-    for (let a = 0; a < this.map.MapHeight; a++) {
-      for (let b = 0; b < this.map.MapWidth; b++) {
-        let p = this.GetCoordsFromCellID(cell);
-        this.CELLPOS[cell] = { x: startX + b, y: startY + b, X: p.X * this.TileWidth + (p.Y % 2 == 1 ? this.TileWidth / 2 : 0), Y: p.Y * this.TileHeight / 2 };
-        cell++;
+    for (let a = 0; a <= 2 * (this.map.mapHeight - 1); a++) {
+      if ((a % 2) === 0) {
+        for (let b = 0; b <= this.map.mapWidth - 1; b++) {
+          let p = this.GetCoordsFromCellID(cell);
+          this.CELLPOS[cell] = { x: startX + b, y: startY + b, X: p.X * this.TileWidth + (p.Y % 2 == 1 ? this.TileWidth / 2 : 0), Y: p.Y * this.TileHeight / 2 };
+          cell++;
+        }
+        startX++;
       }
-      startX++;
-      for (let b = 0; b < this.map.MapWidth; b++) {
-        let p = this.GetCoordsFromCellID(cell);
-        this.CELLPOS[cell] = { x: startX + b, y: startY + b, X: p.X * this.TileWidth + (p.Y % 2 == 1 ? this.TileWidth / 2 : 0), Y: p.Y * this.TileHeight / 2 };
-        cell++;
+      else {
+        for (let b = 0; b <= this.map.mapWidth - 2; b++) {
+          let p = this.GetCoordsFromCellID(cell);
+          this.CELLPOS[cell] = { x: startX + b, y: startY + b, X: p.X * this.TileWidth + (p.Y % 2 == 1 ? this.TileWidth / 2 : 0), Y: p.Y * this.TileHeight / 2 };
+          cell++;
+        }
+        startY--;
+
       }
-      startY--;
     }
   }
 
-  SetMap() {
+  SetMap(map) {
     let _Canvas = this.GetTempCanvas();
     for (var CellID in this.CELLPOS) {
       this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xFFFFFF, 0xBBBBBB); // Affichage de la grille
-      this.map.Cells.forEach(cell => {
-        if (cell.id === CellID) {
-          switch (cell.type) {
-            case CellTypes.NOT_WALKABLE:
-              this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB, 'fff');
-              break;
-            default:
-              break;
-          }
-        }
-        this.DrawTextFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, CellID, "#e74c3c");
-        // var mask = 0 ? 5 : 1;
-        // if (map.cells[q].l & mask === 1){
-      })
-
+      var mask = 0 ? 5 : 1;
+      //if (!map.cells[CellID].isWalkable) {
+      //  this.DrawTileFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, 0xBBBBBB, "#ebebeb");
+      //}
+      this.DrawTextFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, CellID, "#e74c3c");
     }
+    //this.Storage.Source.Map = { Obstacles: Obstacles, Los: Los };
+    this.Storage.Canvas.Map = _Canvas;
+    this._Bind([_Canvas, this.Storage.Canvas.Entities]);
     // }
     this.Storage.Canvas.Map = _Canvas;
     this._Bind([_Canvas, this.Storage.Canvas.Entities]);
@@ -116,7 +115,7 @@ export class MapComponent implements OnInit {
 
   _Bind(Maps) {
     let Context = this.canvas[0].getContext('2d');
-    Context.clearRect(0, 0, this.TileWidth * (this.map.MapWidth + 1), this.TileHeight * (this.map.MapHeight + 1));
+    Context.clearRect(0, 0, this.TileWidth * (this.map.mapWidth + 1), this.TileHeight * (this.map.mapHeight + 1));
     Maps.forEach((Value, Index, Elem) => {
       Context.drawImage(Value, 0, 0);
     })
@@ -164,7 +163,7 @@ export class MapComponent implements OnInit {
     target.fillText(_text, (x + this.TileWidth / 2) - (3 * _text.length), (y + this.TileHeight / 2) + (_text.length - 1));
   }
 
-  GetCoordsFromCellID(CellID) { return { X: CellID % this.map.MapWidth, Y: Math.floor(CellID / this.map.MapWidth) } }
+  GetCoordsFromCellID(CellID) { return { X: CellID % this.map.mapWidth, Y: Math.floor(CellID / this.map.mapWidth) } }
 
   DrawTileFromPos(canvas, x, y, color, borderColor) {
     let target = canvas.getContext("2d");
@@ -206,8 +205,8 @@ export class MapComponent implements OnInit {
 
   GetTempCanvas() {
     let _Canvas = document.createElement('canvas');
-    _Canvas.width = this.TileWidth * (this.map.MapWidth + 1);;
-    _Canvas.height = this.TileWidth * (this.map.MapHeight + 1);;
+    _Canvas.width = this.TileWidth * (this.map.mapWidth + 1);;
+    _Canvas.height = this.TileWidth * (this.map.mapHeight + 1);;
     return _Canvas;
   }
 }
