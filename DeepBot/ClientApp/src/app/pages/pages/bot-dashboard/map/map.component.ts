@@ -58,6 +58,7 @@ export class MapComponent implements OnChanges {
   for (var q = 0; q < this.CellsCount; q++) {
     this.Cells[q] = { los: false };
     var mask = 0 ? 5 : 1;
+    console.log(mapData.cells[q]);
     if (!mapData.cells[q].isWalkable) {
       this.Cells[q].mov = true;
     }
