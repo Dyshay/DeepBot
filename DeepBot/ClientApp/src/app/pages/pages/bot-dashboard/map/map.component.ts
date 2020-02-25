@@ -45,22 +45,22 @@ export class MapComponent implements OnChanges {
       else {
         context.fillStyle = "#dadada";
       }
-      console.log(cell);
       context.beginPath();
-      var paddingTop = cell.Points.down.y - cell.Points.top.y;
-      context.moveTo(cell.Points.top.x, cell.Points.top.y + paddingTop);
-      context.lineTo(cell.Points.right.x, cell.Points.right.y + paddingTop);
-      context.lineTo(cell.Points.down.x, cell.Points.down.y + paddingTop);
-      context.lineTo(cell.Points.left.x, cell.Points.left.y + paddingTop);
-      context.closePath();
-      context.fill();
+      if(cell.Points !== undefined){
+        var paddingTop = cell.Points.down.y - cell.Points.top.y;
+        context.moveTo(cell.Points.top.x, cell.Points.top.y + paddingTop);
+        context.lineTo(cell.Points.right.x, cell.Points.right.y + paddingTop);
+        context.lineTo(cell.Points.down.x, cell.Points.down.y + paddingTop);
+        context.lineTo(cell.Points.left.x, cell.Points.left.y + paddingTop);
+        context.closePath();
+        context.fill();
+      }
     }
   }
 
  BuildMap(Width, Height, mapData) {
   for (var q = 0; q < this.CellsCount; q++) {
     this.Cells[q] = { los: false };
-    console.log(mapData.cells[q]);
     if (mapData.cells[q] !== undefined && !mapData.cells[q].isWalkable) {
       this.Cells[q].mov = true;
     }
