@@ -22,7 +22,10 @@ export class MapComponent implements OnChanges {
 
   ngOnChanges(): void {
     let canvas = $('#isocanvas')[0];
-    this.DrawMap(canvas, this.map)
+    if(this.map !== null){
+      this.DrawMap(canvas, this.map)
+
+    }
   }
 
   DrawMap(canvas, mapData) {
@@ -42,7 +45,7 @@ export class MapComponent implements OnChanges {
       else {
         context.fillStyle = "#dadada";
       }
-
+      console.log(cell);
       context.beginPath();
       var paddingTop = cell.Points.down.y - cell.Points.top.y;
       context.moveTo(cell.Points.top.x, cell.Points.top.y + paddingTop);
@@ -57,9 +60,8 @@ export class MapComponent implements OnChanges {
  BuildMap(Width, Height, mapData) {
   for (var q = 0; q < this.CellsCount; q++) {
     this.Cells[q] = { los: false };
-    var mask = 0 ? 5 : 1;
     console.log(mapData.cells[q]);
-    if (!mapData.cells[q].isWalkable) {
+    if (mapData.cells[q] !== undefined && !mapData.cells[q].isWalkable) {
       this.Cells[q].mov = true;
     }
     else {
@@ -76,9 +78,9 @@ export class MapComponent implements OnChanges {
   var midCellHeight = cellHeight / 2;
   var midCellWidth = cellWidth / 2;
 
-   for (var y = 0; y < 2 * this.map.mapHeight; y++) {
+   for (var y = 0; y <= 2 * (this.map.mapHeight - 1); y++) {
     if (y % 2 === 0)
-      for (var x = 0; x < this.map.mapWidth; x++) {
+      for (var x = 0; x <= this.map.mapWidth - 1; x++) {
         var left = { x: offsetX + x * cellWidth, y: offsetY + y * midCellHeight + midCellHeight };
         var top = { x: offsetX + x * cellWidth + midCellWidth, y: offsetY + y * midCellHeight };
         var right = { x: offsetX + x * cellWidth + cellWidth, y: offsetY + y * midCellHeight + midCellHeight };
@@ -86,7 +88,7 @@ export class MapComponent implements OnChanges {
         this.Cells[cellId++].Points = { left, top, right, down };
       }
     else
-      for (var x = 0; x < this.map.mapWidth; x++) {
+      for (var x = 0; x <= this.map.mapWidth - 2; x++) {
         var left = { x: offsetX + x * cellWidth + midCellWidth, y: offsetY + y * midCellHeight + midCellHeight };
         var top = { x: offsetX + x * cellWidth + cellWidth, y: offsetY + y * midCellHeight };
         var right = { x: offsetX + x * cellWidth + cellWidth + midCellWidth, y: offsetY + y * midCellHeight + midCellHeight };
