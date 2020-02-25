@@ -11,6 +11,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { IconModule } from '@visurel/iconify-angular';
+import { MatDialogModule } from '@angular/material';
+import { DialogResultRegisterComponent } from './dialog-result-register/dialog-result-register.component';
+import { AuthModule } from '../auth.modules';
 
 
 @NgModule({
@@ -18,6 +21,7 @@ import { IconModule } from '@visurel/iconify-angular';
   imports: [
     CommonModule,
     RegisterRoutingModule,
+    AuthModule,
     FlexLayoutModule,
     ReactiveFormsModule,
     MatInputModule,
@@ -25,8 +29,10 @@ import { IconModule } from '@visurel/iconify-angular';
     MatButtonModule,
     MatTooltipModule,
     MatCheckboxModule,
+    MatDialogModule,
     IconModule
-  ]
+  ],
+  entryComponents: [DialogResultRegisterComponent]
 })
 export class RegisterModule {
 }

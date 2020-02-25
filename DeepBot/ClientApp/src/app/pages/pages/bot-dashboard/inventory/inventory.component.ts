@@ -18,6 +18,7 @@ export interface ressources {
   id: number,
   name: string,
   quantity: number,
+  autoDelete:boolean
 }
 
 @Component({
@@ -43,16 +44,16 @@ export class InventoryComponent {
     { id: 9, name: 'Geloture', quantity: 2, type: 'Ceinture' },
   ]
   ressourcesDofus: ressources[] = [
-    { id: 10, name: 'Plume de piou rouge', quantity: 100 },
-    { id: 11, name: 'Gelée Menthe', quantity: 1850 },
-    { id: 12, name: 'Gelée Fraise', quantity: 88 },
-    { id: 13, name: 'Gelée bleutée', quantity: 8008 },
+    { id: 10, name: 'Plume de piou rouge', quantity: 100, autoDelete: false },
+    { id: 11, name: 'Gelée Menthe', quantity: 1850, autoDelete: false },
+    { id: 12, name: 'Gelée Fraise', quantity: 88, autoDelete: false },
+    { id: 13, name: 'Gelée bleutée', quantity: 8008 ,autoDelete:false},
   ]
   banqueDofus: ressources[] = [
-    { id: 10, name: 'Plume de piou rouge', quantity: 108260 },
-    { id: 11, name: 'Gelée Menthe', quantity: 18950 },
-    { id: 12, name: 'Gelée Fraise', quantity: 8588 },
-    { id: 13, name: 'Gelée bleutée', quantity: 80098 },
+    { id: 10, name: 'Plume de piou rouge', quantity: 108260, autoDelete: false },
+    { id: 11, name: 'Gelée Menthe', quantity: 18950, autoDelete: false },
+    { id: 12, name: 'Gelée Fraise', quantity: 8588, autoDelete: false },
+    { id: 13, name: 'Gelée bleutée', quantity: 80098, autoDelete: false},
   ]
   /** inventory ctor */
   constructor(private translateService: TranslateService) {

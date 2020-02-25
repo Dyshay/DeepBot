@@ -13,7 +13,7 @@ export class Group {
   config?: ConfigGroup;
   trajet?: Trajet;
   prospection?: number;
-  level?: number;
+  grouplevel?: number;
 }
 
 

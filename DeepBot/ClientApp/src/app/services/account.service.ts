@@ -26,4 +26,12 @@ export class AccountService {
   createAccount(account: Account): Observable<any> {
     return this.http.post<Account>(`${environment.apiURL}Account/CreateAccount`, account, httpOptions);
   }
+
+  updateAccount(account: Account) {
+    return this.http.post<Account>(`${environment.apiURL}Account/UpdateAccount`, account, httpOptions);
+  }
+
+  deleteAccount(key: string) {
+    return this.http.post<string>(`${environment.apiURL}Account/DeleteAccount`, { key }, httpOptions);
+  }
 }

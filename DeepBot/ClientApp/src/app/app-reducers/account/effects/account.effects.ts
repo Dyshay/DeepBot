@@ -51,6 +51,72 @@ export class AccountEffects {
   );
 
 
+  updateAccount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.updateAccount),
+      map(action => action.accountToUpdate),
+      exhaustMap((accountToUpdate: Account) =>
+        this.accountService.updateAccount(accountToUpdate).pipe(
+          map(accountToUpdate => AccountActions.updateAccountSuccess({ accountToUpdate })),
+          catchError(error => of(AccountActions.updateAccountFailure({ error }))))
+      )
+    )
+
+  );
+
+  updateAccountSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.updateAccountSuccess),
+      map(action => action.accountToUpdate),
+      tap((account: any) => {
+        this.toastr.success('', 'Compte ' + account.accountName + ' modifié avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  updateAccountFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.updateAccountFailure),
+      map(action => action.error),
+
+    )
+  );
+
+
+  deleteAccount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.deleteAccount),
+      map(action => action.accountKeyToDelete),
+      exhaustMap((accountKeyToDelete: string) =>
+        this.accountService.deleteAccount(accountKeyToDelete).pipe(
+          map(accontName => AccountActions.deleteAccountSuccess({ accontName })),
+          catchError(error => of(AccountActions.deleteAccountFailure({ error }))))
+      )
+    )
+
+  );
+
+  deleteAccountSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.deleteAccountSuccess),
+      map(action => action.accontName),
+      tap((accountName: string) => {
+        this.toastr.success('', 'Compte ' + accountName + ' supprimé avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  deleteAccountFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.deleteAccountFailure),
+      map(action => action.error),
+
+    )
+  );
+
+  
 
   constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr:ToastrService) { }
 }

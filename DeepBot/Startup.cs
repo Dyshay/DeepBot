@@ -69,6 +69,7 @@ namespace DeepBot
                 identity.Password.RequireUppercase = false;
                 identity.Password.RequiredLength = 1;
                 identity.Password.RequiredUniqueChars = 0;
+                identity.SignIn.RequireConfirmedEmail = true;
             },
                 mongo =>
                 {

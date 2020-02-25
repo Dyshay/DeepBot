@@ -15,6 +15,12 @@ export const createAccountFailure = createAction('[BOT/ACCOUNT] CREATE ACCOUNT E
 export const getAllAccount = createAction('[BOT/ACCOUNT] GET ALL ACCOUNT', props<{ allAccounts: Account[] }>());
 
 
-export const updateAccountAccountName = createAction('[BOT/ACCOUNT] UPDATE ACCOUNTNAME ACCOUNT', props<{ accountName: string, key: number }>());
-export const updateAccountPassword = createAction('[BOT/ACCOUNT] UPDATE PASSWORD ACCOUNT', props<{ password: string, key: number }>());
-export const updateAccountServerId = createAction('[BOT/ACCOUNT] UPDATE SERVERID ACCOUNT', props<{ serverId: string, key: number }>());
+
+export const updateAccount = createAction('[BOT/ACCOUNT] UPDATE  ACCOUNT', props<{ accountToUpdate: Account }>());
+export const updateAccountSuccess = createAction('[BOT/ACCOUNT] UPDATE ACCOUNT SUCCESS', props<{ accountToUpdate: Account }>());
+export const updateAccountFailure = createAction('[BOT/ACCOUNT] UPDATE ACCOUNT ERROR', props<{ error: any }>());
+
+
+export const deleteAccount = createAction('[BOT/ACCOUNT] DELETE  ACCOUNT', props<{ accountKeyToDelete: string }>());
+export const deleteAccountSuccess = createAction('[BOT/ACCOUNT] DELETE ACCOUNT SUCCESS', props<{ accontName: string }>());
+export const deleteAccountFailure = createAction('[BOT/ACCOUNT] DELETE ACCOUNT ERROR', props<{ error: any }>());

@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
 using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
+using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -26,6 +28,8 @@ namespace DeepBot.Controllers
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
+        private List<GroupDB> _groups = Database.Groups.Find(FilterDefinition<GroupDB>.Empty).ToList();
+        private List<ConfigCharacterDB> _configCharacter = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList();
 
         public AccountController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -56,20 +60,21 @@ namespace DeepBot.Controllers
         [Route("CreateAccount")]
         public async Task<IActionResult> CreateAccount(Account account)
         {
-            var tt = this.Request.Body;
+            await CreateConfigAsync(account.CurrentCharacter.Key);
+
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
             user.Accounts.RemoveAll(o=> o.isScan == true);
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
             account.isScan = false;
+            account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
             if (user.Accounts == null)
             {
                 user.Accounts = new List<Account>() { account };
                 try
                 {
                     await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
-                    //var res= await _userManager.UpdateAsync(user);
                     return Ok(account);
                 }
                 catch (Exception ex)
@@ -89,7 +94,6 @@ namespace DeepBot.Controllers
                     try
                     {
                         await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
-                        //var res= await _userManager.UpdateAsync(user);
                         return Ok(account);
                     }
                     catch (Exception ex)
@@ -101,5 +105,75 @@ namespace DeepBot.Controllers
             else
                 return ValidationProblem("MaxAccount");
         }
+        [HttpPost]
+        [Authorize]
+        [Route("UpdateAccount")]
+        public async Task<IActionResult> UpdateAccount(Account account)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            Account currentAcount = user.Accounts.FirstOrDefault(o => o.Key == account.Key);
+
+            if(account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key && _configCharacter.FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key) == null)
+            {
+                await CreateConfigAsync(account.CurrentCharacter.Key);
+                account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+            }
+
+            if((account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key) || (account.CurrentCharacter.Fk_Group != currentAcount.CurrentCharacter.Fk_Group))
+            {
+                List<GroupDB> grouptoUpdate = _groups.Where(o => o.Fk_Followers.Contains(currentAcount.CurrentCharacter.Key)).ToList();
+                foreach (var item in grouptoUpdate)
+                {
+                    item.Fk_Followers.Remove(currentAcount.CurrentCharacter.Key);
+                }
+            }
+            var index = user.Accounts.FindIndex(o => o.Key == account.Key);
+            user.Accounts[index] = account;
+            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+
+            return Ok(account);
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("DeleteAccount")]
+        public async Task<string> DeleteAccount(keymodel accountkey)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            Account accountToDelete = user.Accounts.FirstOrDefault(o => o.Key.ToString() == accountkey.key);
+
+            user.Accounts.Remove(accountToDelete);
+            try
+            {
+                await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+
+            return JsonSerializer.Serialize(accountToDelete.AccountName);
+        }
+
+            public async Task CreateConfigAsync(int characterId)
+        {
+            ConfigCharacterDB config = new ConfigCharacterDB();
+            config.Fk_Character = characterId;
+            config.Fk_User = new Guid(User.Claims.First(c => c.Type == "UserID").Value);
+            config.CreationDate = DateTime.Now;
+
+
+            await Database.ConfigsCharacter.InsertOneAsync(config);
+
+        }
+    }
+
+    public class keymodel
+    {
+        public string key { get; set; }
     }
 }
