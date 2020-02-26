@@ -12,6 +12,7 @@ namespace DeepBot.Data.Enums
         GUILD,
         BANK,
         MAP,
-        CHARACTERS
+        CHARACTERS,
+        CHARACTERISTIC,
     }
 }
