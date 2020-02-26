@@ -37,10 +37,10 @@
 
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [(ngModel)]="character.config.blockSpectate" [disabled]="character.fk_Group !=null" >{{'DASHBOARDBOT.BLOCKSPEC' | translate}}</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [(ngModel)]="character.config.blockSpectate" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'" >{{'DASHBOARDBOT.BLOCKSPEC' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [(ngModel)]="character.config.blockFight" [disabled]="character.fk_Group !=null">{{'DASHBOARDBOT.BLOCKFIGHT' | translate}}</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [(ngModel)]="character.config.blockFight" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.BLOCKFIGHT' | translate}}</mat-slide-toggle>
     </div>
     <mat-divider gdColumn="1 / 4"></mat-divider>
     <div gdColumn="1 / 4">
@@ -70,7 +70,7 @@
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-form-field class="full-width" fxFlex="75" >
         <mat-label>{{'DASHBOARDBOT.TRYCHALLENGE' | translate}} </mat-label>
-        <mat-select multiple [disabled]="character.fk_Group !=null">
+        <mat-select multiple [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
           <mat-option value="1">Mystique</mat-option>
           <mat-option value="2">Anachoréte</mat-option>
           <mat-option value="3">Borné</mat-option>
