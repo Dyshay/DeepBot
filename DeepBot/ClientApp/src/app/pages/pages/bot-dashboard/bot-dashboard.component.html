@@ -10,7 +10,7 @@
                  size="25px"></ic-icon>
         <span class="mr-3">{{'GLOBAL.CONNECT' | translate}}</span>
       </button>
-      <button color="primary" mat-mini-fab type="button" class="ml-4 mt-3" matTooltip=" {{'DASHBOARDBOT.BOTPAUSE' | translate}}" matTooltipPosition="right">
+      <button color="primary" mat-mini-fab type="button" class="ml-4 mt-3" matTooltip=" {{'DASHBOARDBOT.BOTPAUSE' | translate}}" matTooltipPosition="right" [disabled]="character.fk_Group !=null">
         <mat-icon [icIcon]="icPause"></mat-icon>
       </button>
       <div flLayout="row" fxLayoutAlign="start end" fxFlex="20">
@@ -37,7 +37,12 @@
             </div>
             <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
               <div @fadeInRight>
-                <p class="m-0 body-2"> {{'GLOBAL.GROUPACTUAL' | translate}}  aucun</p>
+                <p class="m-0 body-2"> {{'GLOBAL.GROUPACTUAL' | translate}}  nom group</p>
+              </div>
+            </div>
+            <div class="py-1" gdColumn="1 / 3" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight>
+                <p class="m-0 body-2"> {{'GLOBAL.ACTUALPATH' | translate}} :  trajet</p>
               </div>
             </div>
           </div>

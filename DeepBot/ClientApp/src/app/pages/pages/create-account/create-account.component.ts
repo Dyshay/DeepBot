@@ -90,8 +90,8 @@ export class CreateAccountComponent implements OnInit{
       accountName: [, Validators.required],
       password: ['', Validators.required],
       server : ['', Validators.required], 
-      group: [Group,null],
-      character: [Character, Validators.required]
+      group:null,
+      character: ['', Validators.required]
     });
 
    // Apelle de la groupList sur serv
@@ -104,9 +104,9 @@ export class CreateAccountComponent implements OnInit{
 
   findCharacter() {
     this.deeptalk.createConnexionBot(this.form.controls["accountName"].value, this.form.controls["password"].value, this.form.controls["server"].value, true);
+    this.charaters$ = this.storeCharacter.pipe(select(fromcharacter.getScanCharacters));
     this.ischaractersfound = true;
    
-
   }
 
  async addAccount() {
@@ -118,8 +118,8 @@ export class CreateAccountComponent implements OnInit{
           this.accountToCreate.characters = result;
         }
       );
-
-      this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
+      if (this.form.controls["group"].value != null)
+          this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_Group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
 
       this.charaters$.subscribe(
         (result) => {
@@ -134,7 +134,9 @@ export class CreateAccountComponent implements OnInit{
       this.accountToCreate.serverId = this.form.controls["server"].value;
       this.accountToCreate.isBan = false;
       let accountCreated = this.accountToCreate;
-      this.storeAccount.dispatch(AccountActions.createAccount({ accountCreated  }));
+      this.storeAccount.dispatch(AccountActions.createAccount({ accountCreated }));
+      this.storeCharacter.dispatch(CharacterActions.resetReceveidCharacters());
+      this.charaters$ = this.storeCharacter.pipe(select(fromcharacter.getScanCharacters));
     };
     
    this.navigationService.GenerateNavigation();
@@ -157,6 +159,6 @@ export class CreateAccountComponent implements OnInit{
   }
 
   setCharacters(): any {
-    this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
+    this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_Group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
   }
 }

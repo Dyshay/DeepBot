@@ -6,12 +6,13 @@ import { Router } from '@angular/router';
 
 import { TalkService } from "src/app/Services/TalkService";
 import { AccountActions } from '../actions';
-
+import icLayers from '@iconify/icons-ic/twotone-layers';
 import { ToastrService } from 'ngx-toastr';
 import { AccountService } from '../../../services/account.service';
 import { GroupsService } from '../../../services/group.service';
 import { Account } from '../../../../webModel/Account';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
+import { NavigationLink } from '../../../../@vex/interfaces/navigation-item.interface';
 
 @Injectable()
 export class AccountEffects {
@@ -33,9 +34,10 @@ export class AccountEffects {
         this.actions$.pipe(
           ofType(AccountActions.createAccountSuccess),
             map(action => action.accountCreated),
-            tap((account: any) => {
-              this.navigationService.GenerateNavigation();
-              this.toastr.success('', 'Compte ' + account.accountName + ' ajouté avec succés');
+          tap((accountCreated: any) => {
+            console.log(accountCreated);
+            this.navigationService.GenerateNavigation();
+            this.toastr.success('', 'Compte ' + accountCreated.accountName + ' ajouté avec succés');
               this.router.navigateByUrl('/');
             })
         ),

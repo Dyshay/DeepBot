@@ -27,7 +27,7 @@ import icPictureInPicture from '@iconify/icons-ic/twotone-picture-in-picture';
 import icSettings from '@iconify/icons-ic/twotone-settings';
 import { LayoutService } from '../@vex/services/layout.service';
 import icUpdate from '@iconify/icons-ic/twotone-update';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { SplashScreenService } from '../@vex/services/splash-screen.service';
@@ -72,7 +72,8 @@ export class AppComponent implements OnInit {
     private storeUser: Store<fromwebuser.State>,
     private storeGroup: Store<fromGroup.State>,
     private storeAccount: Store<fromAccount.State>,
-    private splashScreenService: SplashScreenService
+    private splashScreenService: SplashScreenService,
+    private router: Router
   ) {
 
     translate.setDefaultLang('fr');
@@ -103,6 +104,10 @@ export class AppComponent implements OnInit {
       this.storeUser.dispatch(webUserActions.getUser());
       this.storeGroup.dispatch(GroupActions.getAllGroups());
       this.navigationService.GenerateNavigation();
+    }
+    else {
+      this.userService.logout();
+      this.router.navigate(['/login']);
     }
   }
 }

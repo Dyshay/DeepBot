@@ -62,7 +62,27 @@ export class GroupEffects {
     this.actions$.pipe(
       ofType(GroupActions.getAllGroupsSuccess),
       map(action => action.groups),
-      tap((groups: any) => {
+      tap((groups: Group[]) => {
+        for (var i = 0; i < groups.length; i++) {
+          var level = 0;
+          var pp = 0;
+          var grouptotal = 0;
+          for (var j = 0; j < groups[i].followers.length; j++) {
+            level = level + groups[i].followers[j].level;
+            grouptotal++;
+            if (groups[i].followers[j].characteristic != null)
+               pp = pp + groups[i].followers[j].characteristic.prospection.total;
+          }
+          level = level + groups[i].leader.level;
+          grouptotal++;
+          if (groups[i].leader.characteristic != null)
+            pp = pp + groups[i].leader.characteristic.prospection.total;
+
+          groups[i].groupLevel = level;
+          groups[i].groupProspection = pp
+          groups[i].groupTotal = grouptotal;
+        }
+
       })
     ),
     { dispatch: false }

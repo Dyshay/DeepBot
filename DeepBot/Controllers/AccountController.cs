@@ -67,6 +67,8 @@ namespace DeepBot.Controllers
             user.Accounts.RemoveAll(o=> o.isScan == true);
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
+            account.ExpirationDateBan = null;
+            account.EndAnakamaSubscribe = null;
             account.isScan = false;
             account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
             if (user.Accounts == null)

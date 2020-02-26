@@ -105,7 +105,7 @@ export class UpdateGroupComponent implements OnInit {
                   leader: result.find(o=>o.key == result1[i].fk_Leader).name,
                   followers: followers,
                   description: result1[i].description,
-                  groupLevel:result1[i].grouplevel
+                  groupLevel:result1[i].groupLevel
                 }
               )
             }

@@ -59,7 +59,6 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<Account>();
             BsonClassMap.RegisterClassMap<Character>();
             BsonClassMap.RegisterClassMap<Proxy>();
-            BsonClassMap.RegisterClassMap<ConfigAccount>();
 
             services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
             {

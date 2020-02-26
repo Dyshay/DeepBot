@@ -3,38 +3,72 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconModule } from '@visurel/iconify-angular';
-import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule,  MatPaginatorModule, MatSortModule, MatMenuModule, MatRippleModule, MatDialogModule, MatSidenavModule } from '@angular/material';
+import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule,  MatPaginatorModule, MatSortModule, MatMenuModule, MatRippleModule, MatDialogModule, MatSidenavModule, MatTabsModule, MatTooltipModule, MatProgressBarModule, MatListModule, MatDividerModule } from '@angular/material';
 import { MatTableModule } from '@angular/material/table';
-import { ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ScrollbarModule } from '../../../../@vex/components/scrollbar/scrollbar.module';
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
 import { GroupDashboardComponent } from './group-dashboard.component';
 import { GroupDashboardRoutingModule } from './group-dashboard-routing.module';
+import { DashboardGroupComponent } from './dashboard-group/dashboard-group.component';
+import { GroupFightComponent } from './group-fight/group-fight.component';
+import { GroupInventoryComponent } from './group-inventory/group-inventory.component';
+import { GroupParametersComponent } from './group-parameters/group-parameters.component';
+import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-layout.module';
+import { ChartModule } from '../../../../@vex/components/chart/chart.module';
+import { WidgetQuickLineChartModule } from '../../../../@vex/components/widgets/widget-quick-line-chart/widget-quick-line-chart.module';
+import { WidgetQuickValueCenterModule } from '../../../../@vex/components/widgets/widget-quick-value-center/widget-quick-value-center.module';
+import { WidgetQuickValueStartModule } from '../../../../@vex/components/widgets/widget-quick-value-start/widget-quick-value-start.module';
+import { WidgetLargeGoalChartModule } from '../../../../@vex/components/widgets/widget-large-goal-chart/widget-large-goal-chart.module';
+import { WidgetAssistantModule } from '../../../../@vex/components/widgets/widget-assistant/widget-assistant.module';
+import { WidgetLargeChartModule } from '../../../../@vex/components/widgets/widget-large-chart/widget-large-chart.module';
+import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
+import { WidgetTableModule } from '../../../../@vex/components/widgets/widget-table/widget-table.module';
 
 
 @NgModule({
-  declarations: [GroupDashboardComponent],
+  declarations: [GroupDashboardComponent,DashboardGroupComponent,GroupFightComponent,GroupInventoryComponent,GroupParametersComponent],
   imports: [
     CommonModule,
     GroupDashboardRoutingModule,
-    FlexLayoutModule,
-    IconModule,
-    MatButtonModule,
-    MatTableModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatCheckboxModule,
     MatIconModule,
-    MatMenuModule,
+    MatSlideToggleModule,
+    PageLayoutModule,
+    FlexLayoutModule,
+    MatSliderModule,
+    MatTabsModule,
+    IconModule,
+    FormsModule,
+    MatButtonModule,
+    MatIconModule,
+    MatTooltipModule,
     MatRippleModule,
-    MatDialogModule,
-    ScrollbarModule,
-    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatListModule,
+    ChartModule,
+    MatIconModule,
+    WidgetQuickLineChartModule,
+    WidgetQuickValueCenterModule,
+    WidgetQuickValueStartModule,
+    WidgetLargeGoalChartModule,
+    IconModule,
+    WidgetAssistantModule,
+    WidgetLargeChartModule,
+    WidgetTableModule,
+    SecondaryToolbarModule,
+    MatButtonModule,
+    PageLayoutModule,
+    MatInputModule,
     ContainerModule,
-    MatSidenavModule,
-    TranslateModule
+    MatSelectModule,
+    TranslateModule,
+    MatDividerModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
