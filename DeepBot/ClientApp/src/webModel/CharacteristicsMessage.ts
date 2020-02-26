@@ -1,8 +1,8 @@
 import { Caracteristic } from './Caracteristic';
 
 export interface CharacteristicsMessage {
-  characteristics: Caracteristic,
-  availableCharactericsPts: number,
+  characteristic: Caracteristic,
+  characteristicsPoints: number,
   kamas: number,
   tcpId: string
 }

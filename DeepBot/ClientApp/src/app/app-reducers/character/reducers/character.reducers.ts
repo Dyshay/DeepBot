@@ -12,7 +12,7 @@ export interface State {
   kamas: number,
   pending: boolean,
   characteristics: Caracteristic,
-  actionPoints: number,
+  characteristicsPoints: number,
 }
 
 export const initialState: State = {
@@ -41,7 +41,7 @@ export const initialState: State = {
     prospection: { total: 0 },
   },
   kamas: 0,
-  actionPoints: 0,
+  characteristicsPoints: 0,
   error: null,
   pending: false
 }
@@ -51,7 +51,7 @@ export const reducer = createReducer(initialState,
 
 
   on(CharacterActions.receveidCharacters, (state, { network }) => ({ ...state, scanCharacters: network.characters })),
-  on(CharacterActions.receivedCharacteristic, (state, { network }) => ({ ...state, characteristics: network.characteristics, kamas: network.kamas, actionPoints: network.availableCharactericsPts })),
+  on(CharacterActions.receivedCharacteristic, (state, { network }) => ({ ...state, characteristics: network.characteristic, kamas: network.kamas, characteristicsPoints: network.characteristicsPoints })),
   on(CharacterActions.resetReceveidCharacters, (state) => ({ ...state, scanCharacters: [] })),
 
   on(CharacterActions.getAllCharacters, (state, { allCharacters }) => ({ ...state, allCharacters: allCharacters, pending: false })),
@@ -69,7 +69,7 @@ export const reducer = createReducer(initialState,
 
 export const getScanCharacters = (state: State) => state.scanCharacters;
 export const getKamas = (state: State) => state.kamas;
-export const getActionPoints = (state: State) => state.actionPoints;
+export const getCharacteristicsPoints = (state: State) => state.characteristicsPoints;
 export const getCharacteristics = (state: State) => state.characteristics;
 export const getAllCharacters = (State: State) => State.allCharacters;
 export const getAllCurrentCharacters = (State: State) => State.allCurrentCharacters;
