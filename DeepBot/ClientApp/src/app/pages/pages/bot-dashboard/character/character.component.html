@@ -37,37 +37,37 @@
           {{'DASHBOARDBOT.PA' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          6
+          {{characteristics.pa.total}}
         </div>
         <div gdColumn.lt-sm="1">
           {{'DASHBOARDBOT.PM' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          3
+          {{characteristics.pm.total}}
         </div>
         <div gdColumn.lt-sm="1">
           {{'DASHBOARDBOT.SCOPE' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          3
+          {{characteristics.range.total}}
         </div>
         <div gdColumn.lt-sm="1">
           {{'DASHBOARDBOT.INIT' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          1200
+          {{characteristics.initiative.total}}
         </div>
         <div gdColumn.lt-sm="1">
           {{'DASHBOARDBOT.PP' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          120
+          {{characteristics.prospection.total}}
         </div>
         <div gdColumn.lt-sm="1">
           {{'DASHBOARDBOT.CREATURE' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          3
+          {{characteristics.invocablesCreatures.total}}
         </div>
       </div>
 
@@ -82,8 +82,8 @@
           {{'DASHBOARDBOT.VITALITY' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          100
-          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right">
+          {{characteristics.vitality.total}}
+          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right" (disabled)="points === 0">
             <mat-icon [icIcon]="icPlus"></mat-icon>
           </button>
         </div>
@@ -91,8 +91,8 @@
           {{'DASHBOARDBOT.WISDOM' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          100
-          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right">
+          {{characteristics.wisdom.total}}
+          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right" (disabled)="points === 0">
             <mat-icon [icIcon]="icPlus"></mat-icon>
           </button>
         </div>
@@ -100,8 +100,8 @@
           {{'DASHBOARDBOT.STRENGTH' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          100
-          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right">
+          {{characteristics.strength.total}}
+          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right" (disabled)="points === 0">
             <mat-icon [icIcon]="icPlus"></mat-icon>
           </button>
         </div>
@@ -109,8 +109,8 @@
           {{'DASHBOARDBOT.INTEL' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          100
-          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right">
+          {{characteristics.intelligence.total}}
+          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right" (disabled)="points === 0">
             <mat-icon [icIcon]="icPlus"></mat-icon>
           </button>
         </div>
@@ -118,8 +118,8 @@
           {{'DASHBOARDBOT.LUCK' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          100
-          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right">
+          {{characteristics.luck.total}}
+          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right" (disabled)="points === 0">
             <mat-icon [icIcon]="icPlus"></mat-icon>
           </button>
         </div>
@@ -127,8 +127,8 @@
           {{'DASHBOARDBOT.AGILITY' | translate}}
         </div>
         <div gdColumn.lt-sm="1">
-          100
-          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right">
+          {{characteristics.agility.total}}
+          <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip=" 5 {{'DASHBOARDBOT.PTSUSUABLE' | translate}}" matTooltipPosition="right" (disabled)="points === 0">
             <mat-icon [icIcon]="icPlus"></mat-icon>
           </button>
         </div>

@@ -1,9 +1,9 @@
 import { Stat } from './Stat';
 
 export class Caracteristic {
-  expActual: number;
-  expMinLevel: number;
-  expLevelUp: number;
+  experienceActual: number;
+  experienceMinLevel: number;
+  experienceLevelUp: number;
   energyActual: number;
   energyMax: number = 10000;
   vitalityActual: number;
@@ -19,7 +19,7 @@ export class Caracteristic {
   luck: Stat;
   agility: Stat;
   range: Stat;
-  invocation: Stat;
+  invocablesCreatures: Stat;
 }
 
 

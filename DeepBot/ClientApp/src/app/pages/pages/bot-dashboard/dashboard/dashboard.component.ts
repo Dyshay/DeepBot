@@ -20,9 +20,12 @@ export class DashboardComponent implements OnInit {
       console.log(this.logs);
     }
 
+  @Input() kamas: number;
   @Input() character: Character;
   @Input() account: Account;
   @Input() logs: LogMessage[];
+  @Input() experienceActual: string;
+  @Input() experienceLevelUp: string;
   theme = theme;
   icKamas = icKamas;
   icTimer = icTimer;

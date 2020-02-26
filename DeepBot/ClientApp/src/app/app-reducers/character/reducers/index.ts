@@ -25,5 +25,8 @@ export const selectCharacterStatusState = createSelector(
 );
 
 export const getScanCharacters = createSelector(selectCharacterStatusState, fromCharacter.getScanCharacters);
+export const getKamas = createSelector(selectCharacterStatusState, fromCharacter.getKamas);
+export const getCharacteristicsPoints = createSelector(selectCharacterStatusState, fromCharacter.getCharacteristicsPoints);
+export const getCharacteristics = createSelector(selectCharacterStatusState, fromCharacter.getCharacteristics);
 export const getAllCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCharacters);
 export const getAllCurrentCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCurrentCharacters);

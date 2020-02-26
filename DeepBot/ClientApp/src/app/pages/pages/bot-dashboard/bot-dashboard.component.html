@@ -75,8 +75,8 @@
        fxLayoutAlign.lt-md="start stretch"
        fxLayoutGap="24px">
     <div fxFlex="calc(70% - 12px)" fxFlex.lt-md="auto">
-      <app-dashboard *ngIf="indexSelected == 0" [character]="character" [account]="account" [logs]="logs$ | async"></app-dashboard>
-      <app-character *ngIf="indexSelected == 1" [character]="character"></app-character>
+      <app-dashboard *ngIf="indexSelected == 0" [character]="character" [account]="account" [logs]="logs$ | async" [kamas]="kamas$ | async" [experienceActual]="(characteristics$ | async).experienceActual" [experienceLevelUp]="(characteristics$ | async).experienceLevelUp"></app-dashboard>
+      <app-character *ngIf="indexSelected == 1" [character]="character" [characteristics]="characteristics$ | async" [points]="characteristicsPoints | async" [kamas]="kamas$ | async"></app-character>
       <app-fight *ngIf="indexSelected == 2" [character]="character"></app-fight>
       <app-job *ngIf="indexSelected == 3" [character]="character"></app-job>
       <app-inventory *ngIf="indexSelected == 4" [character]="character"></app-inventory>

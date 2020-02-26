@@ -133,7 +133,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         //}
 
         [Receiver("AYK")]
-        public void GetServerWorld(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetServerWorldRemastered(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Split(';')[1];
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
