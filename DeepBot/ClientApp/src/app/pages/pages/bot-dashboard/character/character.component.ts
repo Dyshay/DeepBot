@@ -9,6 +9,7 @@ import icSave from '@iconify/icons-ic/outline-save';
 import icImport from '@iconify/icons-mdi/file-import-outline';
 import icDelete from '@iconify/icons-fa-solid/trash';
 import { Store } from '@ngrx/store';
+import { Caracteristic } from 'src/webModel/Caracteristic';
 
 @Component({
     selector: 'app-character',
@@ -21,7 +22,7 @@ export class CharacterComponent {
   icImport = icImport;
   icDelete = icDelete;
   @Input() character: Character;
-  @Input() characteristics: any;
+  @Input() characteristics: Caracteristic;
   @Input() kamas: number;
   @Input() points: number;
   icPlus = icPlus;
@@ -29,7 +30,7 @@ export class CharacterComponent {
   autoBoostKey;
     /** character ctor */
   constructor(private translateService: TranslateService, private storeCharacter: Store<fromCharacter.State>) {
-
+    console.log(this.characteristics)
   }
   AddAutoBoost() {
     console.log(this.autoBoostKey, this.autoBoostValue)
