@@ -12,14 +12,13 @@ namespace DeepBot.Core.Network.HubMessage.Messages
         public Caracteristic Characteristic { get; set; }
         public int Kamas { get; set; }
         public int CharacteristicsPoints { get; set; }
-        public byte Level { get; set; }
 
-        public CharacteristicMessage(Caracteristic characteristic, int kamas, int characteristicsPoints, byte level)
+        public CharacteristicMessage(Caracteristic characteristic, int kamas, int characteristicsPoints, string tcpId)
         {
             Characteristic = characteristic;
             Kamas = kamas;
             CharacteristicsPoints = characteristicsPoints;
-            Level = level;
+            TcpId = tcpId;
         }
     }
 }

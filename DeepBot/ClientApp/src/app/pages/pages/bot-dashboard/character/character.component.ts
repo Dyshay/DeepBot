@@ -20,7 +20,10 @@ export class CharacterComponent {
   icSave = icSave;
   icImport = icImport;
   icDelete = icDelete;
-  @Input() character: Character
+  @Input() character: Character;
+  @Input() characteristics: any;
+  @Input() kamas: number;
+  @Input() points: number;
   icPlus = icPlus;
   autoBoostValue =0;
   autoBoostKey;

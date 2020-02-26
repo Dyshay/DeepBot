@@ -18,7 +18,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             characterGame.UpdateCharacteristics(package);
 
             manager.ReplaceOneAsync(c => c.Id == account.Id, account);
-            hub.DispatchToClient(new CharacteristicMessage(characterGame.Characteristic, characterGame.Kamas, characterGame.AvailableCharactericsPts, characterGame.Level), tcpId).Wait();
+            hub.DispatchToClient(new CharacteristicMessage(characterGame.Characteristic, characterGame.Kamas, characterGame.AvailableCharactericsPts, tcpId), tcpId).Wait();
         }
     }
 }

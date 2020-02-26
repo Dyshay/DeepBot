@@ -4,6 +4,7 @@ import { ConfigCharacter } from '../../../../webModel/ConfigCharacter';
 
 
 export const receveidCharacters = createAction('[BOT/TALK] RECEIVE CHARACTERS', props<{ network: CharacterMessage }>());
+export const receivedCharacteristic = createAction('[BOT/TALK] RECEIVE CHARACTERISTICS', props<{ network: any }>());
 export const resetReceveidCharacters = createAction('[BOT/TALK] RESET RECEIVE CHARACTERS');
 
 export const getAllCharacters = createAction('[BOT/CHARACTER] GET ALLCHARACTERS', props<{ allCharacters: Character[] }>());

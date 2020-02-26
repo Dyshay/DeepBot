@@ -8,12 +8,14 @@ export interface State {
   allCurrentCharacters: Character[],
   error: string | null,
   pending: boolean
+  characteristics: any | null
 }
 
 export const initialState: State = {
   scanCharacters: [],
   allCharacters: [],
-  allCurrentCharacters:[],
+  allCurrentCharacters: [],
+  characteristics: null,
   error: null,
   pending: false
 }
@@ -23,6 +25,7 @@ export const reducer = createReducer(initialState,
 
 
   on(CharacterActions.receveidCharacters, (state, { network }) => ({ ...state, scanCharacters: network.characters })),
+  on(CharacterActions.receivedCharacteristic, (state, { network }) => ({ ...state, characteristics: network })),
   on(CharacterActions.resetReceveidCharacters, (state) => ({ ...state, scanCharacters: [] })),
 
   on(CharacterActions.getAllCharacters, (state, { allCharacters}) => ({ ...state, allCharacters:allCharacters, pending: false })),
@@ -39,5 +42,6 @@ export const reducer = createReducer(initialState,
 )
 
 export const getScanCharacters = (state: State) => state.scanCharacters;
+export const getCharacteristics = (state: State) => state.characteristics;
 export const getAllCharacters = (State: State) => State.allCharacters;
 export const getAllCurrentCharacters = (State: State) => State.allCurrentCharacters;

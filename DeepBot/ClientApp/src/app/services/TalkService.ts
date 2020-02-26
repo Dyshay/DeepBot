@@ -72,6 +72,9 @@ export class TalkService {
         case 6:
           this.storeCharacter.dispatch(CharacterActions.receveidCharacters({ network }));
           break;
+        case 7:
+          this.storeCharacter.dispatch(CharacterActions.receivedCharacteristic({ network }));
+          break;
         default:
           break;
       }
