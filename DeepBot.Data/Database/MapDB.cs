@@ -9,12 +9,11 @@ using System.Text.Json;
 
 namespace DeepBot.Data.Database
 {
-    public class MapDB
+    public class MapDB: Document<int>
     {
         public string GlobalAreaName { get; set; }
         public string AreaName { get; set; }
         public int AreaId { get; set; }
-        public int MapId { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
         public string Coordinate { get; set; }

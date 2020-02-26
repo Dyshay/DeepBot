@@ -113,23 +113,23 @@ namespace DeepBot
                 };
             });
 
-            Map.Initialize();
-            foreach (var item in Map.Maps.Values)
-            {
-                MapDB map = new MapDB()
-                {
-                    AreaId = item.AreaId,
-                    AreaName = item.AreaName,
-                    GlobalAreaName = item.GlobalAreaName,
-                    Height = item.Height,
-                    Width = item.Width,
-                    MapId = item.MapId,
-                    Cells = item.Cells,
-                    CellsTeleport = item.CellsTeleport,
-                    Coordinate = item.Coordinate,
-                };
-                map.Insert();
-            }
+            //Map.Initialize();
+            //foreach (var item in Map.Maps.Values)
+            //{
+            //    MapDB map = new MapDB()
+            //    {
+            //        AreaId = item.AreaId,
+            //        AreaName = item.AreaName,
+            //        GlobalAreaName = item.GlobalAreaName,
+            //        Height = item.Height,
+            //        Width = item.Width,
+            //        MapId = item.MapId,
+            //        Cells = item.Cells,
+            //        CellsTeleport = item.CellsTeleport,
+            //        Coordinate = item.Coordinate,
+            //    };
+            //    map.Insert();
+            //}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

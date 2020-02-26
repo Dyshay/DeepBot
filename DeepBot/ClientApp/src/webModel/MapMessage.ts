@@ -1,10 +1,10 @@
 import { Cell } from './Cell';
 
 export interface MapMessage {
-  Cells: Cell[],
+  cells: Cell[],
   AreaName: string,
-  MapWidth: number,
-  MapHeight: number,
+  mapWidth: number,
+  mapHeight: number,
   Coordinate: string,
   tcpId: string
 }

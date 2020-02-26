@@ -28,7 +28,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
 
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Connexion au serveur d'auth", tcpId), tcpId).Wait();
 
-            hub.SendPackage("1.31", tcpId);
+            hub.SendPackage("1.31.2", tcpId);
 
             // USE THE ACCOUNT AND PASSWORD FROM account
             hub.SendPackage($"{user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).AccountName}\n{Hash.EncryptPassword(user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Password, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey)}", tcpId);
@@ -130,6 +130,15 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
+        }
+
+        [Receiver("AYK")]
+        public void GetServerWorld(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Split(';')[1];
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            hub.Clients.Caller.SendAsync("NewConnection", package.Split(';')[0].Substring(3), 443, true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world ", tcpId), tcpId).Wait();
         }
     }
 }
