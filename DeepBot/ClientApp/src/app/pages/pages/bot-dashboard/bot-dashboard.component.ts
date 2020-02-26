@@ -67,6 +67,8 @@ export class BotDashboardComponent implements OnInit {
   logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   map$ = this.accountStore.pipe(select(fromAccount.getMap));
   characteristics$ = this.characterStore.pipe(select(fromCharacter.getCharacteristics));
+  kamas$ = this.characterStore.pipe(select(fromCharacter.getKamas));
+  characteristicsPoints$ = this.characterStore.pipe(select(fromCharacter.getCharacteristicsPoints));
   /** bot-dashboard ctor */
   constructor(private activatedRoute: ActivatedRoute, private characterService: CharacterService,
     private groupStore: Store<fromGroup.State>,
