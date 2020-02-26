@@ -15,6 +15,9 @@ namespace DeepBot.Data.Database
         public Guid Fk_User { get; set; }
         public Guid Fk_Group { get; set; }
         public int PauseNumber { get; set; }
+        public int PauseTime { get; set; }
+        public bool AlignTeam { get; set; }
+        public int AgressionZone { get; set; }
         public bool AutoCaptureArchi { get; set; }
         public int Fk_CharacterCapture { get; set; }
         public bool BlockSpectate { get; set; }

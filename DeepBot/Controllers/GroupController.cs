@@ -26,7 +26,7 @@ namespace DeepBot.Controllers
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
         private List<GroupDB> _groups = Database.Groups.Find(FilterDefinition<GroupDB>.Empty).ToList();
-
+        private List<ConfigGroupDB> _configGroup = Database.ConfigsGroup.Find(FilterDefinition<ConfigGroupDB>.Empty).ToList();
 
         public GroupController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -49,6 +49,8 @@ namespace DeepBot.Controllers
             foreach (GroupDB item in ListGroup)
             {
                 item.Followers = new List<Character>();
+                item.Config = _configGroup.FirstOrDefault(o => o.Fk_Group == item.Key);
+
                 foreach (var account in user.Accounts)
                 {
                     if (account.CurrentCharacter != null)
@@ -70,8 +72,13 @@ namespace DeepBot.Controllers
         public async Task<GroupDB> CreateGroupAsync(GroupDB group)
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
+
+           
             var user = await _userManager.FindByIdAsync(userId);
             group.Key = Guid.NewGuid();
+            await CreateConfigAsync(group.Key);
+            group.Fk_Configuration =  Database.ConfigsGroup.Find(FilterDefinition<ConfigGroupDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Group == group.Key).Key;
+
             group.FK_User = Guid.Parse(userId);
             int level = 0;
             foreach (var charactersId in group.Fk_Followers)
@@ -167,6 +174,18 @@ namespace DeepBot.Controllers
             await Database.Groups.ReplaceOneAsync(o => o.Key == group.Key, group);
 
             return Ok(group);
+        }
+
+        public async Task CreateConfigAsync(Guid groupId)
+        {
+            ConfigGroupDB config = new ConfigGroupDB();
+            config.Fk_Group = groupId;
+            config.Fk_User = new Guid(User.Claims.First(c => c.Type == "UserID").Value);
+            config.CreationDate = DateTime.Now;
+
+
+            await Database.ConfigsGroup.InsertOneAsync(config);
+
         }
     }
 }

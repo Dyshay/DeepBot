@@ -1,1 +1,20 @@
-﻿<div style="border: 1px solid red">group-inventory Component</div>
+<div class="card">
+  <div class="px-gutter py-4 border-b">
+    <h2 class="title m-0">{{'DASHBOARDBOT.INVENTORY' | translate}}</h2>
+  </div>
+  <mat-tab-group mat-align-tabs="center">
+    <mat-tab label="{{'DASHBOARDBOT.ITEM' | translate}}">
+      <app-liste-group class="mt-2" [itemDofus]="itemDofus"></app-liste-group>
+    </mat-tab>
+    <mat-tab label="{{'DASHBOARDBOT.CONSOMMABLE' | translate}}">
+      <app-liste-group class="mt-2" [consommablesDofus]="consommablesDofus"></app-liste-group>
+    </mat-tab>
+    <mat-tab label="{{'DASHBOARDBOT.RESSOURCE' | translate}}">
+      <app-liste-group class="mt-2" [ressourcesDofus]="ressourcesDofus"></app-liste-group>
+    </mat-tab>
+    <mat-tab label="{{'DASHBOARDBOT.BANK' | translate}}">
+      <app-liste-group class="mt-2" [banqueDofus]="banqueDofus"></app-liste-group>
+    </mat-tab>
+  </mat-tab-group>
+
+</div>

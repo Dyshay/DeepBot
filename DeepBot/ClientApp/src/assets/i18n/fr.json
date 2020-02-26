@@ -157,7 +157,7 @@
     "RESSOURCE": "Ressources",
     "BANK": "Banque",
     "JOBHANDLE": "Gestion du métier",
-    "GLOBALPARAMETERS": "Paramétres global",
+    "GLOBALPARAMETERS": "Paramétres globaux",
     "DELAYMOVE": "Delai des déplacements",
     "MAKEPAUSE": "Effectuer une pause",
     "AGRESSIONZONE": "Définir une zone d'agression",
@@ -172,6 +172,10 @@
     "MESSAGEATSTOP": "Message lors de l'arret du bot",
     "NOPAUSE": "Aucune pause",
     "IMPORTCONFIG": "Importer la configuration d'un autre bot"
+  },
+  "GROUPDASHBOARD": {
+    "ALIGNTEAM": "Aligner team durant la pause",
+    "PAUSETIME": "Temps de pause"
   },
   "UPDATEGROUP": {
     "GROUP": "Mes groupes ",

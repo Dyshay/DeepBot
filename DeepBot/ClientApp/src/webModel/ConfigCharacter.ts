@@ -3,6 +3,7 @@ export class ConfigCharacter {
   description: string;
   moveDelay: number;
   pauseNumber: number;
+  pauseTime: number;
   agressionZone: number;
   autoAnswer: boolean;
   autoDisconnect: boolean;
