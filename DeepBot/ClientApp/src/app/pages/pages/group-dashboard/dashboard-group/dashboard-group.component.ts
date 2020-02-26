@@ -69,7 +69,6 @@ export class DashboardGroupComponent implements OnInit {
     this.dataSource = this.data;
   }
 
-  https://localhost:44319/bot-dashboard/70080623
 }
 
 export interface Character {
