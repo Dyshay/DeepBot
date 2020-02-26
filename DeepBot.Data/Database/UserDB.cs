@@ -26,6 +26,7 @@ namespace DeepBot.Data.Database
         public string AddressIP { get; set; }
         public short AppCliOnline { get; set; }
         public string CliConnectionId { get; set; }
+        public bool isActive { get; set; }
 
     }
  

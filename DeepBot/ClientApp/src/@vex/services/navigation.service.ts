@@ -41,9 +41,7 @@ const httpOptions = {
 export class NavigationService {
 
   items: NavigationItem[] = [];
-  item: NavigationLink;
-  group: NavigationDropdown = null;
-  itemGroup: NavigationLink = null;
+
 
   private _openChangeSubject = new Subject<NavigationDropdown>();
   openChange$ = this._openChangeSubject.asObservable();
@@ -61,6 +59,9 @@ export class NavigationService {
   }
 
   GenerateNavigation() {
+   var item: NavigationLink
+  var  group: NavigationDropdown = null;
+   var itemGroup: NavigationLink = null;
     this.http.get<SideNav>(`${environment.apiURL}User/CreateSideNavUser`, httpOptions).subscribe(
       (result: SideNav) => {
         this.items = [];
@@ -77,31 +78,31 @@ export class NavigationService {
         });
 
         for (var i = 0; i < result.items.length; i++) {
-          this.group = {children:null,label:null,type:null,badge:null,icon:null};
-          this.group.children = [];
+          group = {children:null,label:null,type:null,badge:null,icon:null};
+          group.children = [];
 
           if (result.items[i].isGroup) {
-            this.group.label = result.items[i].name;
-            this.group.route = '/group-dashboard/' + result.items[i].id;
-            this.group.type = 'dropdown';
-            this.group.icon = icLayers;
+            group.label = result.items[i].name;
+            group.route = '/group-dashboard/' + result.items[i].id;
+            group.type = 'dropdown';
+            group.icon = icLayers;
             for (var j = 0; j < result.items[i].children.length; j++) {
-              this.itemGroup = {label:null,route:null,type:null,badge:null,fragment:null}
-              this.itemGroup.label = result.items[i].children[j].name;
-              this.itemGroup.route = '/bot-dashboard/' + result.items[i].children[j].id;
-              this.itemGroup.icon = icLayers;
-              this.itemGroup.type = 'link';
-              this.group.children.push(this.itemGroup); 
+              itemGroup = {label:null,route:null,type:null,badge:null,fragment:null}
+              itemGroup.label = result.items[i].children[j].name;
+              itemGroup.route = '/bot-dashboard/' + result.items[i].children[j].id;
+             itemGroup.icon = icLayers;
+              itemGroup.type = 'link';
+              group.children.push(itemGroup); 
             }
-            this.addDropdown(this.group);
+            this.addDropdown(group);
           }
           else {
-            this.item = { label: null, route: null, type: null, badge: null, fragment: null };
-            this.item.label = result.items[i].name;
-            this.item.type = 'link';
-            this.item.icon = icLayers;
-            this.item.route = '/bot-dashboard/' + result.items[i].id;
-            this.addLink(this.item);
+            item = { label: null, route: null, type: null, badge: null, fragment: null };
+            item.label = result.items[i].name;
+            item.type = 'link';
+            item.icon = icLayers;
+            item.route = '/bot-dashboard/' + result.items[i].id;
+            this.addLink(item);
           }
         }
         this.addSubheading({

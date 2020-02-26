@@ -27,6 +27,7 @@ import icPause from '@iconify/icons-ic/outline-pause-circle-outline'
 import { Link } from '../../../../@vex/interfaces/link.interface';
 import { Store, select } from '@ngrx/store';
 import * as fromCharacter from 'src/app/app-reducers/character/reducers';
+import * as fromGroup from 'src/app/app-reducers/group/reducers';
 import { Character } from '../../../../webModel/Character';
 import { TranslateService } from '@ngx-translate/core';
 import { Icon } from '@visurel/iconify-angular';
@@ -35,6 +36,8 @@ import { TalkService } from 'src/app/Services/TalkService';
 import * as fromAccount from '../../../app-reducers/account/reducers';
 import { LogMessage } from 'src/webModel/LogMessage';
 import { Account } from 'src/webModel/Account';
+import { CharacterService } from '../../../services/character.service';
+import { Group } from '../../../../webModel/Group';
 
 export interface FriendSuggestion {
   name: string;
@@ -59,19 +62,33 @@ export class BotDashboardComponent implements OnInit {
   account: Account;
   character: Character;
   indexSelected: number = 0;
+  iconCharacter: string;
+  groupName: string;
   logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   map$ = this.accountStore.pipe(select(fromAccount.getMap));
   /** bot-dashboard ctor */
-  constructor(private activatedRoute: ActivatedRoute, private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>) {
+  constructor(private activatedRoute: ActivatedRoute, private characterService: CharacterService,
+    private groupStore: Store<fromGroup.State>,
+    private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>) {
   }
 
   ngOnInit() {
+
     this.activatedRoute.paramMap.subscribe(params => {
       this.store.pipe(select(fromCharacter.getAllCurrentCharacters)).subscribe(
         (result: Character[]) => {
           for (var i = 0; i < result.length; i++) {
             if (result[i].key.toString() == params.get('id'))
               this.character = result[i];
+            this.iconCharacter = this.characterService.getCharacterIcon(this.character.breedId);
+            if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
+              this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
+                (result: Group[]) => {
+                  this.groupName = result.find(o => o.key == this.character.fk_Group).name;
+                }
+              );
+              
+            }
           }
         })
     });

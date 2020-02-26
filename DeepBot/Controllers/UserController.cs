@@ -85,13 +85,10 @@ namespace DeepBot.Controllers
             if (user != null)
             {
 
-                if (user.EmailConfirmed && !user.LockoutEnabled)
+                if (user.EmailConfirmed && user.isActive)
                 {
                     retour = true;
                 }
-#if DEBUG
-                retour = true;
-#endif
             }
             return retour;
 
@@ -155,7 +152,8 @@ namespace DeepBot.Controllers
                 UserName = model.UserName,
                 Email = model.UserEmail,
                 ApiKey = apiKeyDebug,
-                Langue = model.Langue
+                Langue = model.Langue,
+                isActive = true
             };
             bool alreadyCreated = await isAlreadyCreatedAsync(model.UserEmail, model.UserName);
             if (alreadyCreated)
@@ -272,13 +270,11 @@ namespace DeepBot.Controllers
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 var role = user.Roles.FirstOrDefault();
-
-
                 IdentityOptions _options = new IdentityOptions();
 
                 SecurityTokenDescriptor tokenDescriptor;
 
-                if (role != null && user.EmailConfirmed)
+                if (role != null && user.EmailConfirmed && user.isActive)
                 {
                     try
                     {
@@ -316,15 +312,15 @@ namespace DeepBot.Controllers
                 {
                     return NotFound(new { message = "MailNotConfirmed" });
                 }
+                else if (!user.isActive)
+                {
+                    return NotFound(new { message = "AccountBlocked" });
+                }
                 else
                 {
                     return NotFound(new { message = "ErrorUnknown" });
                 }
-
-
                 //DAL_Log.Write("User", "Login", user.UserName, "Connection reussie");
-
-
             }
             else
                 return NotFound(new { message = "IdOrPwdIncorrect" });

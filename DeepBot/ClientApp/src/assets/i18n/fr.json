@@ -13,6 +13,8 @@
     "ADD": "Ajouter",
     "DISCONNECT": "Se déconnecter",
     "CONNECT": "Se connecter",
+    "CONNECTGROUP": "Connecter le groupe",
+    "DISCONNECTGROUP": "Déconnecter le groupe",
     "ACCOUNTNAME": "Nom de compte",
     "PRINCIPALCHARACTER": "Personnage principal",
     "CREATIONDATE": "Date de création",
@@ -22,7 +24,8 @@
     "GROUPACTUAL": "Groupe actuel",
     "CHARACTER": "Personnage",
     "NOGROUP": "Aucun Groupe",
-    "DELETE": "Supprimer"
+    "DELETE": "Supprimer",
+    "ACTUALPATH": "Trajet actuel"
   },
   "TOOLBAR": {
     "BOTHANDLE": "Gestion du bot",

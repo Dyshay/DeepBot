@@ -36,7 +36,7 @@
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
         <mat-form-field class="full-width" fxFlex="75">
           <mat-label>{{'DASHBOARDBOT.MAKEPAUSE' | translate}}</mat-label>
-          <mat-select [(value)]="character.config.pauseNumber">
+          <mat-select [(value)]="character.config.pauseNumber" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
             <mat-option [value]="0">{{ 'DASHBOARDBOT.NOPAUSE' | translate}}</mat-option>
             <mat-option [value]="1">40 combats</mat-option>
             <mat-option [value]="2">60 combats</mat-option>
@@ -47,13 +47,13 @@
       </div>
       <mat-form-field class="example-full-width">
         <mat-label>{{'DASHBOARDBOT.AGRESSIONZONE' | translate}}</mat-label>
-        <input matInput placeholder="3"  type="number" [(ngModel)]="character.config.agressionZone" [name]="agressionZone">
+        <input matInput placeholder="3"  type="number" [(ngModel)]="character.config.agressionZone" [name]="agressionZone" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
       </mat-form-field>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
         <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoAnswer">{{'DASHBOARDBOT.AUTOANSWER' | translate}}</mat-slide-toggle>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoDisconnect">{{'DASHBOARDBOT.AUTODISCONNECT' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoDisconnect" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.AUTODISCONNECT' | translate}}</mat-slide-toggle>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
         <mat-form-field class="full-width" fxFlex="75">
@@ -69,20 +69,20 @@
         <mat-slide-toggle color="primary" [(ngModel)]="character.config.msgAfterRefuse">{{'DASHBOARDBOT.MPAFTERREFUS' | translate}}</mat-slide-toggle>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoCaptureArchi">{{'DASHBOARDBOT.AUTOCAPTURE' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoCaptureArchi" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.AUTOCAPTURE' | translate}}</mat-slide-toggle>
       </div>
       <mat-divider gdColumn="1 / 4" class="mt-2"></mat-divider>
       <div gdColumn="1 / 4">
         <h3 class="font-medium" fxLayoutAlign="center center" >{{'DASHBOARDBOT.DISCORDPARAMETERS' | translate}}</h3>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgModerator">{{'DASHBOARDBOT.MESSAGEMODO' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgModerator" >{{'DASHBOARDBOT.MESSAGEMODO' | translate}}</mat-slide-toggle>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgMP">{{'DASHBOARDBOT.RECEIVEMPMESSAGE' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgMP" >{{'DASHBOARDBOT.RECEIVEMPMESSAGE' | translate}}</mat-slide-toggle>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgStop">{{'DASHBOARDBOT.MESSAGEATSTOP' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgStop" >{{'DASHBOARDBOT.MESSAGEATSTOP' | translate}}</mat-slide-toggle>
       </div>
 
     </div>
