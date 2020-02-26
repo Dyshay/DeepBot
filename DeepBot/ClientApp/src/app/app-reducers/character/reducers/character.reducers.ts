@@ -68,6 +68,8 @@ export const reducer = createReducer(initialState,
 )
 
 export const getScanCharacters = (state: State) => state.scanCharacters;
+export const getKamas = (state: State) => state.kamas;
+export const getActionPoints = (state: State) => state.actionPoints;
 export const getCharacteristics = (state: State) => state.characteristics;
 export const getAllCharacters = (State: State) => State.allCharacters;
 export const getAllCurrentCharacters = (State: State) => State.allCurrentCharacters;
