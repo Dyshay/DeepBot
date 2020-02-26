@@ -20,6 +20,7 @@ export class DashboardComponent implements OnInit {
       console.log(this.logs);
     }
 
+  @Input() kamas: number;
   @Input() character: Character;
   @Input() account: Account;
   @Input() logs: LogMessage[];

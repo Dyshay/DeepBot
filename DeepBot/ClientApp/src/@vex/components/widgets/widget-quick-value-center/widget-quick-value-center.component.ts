@@ -18,7 +18,7 @@ import { ColorDef } from '../../../utils/tailwindcss.interface';
 export class WidgetQuickValueCenterComponent implements OnInit {
 
   @Input() icon: Icon;
-  @Input() value: string;
+  @Input() value: any;
   @Input() label: string;
   @Input() change: number;
   @Input() helpText: string;
