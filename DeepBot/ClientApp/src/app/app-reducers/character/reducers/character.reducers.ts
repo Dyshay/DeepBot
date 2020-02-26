@@ -12,6 +12,7 @@ export interface State {
   kamas: number,
   pending: boolean,
   characteristics: Caracteristic,
+  actionPoints: number,
 }
 
 export const initialState: State = {
@@ -40,6 +41,7 @@ export const initialState: State = {
     prospection: { total: 0 },
   },
   kamas: 0,
+  actionPoints: 0,
   error: null,
   pending: false
 }
@@ -49,7 +51,7 @@ export const reducer = createReducer(initialState,
 
 
   on(CharacterActions.receveidCharacters, (state, { network }) => ({ ...state, scanCharacters: network.characters })),
-  on(CharacterActions.receivedCharacteristic, (state, { network }) => ({ ...state, characteristics: network.characteristics, kamas: network.kamas })),
+  on(CharacterActions.receivedCharacteristic, (state, { network }) => ({ ...state, characteristics: network.characteristics, kamas: network.kamas, actionPoints: network.availableCharactericsPts })),
   on(CharacterActions.resetReceveidCharacters, (state) => ({ ...state, scanCharacters: [] })),
 
   on(CharacterActions.getAllCharacters, (state, { allCharacters }) => ({ ...state, allCharacters: allCharacters, pending: false })),
