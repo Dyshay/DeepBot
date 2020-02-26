@@ -60,10 +60,10 @@ export interface FriendSuggestion {
 /** bot-dashboard component*/
 export class BotDashboardComponent implements OnInit {
   account: Account;
-  character: Character;
+  character: Character = new Character();
   indexSelected: number = 0;
   iconCharacter: string;
-  groupName: string;
+  groupName: string='';
   logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   map$ = this.accountStore.pipe(select(fromAccount.getMap));
   /** bot-dashboard ctor */

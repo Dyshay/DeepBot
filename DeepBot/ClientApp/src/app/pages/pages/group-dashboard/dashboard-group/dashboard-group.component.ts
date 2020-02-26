@@ -9,6 +9,7 @@ import icStarTrue from '@iconify/icons-ic/twotone-star';
 import icStarFalse from '@iconify/icons-ic/twotone-star-border';
 import { state, trigger, transition, style, animate } from '@angular/animations';
 import { MatTableModule } from '@angular/material/table';
+import { link } from 'fs';
 
 @Component({
     selector: 'app-dashboard-group',
@@ -48,7 +49,8 @@ export class DashboardGroupComponent implements OnInit {
         POD: '80%',
         Leader: true,
         Level: this.group.leader.level,
-        Nom: this.group.leader.name
+        Nom: this.group.leader.name,
+        link: '/bot-dashboard/' + this.group.leader.key
       }
     );
 
@@ -59,14 +61,15 @@ export class DashboardGroupComponent implements OnInit {
           POD: '80%',
           Leader: false,
           Level: this.group.followers[i].level,
-          Nom:this.group.followers[i].name
+          Nom: this.group.followers[i].name,
+          link: '/bot-dashboard/' + this.group.followers[i].key
         }
       )
     }
     this.dataSource = this.data;
   }
 
-
+  https://localhost:44319/bot-dashboard/70080623
 }
 
 export interface Character {
@@ -74,7 +77,8 @@ export interface Character {
   Classe: number,
   Level: number,
   POD: string,
-  Leader: boolean
+  Leader: boolean,
+  link: string
 }
 
 export interface PeriodicElement {
