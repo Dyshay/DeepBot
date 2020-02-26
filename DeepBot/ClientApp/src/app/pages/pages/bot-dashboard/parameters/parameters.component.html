@@ -76,13 +76,13 @@
         <h3 class="font-medium" fxLayoutAlign="center center" >{{'DASHBOARDBOT.DISCORDPARAMETERS' | translate}}</h3>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgModerator" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.MESSAGEMODO' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgModerator" >{{'DASHBOARDBOT.MESSAGEMODO' | translate}}</mat-slide-toggle>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgMP" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.RECEIVEMPMESSAGE' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgMP" >{{'DASHBOARDBOT.RECEIVEMPMESSAGE' | translate}}</mat-slide-toggle>
       </div>
       <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgStop" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.MESSAGEATSTOP' | translate}}</mat-slide-toggle>
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgStop" >{{'DASHBOARDBOT.MESSAGEATSTOP' | translate}}</mat-slide-toggle>
       </div>
 
     </div>

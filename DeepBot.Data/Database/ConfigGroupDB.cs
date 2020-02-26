@@ -17,5 +17,9 @@ namespace DeepBot.Data.Database
         public int PauseNumber { get; set; }
         public bool AutoCaptureArchi { get; set; }
         public int Fk_CharacterCapture { get; set; }
+        public bool BlockSpectate { get; set; }
+        public bool BlockFightGroupOnly { get; set; }
+        public List<int> ChallengesToTry { get; set; }
+        public bool AutoDisconnect { get; set; }
     }
 }

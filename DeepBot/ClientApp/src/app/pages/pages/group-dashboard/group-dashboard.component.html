@@ -13,29 +13,30 @@
       <button color="primary" mat-mini-fab type="button" class="ml-4 mt-3" matTooltip=" {{'DASHBOARDBOT.BOTPAUSE' | translate}}" matTooltipPosition="right">
         <mat-icon [icIcon]="icPause"></mat-icon>
       </button>
-      <div fxLayout="row" fxFlex="fill" fxLayoutAlign="end center" class="mr-20 h-full">
+      <div fxLayout="row" fxFlex="fill" fxLayoutAlign="end center" class="mr-20 h-full" style="z-index:99999;">
         <div fxFlex="50" class="my-10">
           <div gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="5px">
             <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
-              <div @fadeInRight>
-                <p class="m-0 body-2">{{'GLOBAL.LEVEL' | translate}} : {{group?.groupLevel}}</p>
+              <div @fadeInRight matTooltip="{{'GLOBAL.LEVEL' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">{{group?.groupLevel}}</h1>
               </div>
             </div>
 
             <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
-              <div @fadeInRight>
-                <p class="m-0 body-2"> {{'DASHBOARDBOT.PP' | translate}} : {{group?.groupProspection}}</p>
+              <div @fadeInRight matTooltip="{{'DASHBOARDBOT.PP' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">{{group?.groupProspection}}</h1>
               </div>
             </div>
 
             <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
-              <div @fadeInRight>
-                <p class="m-0 body-2"> {{'GLOBAL.GROUPACTUAL' | translate}}  : {{group?.name}}</p>
+              <div @fadeInRight matTooltip="{{'CREATEGROUP.LEADER' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">Leader Name</h1>
               </div>
             </div>
-            <div class="py-1"  fxLayout="column" fxLayoutAlign="center center">
-              <div @fadeInRight>
-                <p class="m-0 body-2"> {{'GLOBAL.ACTUALPATH' | translate}} :  trajet</p>
+
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight matTooltip="{{'GLOBAL.ACTUALPATH' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">trajet Name</h1>
               </div>
             </div>
           </div>
