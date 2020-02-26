@@ -24,6 +24,8 @@ export class DashboardComponent implements OnInit {
   @Input() character: Character;
   @Input() account: Account;
   @Input() logs: LogMessage[];
+  @Input() experienceActual: string;
+  @Input() experienceLevelUp: string;
   theme = theme;
   icKamas = icKamas;
   icTimer = icTimer;
