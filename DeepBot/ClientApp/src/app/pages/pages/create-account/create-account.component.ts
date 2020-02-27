@@ -15,10 +15,12 @@ import { environment } from '../../../../environments/environment';
 import { TalkService } from 'src/app/Services/TalkService';
 import { CharacterActions } from 'src/app/app-reducers/character/actions';
 import { AccountActions } from 'src/app/app-reducers/account/actions';
+import { webUserActions } from 'src/app/app-reducers/webUser/actions';
 import { Store, select } from '@ngrx/store';
 import * as fromcharacter from 'src/app/app-reducers/character/reducers';
 import * as fromgroup from 'src/app/app-reducers/group/reducers';
 import * as fromaccount from 'src/app/app-reducers/account/reducers';
+import * as fromWeb from 'src/app/app-reducers/webUser/reducers';
 import { AccountService } from '../../../services/account.service';
 import { error } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs';
@@ -70,6 +72,7 @@ export class CreateAccountComponent implements OnInit{
     /** create-account ctor */
   constructor(private navigationService: NavigationService, private cd: ChangeDetectorRef, private fb: FormBuilder,
     private accountService: AccountService, private http: HttpClient, private deeptalk: TalkService,
+    private storeWeb : Store<fromWeb.State>,
     private storeCharacter: Store<fromcharacter.State>,
     private storeGroup: Store<fromgroup.State>,
     private storeAccount: Store<fromaccount.State>,) {
@@ -134,12 +137,12 @@ export class CreateAccountComponent implements OnInit{
       this.accountToCreate.serverId = this.form.controls["server"].value;
       this.accountToCreate.isBan = false;
       let accountCreated = this.accountToCreate;
-      this.storeAccount.dispatch(AccountActions.createAccount({ accountCreated }));
+      this.storeAccount.dispatch(AccountActions.createAccount({ accountName: accountCreated.accountName }));
       this.storeCharacter.dispatch(CharacterActions.resetReceveidCharacters());
       this.charaters$ = this.storeCharacter.pipe(select(fromcharacter.getScanCharacters));
     };
     
-   this.navigationService.GenerateNavigation();
+   this.storeWeb.dispatch(webUserActions.getBotNav());
   }
 
   validateCredential() {

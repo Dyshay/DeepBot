@@ -58,13 +58,14 @@ namespace DeepBot.Controllers
         [HttpPost]
         [Authorize]
         [Route("CreateAccount")]
-        public async Task<IActionResult> CreateAccount(Account account)
+        public async Task<IActionResult> CreateAccount(AccountModel name)
         {
-            await CreateConfigAsync(account.CurrentCharacter.Key);
-
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            user.Accounts.RemoveAll(o=> o.isScan == true);
+            var account = user.Accounts.Find(c => c.AccountName == accountName);
+            await CreateConfigAsync(account.CurrentCharacter.Key);
+
+            user.Accounts.RemoveAll(o=> o.isScan == true && o.AccountName != accountName);
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
             account.ExpirationDateBan = null;
@@ -177,5 +178,10 @@ namespace DeepBot.Controllers
     public class keymodel
     {
         public string key { get; set; }
+    }
+
+    public class AccountModel
+    {
+        public string accountName { get; set; }
     }
 }

@@ -8,8 +8,8 @@ import { MapMessage } from '../../../../webModel/MapMessage';
 export const receveidLogs = createAction('[BOT/TALK] RECEIVED LOG', props<{ network: LogMessage }>());
 export const receveidMaps = createAction('[BOT/TALK] RECEIVED MAP', props<{ network: MapMessage }>());
 
-export const createAccount = createAction('[BOT/ACCOUNT] CREATE ACCOUNT', props<{ accountCreated: Account  }>());
-export const createAccountSuccess = createAction('[BOT/ACCOUNT] CREATE ACCOUNT SUCCESS', props<{ accountCreated: any }>());
+export const createAccount = createAction('[BOT/ACCOUNT] CREATE ACCOUNT', props<{ accountName: string  }>());
+export const createAccountSuccess = createAction('[BOT/ACCOUNT] CREATE ACCOUNT SUCCESS', props<{ accountBack: Account }>());
 export const createAccountFailure = createAction('[BOT/ACCOUNT] CREATE ACCOUNT ERROR', props<{ error: any }>());
 
 export const getAllAccount = createAction('[BOT/ACCOUNT] GET ALL ACCOUNT', props<{ allAccounts: Account[] }>());
