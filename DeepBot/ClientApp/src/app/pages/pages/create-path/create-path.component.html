@@ -1,0 +1,223 @@
+<vex-page-layout>
+
+  <vex-page-layout-header fxLayout="column" fxLayoutAlign="center start">
+    <div vexContainer>
+      <h1 class="title m-0">{{ 'CREATEPATH.DESCRIPTION1' | translate }}</h1>
+      <h4 class="ml-6">{{ 'CREATEPATH.DESCRIPTION2' | translate }} </h4>
+      <h4 class="ml-6"> {{ 'CREATEPATH.DESCRIPTION3' | translate }} </h4>
+    </div>
+  </vex-page-layout-header>
+
+  <vex-page-layout-content vexContainer @fadeInUp>
+    <div class="card p-6">
+
+      <div class="overflow-hidden mt-10 mx-5" fxLayoutAlign="center center">
+        <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true" style="width:100%;">
+          <ng-template matStepperIcon="edit">
+            <mat-icon [icIcon]="icDoneAll"></mat-icon>
+          </ng-template>
+
+          <ng-template matStepperIcon="done">
+            <mat-icon [icIcon]="icDoneAll"></mat-icon>
+          </ng-template>
+
+          <mat-step [stepControl]="groupstep1">
+            <form [formGroup]="groupstep1">
+              <ng-template matStepLabel>{{ 'CREATEPATH.PATHPARAMETERS' | translate }} </ng-template>
+
+              <h2 class="title m-0">{{ 'CREATEPATH.CREATEPATH' | translate }}</h2>
+              <div class="subheading-1">{{ 'CREATEPATH.PATHPROPLABEL' | translate }}</div>
+
+              <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+                <mat-form-field fxFlex="auto">
+                  <mat-label>{{ 'CREATEPATH.PATHNAME' | translate }}</mat-label>
+                  <input formControlName="pathName" matInput required>
+                </mat-form-field>
+                <mat-form-field class="mt-1">
+                  <mat-label>{{ 'CREATEPATH.TYPEPATH' | translate }}</mat-label>
+                  <mat-select formControlName="typePath">
+                    <mat-option [value]="0">{{ 'GLOBAL.FIGHT' | translate }}</mat-option>
+                    <mat-option [value]="1">{{ 'GLOBAL.GATHERING' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div *ngIf="groupstep1.value.typePath === 0" class="mt-2">
+                  <div fxLayout="row" fxLayoutAlign="space-around center">
+                    <mat-form-field fxFlex="25">
+                      <mat-label>{{ 'CREATEPATH.MINMONSTER' | translate }}</mat-label>
+                      <input type="number" formControlName="minMonster" matInput>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25">
+                      <mat-label>{{ 'CREATEPATH.MAXMONSTER' | translate }}</mat-label>
+                      <input type="number" formControlName="maxMonster" matInput>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="25">
+                      <mat-label>{{ 'CREATEPATH.LEVELMAX' | translate }}</mat-label>
+                      <input type="number" formControlName="levelMax" matInput>
+                    </mat-form-field>
+                  </div>
+                  <mat-divider class="my-2"></mat-divider>
+                  <div fxLayout="row" fxLayoutAlign="space-around center">
+                    <div fxLayout="row" fxLayoutAlign="center center">
+                      <mat-slider formControlName="maxpod"
+                                  thumbLabel="true"
+                                  min="1"
+                                  max="99"> </mat-slider>
+                      <p>{{'CREATEPATH.MAXPOD' | translate}}</p>
+                    </div>
+                    <div fxLayout="column" fxLayoutAlign="center center">
+                      <mat-slide-toggle color="primary" formControlName="leaderPOD">{{'CREATEPATH.LEADERBANK' | translate}}</mat-slide-toggle>
+                      <mat-hint>{{'CREATEPATH.LEADERHINT' | translate}}</mat-hint>
+                    </div>
+                  </div>
+
+                  <mat-divider class="my-2"></mat-divider>
+
+                  <div fxLayout="row" fxLayoutAlign="space-around center" class="mt-2">
+                    <mat-slide-toggle color="primary" formControlName="capture">{{'CREATEPATH.BOOLCAPTURE' | translate}}</mat-slide-toggle>
+                    <div *ngIf="groupstep1.value.capture" fxLayout="row" fxFlex="80" fxLayoutAlign="space-between center">
+                      <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+                        <mat-form-field class="mt-1 full-width">
+                          <mat-label>{{ 'CREATEPATH.CAPTUREITEM' | translate }}</mat-label>
+                          <mat-select formControlName="captureItem">
+                            <mat-option [value]="0">{{ 'CREATEPATH.CAPTUREITEM1' | translate }}</mat-option>
+                            <mat-option [value]="1">{{ 'CREATEPATH.CAPTUREITEM2' | translate }}</mat-option>
+                            <mat-option [value]="2">{{ 'CREATEPATH.CAPTUREITEM3' | translate }}</mat-option>
+                            <mat-option [value]="3">{{ 'CREATEPATH.CAPTUREITEM4' | translate }}</mat-option>
+                            <mat-option [value]="4">{{ 'CREATEPATH.CAPTUREITEM5' | translate }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </div>
+
+                      <div fxLayout="row" fxLayoutAlign="center start" fxFlex="50" class="mt-1">
+                        <mat-form-field fxFlex="25" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.MONSTERID' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterID" [name]="monsterID" [ngModelOptions]="{standalone: true}">
+                        </mat-form-field>
+                        <mat-form-field fxFlex="65" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.NUMBERMONSTER' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterQuantity" [name]="monsterQuantity" [ngModelOptions]="{standalone: true}">
+                          <mat-hint>{{'CREATEPATH.HINTNUMBERMONSTER' | translate}}</mat-hint>
+                        </mat-form-field>
+                        <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addMonsterCapture()">
+                          <mat-icon [icIcon]="icPlus"></mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <mat-divider class="my-3"></mat-divider>
+                </div>
+                <div *ngIf="groupstep1.value.typePath === 1">
+                  recolte
+                </div>
+              </div>
+
+              <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+                <button (click)="stepper.reset()" color="primary" mat-button
+                        type="button">
+                  {{ 'GLOBAL.CANCEL' | translate }}
+                </button>
+                <button color="primary" [disabled]="groupstep1.invalid" mat-raised-button matStepperNext (click)="changeState()">
+                  {{ 'GLOBAL.NEXT' | translate }}
+                </button>
+              </div>
+            </form>
+          </mat-step>
+
+          <mat-step [stepControl]="groupstep2">
+
+            <ng-template matStepLabel *ngIf="groupstep1.value.typePath === 0">{{ 'CREATEPATH.FIGHTPATHCREATOR' | translate }}</ng-template>
+            <ng-template matStepLabel *ngIf="groupstep1.value.typePath === 1">{{ 'CREATEPATH.GATHERINGPATHCREATOR' | translate }}</ng-template>
+            <ng-template matStepLabel *ngIf="groupstep1.value.typePath == null">{{ 'CREATEPATH.PATHLABEL' | translate }}</ng-template>
+
+            <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATH' | translate }}</h2>
+            <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHINFO' | translate }}</div>
+
+            <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+              <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+                <mat-form-field class="mt-1 full-width">
+                  <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
+                  <mat-select [(value)]="zoneChoose" (selectionChange)="changeZone($event)">
+                    <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
+                    <mat-option [value]="1">ZONE 2</mat-option>
+                    <mat-option [value]="2">ZONE 3</mat-option>
+                    <mat-option [value]="3">ZONE 4</mat-option>
+                    <mat-option [value]="4">ZONE 5</mat-option>
+                  </mat-select>
+                  <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
+                </mat-form-field>
+
+              </div>
+
+            </div>
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
+                <app-map-bonta [statePath]="statePath" id="bontamap"></app-map-bonta>
+              </div>
+            </div>
+
+
+
+
+            <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeState()">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button color="primary" mat-raised-button matStepperNext (click)="changeState('Banque')">
+                {{ 'GLOBAL.NEXT' | translate }}
+              </button>
+            </div>
+          </mat-step>
+
+          <mat-step [stepControl]="groupstep3">
+            <ng-template matStepLabel>{{ 'CREATEPATH.BANKPATH' | translate }}</ng-template>
+
+
+            <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATHBANK' | translate }}</h2>
+            <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHBANKINFO' | translate }}</div>
+
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
+                <app-map-bonta-banque [statePath]="statePath"></app-map-bonta-banque>
+              </div>
+            </div>
+
+            <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeState()">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button color="primary" mat-raised-button matStepperNext (click)="changeState('Retour')">
+                {{ 'GLOBAL.NEXT' | translate }}
+              </button>
+            </div>
+
+          </mat-step>
+
+          <mat-step [stepControl]="groupstep4">
+            <ng-template matStepLabel>{{ 'CREATEPATH.BACKPATH' | translate }}</ng-template>
+
+
+            <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATHBACK' | translate }}</h2>
+            <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHBAckINFO' | translate }}</div>
+
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
+                <app-map-bonta-retour [statePath]="statePath"></app-map-bonta-retour>
+              </div>
+            </div>
+
+            <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeState()">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button (click)="submit()" color="primary" mat-raised-button
+                      matStepperNext>
+                {{ 'CREATEPATH.GENERATEPATH' | translate }}
+              </button>
+            </div>
+          </mat-step>
+        </mat-horizontal-stepper>
+      </div>
+    </div>
+  </vex-page-layout-content>
+
+</vex-page-layout>
+
+
+
+
+
+

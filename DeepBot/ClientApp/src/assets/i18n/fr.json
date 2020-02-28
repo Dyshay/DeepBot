@@ -25,7 +25,9 @@
     "CHARACTER": "Personnage",
     "NOGROUP": "Aucun Groupe",
     "DELETE": "Supprimer",
-    "ACTUALPATH": "Trajet actuel"
+    "ACTUALPATH": "Trajet actuel",
+    "FIGHT": "Combat",
+    "GATHERING": "Récolte"
   },
   "TOOLBAR": {
     "BOTHANDLE": "Gestion du bot",
@@ -83,7 +85,8 @@
     "MEMBER": "Membres du groupe",
     "SELECTMEMBER": "Selectionnez les membres du groupe",
     "SELECTMEMBERINFO": "Le groupe peut être composé de maximum 8 membres. Atention, il est possible de lier un personnage à plusieurs groupes.",
-    "CREATEGROUP": "Créer groupe"
+    "CREATEGROUP": "Créer groupe",
+    "CREATEAGROUP": "Creer un groupe"
   },
   "CREATEACCOUNT": {
     "DESCRIPTION1": "Ajouter votre compte Dofus et personnalisez le",
@@ -205,5 +208,47 @@
     "MESSAGEEERROR": "Une erreur est survenu lors de la création de votre compte, veuillez contacter le support.",
     "TYPESUCESSMAIL": "Succés confirmation de l'Email",
     "MESSAGESUCCESMAIL": "Votre compte a été créé avec succés, vous pouvez maintenant vous connecter."
+  },
+  "CREATEPATH": {
+    "DESCRIPTION1": "Créez votre trajet pour vos bots",
+    "DESCRIPTION2": "- Ce trajet sera sauvegardé sur votre compte.",
+    "DESCRIPTION3": "- Suivez les étapes ci-dessous pour créer votre trajet",
+    "PATHLABEL": "Le Trajet",
+    "PATHPARAMETERS": "Paramétres Trajet",
+    "CREATEPATH": "Créer un Trajet",
+    "PATHPROPLABEL": "Definissez les propriétés du trajet",
+    "PATHNAME": "Nom du trajet",
+    "TYPEPATH": "Type de trajet",
+    "MAXMONSTER": "Monstre maxmimum a attaquer",
+    "MINMONSTER": "Monstre minimum a attaquer",
+    "LEVELMAX": "Level maximum a attaquer",
+    "MAXPOD": "POD pour déclencher le retour en banque",
+    "LEADERBANK": "Leader faisant office de banque",
+    "LEADERHINT": "Les membres du groupe lanceront échange avec le leader, celui ci effectuera les aller-retour banque",
+    "BOOLCAPTURE": "Capturer des monstres",
+    "CAPTUREITEM": "Pierre de capture a utiliser",
+    "CAPTUREITEM1": "Petite pierre d'âme heureuse",
+    "CAPTUREITEM2": "Moyenne pierre d'âme heureuse",
+    "CAPTUREITEM3": "Grande pierre d'âme heureuse",
+    "CAPTUREITEM4": "Enorme pierre d'âme heureuse",
+    "CAPTUREITEM5": "Giga pierre d'âme heureuse",
+    "MONSTERID": "ID du monstre",
+    "NUMBERMONSTER": "Nombre minimum de monstre",
+    "HINTNUMBERMONSTER": "Si un groupe contient au minimum 'quantité renseigné' le monstre 'ID renseigné' il sera capturé ",
+    "FIGHTPATHCREATOR": "Création du trajet de combat",
+    "PATHCREATOR": "Création du trajet",
+    "GATHERINGPATHCREATOR": "Création du trajet de récolte",
+    "SELECTPATH": "Selectionnez le trajet",
+    "SELECTPATHINFO": "Cochez les cartes du trajet voulu, l'ordre de selection determinera la trajectoire, vous pourez modifier ceci lors de la synthése",
+    "CHOICEMAP": "Choisir la zone du trajet",
+    "CHOICEMAPHINT": "Atention la zone selectionné doit contenir l'ensemble de la zone combat ou récolte",
+    "ZONE1": "Zone de bonta",
+    "BANKPATH": "Trajet Banque",
+    "SELECTPATHBANK": "Selectionnez le trajet de retour en banque",
+    "SELECTPATHBANKINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la zone combat ou récolte, puis jusqu'à la map de la banque",
+    "BACKPATH": "Trajet Retour",
+    "SELECTPATHBACK": "Selectionnez le trajet de retour vers la zone de combat / récolte",
+    "SELECTPATHBAckINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la banque, puis jusqu'à une map adjacente de la zone combat / récolte",
+    "GENERATEPATH": "Générer le trajet"
   }
 }
