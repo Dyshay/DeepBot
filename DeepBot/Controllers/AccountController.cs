@@ -58,19 +58,21 @@ namespace DeepBot.Controllers
         [HttpPost]
         [Authorize]
         [Route("CreateAccount")]
-        public async Task<IActionResult> CreateAccount(AccountModel name)
+        public async Task<IActionResult> CreateAccount([FromBody]AccountModel acc)
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            var account = user.Accounts.Find(c => c.AccountName == accountName);
+            var account = user.Accounts.Find(c => c.AccountName == acc.accountName);
+            account.isScan = false;
+            account.CurrentCharacter = account.Characters.Find(c => c.Key == acc.currentCharacterId);
             await CreateConfigAsync(account.CurrentCharacter.Key);
 
-            user.Accounts.RemoveAll(o=> o.isScan == true && o.AccountName != accountName);
+            user.Accounts.RemoveAll(o=> o.isScan);
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
             account.ExpirationDateBan = null;
             account.EndAnakamaSubscribe = null;
-            account.isScan = false;
+
             account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
             if (user.Accounts == null)
             {
@@ -87,7 +89,7 @@ namespace DeepBot.Controllers
             }
             if (user.ApiKey.MaxAccount >= user.Accounts?.Count() + 1)
             {
-                if (user.Accounts.Select(o => o.AccountName.ToUpper()).Contains(account.AccountName.ToUpper()))
+                if (user.Accounts.Select(o => o.AccountName.ToUpper()).Contains(account.AccountName.ToUpper()) && user.Accounts.Select(o => o.AccountName.ToUpper()).Count() > 1)
                 {
                     return ValidationProblem("AlreadyCreated");
                 }
@@ -183,5 +185,6 @@ namespace DeepBot.Controllers
     public class AccountModel
     {
         public string accountName { get; set; }
+        public int currentCharacterId { get; set; }
     }
 }

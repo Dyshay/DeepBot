@@ -16,6 +16,7 @@ import { NavigationLink } from '../../../../@vex/interfaces/navigation-item.inte
 import { webUserActions } from '../../webUser/actions';
 import * as fromWeb from '../../webUser/reducers';
 import { Store } from '@ngrx/store';
+import { AccountModel } from 'src/webModel/AccountModel';
 
 @Injectable()
 export class AccountEffects {
@@ -23,9 +24,9 @@ export class AccountEffects {
   createAccount$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AccountActions.createAccount),
-      map(action => action.accountName),
-      exhaustMap((accountName: string) =>
-        this.accountService.createAccount(accountName).pipe(
+      map(action => action.acc),
+      exhaustMap((acc: AccountModel) =>
+        this.accountService.createAccount(acc).pipe(
           map(accountCreated => AccountActions.createAccountSuccess({ accountBack: accountCreated })),
           catchError(error => of(AccountActions.createAccountFailure({ error }))))
       )

@@ -137,7 +137,7 @@ export class CreateAccountComponent implements OnInit{
       this.accountToCreate.serverId = this.form.controls["server"].value;
       this.accountToCreate.isBan = false;
       let accountCreated = this.accountToCreate;
-      this.storeAccount.dispatch(AccountActions.createAccount({ accountName: accountCreated.accountName }));
+      this.storeAccount.dispatch(AccountActions.createAccount({ acc: { accountName: accountCreated.accountName, currentCharacterId: accountCreated.currentCharacter.key }}));
       this.storeCharacter.dispatch(CharacterActions.resetReceveidCharacters());
       this.charaters$ = this.storeCharacter.pipe(select(fromcharacter.getScanCharacters));
     };
