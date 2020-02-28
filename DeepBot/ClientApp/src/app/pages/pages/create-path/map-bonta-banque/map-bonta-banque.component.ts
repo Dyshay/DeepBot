@@ -1,5 +1,6 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { MatMenuTrigger } from '@angular/material';
+import { MatMenuTrigger, MatDialog } from '@angular/material';
+import { DialogZaapComponent } from '../dialog-zaap/dialog-zaap.component';
 
 
 declare global {
@@ -21,7 +22,7 @@ export class MapBontaBanqueComponent {
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanque: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
     /** map-bonta ctor */
-    constructor() {
+  constructor(public dialog: MatDialog) {
 
   }
 
@@ -60,6 +61,14 @@ export class MapBontaBanqueComponent {
     console.log(this.rightClickPos);
   }
   onContextMenuActionZaap() {
-    console.log(this.rightClickPos);
+    var zaap;
+    const dialogRef = this.dialog.open(DialogZaapComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      zaap = result;
+    });
   }
+
 }

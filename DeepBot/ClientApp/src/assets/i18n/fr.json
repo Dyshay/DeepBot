@@ -3,6 +3,7 @@
     "CANCEL": "Annuler",
     "NEXT": "Suivant",
     "SAVE": "Sauvegarder",
+    "VALIDATE": "Valider",
     "BACK": "Retour",
     "BREED": "Classe",
     "LEVEL": "Level",
@@ -249,6 +250,7 @@
     "BACKPATH": "Trajet Retour",
     "SELECTPATHBACK": "Selectionnez le trajet de retour vers la zone de combat / récolte",
     "SELECTPATHBAckINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la banque, puis jusqu'à une map adjacente de la zone combat / récolte",
-    "GENERATEPATH": "Générer le trajet"
+    "GENERATEPATH": "Générer le trajet",
+    "CHOICEZAAP": "Choisissez la destination"
   }
 }

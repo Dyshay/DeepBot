@@ -1,8 +1,8 @@
 export class Trajet {
-  id: string;
-  description: string;
-  creationDate: Date;
-  updatedDate: Date;
+  key: string;
+  name: string;
+  fk_User: string;
+  type: number;
 }
 
 

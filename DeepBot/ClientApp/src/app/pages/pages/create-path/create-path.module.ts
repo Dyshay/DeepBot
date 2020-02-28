@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconModule } from '@visurel/iconify-angular';
-import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatTableModule, MatDividerModule, MatMenuModule } from '@angular/material';
+import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatTableModule, MatDividerModule, MatMenuModule, MatDialogModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
@@ -16,10 +16,11 @@ import { CreatePathRoutingModule } from './create-path-routing.module';
 import { MapBontaComponent } from './map-bonta/map-bonta.component';
 import { MapBontaBanqueComponent } from './map-bonta-banque/map-bonta-banque.component';
 import { MapBontaRetourComponent } from './map-bonta-retour/map-bonta-retour.component';
+import { DialogZaapComponent } from './dialog-zaap/dialog-zaap.component';
 
 
 @NgModule({
-  declarations: [CreatePathComponent,MapBontaComponent,MapBontaBanqueComponent,MapBontaRetourComponent],
+  declarations: [CreatePathComponent,MapBontaComponent,MapBontaBanqueComponent,MapBontaRetourComponent,DialogZaapComponent],
   imports: [
     CommonModule,
     CreatePathRoutingModule,
@@ -43,10 +44,12 @@ import { MapBontaRetourComponent } from './map-bonta-retour/map-bonta-retour.com
     ContainerModule,
     ColorFadeModule,
     PageLayoutModule,
+    MatDialogModule,
     MatTableModule,
     TranslateModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  entryComponents: [DialogZaapComponent]
 })
 export class CreatePathModule {
 }

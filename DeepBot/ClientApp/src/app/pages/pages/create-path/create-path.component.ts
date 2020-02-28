@@ -3277,7 +3277,10 @@ export class CreatePathComponent implements OnInit {
   }
 
   selectMap(event) {
-    console.log(event);
+    console.log(event.target.alt);
+    console.log(this.statePath);
+
+
     const target = event.target as HTMLAreaElement
 
 
