@@ -20,7 +20,7 @@ namespace DeepBot.Data.Model
         public Character CurrentCharacter { get; set; }
         public Proxy Proxy { get; set; }
         public Nullable<DateTime> EndAnakamaSubscribe { get; set; }
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
         public string AnkamaPseudo { get; set; }
         public bool isBan { get; set; }
         public Nullable<DateTime> ExpirationDateBan { get; set; }

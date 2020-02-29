@@ -51,7 +51,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\webModel\file.ts" />
     <TypeScriptCompile Include="ClientApp\src\webModel\MapMessage.ts" />
   </ItemGroup>
 
