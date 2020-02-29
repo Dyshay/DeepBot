@@ -8,23 +8,23 @@ export class Account {
   key: string;
   characters: Character[];
   currentCharacter: Character;
-  proxy?: Proxy;
+  proxy?: Proxy | null;
   config?: ConfigAccount;
   creationDate?: Date;
-  endAnakamaSubscribe?: Date;
+  endAnakamaSubscribe?: Date | null;
   ankamaPseudo?: string;
   isBan: boolean;
   expirationDateBan?: Date;
-  nickName?: string;
+  nickName?: string | null;
   accountName: string;
   password: string;
   serverId: number;
-  welcomeKey?: string;
-  AnkamaNickName?: string;
-  gameTicket?: string;
-  tcpId: string;
+  welcomeKey?: string | null;
+  AnkamaNickName?: string | null;
+  gameTicket?: string | null;
+  tcpId?: string;
   state: AccountState;
-  server?: Server;
+  server?: Server | null;
 }
 
 export class CreateAccount {

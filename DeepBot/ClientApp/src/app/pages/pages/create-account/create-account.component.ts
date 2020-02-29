@@ -15,10 +15,12 @@ import { environment } from '../../../../environments/environment';
 import { TalkService } from 'src/app/Services/TalkService';
 import { CharacterActions } from 'src/app/app-reducers/character/actions';
 import { AccountActions } from 'src/app/app-reducers/account/actions';
+import { webUserActions } from 'src/app/app-reducers/webUser/actions';
 import { Store, select } from '@ngrx/store';
 import * as fromcharacter from 'src/app/app-reducers/character/reducers';
 import * as fromgroup from 'src/app/app-reducers/group/reducers';
 import * as fromaccount from 'src/app/app-reducers/account/reducers';
+import * as fromWeb from 'src/app/app-reducers/webUser/reducers';
 import { AccountService } from '../../../services/account.service';
 import { error } from '@angular/compiler/src/util';
 import { Observable } from 'rxjs';
@@ -70,6 +72,7 @@ export class CreateAccountComponent implements OnInit{
     /** create-account ctor */
   constructor(private navigationService: NavigationService, private cd: ChangeDetectorRef, private fb: FormBuilder,
     private accountService: AccountService, private http: HttpClient, private deeptalk: TalkService,
+    private storeWeb : Store<fromWeb.State>,
     private storeCharacter: Store<fromcharacter.State>,
     private storeGroup: Store<fromgroup.State>,
     private storeAccount: Store<fromaccount.State>,) {
@@ -90,8 +93,8 @@ export class CreateAccountComponent implements OnInit{
       accountName: [, Validators.required],
       password: ['', Validators.required],
       server : ['', Validators.required], 
-      group: [Group,null],
-      character: [Character, Validators.required]
+      group:null,
+      character: ['', Validators.required]
     });
 
    // Apelle de la groupList sur serv
@@ -104,9 +107,9 @@ export class CreateAccountComponent implements OnInit{
 
   findCharacter() {
     this.deeptalk.createConnexionBot(this.form.controls["accountName"].value, this.form.controls["password"].value, this.form.controls["server"].value, true);
+    this.charaters$ = this.storeCharacter.pipe(select(fromcharacter.getScanCharacters));
     this.ischaractersfound = true;
    
-
   }
 
  async addAccount() {
@@ -118,8 +121,8 @@ export class CreateAccountComponent implements OnInit{
           this.accountToCreate.characters = result;
         }
       );
-
-      this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
+      if (this.form.controls["group"].value != null)
+          this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_Group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
 
       this.charaters$.subscribe(
         (result) => {
@@ -134,10 +137,12 @@ export class CreateAccountComponent implements OnInit{
       this.accountToCreate.serverId = this.form.controls["server"].value;
       this.accountToCreate.isBan = false;
       let accountCreated = this.accountToCreate;
-      this.storeAccount.dispatch(AccountActions.createAccount({ accountCreated  }));
+      this.storeAccount.dispatch(AccountActions.createAccount({ acc: { accountName: accountCreated.accountName, currentCharacterId: accountCreated.currentCharacter.key }}));
+      this.storeCharacter.dispatch(CharacterActions.resetReceveidCharacters());
+      this.charaters$ = this.storeCharacter.pipe(select(fromcharacter.getScanCharacters));
     };
     
-   this.navigationService.GenerateNavigation();
+   this.storeWeb.dispatch(webUserActions.getBotNav());
   }
 
   validateCredential() {
@@ -157,6 +162,6 @@ export class CreateAccountComponent implements OnInit{
   }
 
   setCharacters(): any {
-    this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
+    this.storeCharacter.dispatch(CharacterActions.updateCharacterFKGroup({ fk_Group: this.form.controls["group"].value, key: this.form.controls["character"].value }));
   }
 }

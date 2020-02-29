@@ -4,8 +4,10 @@ using DeepBot.ControllersModel;
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Data.Database;
+using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.MapComponent;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -57,7 +59,6 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<Account>();
             BsonClassMap.RegisterClassMap<Character>();
             BsonClassMap.RegisterClassMap<Proxy>();
-            BsonClassMap.RegisterClassMap<ConfigAccount>();
 
             services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
             {
@@ -67,6 +68,7 @@ namespace DeepBot
                 identity.Password.RequireUppercase = false;
                 identity.Password.RequiredLength = 1;
                 identity.Password.RequiredUniqueChars = 0;
+                identity.SignIn.RequireConfirmedEmail = true;
             },
                 mongo =>
                 {
@@ -110,6 +112,24 @@ namespace DeepBot
                     }
                 };
             });
+
+            //Map.Initialize();
+            //foreach (var item in Map.Maps.Values)
+            //{
+            //    MapDB map = new MapDB()
+            //    {
+            //        AreaId = item.AreaId,
+            //        AreaName = item.AreaName,
+            //        GlobalAreaName = item.GlobalAreaName,
+            //        Height = item.Height,
+            //        Width = item.Width,
+            //        MapId = item.MapId,
+            //        Cells = item.Cells,
+            //        CellsTeleport = item.CellsTeleport,
+            //        Coordinate = item.Coordinate,
+            //    };
+            //    map.Insert();
+            //}
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

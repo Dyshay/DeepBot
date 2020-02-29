@@ -1,76 +1,89 @@
 <div class="card">
   <div class="px-gutter py-4 border-b">
-    <h2 class="title m-0">Paramétres</h2>
-  </div>
-  <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr"
-       gdColumns.lt-md="1fr 1fr 1fr"
-       gdColumns.lt-sm="1fr"
-       gdGap="16px"
-       vexContainer>
-    <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Paramétres globaux</h3>
-    </div>
-    <mat-divider gdColumn="1 / 4"></mat-divider>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Delai des déplacements</mat-label>
-        <mat-select>
-          <mat-option value="1">250 - 450 MS</mat-option>
-          <mat-option value="2">451 - 650 MS</mat-option>
-          <mat-option value="3">650 MS - 1100 MS</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Effectuer une pause</mat-label>
-        <mat-select>
-          <mat-option value="1">40 combats</mat-option>
-          <mat-option value="1">60 combats</mat-option>
-          <mat-option value="1">80 combats</mat-option>
-          <mat-option value="1">100 combats</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <mat-form-field class="example-full-width">
-      <mat-label>Définir une zone d'agression</mat-label>
-      <input matInput placeholder="3">
-    </mat-form-field>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Activer la réponse automatique au mp</mat-slide-toggle>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Déconnexion automatique si modérateur detecté sur le serveur</mat-slide-toggle>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Delai des refus ( échange, defi, guilde)</mat-label>
-        <mat-select>
-          <mat-option value="1">800 - 1250 MS</mat-option>
-          <mat-option value="2">1251 - 1650 MS</mat-option>
-          <mat-option value="3">1651 MS - 2800 MS</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Envoyer mp aprés refus</mat-slide-toggle>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Capture automatique des archis monstre</mat-slide-toggle>
-    </div>
-    <mat-divider gdColumn="1 / 4" class="mt-2"></mat-divider>
-    <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Paramétres de notification Discord</h3>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Message lors de la connection d'un modérateur (tout serveur confondu)</mat-slide-toggle>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Message lors de la réception d'un MP</mat-slide-toggle>
-    </div>
-    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Message lors de l'arret du bot</mat-slide-toggle>
-    </div>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h2 class="title m-0"> {{'DASHBOARDBOT.PARAMETERS' | translate}}</h2>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'GLOBAL.SAVE' | translate}}" matTooltipPosition="left" (click)="Save()">
+          <mat-icon [icIcon]="icSave"></mat-icon>
+        </button>
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'DASHBOARDBOT.IMPORTCONFIG' | translate}}" matTooltipPosition="left" (click)="Import()">
+          <mat-icon [icIcon]="icImport"></mat-icon>
+        </button>
+      </div>
 
+      </div>
+
+    </div>
+    <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr"
+         gdColumns.lt-md="1fr 1fr 1fr"
+         gdColumns.lt-sm="1fr"
+         gdGap="16px"
+         vexContainer>
+      <div gdColumn="1 / 4">
+        <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.GLOBALPARAMETERS' | translate}}</h3>
+      </div>
+      <mat-divider gdColumn="1 / 4"></mat-divider>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-form-field class="full-width" fxFlex="75">
+          <mat-label>{{'DASHBOARDBOT.DELAYMOVE' | translate}}</mat-label>
+          <mat-select [(value)]="character.config.moveDelay">
+            <mat-option [value]="0">250 - 450 MS</mat-option>
+            <mat-option [value]="1">451 - 650 MS</mat-option>
+            <mat-option [value]="2">650 MS - 1100 MS</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-form-field class="full-width" fxFlex="75">
+          <mat-label>{{'DASHBOARDBOT.MAKEPAUSE' | translate}}</mat-label>
+          <mat-select [(value)]="character.config.pauseNumber" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
+            <mat-option [value]="0">{{ 'DASHBOARDBOT.NOPAUSE' | translate}}</mat-option>
+            <mat-option [value]="1">40 combats</mat-option>
+            <mat-option [value]="2">60 combats</mat-option>
+            <mat-option [value]="3">80 combats</mat-option>
+            <mat-option [value]="4">100 combats</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <mat-form-field class="example-full-width">
+        <mat-label>{{'DASHBOARDBOT.AGRESSIONZONE' | translate}}</mat-label>
+        <input matInput placeholder="3"  type="number" [(ngModel)]="character.config.agressionZone" [name]="agressionZone" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
+      </mat-form-field>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoAnswer">{{'DASHBOARDBOT.AUTOANSWER' | translate}}</mat-slide-toggle>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoDisconnect" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.AUTODISCONNECT' | translate}}</mat-slide-toggle>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-form-field class="full-width" fxFlex="75">
+          <mat-label>{{'DASHBOARDBOT.REFUSDELAY' | translate}}</mat-label>
+          <mat-select [(value)]="character.config.refuseDelay">
+            <mat-option [value]="0">800 - 1250 MS</mat-option>
+            <mat-option [value]="1">1251 - 1650 MS</mat-option>
+            <mat-option [value]="2">1651 MS - 2800 MS</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.msgAfterRefuse">{{'DASHBOARDBOT.MPAFTERREFUS' | translate}}</mat-slide-toggle>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoCaptureArchi" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.AUTOCAPTURE' | translate}}</mat-slide-toggle>
+      </div>
+      <mat-divider gdColumn="1 / 4" class="mt-2"></mat-divider>
+      <div gdColumn="1 / 4">
+        <h3 class="font-medium" fxLayoutAlign="center center" >{{'DASHBOARDBOT.DISCORDPARAMETERS' | translate}}</h3>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgModerator" >{{'DASHBOARDBOT.MESSAGEMODO' | translate}}</mat-slide-toggle>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgMP" >{{'DASHBOARDBOT.RECEIVEMPMESSAGE' | translate}}</mat-slide-toggle>
+      </div>
+      <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+        <mat-slide-toggle color="primary" [(ngModel)]="character.config.discordMsgStop" >{{'DASHBOARDBOT.MESSAGEATSTOP' | translate}}</mat-slide-toggle>
+      </div>
+
+    </div>
   </div>
-</div>

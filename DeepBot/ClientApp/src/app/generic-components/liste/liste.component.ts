@@ -54,7 +54,7 @@ export class ListeComponent implements OnInit {
     if (this.consommablesDofus != null)
       this.displayedColumns = ['id', 'name', 'quantity','delete', 'select'];
     else if (this.ressourcesDofus != null)
-      this.displayedColumns = ['id', 'name', 'quantity', 'delete'];
+      this.displayedColumns = ['id', 'name', 'quantity', 'delete','autoDelete'];
     else if (this.banqueDofus != null)
       this.displayedColumns = ['id', 'name', 'quantity'];
     else if (this.itemDofus != null)

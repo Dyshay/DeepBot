@@ -1,6 +1,17 @@
 <div class="card">
   <div class="px-gutter py-4 border-b">
-    <h2 class="title m-0">Combat</h2>
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h2 class="title m-0"> {{'DASHBOARDBOT.FIGHT' | translate}}</h2>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'GLOBAL.SAVE' | translate}}" matTooltipPosition="left" (click)="Save()">
+          <mat-icon [icIcon]="icSave"></mat-icon>
+        </button>
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'DASHBOARDBOT.IMPORTCONFIG' | translate}}" matTooltipPosition="left" (click)="Import()">
+          <mat-icon [icIcon]="icImport"></mat-icon>
+        </button>
+      </div>
+
+    </div>
   </div>
   <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr"
        gdColumns.lt-md="1fr 1fr 1fr"
@@ -8,7 +19,7 @@
        gdGap="16px"
        vexContainer>
     <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Phase de préparation</h3>
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.PREPARATION' | translate}}</h3>
 
     </div>
 
@@ -16,29 +27,29 @@
 
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Positionnement en début de combat </mat-label>
-        <mat-select>
-          <mat-option value="1">Plus proche possible</mat-option>
-          <mat-option value="1">Plus eloigné possible</mat-option>
-          <mat-option value="1">Pas de placement</mat-option>
+        <mat-label>{{'DASHBOARDBOT.POSSTARTFIGHT' | translate}}</mat-label>
+        <mat-select [(value)]="character.config.positionStartFight">
+          <mat-option [value]="0">{{'DASHBOARDBOT.CLOSEST' | translate}}</mat-option>
+          <mat-option [value]="1">{{'DASHBOARDBOT.FAREST' | translate}}</mat-option>
+          <mat-option [value]="2">{{'DASHBOARDBOT.NOPLACEMENT' | translate}}</mat-option>
         </mat-select>
       </mat-form-field>
 
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Bloquer le mode spéctateur</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [(ngModel)]="character.config.blockSpectate" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'" >{{'DASHBOARDBOT.BLOCKSPEC' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Bloquer le combat</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [(ngModel)]="character.config.blockFight" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">{{'DASHBOARDBOT.BLOCKFIGHT' | translate}}</mat-slide-toggle>
     </div>
     <mat-divider gdColumn="1 / 4"></mat-divider>
     <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Phase de combat</h3>
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.COMBATPHASE' | translate}}</h3>
     </div>
     <mat-divider gdColumn="1 / 4"></mat-divider>
     <div gdColumn.lt-sm="1 " fxLayoutAlign="center center">
       <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>IA selectionné</mat-label>
+        <mat-label>{{'DASHBOARDBOT.IASELECTED' | translate}}</mat-label>
         <mat-select>
           <mat-option value="1">Nom IA1</mat-option>
           <mat-option value="2">Nom IA2</mat-option>
@@ -48,18 +59,18 @@
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Vitesse des actions</mat-label>
-        <mat-select>
-          <mat-option value="1">150 - 350 MS</mat-option>
-          <mat-option value="2">351 - 650 MS</mat-option>
-          <mat-option value="3">650 MS - 1100 MS</mat-option>
+        <mat-label>{{'DASHBOARDBOT.ACTIONSPEED' | translate}}</mat-label>
+        <mat-select [(value)]="character.config.speedFightAction">
+          <mat-option [value]="0">150 - 350 MS</mat-option>
+          <mat-option [value]="1">351 - 650 MS</mat-option>
+          <mat-option [value]="2">650 MS - 1100 MS</mat-option>
         </mat-select>
       </mat-form-field>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-form-field class="full-width" fxFlex="75">
-        <mat-label>Tenter les challenges </mat-label>
-        <mat-select multiple>
+      <mat-form-field class="full-width" fxFlex="75" >
+        <mat-label>{{'DASHBOARDBOT.TRYCHALLENGE' | translate}} </mat-label>
+        <mat-select multiple [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
           <mat-option value="1">Mystique</mat-option>
           <mat-option value="2">Anachoréte</mat-option>
           <mat-option value="3">Borné</mat-option>
@@ -75,24 +86,26 @@
     </div>
     <mat-divider gdColumn="1 / 4"></mat-divider>
     <div gdColumn="1 / 4">
-      <h3 class="font-medium" fxLayoutAlign="center center">Phase post combat</h3>
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.POSTCOMBATPHASE' | translate}}</h3>
     </div>
     <mat-divider gdColumn="1 / 4"></mat-divider>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slider thumbLabel
+      <mat-slider [(value)]="character.config.minLifeRegenerate"
+                  thumbLabel="true"
                   min="1"
-                  max="100"> </mat-slider>
-      <p>% de vie minimum pour lancer la regénération</p>
+                  max="99"> </mat-slider>
+      <p>{{'DASHBOARDBOT.PERCENTAGEMINILIFE' | translate}}</p>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slide-toggle color="primary" [checked]="true">Utiliser les consommables autorisés pour regénérer la vie</mat-slide-toggle>
+      <mat-slide-toggle color="primary" [(ngModel)]="character.config.useConsommable">{{'DASHBOARDBOT.USECONSOMMABLE' | translate}}</mat-slide-toggle>
     </div>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
-      <mat-slider thumbLabel
+      <mat-slider [(value)]="character.config.minLifeToFight"
+                  thumbLabel
                   min="1"
                   max="100"> </mat-slider>
-      <p>% de vie minimum pour lancer un combat</p>
+      <p>{{'DASHBOARDBOT.PERCENTAGEMINFIGHT' | translate}}</p>
     </div>
   </div>
 
-  </div>
+</div>

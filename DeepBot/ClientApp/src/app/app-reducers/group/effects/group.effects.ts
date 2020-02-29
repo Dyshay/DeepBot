@@ -62,7 +62,27 @@ export class GroupEffects {
     this.actions$.pipe(
       ofType(GroupActions.getAllGroupsSuccess),
       map(action => action.groups),
-      tap((groups: any) => {
+      tap((groups: Group[]) => {
+        for (var i = 0; i < groups.length; i++) {
+          var level = 0;
+          var pp = 0;
+          var grouptotal = 0;
+          for (var j = 0; j < groups[i].followers.length; j++) {
+            level = level + groups[i].followers[j].level;
+            grouptotal++;
+            if (groups[i].followers[j].characteristic != null)
+               pp = pp + groups[i].followers[j].characteristic.prospection.total;
+          }
+          level = level + groups[i].leader.level;
+          grouptotal++;
+          if (groups[i].leader.characteristic != null)
+            pp = pp + groups[i].leader.characteristic.prospection.total;
+
+          groups[i].groupLevel = level;
+          groups[i].groupProspection = pp
+          groups[i].groupTotal = grouptotal;
+        }
+
       })
     ),
     { dispatch: false }
@@ -75,6 +95,74 @@ export class GroupEffects {
 
     )
   );
+
+
+  updateGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroup),
+      map(action => action.groupToUpdate),
+      exhaustMap((groupToUpdate: Group) =>
+        this.groupService.updateGroup(groupToUpdate).pipe(
+          map(groupToUpdate => GroupActions.updateGroupSuccess({ groupToUpdate })),
+          catchError(error => of(GroupActions.updateGroupFailure({ error }))))
+      )
+    )
+
+  );
+
+  updateGroupSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroupSuccess),
+      map(action => action.groupToUpdate),
+      tap((group: any) => {
+        this.toastr.success('', 'Group ' + group.name + ' modifié avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  updateGroupFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroupFailure),
+      map(action => action.error),
+
+    )
+  );
+
+
+
+  deleteGroup$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.deleteGroup),
+      map(action => action.groupKeyToDelete),
+      exhaustMap((groupKeyToDelete: string) =>
+        this.groupService.deleteGroup(groupKeyToDelete).pipe(
+          map(name => GroupActions.deleteGroupSuccess({ name })),
+          catchError(error => of(GroupActions.deleteGroupFailure({ error }))))
+      )
+    )
+
+  );
+
+  deleteGroupSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.deleteGroupSuccess),
+      map(action => action.name),
+      tap((name: string) => {
+        this.toastr.success('', 'Group ' + name + ' supprimé avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  deleteGroupFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.deleteGroupFailure),
+      map(action => action.error),
+
+    )
+  );
+
 
   constructor(private actions$: Actions, private accountService: AccountService, private groupService: GroupsService, private toastr : ToastrService, private router: Router, private deeptalk: TalkService,private navigationService:NavigationService) { }
 }

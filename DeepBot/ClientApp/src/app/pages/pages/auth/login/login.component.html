@@ -123,17 +123,9 @@
               <mat-error *ngIf="form.get('password').hasError('required')">{{'LOGIN.PASSWORDREQUIRED' | translate }}</mat-error>
             </mat-form-field>
           </div>
-          <div fxLayout="row" fxLayoutAlign="space-between center">
-            <mat-checkbox class="caption" color="primary">
-              <h3 class=" text-secondary m-0">
-                {{'LOGIN.MEORIZEID' | translate }}
-               
-              </h3>
-            </mat-checkbox>
-          </div>
           <button (click)="send()"
                   color="primary"
-                  class="w-50 mx-auto"
+                  class="w-50 mx-auto mt-2"
                   mat-raised-button
                   type="button">
             {{ 'LOGIN.SECONNECTER' | translate }}

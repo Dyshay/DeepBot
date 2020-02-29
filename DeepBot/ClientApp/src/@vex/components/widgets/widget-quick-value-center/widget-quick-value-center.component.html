@@ -1,6 +1,6 @@
 <div (mouseenter)="showButton = true"
      (mouseleave)="showButton = false"
-     class="card p-3 relative hover:shadow-16 trans-shadow"
+     class="card p-3 m-3 my-1 relative hover:shadow-18 trans-shadow"
      fxLayout="column"
      fxLayoutAlign="start center" fxFlex="fill">
   <div *ngIf="color"
@@ -10,7 +10,7 @@
     <mat-icon [icIcon]="icon"></mat-icon>
   </div>
 
-  <h2 class="display-2 font-bold mt-4 mb-2">{{ value }}</h2>
+  <h2 class="display-1 font-bold mt-4 mb-2">{{ value }}</h2>
   <h3 class="subheading-2 font-medium text-secondary m-0">{{ label }}</h3>
 
   <h4 [class.text-green-500]="change > 0"

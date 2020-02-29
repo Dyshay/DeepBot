@@ -1,1 +1,79 @@
-﻿<div style="border: 1px solid red">group-dashboard Component</div>
+<div class="container py-gutter">
+  <div class="card overflow-hidden">
+    <div class="h-44 relative overflow-hidden bg-pattern">
+      <div class="absolute bg-contrast-black opacity-25 top-0 right-0 bottom-0 left-0 w-full h-full z-0"></div>
+
+      <button class="rounded-full h-10 mt-3 ml-3" style=" min-width: 254px !important;" color="primary" mat-raised-button type="button">
+        <ic-icon [icon]="icToConnect"
+                 class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2"
+                 inline="true"
+                 size="25px"></ic-icon>
+        <span class="mr-3">{{'GLOBAL.CONNECTGROUP' | translate}}</span>
+      </button>
+      <button color="primary" mat-mini-fab type="button" class="ml-4 mt-3" matTooltip=" {{'DASHBOARDBOT.BOTPAUSE' | translate}}" matTooltipPosition="right">
+        <mat-icon [icIcon]="icPause"></mat-icon>
+      </button>
+      <div fxLayout="row" fxFlex="fill" fxLayoutAlign="end center" class="mr-20 h-full" style="z-index:99999;">
+        <div fxFlex="50" class="my-10">
+          <div gdColumns="1fr 1fr" gdColumns.xs="1fr" gdGap="5px">
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight matTooltip="{{'GLOBAL.LEVEL' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">{{group?.groupLevel}}</h1>
+              </div>
+            </div>
+
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight matTooltip="{{'DASHBOARDBOT.PP' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">{{group?.groupProspection}}</h1>
+              </div>
+            </div>
+
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight matTooltip="{{'CREATEGROUP.LEADER' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">Leader Name</h1>
+              </div>
+            </div>
+
+            <div class="py-1" fxLayout="column" fxLayoutAlign="center center">
+              <div @fadeInRight matTooltip="{{'GLOBAL.ACTUALPATH' | translate}}">
+                <h1 class="headline text-contrast-white m-0 ng-trigger ng-trigger-fadeInRight" style="">trajet Name</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
+
+    <div class="z-10 relative -mt-16 px-gutter" fxLayout="row" fxLayoutAlign="start center">
+      <div [ngClass.gt-xs]="['ltr:ml-6 rtl:mr-6']" class="max-w-full" fxFlex="auto">
+        <div class="h-16" fxLayout="row" fxLayoutAlign="start center">
+          <h1 @fadeInRight class="headline text-contrast-black m-0">{{group?.name}}</h1>
+        </div>
+        <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" mat-align-tabs="center">
+          <mat-tab *ngFor="let link of links" fxLayoutAlign="center center">
+            <ng-template mat-tab-label>
+              <ic-icon [icon]="link.icon" size="20px" class="mx-3"></ic-icon>
+              <span> {{ link.label }}</span>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-3"
+       fxLayout="row"
+       fxLayout.lt-md="column"
+       fxLayoutAlign="start start"
+       fxLayoutAlign.lt-md="start stretch"
+       fxLayoutGap="24px">
+    <div fxFlex="calc(70% - 12px)" fxFlex.lt-md="auto">
+      <app-dashboard-group *ngIf="indexSelected == 0" [group]="group"></app-dashboard-group>
+      <app-group-fight *ngIf="indexSelected == 1" [group]="group"></app-group-fight>
+      <app-group-inventory *ngIf="indexSelected == 2" [group]="group"></app-group-inventory>
+      <app-group-parameters *ngIf="indexSelected == 3" [group]="group"></app-group-parameters>
+    </div>
+  </div>
+</div>

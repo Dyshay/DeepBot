@@ -1,4 +1,4 @@
-import { Component, Inject, LOCALE_ID, Renderer2 } from '@angular/core';
+import { Component, Inject, LOCALE_ID, Renderer2, OnInit } from '@angular/core';
 import { ConfigService } from '../@vex/services/config.service';
 import { Settings } from 'luxon';
 import { DOCUMENT } from '@angular/common';
@@ -27,7 +27,7 @@ import icPictureInPicture from '@iconify/icons-ic/twotone-picture-in-picture';
 import icSettings from '@iconify/icons-ic/twotone-settings';
 import { LayoutService } from '../@vex/services/layout.service';
 import icUpdate from '@iconify/icons-ic/twotone-update';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { filter, map } from 'rxjs/operators';
 import { coerceBooleanProperty } from '@angular/cdk/coercion';
 import { SplashScreenService } from '../@vex/services/splash-screen.service';
@@ -53,7 +53,7 @@ import { UserService } from './services/user.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'DeppBot';
   public spinkit = Spinkit;
 
@@ -72,7 +72,8 @@ export class AppComponent {
     private storeUser: Store<fromwebuser.State>,
     private storeGroup: Store<fromGroup.State>,
     private storeAccount: Store<fromAccount.State>,
-    private splashScreenService: SplashScreenService
+    private splashScreenService: SplashScreenService,
+    private router: Router
   ) {
 
     translate.setDefaultLang('fr');
@@ -97,13 +98,16 @@ export class AppComponent {
       }
     });
 
-
-    if (this.userService.isConnected()) {
+  }
+  async ngOnInit() {
+    if (await this.userService.isConnected()) {
       this.storeUser.dispatch(webUserActions.getUser());
       this.storeGroup.dispatch(GroupActions.getAllGroups());
       this.navigationService.GenerateNavigation();
     }
-
-
+    else {
+      this.userService.logout();
+      this.router.navigate(['/login']);
+    }
   }
 }

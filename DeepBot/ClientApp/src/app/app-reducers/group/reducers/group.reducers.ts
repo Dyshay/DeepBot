@@ -27,6 +27,16 @@ export const reducer = createReducer(initialState,
   on(GroupActions.getAllGroups, (state) => ({ ...state, pending: true })),
   on(GroupActions.getAllGroupsSuccess, (state, { groups }) => ({ ...state, allGroups: groups, pending: false })),
   on(GroupActions.getAllGroupsFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+
+  on(GroupActions.updateGroup, (state) => ({ ...state, pending: true })),
+  on(GroupActions.updateGroupSuccess, (state, { groupToUpdate }) => ({ ...state, pending: false })),
+  on(GroupActions.updateGroupFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+
+  on(GroupActions.deleteGroup, (state) => ({ ...state, pending: true })),
+  on(GroupActions.deleteGroupSuccess, (state, { name }) => ({ ...state, pending: false })),
+  on(GroupActions.deleteGroupFailure, (state, { error }) => ({ ...state, error, pending: false })),
 )
 
 

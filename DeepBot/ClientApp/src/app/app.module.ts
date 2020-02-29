@@ -25,6 +25,9 @@ import { TranslateModule, TranslateLoader, MissingTranslationHandler } from '@ng
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MyMissingTranslationHandler } from './modules/my-missing-translation-handler.module';
 import { NgHttpLoaderModule } from 'ng-http-loader';
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/fr';
+registerLocaleData(localeFr, 'fr-FR');
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -59,8 +62,8 @@ export function createTranslateLoader(http: HttpClient) {
     }),
     StoreModule.forRoot(ROOT_REDUCERS, {
       metaReducers, runtimeChecks: {
-        strictStateImmutability: true,
-        strictActionImmutability: true,
+        strictStateImmutability: false,
+        strictActionImmutability: false,
         strictStateSerializability: true,
         strictActionSerializability: true,
       }
@@ -83,6 +86,7 @@ export function createTranslateLoader(http: HttpClient) {
     useClass: AuthInterceptor,
     multi: true
   }, TalkService],
+  
   bootstrap: [AppComponent]
 })
 export class AppModule { }

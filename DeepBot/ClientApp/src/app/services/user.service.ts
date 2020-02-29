@@ -32,7 +32,7 @@ export class UserService {
   }
 
  async isConnected(): Promise<boolean> {
-    let retour = await this.http.get<boolean>(`${environment.apiURL}User/isActive`, httpOptions).toPromise();
+   let retour = await this.http.get<boolean>(`${environment.apiURL}User/isActive`, httpOptions).toPromise();
     return retour;
   }
 

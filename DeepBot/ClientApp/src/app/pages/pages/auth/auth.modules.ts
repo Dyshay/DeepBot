@@ -9,20 +9,27 @@ import { FooterModule } from 'src/@vex/components/footer/footer.module';
 import { ConfigPanelModule } from 'src/@vex/components/config-panel/config-panel.module';
 import { SidebarModule } from 'src/@vex/components/sidebar/sidebar.module';
 import { QuickpanelModule } from 'src/@vex/components/quickpanel/quickpanel.module';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatButtonModule, MatDialogModule } from '@angular/material';
+import { DialogResultRegisterComponent } from './register/dialog-result-register/dialog-result-register.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
-    imports: [
-        CommonModule,
-        LayoutModule,
-        SidenavModule,
-        ToolbarModule,
-        FooterModule,
-        ConfigPanelModule,
-        SidebarModule,
-        QuickpanelModule,
-        MatCardModule
-    ],
+  declarations: [DialogResultRegisterComponent],
+  imports: [
+    CommonModule,
+    LayoutModule,
+    SidenavModule,
+    ToolbarModule,
+    FlexLayoutModule,
+    MatDialogModule,
+    FooterModule,
+    MatButtonModule,
+    ConfigPanelModule,
+    SidebarModule,
+    QuickpanelModule,
+    MatCardModule
+  ],
+  entryComponents: [DialogResultRegisterComponent]
 })
-export class AuthModule {}
+export class AuthModule { }

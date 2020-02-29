@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import icVisibility from '@iconify/icons-ic/twotone-visibility';
 import icVisibilityOff from '@iconify/icons-ic/twotone-visibility-off';
@@ -14,6 +14,8 @@ import { User } from '../../../../../webModel/User';
 import { environment } from '../../../../../environments/environment';
 import { TraductionService } from '../../../../services/traduction.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DialogResultRegisterComponent } from '../register/dialog-result-register/dialog-result-register.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'vex-login',
@@ -39,12 +41,25 @@ export class LoginComponent implements OnInit {
     private cd: ChangeDetectorRef,
     private snackbar: MatSnackBar,
     private http: HttpClient,
+    public dialog: MatDialog,
     private toastr: ToastrService,
     private store: Store<fromwebUser.State>,
-    private tradService: TraductionService 
+    private tradService: TraductionService,
+    private activatedRoute: ActivatedRoute
   ) { }
 
   ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params.get('succes') == "succes") {
+        this.dialog.open(DialogResultRegisterComponent, {
+          width: '450px',
+          height: '300px',
+          data: "succes"
+        });
+
+      }
+    });
+
     this.form = this.fb.group({
       email: ['', Validators.required],
       password: ['', Validators.required]

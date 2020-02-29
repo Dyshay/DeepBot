@@ -69,7 +69,7 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
   }
 
   InitiateList() {
-    this.storeCharacter.select(fromcharacter.getAllCharacters)
+    this.storeCharacter.select(fromcharacter.getAllCurrentCharacters)
       .subscribe(result => {
         Object.assign(this.characterList, result);
         this.dataSource = new MatTableDataSource<Character>(result);
@@ -78,9 +78,17 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
 
 
   }
-  updateList(character: Character) {
-    this.Leader = character;
+  updateList(isretour: boolean) {
+    if (!isretour) {
+      this.Leader = this.groupstep2.controls["leader"].value;
+      var index = this.characterList.findIndex(o => o.key == this.Leader.key);
+      this.characterList.splice(index, 1);
+    }
+    else {
+      this.characterList.push(this.Leader);
+    }
 
+    this.dataSource = new MatTableDataSource<Character>(this.characterList);
   }
 
   submit() {

@@ -17,7 +17,7 @@
   </div>
 
   <div class="sidenav-items flex-auto" vexScrollbar>
-    <vex-sidenav-item *ngFor="let item of items; trackBy: trackByRoute"
+    <vex-sidenav-item *ngFor="let item of items | async; trackBy: trackByRoute"
                       [item]="item"
                       [level]="0"></vex-sidenav-item>
   </div>

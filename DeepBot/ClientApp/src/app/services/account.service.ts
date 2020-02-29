@@ -10,6 +10,7 @@ import { Account, CreateAccount } from '../../webModel/Account';
 import { User } from '../../webModel/User';
 import { Character } from '../../webModel/Character';
 import { Group } from '../../webModel/Group';
+import { AccountModel } from 'src/webModel/AccountModel';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -23,7 +24,16 @@ const httpOptions = {
 export class AccountService {
   constructor(private http: HttpClient, private store: Store<fromRoot.State & fromBot.State>) { }
 
-  createAccount(account: Account): Observable<any> {
-    return this.http.post<Account>(`${environment.apiURL}Account/CreateAccount`, account, httpOptions);
+  createAccount(acc: AccountModel) {
+    console.log(acc);
+    return this.http.post<Account>(`${environment.apiURL}Account/CreateAccount`, acc, httpOptions);
+  }
+
+  updateAccount(account: Account) {
+    return this.http.post<Account>(`${environment.apiURL}Account/UpdateAccount`, account, httpOptions);
+  }
+
+  deleteAccount(key: string) {
+    return this.http.post<string>(`${environment.apiURL}Account/DeleteAccount`, { key }, httpOptions);
   }
 }

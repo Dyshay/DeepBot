@@ -12,8 +12,9 @@ export class Group {
   leader?: Character;
   config?: ConfigGroup;
   trajet?: Trajet;
-  prospection?: number;
-  level?: number;
+  groupProspection?: number;
+  groupLevel?: number;
+  groupTotal?: number;
 }
 
 

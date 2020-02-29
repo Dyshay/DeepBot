@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnChanges } from '@angular/core';
 import icGroup from '@iconify/icons-ic/twotone-group';
 import icPageView from '@iconify/icons-ic/twotone-pageview';
 import icCloudOff from '@iconify/icons-ic/twotone-cloud-off';
@@ -11,13 +11,18 @@ import theme from '../../../../@vex/utils/tailwindcss';
 import { Store, select } from '@ngrx/store';
 import { TalkService } from 'src/app/Services/TalkService';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
+import * as fromWeb from 'src/app/app-reducers/webUser/reducers';
+import { webUserActions } from 'src/app/app-reducers/webUser/actions';
 
 @Component({
   selector: 'vex-dashboard-analytics',
   templateUrl: './dashboard-analytics.component.html',
   styleUrls: ['./dashboard-analytics.component.scss']
 })
-export class DashboardAnalyticsComponent implements OnInit {
+export class DashboardAnalyticsComponent implements OnInit, OnChanges {
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    this.webStore.dispatch(webUserActions.getBotNav());
+    }
 
 
 
@@ -94,7 +99,7 @@ export class DashboardAnalyticsComponent implements OnInit {
 
   theme = theme;
 
-  constructor(private cd: ChangeDetectorRef,private deepTalk: TalkService) { }
+  constructor(private cd: ChangeDetectorRef,private deepTalk: TalkService, private webStore: Store<fromWeb.State>) { }
 
   ngOnInit() {
     setTimeout(() => {

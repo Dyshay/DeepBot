@@ -96,6 +96,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             //account.CurrentCharacter.Inventory.getInventory(splittedData[9]);
 
             account.State = AccountState.IDLE;
+            hub.SendPackage("GC1", tcpId);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }
