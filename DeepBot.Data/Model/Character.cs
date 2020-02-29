@@ -18,6 +18,7 @@ namespace DeepBot.Data.Model
         public Guid Fk_Group { get; set; }
         public Guid Fk_Configuration { get; set; }
         public Guid Fk_Trajet { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public byte Level { get; set; }
         public int ServerId { get; set; }

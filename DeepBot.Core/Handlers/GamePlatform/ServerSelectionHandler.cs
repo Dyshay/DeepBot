@@ -86,9 +86,16 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             string[] splittedData = package.Substring(4).Split('|');
-            //TODO ADD Dispatch to AccountDB value
+            
+            Account account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
+            account.CurrentCharacter.Id = int.Parse(splittedData[0]);
+            account.CurrentCharacter.Name = splittedData[1];
+            account.CurrentCharacter.Level = byte.Parse(splittedData[2]);
+            account.CurrentCharacter.BreedId = byte.Parse(splittedData[3]);
+            account.CurrentCharacter.Sex = byte.Parse(splittedData[4]);
+            //account.CurrentCharacter.Inventory.getInventory(splittedData[9]);
 
-            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = AccountState.IDLE;
+            account.State = AccountState.IDLE;
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }
