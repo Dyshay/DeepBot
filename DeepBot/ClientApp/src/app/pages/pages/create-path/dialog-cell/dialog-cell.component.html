@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>{{ 'CREATEPATH.CHOICECELLID' | translate }}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-chip-list #chipList aria-label="cell selection">
+      <mat-chip *ngFor="let cell of cells" [selectable]="selectable"
+                [removable]="removable" (removed)="remove(cell)">
+        {{cell.cellId}}
+        <mat-icon matChipRemove  [icIcon]="icCancel" class="h-10"></mat-icon>
+      </mat-chip>
+      <input type="number" placeholder="ID de la cell"
+             [matChipInputFor]="chipList"
+             [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+             [matChipInputAddOnBlur]="addOnBlur"
+             (matChipInputTokenEnd)="add($event)">
+    </mat-chip-list>
+    <mat-hint>{{ 'CREATEPATH.CHOICECELLIDHINT' | translate }}</mat-hint>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions>
+  <button  mat-raised-button color="primary"   (click)="onNoClick()">{{ 'GLOBAL.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="cells" cdkFocusInitial>{{ 'GLOBAL.VALIDATE' | translate }}</button>
+</div>

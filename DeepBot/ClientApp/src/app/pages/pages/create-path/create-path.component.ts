@@ -6,8 +6,14 @@ import { scaleIn400ms } from '../../../../@vex/animations/scale-in.animation';
 import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.animation';
 import icPlus from '@iconify/icons-ic/baseline-add';
 import icDoneAll from '@iconify/icons-ic/twotone-done-all';
-import { MatMenuTrigger } from '@angular/material';
+import icLeftArrow from '@iconify/icons-ic/twotone-keyboard-arrow-left'
+import icTopArrow from '@iconify/icons-ic/twotone-keyboard-arrow-up'
+import icRightArrow from '@iconify/icons-ic/twotone-keyboard-arrow-right'
+import icBottomArrow from '@iconify/icons-ic/twotone-keyboard-arrow-down'
+import icDelete from '@iconify/icons-fa-solid/trash';
 import 'jquery';
+import { PathService } from '../../../services/path.service';
+import { Path, SpecificMonsterLevel, SpecificMonsterQuantity, CaptureMonsterQuantity } from '../../../../webModel/Utility/PathCreator/Path';
 declare var $: any;
 
 declare global {
@@ -30,35 +36,45 @@ declare global {
 })
 /** create-path component*/
 export class CreatePathComponent implements OnInit {
+  pathToCreate: Path;
+  monsterLevelToCreate: SpecificMonsterLevel;
+  monsterQuantityToCreate: SpecificMonsterQuantity;
+  monsterCaptureToCreate: CaptureMonsterQuantity;
+  lisType = [
+    { id: 0 }, { id: 1 }
+  ]
+  
 
-  groupstep1: FormGroup;
   icPlus = icPlus;
   icDoneAll = icDoneAll;
-  monsterID;
-  monsterQuantity;
+  icLeftArrow = icLeftArrow;
+  icTopArrow = icTopArrow;
+  icDelete = icDelete;
+  icRightArrow = icRightArrow;
+  icBottomArrow = icBottomArrow;
+  directionTop: boolean = false;
+  directionRight: boolean = false;
+  directionBottom: boolean = false;
+  directionLeft: boolean = false;
+
+
+
   zoneChoose;
   statePath;
   rightClickPos: string;
-  @ViewChild(MatMenuTrigger, { static: false }) contextMenuCombat: MatMenuTrigger;
-  @ViewChild(MatMenuTrigger, { static: false }) contextMenuDeplacement: MatMenuTrigger;
-  contextMenuPosition = { x: '0px', y: '0px' };
     /** create-path ctor */
-  constructor(private fb: FormBuilder) {
-
+  constructor(private fb: FormBuilder, private pathService: PathService) {
+    this.pathToCreate = new Path;
   }
   ngOnInit() {
-     this.groupstep1 = this.fb.group({
-      pathName: [null, Validators.required],
-      typePath: [null, Validators.required],
-      minMonster: [null, Validators.max(8)],
-      maxMonster: [null, Validators.max(8)],
-      levelMax: [null, Validators.max(9999)],
-      maxpod: [],
-      capture: [],
-      captureItem:[],
-      leaderPOD:[],
-      description: []
-    });
+    this.monsterLevelToCreate = new SpecificMonsterLevel;
+    this.monsterQuantityToCreate= new SpecificMonsterQuantity;
+    this.monsterCaptureToCreate = new CaptureMonsterQuantity;
+    this.pathToCreate.monsterLevel = [];
+    this.pathToCreate.monsterQuantity = [];
+    this.pathToCreate.monsterCapture = [];
+
+    console.log(this.pathToCreate)
   }
 
   ngAfterViewInit() {
@@ -73,6 +89,10 @@ export class CreatePathComponent implements OnInit {
               $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744', fillOpacity: .6 });
               $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744', fillOpacity: .6 });
               return false;
+            }
+            else {
+              $('#zone1Banque').mapster('set', false, e.key);
+              $('#zone1Retour').mapster('set', false, e.key);
             }
           },
           areas: [
@@ -1132,7 +1152,12 @@ export class CreatePathComponent implements OnInit {
               $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40', fillOpacity: .6 });
               return false;
             }
-          },
+            else {
+              if ($('#zone1').mapster('get_options', e.key, true).selected) 
+                return false;
+              
+            }
+              },
           areas: [
             { key: "-33;-65", toolTip: "-33;-65" },
             { key: "-32;-65", toolTip: "-32;-65" },
@@ -2189,6 +2214,10 @@ export class CreatePathComponent implements OnInit {
             if (e.selected) {
               $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888', fillOpacity: .6 });
               return false;
+            }
+            else {
+              if ($('#zone1').mapster('get_options', e.key, true).selected) 
+                return false;
             }
           },
           areas: [
@@ -3248,33 +3277,44 @@ export class CreatePathComponent implements OnInit {
 
   }
   
-
-  onContextMenu(event) {
-    console.log(event.target.alt);
-    this.rightClickPos = event.target.alt;
-    event.preventDefault();
-    this.contextMenuPosition.x = event.clientX + 'px';
-    this.contextMenuPosition.y = event.clientY + 'px';
-    this.contextMenuCombat.menu.focusFirstItem('mouse');
-    this.contextMenuCombat.openMenu();
-  }
-
- 
-
   changeZone(zone) {
-    console.log(zone);
   }
-  changeState(etat) {
-    if (etat == 'Banque' || etat =='Retour')
-      this.statePath = 2;
-    else if (etat = 'combat')
-      this.statePath = 0;
-    else if (etat = 'recolte')
-      this.statePath = 1;
-    else {
-      this.statePath = this.groupstep1.controls["typePath"].value
+
+
+  addMonsterQuantity() {
+    this.pathToCreate.monsterQuantity.push(this.monsterQuantityToCreate);
+    this.monsterQuantityToCreate = new SpecificMonsterQuantity;
+  }
+  DeleteQuantityMonster(id) {
+    var index = this.pathToCreate.monsterQuantity.findIndex(o => o.monsterId == id);
+    if (index != -1)
+      this.pathToCreate.monsterQuantity.splice(index, 1);
+  }
+  addMonsterLevel() {
+    this.pathToCreate.monsterLevel.push(this.monsterLevelToCreate);
+    this.monsterLevelToCreate = new SpecificMonsterLevel;
+  }
+  DeleteLevelMonster(id) {
+    var index = this.pathToCreate.monsterLevel.findIndex(o => o.monsterId == id);
+    if (index != -1)
+      this.pathToCreate.monsterLevel.splice(index, 1);
+  }
+
+  addCaptureMonster() {
+    this.pathToCreate.monsterCapture.push(this.monsterCaptureToCreate);
+    this.monsterCaptureToCreate = new CaptureMonsterQuantity;
+  }
+  DeleteCaptureMonster(id) {
+    var index = this.pathToCreate.monsterCapture.findIndex(o => o.monsterId == id);
+    if (index != -1)
+      this.pathToCreate.monsterCapture.splice(index, 1);
+  }
+
+  changeStatePath(etat) {
+  /* 1 = recolte / 2 = combat / 3 banque / 4 retour banque */
+      this.pathService.statePath = etat;
+    
     }
-  }
 
   selectMap(event) {
     console.log(event.target.alt);
@@ -3287,3 +3327,5 @@ export class CreatePathComponent implements OnInit {
   }
 
 }
+
+

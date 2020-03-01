@@ -11,7 +11,9 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class PathService {
-  constructor(private http: HttpClient,) {
+  statePath: number;
+
+  constructor(private http: HttpClient) {
 
     }
 }

@@ -1063,10 +1063,12 @@
 </div>
 <mat-menu #contextMenuBanque="matMenu">
   <ng-template matMenuContent>
-    <button mat-menu-item (click)="onContextMenuActionRappel()">Utiliser popo rappel</button>
-    <button mat-menu-item (click)="onContextMenuActionBonta()">Utiliser popo bonta</button>
-    <button mat-menu-item (click)="onContextMenuActionBrak()">Utiliser popo brakmar</button>
-    <button mat-menu-item (click)="onContextMenuActionZaap()">Utiliser Zaap</button>
-    <button mat-menu-item (click)="onContextMenuActionZaap()">Se déplacer sur une cell spécifique</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem('548')">{{ 'CREATEPATH.USEPOTION1' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem('6965')">{{ 'CREATEPATH.USEPOTION2' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem('6964')">{{ 'CREATEPATH.USEPOTION3' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem()">{{ 'CREATEPATH.USECONSOMMABLE' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionZaap()">{{ 'CREATEPATH.USEZAP' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionCell()">{{ 'CREATEPATH.MOVECELL' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionList()">{{ 'CREATEPATH.LISTACTIONMAP' | translate }}</button>
   </ng-template>
 </mat-menu>

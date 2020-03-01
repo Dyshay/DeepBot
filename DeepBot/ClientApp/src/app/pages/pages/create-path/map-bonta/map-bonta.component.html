@@ -1059,22 +1059,15 @@
 <div style="visibility: hidden; position: fixed"
      [style.left]="contextMenuPosition.x"
      [style.top]="contextMenuPosition.y"
-     [matMenuTriggerFor]="contextMenuCombat">
+     [matMenuTriggerFor]="contextMenuZone">
 </div>
-<mat-menu #contextMenuCombat="matMenu">
+<mat-menu #contextMenuZone="matMenu">
   <ng-template matMenuContent>
-    <button mat-menu-item (click)="onContextMenuActionSeparationGroupe()">Lancer combat seul ( pour groupe)</button>
-  </ng-template>
-</mat-menu>
-
-<div style="visibility: hidden; position: fixed"
-     [style.left]="contextMenuPosition.x"
-     [style.top]="contextMenuPosition.y"
-     [matMenuTriggerFor]="contextMenuRecolte">
-</div>
-<mat-menu #contextMenuRecolte="matMenu">
-  <ng-template matMenuContent>
-    <button mat-menu-item (click)="onContextMenuAction1()">Action spécific 1 récolte</button>
+    <button mat-menu-item (click)="onContextMenuActionSeparationGroupe()" *ngIf="pathService.statePath === 0">{{ 'CREATEPATH.FIGHTALONE' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionNoFight()" *ngIf="pathService.statePath === 0">{{ 'CREATEPATH.NOFIGHT' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionNoGather()" *ngIf="pathService.statePath === 1">{{ 'CREATEPATH.NOGATHER' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionList()">{{ 'CREATEPATH.LISTACTIONMAP' | translate }}</button>
 
   </ng-template>
 </mat-menu>
+

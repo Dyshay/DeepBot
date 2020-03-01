@@ -8,6 +8,6 @@
   </mat-form-field>
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">{{ 'GLOBAL.CANCEL' | translate }}</button>
-  <button mat-button [mat-dialog-close]="zaapSelected" cdkFocusInitial>{{ 'GLOBAL.VALIDATE' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="onNoClick()">{{ 'GLOBAL.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="zaapSelected" cdkFocusInitial>{{ 'GLOBAL.VALIDATE' | translate }}</button>
 </div>

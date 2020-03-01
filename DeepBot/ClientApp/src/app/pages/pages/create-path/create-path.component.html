@@ -11,7 +11,7 @@
   <vex-page-layout-content vexContainer @fadeInUp>
     <div class="card p-6">
 
-      <div class="overflow-hidden mt-10 mx-5" fxLayoutAlign="center center">
+      <div class="overflow-hidden mt-10" fxLayoutAlign="center center">
         <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true" style="width:100%;">
           <ng-template matStepperIcon="edit">
             <mat-icon [icIcon]="icDoneAll"></mat-icon>
@@ -21,8 +21,7 @@
             <mat-icon [icIcon]="icDoneAll"></mat-icon>
           </ng-template>
 
-          <mat-step [stepControl]="groupstep1">
-            <form [formGroup]="groupstep1">
+          <mat-step >
               <ng-template matStepLabel>{{ 'CREATEPATH.PATHPARAMETERS' | translate }} </ng-template>
 
               <h2 class="title m-0">{{ 'CREATEPATH.CREATEPATH' | translate }}</h2>
@@ -31,54 +30,154 @@
               <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
                 <mat-form-field fxFlex="auto">
                   <mat-label>{{ 'CREATEPATH.PATHNAME' | translate }}</mat-label>
-                  <input formControlName="pathName" matInput required>
+                  <input [(ngModel)]="pathToCreate.name" matInput required>
                 </mat-form-field>
                 <mat-form-field class="mt-1">
                   <mat-label>{{ 'CREATEPATH.TYPEPATH' | translate }}</mat-label>
-                  <mat-select formControlName="typePath">
+                  <mat-select [(ngModel)]="pathToCreate.type" (selectionChange)="changeStatePath($event)" required>
                     <mat-option [value]="0">{{ 'GLOBAL.FIGHT' | translate }}</mat-option>
                     <mat-option [value]="1">{{ 'GLOBAL.GATHERING' | translate }}</mat-option>
                   </mat-select>
                 </mat-form-field>
-                <div *ngIf="groupstep1.value.typePath === 0" class="mt-2">
-                  <div fxLayout="row" fxLayoutAlign="space-around center">
-                    <mat-form-field fxFlex="25">
+                <mat-divider class="my-2 full-width"></mat-divider>
+                <div *ngIf="pathToCreate.type === 0" class="mb-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">
+
+                  <div fxLayout="row" fxLayoutAlign="space-around center" class="full-width">
+                    <mat-form-field fxFlex="20">
                       <mat-label>{{ 'CREATEPATH.MINMONSTER' | translate }}</mat-label>
-                      <input type="number" formControlName="minMonster" matInput>
+                      <input type="number" [(ngModel)]="pathToCreate.monsterQuantityMin" matInput>
                     </mat-form-field>
-                    <mat-form-field fxFlex="25">
+                    <mat-form-field fxFlex="20">
                       <mat-label>{{ 'CREATEPATH.MAXMONSTER' | translate }}</mat-label>
-                      <input type="number" formControlName="maxMonster" matInput>
+                      <input type="number" [(ngModel)]="pathToCreate.monsterQuantityMax" matInput>
                     </mat-form-field>
-                    <mat-form-field fxFlex="25">
+                    <mat-form-field fxFlex="20">
+                      <mat-label>{{ 'CREATEPATH.LEVELMIN' | translate }}</mat-label>
+                      <input type="number" [(ngModel)]="pathToCreate.groupLevelMin" matInput>
+                    </mat-form-field>
+                    <mat-form-field fxFlex="20">
                       <mat-label>{{ 'CREATEPATH.LEVELMAX' | translate }}</mat-label>
-                      <input type="number" formControlName="levelMax" matInput>
+                      <input type="number" [(ngModel)]="pathToCreate.groupLevelMax" matInput>
                     </mat-form-field>
                   </div>
-                  <mat-divider class="my-2"></mat-divider>
-                  <div fxLayout="row" fxLayoutAlign="space-around center">
+                  <mat-divider class="my-2 full-width"></mat-divider>
+                  <div fxLayout="row" fxLayoutAlign="space-between center" class=" mb-2 full-width">
+                    <div fxLayout="column" fxLayoutAlign="center center" fxFlex="45">
+                      <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                        <mat-form-field fxFlex="18" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.MONSTERID' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterQuantityToCreate.monsterId" [name]="specificQuantityMonsterId">
+                        </mat-form-field>
+                        <mat-form-field fxFlex="30" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.SPECIFICQUANTITYMIN' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterQuantityToCreate.monsterQuantityMin" [name]="specificQuantityMin">
+                          <mat-hint>{{'CREATEPATH.SPECIFICQUANTITYMINHINT' | translate}}</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="30" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.SPECIFICQUANTITYMAX' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterQuantityToCreate.monsterQuantityMax" [name]="specificQuantityMax">
+                          <mat-hint>{{'CREATEPATH.SPECIFICQUANTITYMAXHINT' | translate}}</mat-hint>
+                        </mat-form-field>
+                        <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addMonsterQuantity()">
+                          <mat-icon [icIcon]="icPlus"></mat-icon>
+                        </button>
+                      </div>
+                      <div class="mt-2 full-width" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-list-item class="mt-2 mx-3 card full-width" *ngFor="let item of pathToCreate.monsterQuantity">
+                          <div fxLayout="row" class="full-width" fxLayoutAlign="center center">
+                            <div fxFlex="20" fxLayoutAlign="center center">
+                              MonstreId : {{item.monsterId}}
+                            </div>
+                            <div fxFlex="20" fxLayoutAlign="center center">
+                              Nombre min : {{item.monsterQuantityMin}}
+                            </div>
+                            <div fxFlex="20" fxLayoutAlign="center center">
+                              Nombre max : {{item.monsterQuantityMax}}
+                            </div>
+                            <div fxFlex="5" fxLayoutAlign="center center">
+                              <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="DeleteQuantityMonster(item.monsterId)">
+                                <mat-icon [icIcon]="icDelete"></mat-icon>
+                              </button>
+                            </div>
+                            <mat-divider></mat-divider>
+                          </div>
+                        </mat-list-item>
+                      </div>
+                    </div>
+
+                    <div fxLayout="column" fxLayoutAlign="center center" fxFlex="45">
+                      <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                        <mat-form-field fxFlex="18" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.MONSTERID' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterLevelToCreate.monsterId" [name]="specificQuantityMonsterId">
+                        </mat-form-field>
+                        <mat-form-field fxFlex="30" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.SPECIFICLEVELMIN' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterLevelToCreate.monsterLevelMin" [name]="specificQuantityMin">
+                          <mat-hint>{{'CREATEPATH.SPECIFICLEVELMINHINT' | translate}}</mat-hint>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="30" class="mx-2">
+                          <mat-label>{{ 'CREATEPATH.SPECIFICLEVELMAX' | translate }}</mat-label>
+                          <input type="number" matInput [(ngModel)]="monsterLevelToCreate.monsterLevelMax" [name]="specificQuantityMax">
+                          <mat-hint>{{'CREATEPATH.SPECIFICLEVELMAXHINT' | translate}}</mat-hint>
+                        </mat-form-field>
+                        <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addMonsterLevel()">
+                          <mat-icon [icIcon]="icPlus"></mat-icon>
+                        </button>
+                      </div>
+                      <div class="mt-2 full-width" fxLayout="column" fxLayoutAlign="center center">
+                        <mat-list-item class="mt-2 mx-3 card full-width" *ngFor="let item of pathToCreate.monsterLevel">
+                          <div fxLayout="row" class="full-width" fxLayoutAlign="center center">
+                            <div fxFlex="20" fxLayoutAlign="center center">
+                              MonstreId : {{item.monsterId}}
+                            </div>
+                            <div fxFlex="20" fxLayoutAlign="center center">
+                              Level min : {{item.monsterLevelMin}}
+                            </div>
+                            <div fxFlex="20" fxLayoutAlign="center center">
+                              Level max : {{item.monsterLevelMax}}
+                            </div>
+                            <div fxFlex="5" fxLayoutAlign="center center">
+                              <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="DeleteLevelMonster(item.monsterId)">
+                                <mat-icon [icIcon]="icDelete"></mat-icon>
+                              </button>
+                            </div>
+                            <mat-divider></mat-divider>
+                          </div>
+                        </mat-list-item>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <mat-divider class="my-2 full-width"></mat-divider>
+                  <div fxLayout="row" fxLayoutAlign="space-around center" class="full-width">
                     <div fxLayout="row" fxLayoutAlign="center center">
-                      <mat-slider formControlName="maxpod"
+                      <mat-slider [(ngModel)]="pathToCreate.maxPod"
                                   thumbLabel="true"
                                   min="1"
                                   max="99"> </mat-slider>
                       <p>{{'CREATEPATH.MAXPOD' | translate}}</p>
                     </div>
                     <div fxLayout="column" fxLayoutAlign="center center">
-                      <mat-slide-toggle color="primary" formControlName="leaderPOD">{{'CREATEPATH.LEADERBANK' | translate}}</mat-slide-toggle>
+                      <mat-slide-toggle color="primary" [(ngModel)]="pathToCreate.leaderBank">{{'CREATEPATH.LEADERBANK' | translate}}</mat-slide-toggle>
                       <mat-hint>{{'CREATEPATH.LEADERHINT' | translate}}</mat-hint>
                     </div>
                   </div>
 
-                  <mat-divider class="my-2"></mat-divider>
+                  <mat-divider class="my-2 full-width"></mat-divider>
 
-                  <div fxLayout="row" fxLayoutAlign="space-around center" class="mt-2">
-                    <mat-slide-toggle color="primary" formControlName="capture">{{'CREATEPATH.BOOLCAPTURE' | translate}}</mat-slide-toggle>
-                    <div *ngIf="groupstep1.value.capture" fxLayout="row" fxFlex="80" fxLayoutAlign="space-between center">
-                      <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+                  <div fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                    <div>
+                      <mat-slide-toggle color="primary" [(ngModel)]="pathToCreate.isCapture">{{'CREATEPATH.BOOLCAPTURE' | translate}}</mat-slide-toggle>
+                    </div>
+                  </div>
+                  <div *ngIf="pathToCreate.isCapture" fxLayout="column" class="full-width mt-2" fxLayoutAlign="center center">
+                    <div fxLayout="row" fxLayoutAlign="space-between center" class="full-width">
+                      <div fxLayout="row" fxLayoutAlign="center center" fxFlex="25">
                         <mat-form-field class="mt-1 full-width">
                           <mat-label>{{ 'CREATEPATH.CAPTUREITEM' | translate }}</mat-label>
-                          <mat-select formControlName="captureItem">
+                          <mat-select [(ngModel)]="pathToCreate.captureItem">
                             <mat-option [value]="0">{{ 'CREATEPATH.CAPTUREITEM1' | translate }}</mat-option>
                             <mat-option [value]="1">{{ 'CREATEPATH.CAPTUREITEM2' | translate }}</mat-option>
                             <mat-option [value]="2">{{ 'CREATEPATH.CAPTUREITEM3' | translate }}</mat-option>
@@ -87,26 +186,44 @@
                           </mat-select>
                         </mat-form-field>
                       </div>
-
-                      <div fxLayout="row" fxLayoutAlign="center start" fxFlex="50" class="mt-1">
+                      <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50" class="mt-1">
                         <mat-form-field fxFlex="25" class="mx-2">
                           <mat-label>{{ 'CREATEPATH.MONSTERID' | translate }}</mat-label>
-                          <input type="number" matInput [(ngModel)]="monsterID" [name]="monsterID" [ngModelOptions]="{standalone: true}">
+                          <input type="number" matInput [(ngModel)]="monsterCaptureToCreate.monsterId" [name]="monsterID">
                         </mat-form-field>
                         <mat-form-field fxFlex="65" class="mx-2">
                           <mat-label>{{ 'CREATEPATH.NUMBERMONSTER' | translate }}</mat-label>
-                          <input type="number" matInput [(ngModel)]="monsterQuantity" [name]="monsterQuantity" [ngModelOptions]="{standalone: true}">
+                          <input type="number" matInput [(ngModel)]="monsterCaptureToCreate.monsterQuantity" [name]="monsterQuantity">
                           <mat-hint>{{'CREATEPATH.HINTNUMBERMONSTER' | translate}}</mat-hint>
                         </mat-form-field>
-                        <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addMonsterCapture()">
+                        <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addCaptureMonster()">
                           <mat-icon [icIcon]="icPlus"></mat-icon>
                         </button>
                       </div>
                     </div>
+                    <div class="mt-2 full-width" fxLayout="column" fxLayoutAlign="center center">
+                      <mat-list-item class="mt-2 mx-3 card  full-width" *ngFor="let item of pathToCreate.monsterCapture">
+                        <div fxLayout="row" class="full-width" fxLayoutAlign="center center">
+                          <div fxFlex="10" fxLayoutAlign="center center">
+                            MonstreId : {{item.monsterId}}
+                          </div>
+                          <div fxFlex="10" fxLayoutAlign="center center">
+                            Nombre minimum : {{item.monsterQuantity}}
+                          </div>
+                          <div fxFlex="5" fxLayoutAlign="center center">
+                            <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="DeleteCaptureMonster(item.monsterId)">
+                              <mat-icon [icIcon]="icDelete"></mat-icon>
+                            </button>
+                          </div>
+                          <mat-divider></mat-divider>
+                        </div>
+
+                      </mat-list-item>
+                    </div>
                   </div>
                   <mat-divider class="my-3"></mat-divider>
                 </div>
-                <div *ngIf="groupstep1.value.typePath === 1">
+                <div *ngIf="pathToCreate.type === 1">
                   recolte
                 </div>
               </div>
@@ -116,18 +233,17 @@
                         type="button">
                   {{ 'GLOBAL.CANCEL' | translate }}
                 </button>
-                <button color="primary" [disabled]="groupstep1.invalid" mat-raised-button matStepperNext (click)="changeState()">
+                <button color="primary"  mat-raised-button matStepperNext (click)="changeStatePath(pathToCreate.type)">
                   {{ 'GLOBAL.NEXT' | translate }}
                 </button>
               </div>
-            </form>
           </mat-step>
 
-          <mat-step [stepControl]="groupstep2">
+          <mat-step>
 
-            <ng-template matStepLabel *ngIf="groupstep1.value.typePath === 0">{{ 'CREATEPATH.FIGHTPATHCREATOR' | translate }}</ng-template>
-            <ng-template matStepLabel *ngIf="groupstep1.value.typePath === 1">{{ 'CREATEPATH.GATHERINGPATHCREATOR' | translate }}</ng-template>
-            <ng-template matStepLabel *ngIf="groupstep1.value.typePath == null">{{ 'CREATEPATH.PATHLABEL' | translate }}</ng-template>
+            <ng-template matStepLabel *ngIf="pathToCreate.type === 0">{{ 'CREATEPATH.FIGHTPATHCREATOR' | translate }}</ng-template>
+            <ng-template matStepLabel *ngIf="pathToCreate.type === 1">{{ 'CREATEPATH.GATHERINGPATHCREATOR' | translate }}</ng-template>
+            <ng-template matStepLabel *ngIf="pathToCreate.type == null">{{ 'CREATEPATH.PATHLABEL' | translate }}</ng-template>
 
             <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATH' | translate }}</h2>
             <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHINFO' | translate }}</div>
@@ -136,7 +252,7 @@
               <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
                 <mat-form-field class="mt-1 full-width">
                   <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
-                  <mat-select [(value)]="zoneChoose" (selectionChange)="changeZone($event)">
+                  <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
                     <mat-option [value]="1">ZONE 2</mat-option>
                     <mat-option [value]="2">ZONE 3</mat-option>
@@ -150,23 +266,42 @@
 
             </div>
             <div fxLayout="row" fxLayoutAlign="center center">
-              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
-                <app-map-bonta [statePath]="statePath" id="bontamap"></app-map-bonta>
+              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
+                <div fxLayout="row" fxLayoutAlign="space-between start">
+                  <app-map-bonta></app-map-bonta>
+                  <div class="card ml-3 mt-2 p-2" fxLayout="column" fxLayoutAlign="center start" fxFlex="auto">
+                    <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
+                      <span class="font-medium"> Choix de la direction</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="directionTop = !directionTop"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="space-evenly start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="directionLeft = !directionLeft"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
+                      <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="directionRight = !directionRight"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="directionBottom = !directionBottom"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
+                    </div>
+
+                  </div>
+
+                </div>
               </div>
             </div>
 
-
+            
 
 
             <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeState()">{{ 'GLOBAL.BACK' | translate }}</button>
-              <button color="primary" mat-raised-button matStepperNext (click)="changeState('Banque')">
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath()">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(3)">
                 {{ 'GLOBAL.NEXT' | translate }}
               </button>
             </div>
           </mat-step>
 
-          <mat-step [stepControl]="groupstep3">
+          <mat-step>
             <ng-template matStepLabel>{{ 'CREATEPATH.BANKPATH' | translate }}</ng-template>
 
 
@@ -175,20 +310,20 @@
 
             <div fxLayout="row" fxLayoutAlign="center center">
               <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
-                <app-map-bonta-banque [statePath]="statePath"></app-map-bonta-banque>
+                <app-map-bonta-banque ></app-map-bonta-banque>
               </div>
             </div>
 
             <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeState()">{{ 'GLOBAL.BACK' | translate }}</button>
-              <button color="primary" mat-raised-button matStepperNext (click)="changeState('Retour')">
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(pathToCreate.type)">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(4)">
                 {{ 'GLOBAL.NEXT' | translate }}
               </button>
             </div>
 
           </mat-step>
 
-          <mat-step [stepControl]="groupstep4">
+          <mat-step>
             <ng-template matStepLabel>{{ 'CREATEPATH.BACKPATH' | translate }}</ng-template>
 
 
@@ -197,12 +332,12 @@
 
             <div fxLayout="row" fxLayoutAlign="center center">
               <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
-                <app-map-bonta-retour [statePath]="statePath"></app-map-bonta-retour>
+                <app-map-bonta-retour ></app-map-bonta-retour>
               </div>
             </div>
 
             <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeState()">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(3)">{{ 'GLOBAL.BACK' | translate }}</button>
               <button (click)="submit()" color="primary" mat-raised-button
                       matStepperNext>
                 {{ 'CREATEPATH.GENERATEPATH' | translate }}

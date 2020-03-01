@@ -1,6 +1,8 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { MatMenuTrigger, MatDialog } from '@angular/material';
 import { DialogZaapComponent } from '../dialog-zaap/dialog-zaap.component';
+import { DialogCellComponent } from '../dialog-cell/dialog-cell.component';
+import { DialogUseItemComponent } from '../dialog-use-item/dialog-use-item.component';
 
 
 declare global {
@@ -10,18 +12,17 @@ declare global {
 }
 
 @Component({
-    selector: 'app-map-bonta-banque',
-    templateUrl: './map-bonta-banque.component.html',
-    styleUrls: ['./map-bonta-banque.component.scss']
+  selector: 'app-map-bonta-banque',
+  templateUrl: './map-bonta-banque.component.html',
+  styleUrls: ['./map-bonta-banque.component.scss']
 })
 /** map-bonta component*/
 export class MapBontaBanqueComponent {
   @Input() statePath;
   rightClickPos: string;
-  @ViewChild(MatMenuTrigger, { static: false }) contextMenuCombat: MatMenuTrigger;
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanque: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
-    /** map-bonta ctor */
+  /** map-bonta ctor */
   constructor(public dialog: MatDialog) {
 
   }
@@ -31,39 +32,55 @@ export class MapBontaBanqueComponent {
     const target = event.target as HTMLAreaElement
 
   }
- 
+
   onContextMenu(event) {
-    console.log(event.target.alt);
-    console.log(this.statePath);
     this.rightClickPos = event.target.alt;
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
 
-    /* chemin de banque */
-    if (this.statePath == 2) {
-      this.contextMenuBanque.menu.focusFirstItem('mouse');
-      this.contextMenuBanque.openMenu();
+    this.contextMenuBanque.menu.focusFirstItem('mouse');
+    this.contextMenuBanque.openMenu();
+
+  }
+
+  onContextMenuActionUseItem(item) {
+    var consommable;
+    if (item == null) {
+      const dialogRef = this.dialog.open(DialogUseItemComponent, {
+        width: '450px',
+      });
+      dialogRef.afterClosed().subscribe(result => {
+        consommable = result;
+      });
     }
+    else
+      consommable = item;
+
+
+
+ 
+
+  }
+  onContextMenuActionCell() {
+    var cells;
+    const dialogRef = this.dialog.open(DialogCellComponent, {
+      width: '450px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      cells = result;
+    });
+
+  }
+  onContextMenuActionList() {
+
   }
 
-  onContextMenuActionSeparationGroupe() {
-    console.log(this.rightClickPos);
-  }
-
-  onContextMenuActionRappel() {
-    console.log(this.rightClickPos);
-  }
-  onContextMenuActionBonta() {
-    console.log(this.rightClickPos);
-  }
-  onContextMenuActionBrak() {
-    console.log(this.rightClickPos);
-  }
   onContextMenuActionZaap() {
     var zaap;
     const dialogRef = this.dialog.open(DialogZaapComponent, {
-      width: '300px',
+      width: '450px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

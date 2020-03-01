@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconModule } from '@visurel/iconify-angular';
-import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatTableModule, MatDividerModule, MatMenuModule, MatDialogModule } from '@angular/material';
+import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatTableModule, MatDividerModule, MatMenuModule, MatDialogModule, MatChipsModule } from '@angular/material';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
@@ -17,10 +17,12 @@ import { MapBontaComponent } from './map-bonta/map-bonta.component';
 import { MapBontaBanqueComponent } from './map-bonta-banque/map-bonta-banque.component';
 import { MapBontaRetourComponent } from './map-bonta-retour/map-bonta-retour.component';
 import { DialogZaapComponent } from './dialog-zaap/dialog-zaap.component';
+import { DialogCellComponent } from './dialog-cell/dialog-cell.component';
+import { DialogUseItemComponent } from './dialog-use-item/dialog-use-item.component';
 
 
 @NgModule({
-  declarations: [CreatePathComponent,MapBontaComponent,MapBontaBanqueComponent,MapBontaRetourComponent,DialogZaapComponent],
+  declarations: [CreatePathComponent,MapBontaComponent,MapBontaBanqueComponent,MapBontaRetourComponent,DialogZaapComponent,DialogCellComponent,DialogUseItemComponent],
   imports: [
     CommonModule,
     CreatePathRoutingModule,
@@ -40,6 +42,7 @@ import { DialogZaapComponent } from './dialog-zaap/dialog-zaap.component';
     FormsModule,
     IconModule,
     MatDividerModule,
+    MatChipsModule,
     BreadcrumbsModule,
     ContainerModule,
     ColorFadeModule,
@@ -49,7 +52,7 @@ import { DialogZaapComponent } from './dialog-zaap/dialog-zaap.component';
     TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [DialogZaapComponent]
+  entryComponents: [DialogZaapComponent, DialogCellComponent,DialogUseItemComponent]
 })
 export class CreatePathModule {
 }
