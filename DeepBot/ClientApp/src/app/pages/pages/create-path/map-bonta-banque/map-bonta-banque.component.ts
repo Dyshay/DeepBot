@@ -1,8 +1,9 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MatMenuTrigger, MatDialog } from '@angular/material';
 import { DialogZaapComponent } from '../dialog-zaap/dialog-zaap.component';
 import { DialogCellComponent } from '../dialog-cell/dialog-cell.component';
 import { DialogUseItemComponent } from '../dialog-use-item/dialog-use-item.component';
+import { PathService } from '../../../../services/path.service';
 
 
 declare global {
@@ -18,20 +19,16 @@ declare global {
 })
 /** map-bonta component*/
 export class MapBontaBanqueComponent {
-  @Input() statePath;
+  @Output() selectMapEvent = new EventEmitter<string>();
+  @Output() specificActionEvent = new EventEmitter<{ position: string, event: string, payload?: any }>();
   rightClickPos: string;
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanque: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
   /** map-bonta ctor */
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private pathService: PathService) {
 
   }
 
-  selectMap(event) {
-    console.log(event);
-    const target = event.target as HTMLAreaElement
-
-  }
 
   onContextMenu(event) {
     this.rightClickPos = event.target.alt;
@@ -52,14 +49,22 @@ export class MapBontaBanqueComponent {
       });
       dialogRef.afterClosed().subscribe(result => {
         consommable = result;
+        this.specificActionEvent.next({
+          position: this.rightClickPos,
+          event: 'useItem',
+          payload: consommable
+        });
       });
     }
-    else
+    else {
       consommable = item;
+      this.specificActionEvent.next({
+        position: this.rightClickPos,
+        event: 'useItem',
+        payload: consommable
+      });
+    }
 
-
-
- 
 
   }
   onContextMenuActionCell() {
@@ -70,10 +75,12 @@ export class MapBontaBanqueComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       cells = result;
+      this.specificActionEvent.next({
+        position: this.rightClickPos,
+        event: 'cellMove',
+        payload: cells
+      });
     });
-
-  }
-  onContextMenuActionList() {
 
   }
 
@@ -82,10 +89,21 @@ export class MapBontaBanqueComponent {
     const dialogRef = this.dialog.open(DialogZaapComponent, {
       width: '450px',
     });
-
     dialogRef.afterClosed().subscribe(result => {
       zaap = result;
+      this.specificActionEvent.next({
+        position: this.rightClickPos,
+        event: 'useZaap',
+        payload: result
+      });
     });
+  }
+  onContextMenuActionList() {
+
+  }
+
+  selectMap(event) {
+    this.selectMapEvent.next(event.target.alt);
   }
 
 }

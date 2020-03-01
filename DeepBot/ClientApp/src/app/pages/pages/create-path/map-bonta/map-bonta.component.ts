@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MatMenuTrigger } from '@angular/material';
 import { PathService } from '../../../../services/path.service';
 
@@ -16,6 +16,9 @@ declare global {
 })
 /** map-bonta component*/
 export class MapBontaComponent {
+  @Output() selectMapEvent = new EventEmitter<string>();
+  @Output() specificActionEvent = new EventEmitter<{ position: string, event: string, payload?: any }>();
+
   rightClickPos: string;
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuZone: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
@@ -24,10 +27,7 @@ export class MapBontaComponent {
 
   }
 
-  selectMap(event) {
-    console.log(event);
-
-  }
+ 
  
   onContextMenu(event) {
     this.rightClickPos = event.target.alt;
@@ -38,20 +38,32 @@ export class MapBontaComponent {
       this.contextMenuZone.menu.focusFirstItem('mouse');
       this.contextMenuZone.openMenu();
 
-   
   }
 
   onContextMenuActionSeparationGroupe() {
-    console.log(this.rightClickPos);
+    this.specificActionEvent.next({
+      position: this.rightClickPos,
+      event:'separateGroup'
+    });
   }
   onContextMenuActionNoFight() {
-    console.log(this.rightClickPos);
+    this.specificActionEvent.next({
+      position: this.rightClickPos,
+      event: 'noFight'
+    });
   }
   onContextMenuActionNoGather() {
-    console.log(this.rightClickPos);
+    this.specificActionEvent.next({
+      position: this.rightClickPos,
+      event: 'noGather'
+    });
   }
   onContextMenuActionList() {
     console.log(this.rightClickPos);
+  }
+
+  selectMap(event) {
+    this.selectMapEvent.next(event.target.alt);
   }
 
 }

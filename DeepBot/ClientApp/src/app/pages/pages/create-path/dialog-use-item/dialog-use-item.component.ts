@@ -17,5 +17,5 @@ export class DialogUseItemComponent {
     this.dialogRef.close();
   }
 
-  idItem =0;
+  idItem :number;
 }

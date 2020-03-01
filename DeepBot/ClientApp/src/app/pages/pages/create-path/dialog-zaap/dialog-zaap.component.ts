@@ -8,7 +8,7 @@ import { MatDialogRef } from '@angular/material';
 })
 /** dialog-zaap component*/
 export class DialogZaapComponent {
-  zaapSelected;
+  zaapSelected :number;
 
   /** dialog-zaap ctor */
   constructor(public dialogRef: MatDialogRef<DialogZaapComponent>) {

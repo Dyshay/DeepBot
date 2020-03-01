@@ -229,11 +229,7 @@
               </div>
 
               <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-                <button (click)="stepper.reset()" color="primary" mat-button
-                        type="button">
-                  {{ 'GLOBAL.CANCEL' | translate }}
-                </button>
-                <button color="primary"  mat-raised-button matStepperNext (click)="changeStatePath(pathToCreate.type)">
+                <button color="primary"  mat-raised-button matStepperNext (click)="changeStatePath(pathToCreate.type);createPathInService()">
                   {{ 'GLOBAL.NEXT' | translate }}
                 </button>
               </div>
@@ -266,22 +262,26 @@
 
             </div>
             <div fxLayout="row" fxLayoutAlign="center center">
-              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
+              <div style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
                 <div fxLayout="row" fxLayoutAlign="space-between start">
-                  <app-map-bonta></app-map-bonta>
-                  <div class="card ml-3 mt-2 p-2" fxLayout="column" fxLayoutAlign="center start" fxFlex="auto">
+                  <app-map-bonta (selectMapEvent)="selectMap($event)"
+                                 (specificActionEvent)="specificAction($event)"
+                                 [hidden]="zoneChoose !== 0">
+
+                  </app-map-bonta>
+                  <div class="card ml-3 mt-2 p-2" fxLayout="column" fxLayoutAlign="center start" fxFlex="auto" *ngIf="zoneChoose != null">
                     <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
                       <span class="font-medium"> Choix de la direction</span>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
-                      <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="directionTop = !directionTop"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
+                      <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Top',directionTop)"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="space-evenly start" class="full-width">
-                      <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="directionLeft = !directionLeft"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
-                      <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="directionRight = !directionRight"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
+                      <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Left',directionTop)"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
+                      <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Right',directionTop)"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
                     </div>
                     <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
-                      <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="directionBottom = !directionBottom"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
+                      <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Bottom',directionTop)"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
                     </div>
 
                   </div>
@@ -294,8 +294,8 @@
 
 
             <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath()">{{ 'GLOBAL.BACK' | translate }}</button>
-              <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(3)">
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(pathToCreate.type)">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(2)">
                 {{ 'GLOBAL.NEXT' | translate }}
               </button>
             </div>
@@ -308,15 +308,51 @@
             <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATHBANK' | translate }}</h2>
             <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHBANKINFO' | translate }}</div>
 
+            <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+              <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+                <mat-form-field class="mt-1 full-width">
+                  <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
+                  <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
+                    <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
+                    <mat-option [value]="1">ZONE 2</mat-option>
+                    <mat-option [value]="2">ZONE 3</mat-option>
+                    <mat-option [value]="3">ZONE 4</mat-option>
+                    <mat-option [value]="4">ZONE 5</mat-option>
+                  </mat-select>
+                  <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
+                </mat-form-field>
+
+              </div>
+            </div>
+
             <div fxLayout="row" fxLayoutAlign="center center">
-              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
-                <app-map-bonta-banque ></app-map-bonta-banque>
+              <div  style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
+                <div fxLayout="row" fxLayoutAlign="space-between start">
+                  <app-map-bonta-banque  (selectMapEvent)="selectMap($event)"
+                                         (specificActionEvent)="specificAction($event)"
+                                        [hidden]="zoneChoose !== 0"></app-map-bonta-banque>
+                  <div class="card ml-3 mt-2 p-2" fxLayout="column" fxLayoutAlign="center start" fxFlex="auto" *ngIf="zoneChoose != null">
+                    <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
+                      <span class="font-medium"> Choix de la direction</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Top',directionTop)"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="space-evenly start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Left',directionTop)"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
+                      <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Right',directionTop)"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Bottom',directionTop)"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
               <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(pathToCreate.type)">{{ 'GLOBAL.BACK' | translate }}</button>
-              <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(4)">
+              <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(3)">
                 {{ 'GLOBAL.NEXT' | translate }}
               </button>
             </div>
@@ -330,14 +366,52 @@
             <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATHBACK' | translate }}</h2>
             <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHBAckINFO' | translate }}</div>
 
+            <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+              <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+                <mat-form-field class="mt-1 full-width">
+                  <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
+                  <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
+                    <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
+                    <mat-option [value]="1">ZONE 2</mat-option>
+                    <mat-option [value]="2">ZONE 3</mat-option>
+                    <mat-option [value]="3">ZONE 4</mat-option>
+                    <mat-option [value]="4">ZONE 5</mat-option>
+                  </mat-select>
+                  <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
+                </mat-form-field>
+
+              </div>
+            </div>
+
             <div fxLayout="row" fxLayoutAlign="center center">
-              <div [hidden]="zoneChoose !== 0" style="overflow-y:scroll;overflow-x:scroll" #zone1>
-                <app-map-bonta-retour ></app-map-bonta-retour>
+              <div style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
+                <div fxLayout="row" fxLayoutAlign="space-between start">
+                  <app-map-bonta-retour  (selectMapEvent)="selectMap($event)"
+                                        (specificActionEvent)="specificAction($event)"
+                                        [hidden]="zoneChoose !== 0" >
+
+                  </app-map-bonta-retour>
+                  <div class="card ml-3 mt-2 p-2" fxLayout="column" fxLayoutAlign="center start" fxFlex="auto" *ngIf="zoneChoose != null">
+                    <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
+                      <span class="font-medium"> Choix de la direction</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Top',directionTop)"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="space-evenly start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Left',directionTop)"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
+                      <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Right',directionTop)"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                      <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Bottom',directionTop)"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
 
             <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
-              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(3)">{{ 'GLOBAL.BACK' | translate }}</button>
+              <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(2)">{{ 'GLOBAL.BACK' | translate }}</button>
               <button (click)="submit()" color="primary" mat-raised-button
                       matStepperNext>
                 {{ 'CREATEPATH.GENERATEPATH' | translate }}

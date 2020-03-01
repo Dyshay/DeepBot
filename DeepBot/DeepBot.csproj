@@ -38,6 +38,7 @@
 
   <ItemGroup>
     <None Remove="ClientApp\src\webModel\MapMessage.ts" />
+    <None Remove="ClientApp\src\webModel\Utility\PathCreator\areas.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -51,6 +52,7 @@
 
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\webModel\MapMessage.ts" />
+    <TypeScriptCompile Include="ClientApp\src\webModel\Utility\PathCreator\Areas.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
