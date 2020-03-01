@@ -19,10 +19,11 @@ import { MapBontaRetourComponent } from './map-bonta-retour/map-bonta-retour.com
 import { DialogZaapComponent } from './dialog-zaap/dialog-zaap.component';
 import { DialogCellComponent } from './dialog-cell/dialog-cell.component';
 import { DialogUseItemComponent } from './dialog-use-item/dialog-use-item.component';
+import { DialogInteractionComponent } from './dialog-interaction/dialog-interaction.component';
 
 
 @NgModule({
-  declarations: [CreatePathComponent,MapBontaComponent,MapBontaBanqueComponent,MapBontaRetourComponent,DialogZaapComponent,DialogCellComponent,DialogUseItemComponent],
+  declarations: [CreatePathComponent,MapBontaComponent,MapBontaBanqueComponent,MapBontaRetourComponent,DialogZaapComponent,DialogCellComponent,DialogUseItemComponent,DialogInteractionComponent],
   imports: [
     CommonModule,
     CreatePathRoutingModule,
@@ -52,7 +53,7 @@ import { DialogUseItemComponent } from './dialog-use-item/dialog-use-item.compon
     TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [DialogZaapComponent, DialogCellComponent,DialogUseItemComponent]
+  entryComponents: [DialogZaapComponent, DialogCellComponent,DialogUseItemComponent,DialogInteractionComponent]
 })
 export class CreatePathModule {
 }

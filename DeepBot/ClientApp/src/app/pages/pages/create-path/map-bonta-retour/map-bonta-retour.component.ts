@@ -4,6 +4,7 @@ import { PathService } from '../../../../services/path.service';
 import { DialogZaapComponent } from '../dialog-zaap/dialog-zaap.component';
 import { DialogCellComponent } from '../dialog-cell/dialog-cell.component';
 import { DialogUseItemComponent } from '../dialog-use-item/dialog-use-item.component';
+import { DialogInteractionComponent } from '../dialog-interaction/dialog-interaction.component';
 
 
 declare global {
@@ -50,16 +51,24 @@ export class MapBontaRetourComponent {
       });
       dialogRef.afterClosed().subscribe(result => {
         consommable = result;
+        if (consommable!=null)
+        this.specificActionEvent.next({
+          position: this.rightClickPos,
+          event: 'useItem',
+          payload: consommable
+        });
       });
     }
-    else
+    else {
       consommable = item;
+      this.specificActionEvent.next({
+        position: this.rightClickPos,
+        event: 'useItem',
+        payload: consommable
+      });
+    }
 
-    this.specificActionEvent.next({
-      position: this.rightClickPos,
-      event: 'useItem',
-      payload: consommable
-    });
+
 
   }
   onContextMenuActionCell() {
@@ -70,6 +79,7 @@ export class MapBontaRetourComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       cells = result;
+      if(cells !=null)
       this.specificActionEvent.next({
         position: this.rightClickPos,
         event: 'cellMove',
@@ -86,6 +96,7 @@ export class MapBontaRetourComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       zaap = result;
+      if (zaap != null)
       this.specificActionEvent.next({
         position: this.rightClickPos,
         event: 'useZaap',
@@ -93,6 +104,23 @@ export class MapBontaRetourComponent {
       });
     });
 
+  }
+
+  onContextMenuActionInteraction() {
+    var interaction;
+    const dialogRef = this.dialog.open(DialogInteractionComponent, {
+      width: '300px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      interaction = result;
+      if (interaction != null)
+      this.specificActionEvent.next({
+        position: this.rightClickPos,
+        event: 'interaction',
+        payload: interaction
+      });
+    });
   }
   onContextMenuActionList() {
 

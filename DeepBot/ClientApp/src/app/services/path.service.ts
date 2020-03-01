@@ -63,6 +63,8 @@ export class PathService {
   }
 
   receivedSpecificActionToAdd(position, type, payload) {
+    console.log(position + ' //' + type + ' // ')
+    console.log(payload);
     var index = this.path.pathAction.findIndex(o => o.mapPos == position)
     if (position.length == 0) {
       this.toastr.error('Position non trouvée, veuillez bien cliquer sur la case ciblé', 'Action non créé');
@@ -74,17 +76,12 @@ export class PathService {
     }
   
 
-    if (type === 'separateGroup') {
-
+    if (type === 'separateGroup' || type === 'noFight' || type === 'noGather') {
+      this.updateAction(position, type);
     }
-    else if (type === 'noFight') {
 
-    }
-    else if (type === 'noGather') {
-
-    }
     else if (type === 'useItem') {
-
+      this.addUseItemAction(position, payload)
     }
     else if (type === 'useZaap') {
 
@@ -92,11 +89,44 @@ export class PathService {
     else if (type === 'cellMove') {
 
     }
+    else if (type === 'interaction') {
+
+    }
   }
 
-  updateAction() {
+  updateAction(position, type) {
+    if (type === 'separateGroup') {
+      this.path.pathAction.find(o => o.mapPos === position).actions.find(o => o.fightAction != null).fightAction.isAlone = true;
+      this.toastr.success('Ajout de l"action avec succés', 'Action combattre seul ajouté avec succés en (' + position + ')');
+    }
+    
+    else if (type === 'noFight') {
+      var index = this.path.pathAction.find(o => o.mapPos === position).actions.findIndex(o => o.fightAction != null);
+      this.path.pathAction.find(o => o.mapPos === position).actions.splice(index, 1)
+      this.toastr.success('Ajout de l"action avec succés', 'Action ne pas combattre ajouté avec succés en (' + position + ')');
+    }
+    else if (type === 'noGather') {
+      var index = this.path.pathAction.find(o => o.mapPos === position).actions.findIndex(o => o.gatherAction != null);
+      this.path.pathAction.find(o => o.mapPos === position).actions.splice(index, 1)
+      this.toastr.success('Ajout de l"action avec succés', 'Action ne pas récolté ajouté avec succés en (' + position + ')');
+    }
+  }
+
+  addUseItemAction(position, item) {
+    var order = this.getOrdre(position);
+    this.path.pathAction.find(o => o.mapPos === position).actions.push({
+      order: order,
+      useItemAction: {
+        itemId: item
+      }
+    });
+    this.toastr.success('Ajout de l"action avec succés', 'Action utiliser (' + item +') ajouté avec succés en (' + position + ')');
+  }
+  addZaapAction(position,payload) {
+
 
   }
+
 
 
   getOrdre(position) {
@@ -219,10 +249,5 @@ export class PathService {
 
   }
 
-  addUseItemAction() {
 
-  }
-  addInteractionAction() {
-
-  }
 }

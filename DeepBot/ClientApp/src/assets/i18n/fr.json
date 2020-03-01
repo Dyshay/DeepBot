@@ -274,6 +274,10 @@
     "SPECIFICLEVELMIN": "Level minimum de monstre",
     "SPECIFICLEVELMINHINT": "N'attaque pas le groupe si le level de monstre de cette ID est inférieur",
     "SPECIFICLEVELMAX": "Level maximum de monstre",
-    "SPECIFICLEVELMAXHINT": "N'attaque pas le groupe si le level de monstre de cette ID est supérieur"
+    "SPECIFICLEVELMAXHINT": "N'attaque pas le groupe si le level de monstre de cette ID est supérieur",
+    "INTERACTION": "Intéragir avec l'environnement",
+    "IDINTERACTIVE": "ID de l'objet ou PNJ d'interaction",
+    "IDACTIONINTERACTIVE": "ID de l'interaction avec l'Objet ou PNJ",
+    "CHOICEINTERACTION": "Choisissez l'interaction avec l'envrionnement"
   }
 }
