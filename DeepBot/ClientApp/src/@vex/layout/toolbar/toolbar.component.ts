@@ -3,7 +3,7 @@ import { LayoutService } from '../../services/layout.service';
 import icBookmarks from '@iconify/icons-ic/twotone-bookmarks';
 import emojioneEN from '@iconify/icons-emojione/flag-for-flag-united-kingdom';
 import emojioneFR from '@iconify/icons-emojione/flag-for-flag-france';
-import emogioneES from '@iconify/icons-emojione/flag-for-flag-spain';
+import emojioneES from '@iconify/icons-emojione/flag-for-flag-spain';
 import icMenu from '@iconify/icons-ic/twotone-menu';
 import { ConfigService } from '../../services/config.service';
 import { map } from 'rxjs/operators';
@@ -49,7 +49,7 @@ export class ToolbarComponent implements OnInit {
   icSearch = icSearch;
   icBookmarks = icBookmarks;
   emojioneEN = emojioneEN;
-  emogioneES = emogioneES;
+  emojioneES = emojioneES;
   emojioneFR = emojioneFR;
   icMenu = icMenu;
   icPersonAdd = icPersonAdd;

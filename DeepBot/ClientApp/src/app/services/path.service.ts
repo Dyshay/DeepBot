@@ -304,8 +304,8 @@ export class PathService {
       else
         this.moveActionToAdd = {
           cellId: cell,
-          toGoBank: true,
-          toBackBank: false
+          toGoBank: false,
+          toBackBank: true
         }
     }
     else {

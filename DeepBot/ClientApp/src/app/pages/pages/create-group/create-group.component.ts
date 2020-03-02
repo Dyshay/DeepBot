@@ -42,6 +42,7 @@ export class CreateGroupComponent implements OnInit, OnDestroy {
   Leader: Character = null;
   characterList: Character[] = [];
   groupToCreate: Group = new Group();
+  hourchecked;
   followers: Character[] = [];
     /** create-group ctor */
   constructor(private fb: FormBuilder, private storeGroup: Store<fromgroup.State>,

@@ -4,6 +4,7 @@ import { ToolbarUserDropdownComponent } from './toolbar-user-dropdown/toolbar-us
 import icPerson from '@iconify/icons-ic/twotone-person';
 import theme from '../../utils/tailwindcss';
 import { Account } from 'src/webModel/Account';
+import { User } from '../../../webModel/User';
 
 @Component({
   selector: 'vex-toolbar-user',
@@ -16,7 +17,7 @@ export class ToolbarUserComponent implements OnInit {
   icPerson = icPerson;
 
   theme = theme;
-  @Input() username : Account | null;
+  @Input() user : User | null;
 
   constructor(private popover: PopoverService,
               private cd: ChangeDetectorRef) { }

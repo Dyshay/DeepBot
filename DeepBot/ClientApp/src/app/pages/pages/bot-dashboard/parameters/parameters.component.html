@@ -45,7 +45,7 @@
     </div>
     <mat-form-field class="example-full-width">
       <mat-label>{{'DASHBOARDBOT.AGRESSIONZONE' | translate}}</mat-label>
-      <input matInput placeholder="3" type="number" [(ngModel)]="character.config.agressionZone" [name]="agressionZone" [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
+      <input matInput placeholder="3" type="number" [(ngModel)]="character.config.agressionZone"  [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'">
     </mat-form-field>
     <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
       <mat-slide-toggle color="primary" [(ngModel)]="character.config.autoAnswer">{{'DASHBOARDBOT.AUTOANSWER' | translate}}</mat-slide-toggle>
