@@ -30,6 +30,61 @@ export class CharacterService {
     return this.http.post<ConfigCharacter>(`${environment.apiURL}ConfigCharacter/UpdateConfigCharacter`, config, httpOptions);
   }
 
+  getCharacterBreedName(breedId: number) {
+    switch (breedId) {
+      case 10:
+        return 'Feca';
+      case 11:
+        return 'Feca';
+      case 20:
+        return 'Osamoadas';
+      case 21:
+        return 'Osamoadas';
+      case 30:
+        return 'Enutrof';
+      case 31:
+        return 'Enutrof';
+      case 40:
+        return 'Sram';
+      case 41:
+        return 'Sram';
+      case 50:
+        return 'Xelor';
+      case 51:
+        return 'Xelor';
+      case 60:
+        return 'Ecaflip';
+      case 61:
+        return 'Ecaflip';
+      case 70:
+        return 'Eniripsa';
+      case 71:
+        return 'Eniripsa';
+      case 80:
+        return 'Iop';
+      case 81:
+        return 'Iop';
+      case 90:
+        return 'Cra';
+      case 91:
+        return 'Cra';
+      case 100:
+        return 'Sadida'
+      case 101:
+        return 'Sadida';
+      case 110:
+        return 'Sacrieur';
+      case 111:
+        return 'Sacrieur';
+      case 120:
+        return 'Pandawa';
+      case 121:
+        return 'Pandawa';
+      default:
+        return 'breed id mauvais';
+    }
+  }
+
   getCharacterIcon(breedId: number) {
     switch (breedId) {
       case 10:

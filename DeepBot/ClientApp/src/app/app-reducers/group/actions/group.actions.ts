@@ -1,6 +1,7 @@
 import { props, createAction } from '@ngrx/store';
 import { User } from '../../../../webModel/User';
 import { Group } from '../../../../webModel/Group';
+import { ConfigGroup } from '../../../../webModel/ConfigGroup';
 
 
 export const createGroup = createAction('[BOT/GROUP] CREATE GROUP', props<{ createdGroup: Group }>());
@@ -19,3 +20,8 @@ export const updateGroupFailure = createAction('[BOT/ACCOUNT] UPDATE GROUP ERROR
 export const deleteGroup = createAction('[BOT/ACCOUNT] DELETE  GROUP', props<{ groupKeyToDelete: string }>());
 export const deleteGroupSuccess = createAction('[BOT/ACCOUNT] DELETE GROUP SUCCESS', props<{ name: string }>());
 export const deleteGroupFailure = createAction('[BOT/ACCOUNT] DELETE GROUP ERROR', props<{ error: any }>());
+
+
+export const updateGroupConfig = createAction('[BOT/ACCOUNT] UPDATE  GROUP CONFIG', props<{ groupConfigToUpdate: ConfigGroup }>());
+export const updateGroupConfigSuccess = createAction('[BOT/ACCOUNT] UPDATE GROUP CONFIG SUCCESS', props<{ groupConfigToUpdate: ConfigGroup }>());
+export const updateGroupConfigFailure = createAction('[BOT/ACCOUNT] UPDATE GROUP CONFIG ERROR', props<{ error: any }>());

@@ -74,7 +74,7 @@
 
   <!--menu trajet-->
   <mat-menu #PathMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/createPath']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
       <span>{{ 'TOOLBAR.CREATEPATH' | translate}}</span>
     </button>

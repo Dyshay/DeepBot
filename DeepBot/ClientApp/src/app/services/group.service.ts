@@ -10,6 +10,7 @@ import { Account, CreateAccount } from '../../webModel/Account';
 import { User } from '../../webModel/User';
 import { Character } from '../../webModel/Character';
 import { Group } from '../../webModel/Group';
+import { ConfigGroup } from '../../webModel/ConfigGroup';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -40,5 +41,9 @@ export class GroupsService {
     return this.http.post<string>(`${environment.apiURL}Group/DeleteGroup`, { key }, httpOptions);
   }
 
+
+  updateGroupConfig(config: ConfigGroup) {
+    return this.http.post<ConfigGroup>(`${environment.apiURL}ConfigGroup/UpdateConfigGroup`, config, httpOptions);
+  }
 
 }

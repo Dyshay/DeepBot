@@ -7,6 +7,7 @@ export class Group {
   name: string;
   description: string;
   fk_Leader?: number;
+  fk_Configuration?: string;
   fk_Followers?: number[];
   followers?: Character[];
   leader?: Character;
