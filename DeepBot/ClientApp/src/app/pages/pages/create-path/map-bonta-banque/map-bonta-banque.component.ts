@@ -5,6 +5,7 @@ import { DialogCellComponent } from '../dialog-cell/dialog-cell.component';
 import { DialogUseItemComponent } from '../dialog-use-item/dialog-use-item.component';
 import { PathService } from '../../../../services/path.service';
 import { DialogInteractionComponent } from '../dialog-interaction/dialog-interaction.component';
+import { DialogZaapiComponent } from '../dialog-zaapi/dialog-zaapi.component';
 
 
 declare global {
@@ -87,6 +88,23 @@ export class MapBontaBanqueComponent {
 
   }
 
+  onContextMenuActionZaapi() {
+    var zaapi;
+    const dialogRef = this.dialog.open(DialogZaapiComponent, {
+      width: '450px',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      zaapi = result;
+      if (zaapi != null)
+        this.specificActionEvent.next({
+          position: this.rightClickPos,
+          event: 'useZaapi',
+          payload: zaapi
+        });
+    });
+  }
+
   onContextMenuActionZaap() {
     var zaap;
     const dialogRef = this.dialog.open(DialogZaapComponent, {
@@ -105,7 +123,7 @@ export class MapBontaBanqueComponent {
   onContextMenuActionInteraction() {
     var interaction;
     const dialogRef = this.dialog.open(DialogInteractionComponent, {
-      width: '300px',
+      width: '450px',
     });
 
     dialogRef.afterClosed().subscribe(result => {

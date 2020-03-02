@@ -8,7 +8,7 @@ import { MatDialogRef } from '@angular/material';
 })
 /** dialog-zaap component*/
 export class DialogZaapComponent {
-  zaapSelected :number;
+  zaapSelected :Zaap;
 
   /** dialog-zaap ctor */
   constructor(public dialogRef: MatDialogRef<DialogZaapComponent>) {
@@ -20,141 +20,168 @@ export class DialogZaapComponent {
 
   Zaaps: Zaap[] = [
     {
-      name: 'Bonta',
-      position: '-32,-58',
-      id: 1
+      destinationName: 'Bonta',
+      destination: '-32,-58',
+      id: 1,
+      cellId: 150
     },
     {
-      name: 'Plaine Rocheuse',
-      position: '-14,-47',
-      id: 2
+      destinationName: 'Plaine Rocheuse',
+      destination: '-14,-47',
+      id: 2,
+      cellId: 150
     },
     {
-      name: 'Village Brigandins',
-      position: '-18,-26',
-      id: 3
+      destinationName: 'Village Brigandins',
+      destination: '-18,-26',
+      id: 3,
+      cellId: 150
     },
     {
-      name: 'Massif Cania',
-      position: '-20,-20',
-      id: 4
+      destinationName: 'Massif Cania',
+      destination: '-20,-20',
+      id: 4,
+      cellId: 150
     },
     {
-      name: 'Tainela ',
-      position: ' 1,-32',
-      id: 5
+      destinationName: 'Tainela ',
+      destination: ' 1,-32',
+      id: 5,
+      cellId: 150
     },
     {
-      name: 'Astrub ',
-      position: '4,-19',
-      id: 6
+      destinationName: 'Astrub ',
+      destination: '4,-19',
+      id: 6,
+      cellId: 150
     },
     {
-      name: 'pandala air',
-      position: '17,-31',
-      id: 7
+      destinationName: 'pandala air',
+      destination: '17,-31',
+      id: 7,
+      cellId: 150
     },
     {
-      name: 'pandala eau',
-      position: '23,-22',
-      id: 8
+      destinationName: 'pandala eau',
+      destination: '23,-22',
+      id: 8,
+      cellId: 150
     },
     {
-      name: 'pandala neutre',
-      position: '26,-37',
-      id: 9
+      destinationName: 'pandala neutre',
+      destination: '26,-37',
+      id: 9,
+      cellId: 150
     },
     {
-      name: 'pandala terre',
-      position: '30,-39',
-      id: 10
+      destinationName: 'pandala terre',
+      destination: '30,-39',
+      id: 10,
+      cellId: 150
     },
     {
-      name: 'pandala feu',
-      position: '29,-49',
-      id: 11
+      destinationName: 'pandala feu',
+      destination: '29,-49',
+      id: 11,
+      cellId: 150
     },
     {
-      name: 'ile wabbit ',
-      position: '25,-4',
-      id: 12
+      destinationName: 'ile wabbit ',
+      destination: '25,-4',
+      id: 12,
+      cellId: 150
     },
     {
-      name: 'moon ',
-      position: '35,12',
-      id: 13
+      destinationName: 'moon ',
+      destination: '35,12',
+      id: 13,
+      cellId: 150
     },
     {
-      name: 'montagne craq',
-      position: '-5,-8',
-      id: 14
+      destinationName: 'montagne craq',
+      destination: '-5,-8',
+      id: 14,
+      cellId: 150
     },
     {
-      name: 'chateau amakna',
-      position: '3,-5',
-      id: 15
+      destinationName: 'chateau amakna',
+      destination: '3,-5',
+      id: 15,
+      cellId: 150
     },
     {
-      name: 'port de madrestam',
-      position: '7,-4',
-      id: 16
+      destinationName: 'port de madrestam',
+      destination: '7,-4',
+      id: 16,
+      cellId: 150
     },
     {
-      name: 'amakna village',
-      position: '-2,0',
-      id: 17
+      destinationName: 'amakna village',
+      destination: '-2,0',
+      id: 17,
+      cellId: 150
     },
     {
-      name: 'la milifutaie',
-      position: '5,7',
-      id: 18
+      destinationName: 'la milifutaie',
+      destination: '5,7',
+      id: 18,
+      cellId: 150
     },
     {
-      name: 'bord de la foret maléfique',
-      position: '-1,13',
-      id: 19
+      destinationName: 'bord de la foret maléfique',
+      destination: '-1,13',
+      id: 19,
+      cellId: 150
     },
     {
-      name: 'port de sufokia ',
-      position: '10,22',
-      id: 20
+      destinationName: 'port de sufokia ',
+      destination: '10,22',
+      id: 20,
+      cellId: 150
     },
     {
-      name: 'plaine des scarafeuilles',
-      position: '-1,24',
-      id: 21
+      destinationName: 'plaine des scarafeuilles',
+      destination: '-1,24',
+      id: 21,
+      cellId: 150
     },
     {
-      name: 'brakmar ',
-      position: '-25,39',
-      id: 22
+      destinationName: 'brakmar ',
+      destination: '-25,39',
+      id: 22,
+      cellId: 150
     },
     {
-      name: 'lance de sidimote ',
-      position: '-24,12',
-      id: 23
+      destinationName: 'lance de sidimote ',
+      destination: '-24,12',
+      id: 23,
+      cellId: 150
     },
     {
-      name: 'villages des eleveurs',
-      position: '-16,1',
-      id: 24
+      destinationName: 'villages des eleveurs',
+      destination: '-16,1',
+      id: 24,
+      cellId: 150
     },
     {
-      name: 'territoire des dopeuls',
-      position: '-34,-8',
-      id: 25
+      destinationName: 'territoire des dopeuls',
+      destination: '-34,-8',
+      id: 25,
+      cellId: 150
     },
     {
-      name: 'ple village côtier',
-      position: '-46,18',
-      id: 26
+      destinationName: 'ple village côtier',
+      destination: '-46,18',
+      id: 26,
+      cellId: 150
     },
   ];
 }
 
 interface Zaap {
-  name: string;
-  position: string;
+  destinationName: string;
+  destination: string;
   id: number;
+  cellId: number;
 }
 
