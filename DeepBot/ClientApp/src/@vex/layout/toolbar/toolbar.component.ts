@@ -23,6 +23,7 @@ import * as fromwebUser from 'src/app/app-reducers/webUser/reducers';
 import { Store, select } from '@ngrx/store';
 import { webUserActions } from 'src/app/app-reducers/webUser/actions';
 import { TraductionService } from '../../../app/services/traduction.service';
+import { User } from '../../../webModel/User';
 
 
 @Component({
@@ -32,8 +33,9 @@ import { TraductionService } from '../../../app/services/traduction.service';
 })
 export class ToolbarComponent implements OnInit {
 
-  user$ = this.store.pipe(select(fromwebUser.getUser));
+
   @Input() mobileQuery: boolean;
+  user: User;
 
   @Input()
   @HostBinding('class.shadow-b')
@@ -74,6 +76,11 @@ export class ToolbarComponent implements OnInit {
                }
 
   ngOnInit() {
+    this.store.pipe(select(fromwebUser.getUser)).subscribe(
+      (result) => {
+        this.user = result;
+      }
+    );
   }
 
   changeLanguage(language) {
