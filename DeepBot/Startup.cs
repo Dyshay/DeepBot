@@ -8,6 +8,7 @@ using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.MapComponent;
+using DeepBot.Data.Model.Path;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -59,6 +60,9 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<Account>();
             BsonClassMap.RegisterClassMap<Character>();
             BsonClassMap.RegisterClassMap<Proxy>();
+            BsonClassMap.RegisterClassMap<SpecificMonsterLevel>();
+            BsonClassMap.RegisterClassMap<SpecificMonsterQuantity>();
+            BsonClassMap.RegisterClassMap<CaptureMonsterQuantity>();
 
             services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
             {
@@ -123,7 +127,7 @@ namespace DeepBot
             //        GlobalAreaName = item.GlobalAreaName,
             //        Height = item.Height,
             //        Width = item.Width,
-            //        MapId = item.MapId,
+            //        Key = item.MapId,
             //        Cells = item.Cells,
             //        CellsTeleport = item.CellsTeleport,
             //        Coordinate = item.Coordinate,

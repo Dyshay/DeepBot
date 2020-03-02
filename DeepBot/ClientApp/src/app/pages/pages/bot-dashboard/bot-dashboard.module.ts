@@ -34,7 +34,7 @@ import { ListeComponent } from '../../../generic-components/liste/liste.componen
 
 
 @NgModule({
-  declarations: [BotDashboardComponent, DashboardComponent, CharacterComponent, FightComponent, InventoryComponent, MapComponent, ParametersComponent, JobComponent, JobPanelComponent, ListeComponent],
+  declarations: [BotDashboardComponent, DashboardComponent, CharacterComponent, FightComponent, InventoryComponent, MapComponent, ParametersComponent, JobComponent, JobPanelComponent,ListeComponent],
   imports: [
     CommonModule,
     BotDashboardRoutingModule,

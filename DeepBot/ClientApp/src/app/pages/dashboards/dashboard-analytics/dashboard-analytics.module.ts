@@ -21,6 +21,7 @@ import { ContainerModule } from '../../../../@vex/directives/container/container
 import { MatProgressBarModule } from '@angular/material';
 import { WidgetCharacterModule } from '../../../../@vex/components/widgets/widget-character/widget-character.module';
 import { WidgetQuickValueCenterModule } from '../../../../@vex/components/widgets/widget-quick-value-center/widget-quick-value-center.module';
+import { ListeComponent } from '../../../generic-components/liste/liste.component';
 
 
 @NgModule({

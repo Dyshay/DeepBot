@@ -9,6 +9,8 @@ import icStarTrue from '@iconify/icons-ic/twotone-star';
 import icStarFalse from '@iconify/icons-ic/twotone-star-border';
 import { state, trigger, transition, style, animate } from '@angular/animations';
 import { MatTableModule } from '@angular/material/table';
+import { link } from 'fs';
+import { CharacterService } from '../../../../services/character.service';
 
 @Component({
     selector: 'app-dashboard-group',
@@ -38,43 +40,45 @@ export class DashboardGroupComponent implements OnInit {
   icStarTrue = icStarTrue;
   icStarFalse = icStarFalse;
     /** dashboard-group ctor */
-    constructor() {
+    constructor(private characterService:CharacterService) {
 
   }
   ngOnInit() {
     this.data.push(
       {
-        Classe: this.group.leader.breedId,
+        Classe: this.characterService.getCharacterBreedName(this.group.leader.breedId),
         POD: '80%',
         Leader: true,
         Level: this.group.leader.level,
-        Nom: this.group.leader.name
+        Nom: this.group.leader.name,
+        link: '/bot-dashboard/' + this.group.leader.key
       }
     );
 
     for (var i = 0; i < this.group.followers.length; i++) {
       this.data.push(
         {
-          Classe: this.group.followers[i].breedId,
+          Classe: this.characterService.getCharacterBreedName(this.group.followers[i].breedId),
           POD: '80%',
           Leader: false,
           Level: this.group.followers[i].level,
-          Nom:this.group.followers[i].name
+          Nom: this.group.followers[i].name,
+          link: '/bot-dashboard/' + this.group.followers[i].key
         }
       )
     }
     this.dataSource = this.data;
   }
 
-
 }
 
 export interface Character {
   Nom: string,
-  Classe: number,
+  Classe: string,
   Level: number,
   POD: string,
-  Leader: boolean
+  Leader: boolean,
+  link: string
 }
 
 export interface PeriodicElement {

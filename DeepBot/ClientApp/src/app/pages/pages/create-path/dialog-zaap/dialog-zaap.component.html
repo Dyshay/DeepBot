@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{ 'CREATEPATH.CHOICEZAAP' | translate }}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Zaap </mat-label>
+    <mat-select [(ngModel)]="zaapSelected" >
+      <mat-option [value]="zaap.id" *ngFor="let zaap of Zaaps"> {{zaap.name}}  ( {{zaap.position}} )</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()">{{ 'GLOBAL.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="zaapSelected" cdkFocusInitial>{{ 'GLOBAL.VALIDATE' | translate }}</button>
+</div>
