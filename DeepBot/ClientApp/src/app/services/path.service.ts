@@ -26,25 +26,41 @@ export class PathService {
   zaapActionToAdd: ZaapAction = new ZaapAction;
   zaapiActiontoAdd: ZaapiAction = new ZaapiAction;
   constructor(private http: HttpClient, private toastr: ToastrService) {
-    this.toastr.toastrConfig.timeOut = 3000;
-    this.toastr.toastrConfig.maxOpened = 2;
+    this.toastr.toastrConfig.timeOut = 3300;
+    this.toastr.toastrConfig.maxOpened = 4;
     this.toastr.toastrConfig.autoDismiss = true;
+    this.toastr.toastrConfig.newestOnTop = true;
+    this.toastr.toastrConfig.positionClass ='toast-top-full-width'
   }
 
-  /* action id 
-   1 = séparation groupe
-  
-  */
+
   receivedActionToadd(position: string) {
-    var index = this.path.pathAction.findIndex(o => o.mapPos == position)
+    var index = this.path.pathAction.findIndex(o => o.mapPos == position);
+    var toDelete = false;
+    if (index !== -1 && this.statePath === 3) {
+      console.log(this.path.pathAction[index].actions);
+      var index2 = this.path.pathAction[index].actions.findIndex(o => o.moveAction != null && o.moveAction.toGoBank === false);
+      if (index2 !== -1) {
+        toDelete = true;
+      }
+    }
+    else if (index !== -1 && this.statePath === 2) {
+      var index2 = this.path.pathAction[index].actions.findIndex(o => o.moveAction != null && o.moveAction.toBackBank === false);
+      if (index2 !== -1) {
+        toDelete = true;
+      }
+    }
+    else if (this.statePath === 0 || this.statePath === 1) {
+      if (index !== -1)
+        toDelete = true;
+    }
 
     /*l'action  sur la map n'existe pas */
-    if (index == -1) {
+    if (toDelete === false) {
 
-      /* création de la map action */
-      this.createActionOnMap(position);
-
-      /* ajout de l'action sur la map action
+    /* création de la map action */
+      if (index ===-1)
+        this.createActionOnMap(position);
 
       /* création action combat + move */
       if (this.statePath == 0) {
@@ -60,7 +76,7 @@ export class PathService {
       }
       else {
         if (this.statePath === 2 )
-          this.toastr.warning('Atention map ajoutée au trajet sans aucune action !', 'Ajout map '+ position +' au trajet retour en banque');
+          this.toastr.warning('Atention map ajoutée au trajet sans aucune action !', 'Ajout map ' + position + ' au trajet retour en banque');
         else
           this.toastr.warning('Atention map ajoutée au trajet sans aucune action !', 'Ajout map ' + position + ' au trajet retour de banque vers zone');
       }
@@ -102,7 +118,7 @@ export class PathService {
       }
     }
     else if (type === 'interaction') {
-      this.addUseItemAction(position, payload);
+      this.addInteractionAction(position, payload);
 
     }
     console.log(this.path);
@@ -141,11 +157,15 @@ export class PathService {
       zaapId: payload.id
     };
     this.addActionMapOnMap(position, order, this.zaapActionToAdd, 'ZaapAction');
-
-    console.log(payload);
   }
 
-  addInteractionAction() {
+  addInteractionAction(position, payload) {
+    var order = this.getOrdre(position);
+    this.interactionActionToAdd = {
+      interactiveIdObject: payload.interactiveIdObject,
+      InteractiveIdResponse: payload.InteractiveIdResponse
+    };
+    this.addActionMapOnMap(position, order, this.interactionActionToAdd, 'InteractionAction');
 
   }
 
@@ -237,6 +257,7 @@ export class PathService {
         order: order,
         interactionAction: action
       });
+      this.toastr.success('', 'Action Interaction ajouté avec succés en (' + position + '), interaction ( objet/pnj :' + action.interactiveIdObject + ' , action : ' + action.InteractiveIdResponse +')');
     }
     else if (type === 'ZaapAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({

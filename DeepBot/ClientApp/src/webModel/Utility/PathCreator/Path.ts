@@ -70,8 +70,8 @@ export class GatherAction {
 }
 
 export class InteractionAction {
-  interactiveId: number;
-  cellId: number;
+  interactiveIdObject: number;
+  InteractiveIdResponse: number;
 }
 
 export class ZaapAction {
