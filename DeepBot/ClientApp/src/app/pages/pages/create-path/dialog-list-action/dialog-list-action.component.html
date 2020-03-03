@@ -1,0 +1,86 @@
+<h1 mat-dialog-title>{{ 'CREATEPATH.LISTACTIONMAP' | translate }}</h1>
+<div mat-dialog-content style="height: 80% !important;">
+  <div fxLayout="column" fxLayoutAlign="center center">
+    <div fxLayout="row" fxLayoutAlign="center center" class="full-width" *ngFor="let mapaction of data.actions">
+      <mat-form-field fxFlex="10">
+        <mat-label>{{ 'CREATEPATH.ORDER' | translate }}</mat-label>
+        <input type="number" matInput [(ngModel)]="mapaction.order">
+      </mat-form-field>
+      <div *ngIf="mapaction.moveAction != null" fxFlex="80" class="ml-3">
+        <mat-form-field class="full-width" *ngIf="mapaction.moveAction.cellId != null">
+          <mat-label>{{ 'CREATEPATH.DEPLACEMENTCELL' | translate }}</mat-label>
+          <input type="number" matInput [(ngModel)]="mapaction.moveAction.cellId">
+        </mat-form-field>
+        <mat-form-field class="full-width" *ngIf="mapaction.moveAction.direction != null">
+          <mat-label>{{ 'CREATEPATH.DEPLACEMENT' | translate }}</mat-label>
+          <mat-select [(ngModel)]="mapaction.moveAction.direction" multiple>
+            <mat-option *ngFor="let direction of directions" [value]="direction">{{direction}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="mapaction.useItemAction != null" fxFlex="80" class="ml-3">
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'CREATEPATH.CONSOMMABLEUSED' | translate }}</mat-label>
+          <input type="number" matInput [(ngModel)]="mapaction.useItemAction.itemId">
+        </mat-form-field>
+      </div>
+      <div *ngIf="mapaction.fightAction != null"  fxLayout="column" fxLayoutAlign="center center" fxFlex="80" class="ml-3">
+        <mat-slide-toggle color="primary" [(ngModel)]="mapaction.fightAction.isAlone">{{'CREATEPATH.FIGHTALONE' | translate}}</mat-slide-toggle>
+        <mat-hint>{{'CREATEPATH.FIGHTHERE' | translate}}</mat-hint>
+      </div>
+      <div *ngIf="mapaction.gatherAction != null" fxFlex="80" class="ml-3">
+        <mat-slide-toggle color="primary" [checked]="true" [disabled]="true">{{'CREATEPATH.GATHERHERE' | translate}}</mat-slide-toggle>
+      </div>
+      <div *ngIf="mapaction.interactionAction != null" fxFlex="80" class="ml-3">
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'CREATEPATH.IDINTERACTIVE' | translate }}</mat-label>
+          <input type="number" matInput [(ngModel)]="mapaction.interactionAction.interactiveIdObject">
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'CREATEPATH.IDACTIONINTERACTIVE' | translate }}</mat-label>
+          <input type="number" matInput [(ngModel)]="mapaction.interactionAction.InteractiveIdResponse">
+        </mat-form-field>
+      </div>
+      <div *ngIf="mapaction.zaapAction != null" fxFlex="80" class="ml-3">
+        <mat-form-field class="full-width">
+          <mat-label>Zaap </mat-label>
+          <mat-select [(ngModel)]="zaapSelected">
+            <mat-option [value]="zaap" *ngFor="let zaap of Zaaps"> {{zaap.destinationName}}  ( {{zaap.destination}} )</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div *ngIf="mapaction.zaapiAction != null" fxLayout="row" fxLayoutAlign="center center" fxFlex="80" class="ml-3">
+        <mat-form-field class="full-width">
+        <mat-label>Zaapi</mat-label>
+        <input [formControl]="zaapiCtrl" [matAutocomplete]="auto" matInput>
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let zaapi of filteredZaapi$ | async" [value]="zaapi">
+            <span class="body-1">
+              {{ zaapi.destinationName }} ( {{zaapi.destination}} )
+            </span>
+          </mat-option>
+        </mat-autocomplete>
+        <button (click)="zaapiCtrl.reset()" *ngIf="zaapiCtrl.value" mat-icon-button matSuffix type="button">
+          <mat-icon [icIcon]="icClose"></mat-icon>
+        </button>
+        <button *ngIf="!zaapiCtrl.value" mat-icon-button matSuffix type="button">
+          <mat-icon [icIcon]="icArrowDropDown" height="24px" width="24px"></mat-icon>
+        </button>
+        </mat-form-field>
+      </div>
+      
+
+      <div fxFlex="10">
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="deleteAction(mapaction.order)">
+          <mat-icon [icIcon]="icDelete"></mat-icon>
+        </button>
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="space-between end">
+  <button mat-raised-button color="primary" (click)="onNoClick()">{{ 'GLOBAL.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" (click)="updateAction()" cdkFocusInitial>{{ 'GLOBAL.VALIDATE' | translate }}</button>
+</div>

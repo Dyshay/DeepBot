@@ -39,8 +39,7 @@ export class CaptureMonsterQuantity {
 export class PathAction {
   mapPos: string;
   actions: MapAction[];
-
-}
+} 
 
 export class MapAction {
   order: number;

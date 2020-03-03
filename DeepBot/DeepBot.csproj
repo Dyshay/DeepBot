@@ -39,6 +39,8 @@
   <ItemGroup>
     <None Remove="ClientApp\src\webModel\MapMessage.ts" />
     <None Remove="ClientApp\src\webModel\Utility\PathCreator\areas.ts" />
+    <None Remove="ClientApp\src\webModel\Utility\PathCreator\Zaap.ts" />
+    <None Remove="ClientApp\src\webModel\Utility\PathCreator\Zaapi.ts" />
   </ItemGroup>
 
   <ItemGroup>
@@ -53,6 +55,8 @@
   <ItemGroup>
     <TypeScriptCompile Include="ClientApp\src\webModel\MapMessage.ts" />
     <TypeScriptCompile Include="ClientApp\src\webModel\Utility\PathCreator\Areas.ts" />
+    <TypeScriptCompile Include="ClientApp\src\webModel\Utility\PathCreator\Zaap.ts" />
+    <TypeScriptCompile Include="ClientApp\src\webModel\Utility\PathCreator\Zaapi.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

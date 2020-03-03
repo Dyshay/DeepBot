@@ -21,11 +21,12 @@ import { DialogCellComponent } from './dialog-cell/dialog-cell.component';
 import { DialogUseItemComponent } from './dialog-use-item/dialog-use-item.component';
 import { DialogInteractionComponent } from './dialog-interaction/dialog-interaction.component';
 import { DialogZaapiComponent } from './dialog-zaapi/dialog-zaapi.component';
+import { DialogListActionComponent } from './dialog-list-action/dialog-list-action.component';
 
 
 @NgModule({
   declarations: [CreatePathComponent, MapBontaComponent, MapBontaBanqueComponent,
-    MapBontaRetourComponent, DialogZaapComponent,DialogZaapiComponent,
+    MapBontaRetourComponent, DialogZaapComponent,DialogZaapiComponent,DialogListActionComponent,
     DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent],
   imports: [
     CommonModule,
@@ -57,7 +58,7 @@ import { DialogZaapiComponent } from './dialog-zaapi/dialog-zaapi.component';
     TranslateModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [DialogZaapComponent, DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent, DialogZaapiComponent]
+  entryComponents: [DialogZaapComponent, DialogCellComponent, DialogUseItemComponent, DialogListActionComponent, DialogInteractionComponent, DialogZaapiComponent]
 })
 export class CreatePathModule {
 }

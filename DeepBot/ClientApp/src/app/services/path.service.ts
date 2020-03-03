@@ -114,7 +114,7 @@ export class PathService {
     }
     else if (type === 'cellMove') {
       for (var i = 0; i < payload.length; i++) {
-        this.addMoveAction(position, payload[i]);
+        this.addMoveAction(position, payload[i].cellId);
       }
     }
     else if (type === 'interaction') {
@@ -122,6 +122,10 @@ export class PathService {
 
     }
     console.log(this.path);
+  }
+
+  getAlActionsOnMap(position):PathAction {
+    return this.path.pathAction.find(o => o.mapPos === position);
   }
 
   updateAction(position, type) {
