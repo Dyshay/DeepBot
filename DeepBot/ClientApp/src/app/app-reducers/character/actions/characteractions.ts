@@ -17,4 +17,5 @@ export const updateCharacterConfig = createAction('[BOT/ACCOUNT] UPDATE  CHARACT
 export const updateCharacterConfigSuccess = createAction('[BOT/ACCOUNT] UPDATE CHARACTER CONFIG SUCCESS', props<{ characterConfigToUpdate: ConfigCharacter }>());
 export const updateCharacterConfigFailure = createAction('[BOT/ACCOUNT] UPDATE CHARACTER CONFIG ERROR', props<{ error: any }>());
 
+export const addOnCurrentCharacter = createAction('[BOT/ACCOUNT] ADD NEW CURRENT CHARACTER', props<{currentCharacter: Character}>());
 

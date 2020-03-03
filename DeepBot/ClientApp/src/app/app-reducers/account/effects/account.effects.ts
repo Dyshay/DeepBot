@@ -14,6 +14,8 @@ import { Account } from '../../../../webModel/Account';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
 import { NavigationLink } from '../../../../@vex/interfaces/navigation-item.interface';
 import { webUserActions } from '../../webUser/actions';
+import { CharacterActions } from '../../character/actions';
+import * as fromCharacter from '../../character/reducers';
 import * as fromWeb from '../../webUser/reducers';
 import { Store } from '@ngrx/store';
 import { AccountModel } from 'src/webModel/AccountModel';
@@ -40,6 +42,7 @@ export class AccountEffects {
       map(action => action.accountBack),
       tap((accountCreated: Account) => {
         console.log(accountCreated);
+        this.characterStore.dispatch(CharacterActions.addOnCurrentCharacter({currentCharacter: accountCreated.currentCharacter}));
         this.webStore.dispatch(webUserActions.getBotNav());
         this.toastr.success('', 'Compte ' + accountCreated.accountName + ' ajouté avec succés');
         this.router.navigateByUrl('/');
@@ -123,6 +126,6 @@ export class AccountEffects {
   );
 
 
+  constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr: ToastrService, private webStore: Store<fromWeb.State>, private characterStore: Store<fromCharacter.State>) { }
 
-  constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr: ToastrService, private webStore: Store<fromWeb.State>) { }
 }
