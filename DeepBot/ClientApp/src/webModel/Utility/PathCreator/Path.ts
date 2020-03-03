@@ -49,6 +49,8 @@ export class MapAction {
   fightAction?: FightAction;
   gatherAction?: GatherAction;
   interactionAction?: InteractionAction;
+  zaapAction?: ZaapAction;
+  zaapiAction?: ZaapiAction;
 }
 export class MoveAction {
   direction?: string[];
@@ -66,7 +68,18 @@ export class FightAction {
 export class GatherAction {
 
 }
+
 export class InteractionAction {
-  interactiveId: number;
-  cellId: number;
+  interactiveIdObject: number;
+  InteractiveIdResponse: number;
+}
+
+export class ZaapAction {
+  zaapId: number;
+  destination: string;
+}
+
+export class ZaapiAction {
+  zaapiId: number;
+  destination: string;
 }

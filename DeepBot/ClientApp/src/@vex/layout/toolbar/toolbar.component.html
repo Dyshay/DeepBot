@@ -126,15 +126,15 @@
 
     <div class="px-1">
       <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
-        <mat-icon *ngIf="(user$ | async)?.langue == 'fr'" [icIcon]="emojioneFR"></mat-icon>
-        <mat-icon *ngIf="(user$ | async)?.langue == 'es'" [icIcon]="emojioneES"></mat-icon>
-        <mat-icon *ngIf="(user$ | async)?.langue == 'en'" [icIcon]="emojioneEN"></mat-icon>
+        <mat-icon *ngIf="user.langue == 'fr'" [icIcon]="emojioneFR"></mat-icon>
+        <mat-icon *ngIf="user.langue == 'es'" [icIcon]="emojioneES"></mat-icon>
+        <mat-icon *ngIf="user.langue == 'en'" [icIcon]="emojioneEN"></mat-icon>
       </button>
     </div>
 
     <div class="px-1">
-      <div *ngIf="(user$ | async) as Account">
-        <vex-toolbar-user [username]="user$ | async"></vex-toolbar-user>
+      <div>
+        <vex-toolbar-user></vex-toolbar-user>
       </div>
     </div>
 
@@ -149,7 +149,7 @@
       </button>
 
       <button mat-menu-item (click)="changeLanguage('es')">
-        <mat-icon [icIcon]="emogioneES"></mat-icon>
+        <mat-icon [icIcon]="emojioneES"></mat-icon>
         <span>Espanol</span>
       </button>
     </mat-menu>

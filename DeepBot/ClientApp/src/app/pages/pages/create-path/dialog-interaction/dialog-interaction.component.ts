@@ -19,8 +19,11 @@ export class DialogInteractionComponent {
 
 
   data: {
-    interactiveObject: number,
-    interactiveAction: number
-  } = {interactiveAction:0,interactiveObject:0}
+    interactiveIdObject: number,
+    InteractiveIdResponse: number
+  } = {
+      interactiveIdObject: 0,
+      InteractiveIdResponse: 0
+    }
 
 }
