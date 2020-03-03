@@ -3,8 +3,8 @@
   "version": "8.4.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --live-reload false",
-    "build": "node --max_old_space_size=6144 ./node_modules/@angular/cli/bin/ng build --prod",
+    "start": "ng serve",
+    "build": "node ./node_modules/@angular/cli/bin/ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

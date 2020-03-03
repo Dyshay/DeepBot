@@ -31,10 +31,11 @@ import { WidgetTableModule } from '../../../../@vex/components/widgets/widget-ta
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { JobPanelComponent } from './job/job-panel/job-panel.component';
 import { ListeComponent } from '../../../generic-components/liste/liste.component';
+import { StuffComponent } from './inventory/stuff/stuff.component';
 
 
 @NgModule({
-  declarations: [BotDashboardComponent, DashboardComponent, CharacterComponent, FightComponent, InventoryComponent, MapComponent, ParametersComponent, JobComponent, JobPanelComponent,ListeComponent],
+  declarations: [BotDashboardComponent, DashboardComponent, CharacterComponent, FightComponent, InventoryComponent, MapComponent, ParametersComponent, JobComponent, JobPanelComponent, ListeComponent, StuffComponent],
   imports: [
     CommonModule,
     BotDashboardRoutingModule,

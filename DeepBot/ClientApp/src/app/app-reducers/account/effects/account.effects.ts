@@ -13,35 +13,42 @@ import { GroupsService } from '../../../services/group.service';
 import { Account } from '../../../../webModel/Account';
 import { NavigationService } from '../../../../@vex/services/navigation.service';
 import { NavigationLink } from '../../../../@vex/interfaces/navigation-item.interface';
+import { webUserActions } from '../../webUser/actions';
+import { CharacterActions } from '../../character/actions';
+import * as fromCharacter from '../../character/reducers';
+import * as fromWeb from '../../webUser/reducers';
+import { Store } from '@ngrx/store';
+import { AccountModel } from 'src/webModel/AccountModel';
 
 @Injectable()
 export class AccountEffects {
 
-    createAccount$ = createEffect(() =>
-        this.actions$.pipe(
-          ofType(AccountActions.createAccount),
-            map(action => action.accountCreated),
-          exhaustMap((accountCreated: Account) =>
-            this.accountService.createAccount(accountCreated).pipe(
-              map(accountCreated => AccountActions.createAccountSuccess({ accountCreated })),
-              catchError(error => of(AccountActions.createAccountFailure({ error }))))
-            )
-        )
+  createAccount$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.createAccount),
+      map(action => action.acc),
+      exhaustMap((acc: AccountModel) =>
+        this.accountService.createAccount(acc).pipe(
+          map(accountCreated => AccountActions.createAccountSuccess({ accountBack: accountCreated })),
+          catchError(error => of(AccountActions.createAccountFailure({ error }))))
+      )
+    )
 
-    );
+  );
 
-    createAccountSucces$ = createEffect(() =>
-        this.actions$.pipe(
-          ofType(AccountActions.createAccountSuccess),
-            map(action => action.accountCreated),
-          tap((accountCreated: any) => {
-            console.log(accountCreated);
-            this.navigationService.GenerateNavigation();
-            this.toastr.success('', 'Compte ' + accountCreated.accountName + ' ajouté avec succés');
-              this.router.navigateByUrl('/');
-            })
-        ),
-        { dispatch: false }
+  createAccountSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(AccountActions.createAccountSuccess),
+      map(action => action.accountBack),
+      tap((accountCreated: Account) => {
+        console.log(accountCreated);
+        this.characterStore.dispatch(CharacterActions.addOnCurrentCharacter({currentCharacter: accountCreated.currentCharacter}));
+        this.webStore.dispatch(webUserActions.getBotNav());
+        this.toastr.success('', 'Compte ' + accountCreated.accountName + ' ajouté avec succés');
+        this.router.navigateByUrl('/');
+      })
+    ),
+    { dispatch: false }
   );
 
   createAccountFailure$ = createEffect(() =>
@@ -118,7 +125,7 @@ export class AccountEffects {
     )
   );
 
-  
 
-  constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr:ToastrService) { }
+  constructor(private actions$: Actions, private accountService: AccountService, private router: Router, private deeptalk: TalkService, private groupService: GroupsService, private navigationService: NavigationService, private toastr: ToastrService, private webStore: Store<fromWeb.State>, private characterStore: Store<fromCharacter.State>) { }
+
 }

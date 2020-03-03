@@ -63,6 +63,7 @@ export const reducer = createReducer(initialState,
   on(CharacterActions.updateCharacterConfig, (state) => ({ ...state, pending: true })),
   on(CharacterActions.updateCharacterConfigSuccess, (state, { characterConfigToUpdate }) => ({ ...state, pending: false })),
   on(CharacterActions.updateCharacterConfigFailure, (state, { error }) => ({ ...state, error, pending: false })),
+  on(CharacterActions.addOnCurrentCharacter, (state, {currentCharacter}) => ({...state, allCurrentCharacters: state.allCurrentCharacters.concat(currentCharacter)}))
 
 
 )

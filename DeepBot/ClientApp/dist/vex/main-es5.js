@@ -125,7 +125,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div [ngClass.gt-sm]=\"['mr-6']\" class=\"card overflow-auto\" fxLayout=\"row\" fxLayout.lt-md=\"column\">\r\n  <div class=\"bg-primary-500 text-primary-contrast-500 p-gutter\" fxFlex=\"300px\" fxFlex.lt-md=\"auto\">\r\n    <h2 class=\"headline mb-4\">Mega Menu</h2>\r\n\r\n    <p class=\"caption\">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there\r\n      live the blind\r\n      texts.</p>\r\n\r\n    <p class=\"caption\">Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language\r\n      ocean.</p>\r\n\r\n    <button class=\"border border-primary-contrast border-solid mt-4\" mat-button type=\"button\">LEARN MORE</button>\r\n  </div>\r\n\r\n  <div class=\"p-gutter\" fxFlex=\"400px\" fxFlex.lt-md=\"auto\">\r\n    <h3 class=\"body-2 m-0\">FEATURES</h3>\r\n\r\n    <div class=\"mt-4\" gdColumns=\"1fr 1fr 1fr\" gdGap=\"16px\">\r\n      <a (click)=\"close()\"\r\n         *ngFor=\"let feature of features\"\r\n         [routerLink]=\"feature.route\"\r\n         class=\"text-dark p-3 text-center hover:bg-hover hover:text-primary-500 trans-ease-out rounded block no-underline\">\r\n        <ic-icon [icon]=\"feature.icon\" class=\"text-primary-500\" size=\"32px\"></ic-icon>\r\n        <div class=\"body-1 mt-2\">{{ feature.label }}</div>\r\n      </a>\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"p-gutter\" fxFlex=\"350px\" fxFlex.lt-md=\"auto\">\r\n    <h3 class=\"body-2 m-0\">PAGES</h3>\r\n\r\n    <div class=\"mt-6\" gdColumns=\"1fr 1fr\" gdGap=\"16px 48px\">\r\n      <a (click)=\"close()\"\r\n         *ngFor=\"let page of pages\"\r\n         [routerLink]=\"page.route\"\r\n         class=\"text-dark body-1 no-underline hover:text-primary-500 trans-ease-out\">{{ page.label }}</a>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n";
+    __webpack_exports__["default"] = "<div [ngClass.gt-sm]=\"['mr-6']\" class=\"card overflow-auto\" fxLayout=\"row\" fxLayout.lt-md=\"column\">\r\n  <div class=\"bg-primary-500 text-primary-contrast-500 p-gutter\" fxFlex=\"300px\" fxFlex.lt-md=\"auto\">\r\n    <h2 class=\"headline mb-4\">{{'MENU.NAVIGATION' | translate}}</h2>\r\n\r\n    <p class=\"caption\">{{'MENU.DESCRIPTION' | translate}}</p>\r\n  </div>\r\n\r\n  <div class=\"p-gutter\" fxFlex=\"400px\" fxFlex.lt-md=\"auto\">\r\n\r\n    <div class=\"mt-4\" gdColumns=\"1fr 1fr 1fr\" gdGap=\"16px\">\r\n      <a (click)=\"close()\"\r\n         *ngFor=\"let feature of features\"\r\n         [routerLink]=\"feature.route\"\r\n         class=\"text-dark p-3 text-center hover:bg-hover hover:text-primary-500 trans-ease-out rounded block no-underline\">\r\n        <ic-icon [icon]=\"feature.icon\" class=\"text-primary-500\" size=\"32px\"></ic-icon>\r\n        <div class=\"body-1 mt-2\">{{ feature.label }}</div>\r\n      </a>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n";
     /***/
   },
 
@@ -265,7 +265,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<a *ngIf=\"isLink(item) && !isFunction(item.route)\"\r\n   [fragment]=\"item.fragment\"\r\n   [routerLinkActiveOptions]=\"item.routerLinkActive || { exact: false }\"\r\n   [routerLink]=\"item.route\"\r\n   class=\"item\"\r\n   fxLayout=\"row\"\r\n   matRipple\r\n   routerLinkActive=\"active\">\r\n  <mat-icon *ngIf=\"level === 0\" [icIcon]=\"item.icon\" class=\"item-icon\" fxFlex=\"none\"></mat-icon>\r\n  <span class=\"item-label\" fxFlex=\"auto\">{{ item.label }}</span>\r\n  <span *ngIf=\"item.badge\"\r\n        [style.background]=\"item.badge.background\"\r\n        [style.color]=\"item.badge.color\"\r\n        class=\"item-badge\"\r\n        fxFlex=\"none\">{{ item.badge.value }}</span>\r\n</a>\r\n\r\n<div (click)=\"item.route()\"\r\n     *ngIf=\"isLink(item) && isFunction(item.route)\"\r\n     class=\"item\"\r\n     fxLayout=\"row\"\r\n     matRipple\r\n     routerLinkActive=\"active\">\r\n  <mat-icon *ngIf=\"level === 0\" [icIcon]=\"item.icon\" class=\"item-icon\" fxFlex=\"none\"></mat-icon>\r\n  <span class=\"item-label\" fxFlex=\"auto\">{{ item.label }}</span>\r\n  <span *ngIf=\"item.badge\"\r\n        [style.background]=\"item.badge.background\"\r\n        [style.color]=\"item.badge.color\"\r\n        class=\"item-badge\"\r\n        fxFlex=\"none\">{{ item.badge.value }}</span>\r\n</div>\r\n\r\n<ng-container *ngIf=\"isDropdown(item)\">\r\n  <div (click)=\"toggleOpen()\"\r\n       [class.active]=\"isOpen || isActive\"\r\n       [class.open]=\"isOpen\"\r\n       class=\"item\"\r\n       fxLayout=\"row\"\r\n       matRipple>\r\n    <mat-icon *ngIf=\"level === 0\" [icIcon]=\"item.icon\" class=\"item-icon\" fxFlex=\"none\"></mat-icon>\r\n    <span class=\"item-label\" fxFlex=\"auto\">{{ item.label }}</span>\r\n    <span *ngIf=\"item.badge\"\r\n          [style.background]=\"item.badge.background\"\r\n          [style.color]=\"item.badge.color\"\r\n          class=\"item-badge\"\r\n          fxFlex=\"none\">{{ item.badge.value }}</span>\r\n    <mat-icon [icIcon]=\"icKeyboardArrowRight\" class=\"item-dropdown-icon\" fxFlex=\"none\"></mat-icon>\r\n  </div>\r\n  <div [@dropdown]=\"isOpen\" class=\"item-dropdown\">\r\n    <vex-sidenav-item *ngFor=\"let subItem of item.children\" [item]=\"subItem\" [level]=\"level + 1\"></vex-sidenav-item>\r\n  </div>\r\n</ng-container>\r\n\r\n\r\n<ng-container *ngIf=\"isSubheading(item)\">\r\n  <div class=\"subheading\">{{ item.label }}</div>\r\n  <vex-sidenav-item *ngFor=\"let subItem of item.children\" [item]=\"subItem\" [level]=\"0\"></vex-sidenav-item>\r\n</ng-container>\r\n\r\n";
+    __webpack_exports__["default"] = "<a *ngIf=\"isLink(item) && !isFunction(item.route)\"\r\n   [fragment]=\"item.fragment\"\r\n   [routerLinkActiveOptions]=\"item.routerLinkActive || { exact: false }\"\r\n   [routerLink]=\"item.route\"\r\n   class=\"item\"\r\n   fxLayout=\"row\"\r\n   matRipple\r\n   routerLinkActive=\"active\">\r\n  <mat-icon *ngIf=\"level === 0\" [icIcon]=\"item.icon\" class=\"item-icon\" fxFlex=\"none\"></mat-icon>\r\n  <span class=\"item-label\" fxFlex=\"auto\">{{ item.label }}</span>\r\n  <span *ngIf=\"item.badge\"\r\n        [style.background]=\"item.badge.background\"\r\n        [style.color]=\"item.badge.color\"\r\n        class=\"item-badge\"\r\n        fxFlex=\"none\">{{ item.badge.value }}</span>\r\n</a>\r\n\r\n<div (click)=\"item.route()\"\r\n     *ngIf=\"isLink(item) && isFunction(item.route)\"\r\n     class=\"item\"\r\n     fxLayout=\"row\"\r\n     matRipple\r\n     routerLinkActive=\"active\">\r\n  <mat-icon *ngIf=\"level === 0\" [icIcon]=\"item.icon\" class=\"item-icon\" fxFlex=\"none\"></mat-icon>\r\n  <span class=\"item-label\" fxFlex=\"auto\">{{ item.label }}</span>\r\n  <span *ngIf=\"item.badge\"\r\n        [style.background]=\"item.badge.background\"\r\n        [style.color]=\"item.badge.color\"\r\n        class=\"item-badge\"\r\n        fxFlex=\"none\">{{ item.badge.value }}</span>\r\n</div>\r\n\r\n<ng-container *ngIf=\"isDropdown(item)\">\r\n  <div \r\n       [class.active]=\"isOpen || isActive\"\r\n       [class.open]=\"isOpen\"\r\n       class=\"item\"\r\n       fxLayout=\"row\"\r\n       matRipple>\r\n    <mat-icon *ngIf=\"level === 0\" [icIcon]=\"item.icon\" class=\"item-icon\" fxFlex=\"none\" (click)=\"dropdownLink(item.route)\"></mat-icon>\r\n    <span class=\"item-label\" fxFlex=\"auto\" (click)=\"dropdownLink(item.route)\">{{ item.label }}</span>\r\n    <span *ngIf=\"item.badge\"\r\n          [style.background]=\"item.badge.background\"\r\n          [style.color]=\"item.badge.color\"\r\n          class=\"item-badge\"\r\n          fxFlex=\"none\" (click)=\"dropdownLink(item.route)\">{{ item.badge.value }}</span>\r\n    <div style=\"min-width:4rem;\" fxLayout=\"row\" fxLayoutAlign=\"end center\" (click)=\"toggleOpen()\">\r\n      <mat-icon [icIcon]=\"icKeyboardArrowRight\" class=\"item-dropdown-icon\" fxFlex=\"none\" ></mat-icon>\r\n    </div>\r\n    \r\n  </div>\r\n  <div [@dropdown]=\"isOpen\" class=\"item-dropdown\">\r\n    <vex-sidenav-item *ngFor=\"let subItem of item.children\" [item]=\"subItem\" [level]=\"level + 1\"></vex-sidenav-item>\r\n  </div>\r\n</ng-container>\r\n\r\n\r\n<ng-container *ngIf=\"isSubheading(item)\">\r\n  <div class=\"subheading\">{{ item.label }}</div>\r\n  <vex-sidenav-item *ngFor=\"let subItem of item.children\" [item]=\"subItem\" [level]=\"0\"></vex-sidenav-item>\r\n</ng-container>\r\n\r\n";
     /***/
   },
 
@@ -345,7 +345,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"dropdown\">\r\n  <div class=\"dropdown-header\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n    <div fxLayout=\"row\" fxLayoutAlign=\"start center\">\r\n      <div class=\"dropdown-heading-icon\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n        <mat-icon [icIcon]=\"icPerson\"></mat-icon>\r\n      </div>\r\n      <div class=\"dropdown-heading\">David Smith</div>\r\n    </div>\r\n\r\n    <button [matMenuTriggerFor]=\"settingsMenu\"\r\n            mat-icon-button\r\n            matTooltip=\"Settings\"\r\n            matTooltipPosition=\"before\"\r\n            type=\"button\">\r\n      <mat-icon [icIcon]=\"icSettings\" class=\"notifications-header-icon\"></mat-icon>\r\n    </button>\r\n  </div>\r\n\r\n  <div class=\"dropdown-content\">\r\n    <a (click)=\"close()\"\r\n       *ngFor=\"let item of items; trackBy: trackById\"\r\n       [routerLink]=\"item.route\"\r\n       class=\"notification\"\r\n       fxLayout=\"row\"\r\n       fxLayoutAlign=\"start center\"\r\n       matRipple>\r\n      <mat-icon [icIcon]=\"item.icon\"\r\n                [ngClass]=\"item.colorClass\"\r\n                class=\"notification-icon\"\r\n                fxFlex=\"none\"></mat-icon>\r\n      <div fxFlex=\"auto\">\r\n        <div class=\"notification-label\">{{ item.label }}</div>\r\n        <div class=\"notification-description\">{{ item.description }}</div>\r\n      </div>\r\n      <mat-icon [icIcon]=\"icChevronRight\" class=\"notification-chevron\" fxFlex=\"none\"></mat-icon>\r\n    </a>\r\n  </div>\r\n\r\n  <div class=\"dropdown-footer\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n    <button [matMenuTriggerFor]=\"statusMenu\" class=\"dropdown-footer-select\" mat-button type=\"button\">\r\n      <ng-container *ngFor=\"let status of statuses; trackBy: trackById\">\r\n        <span *ngIf=\"status === activeStatus\">\r\n          <mat-icon [icIcon]=\"status.icon\" [ngClass]=\"status.colorClass\"></mat-icon>\r\n          <span>{{ status.label }}</span>\r\n          <mat-icon [icIcon]=\"icArrowDropDown\" class=\"dropdown-footer-select-caret\"></mat-icon>\r\n        </span>\r\n      </ng-container>\r\n    </button>\r\n    <a (click)=\"close()\" [routerLink]=\"['/login']\" color=\"primary\" mat-button>LOGOUT</a>\r\n  </div>\r\n</div>\r\n\r\n<mat-menu #statusMenu=\"matMenu\" xPosition=\"before\" yPosition=\"below\">\r\n  <button (click)=\"setStatus(status)\"\r\n          *ngFor=\"let status of statuses; trackBy: trackById\"\r\n          mat-menu-item>\r\n    <ic-icon [icon]=\"status.icon\" [ngClass]=\"status.colorClass\" inline=\"true\" size=\"24px\"></ic-icon>\r\n    <span>{{ status.label }}</span>\r\n  </button>\r\n</mat-menu>\r\n\r\n\r\n<mat-menu #settingsMenu=\"matMenu\" xPosition=\"before\" yPosition=\"below\">\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icBusiness\"></mat-icon>\r\n    <span>Change Address</span>\r\n  </button>\r\n\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icVerifiedUser\"></mat-icon>\r\n    <span>Change Username</span>\r\n  </button>\r\n\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icLock\"></mat-icon>\r\n    <span>Change Password</span>\r\n  </button>\r\n\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icNotificationsOff\"></mat-icon>\r\n    <span>Disable Notifications</span>\r\n  </button>\r\n</mat-menu>\r\n";
+    __webpack_exports__["default"] = "<div class=\"dropdown\">\r\n  <div class=\"dropdown-header\" style=\"background-color:#ff935c !important\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n    <div fxLayout=\"row\" fxLayoutAlign=\"start center\">\r\n      <div class=\"dropdown-heading-icon\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n        <mat-icon [icIcon]=\"icPerson\"></mat-icon>\r\n      </div>\r\n      <div class=\"dropdown-heading\">{{ (user | async).userName }}</div>\r\n    </div>\r\n\r\n  </div>\r\n\r\n  <div class=\"dropdown-content\">\r\n    <a (click)=\"close()\"\r\n       *ngFor=\"let item of items; trackBy: trackById\"\r\n       [routerLink]=\"item.route\"\r\n       class=\"notification\"\r\n       fxLayout=\"row\"\r\n       fxLayoutAlign=\"start center\"\r\n       matRipple>\r\n      <mat-icon [icIcon]=\"item.icon\"\r\n                [ngClass]=\"item.colorClass\"\r\n                class=\"notification-icon\"\r\n                fxFlex=\"none\"></mat-icon>\r\n      <div fxFlex=\"auto\">\r\n        <div class=\"notification-label\">{{ item.label }}</div>\r\n        <div class=\"notification-description\">{{ item.description }}</div>\r\n      </div>\r\n      <mat-icon [icIcon]=\"icChevronRight\" class=\"notification-chevron\" fxFlex=\"none\"></mat-icon>\r\n    </a>\r\n  </div>\r\n\r\n  <div class=\"dropdown-footer\" fxLayout=\"row\" fxLayoutAlign=\"space-between center\">\r\n\r\n    <a (click)=\"close()\" [routerLink]=\"['/login']\" color=\"primary\" mat-button>{{ 'GLOBAL.DISCONNECT' | translate}}</a>\r\n  </div>\r\n</div>\r\n<mat-menu #settingsMenu=\"matMenu\" xPosition=\"before\" yPosition=\"below\">\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icBusiness\"></mat-icon>\r\n    <span>Change Address</span>\r\n  </button>\r\n\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icVerifiedUser\"></mat-icon>\r\n    <span>Change Username</span>\r\n  </button>\r\n\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icLock\"></mat-icon>\r\n    <span>Change Password</span>\r\n  </button>\r\n\r\n  <button mat-menu-item>\r\n    <mat-icon [icIcon]=\"icNotificationsOff\"></mat-icon>\r\n    <span>Disable Notifications</span>\r\n  </button>\r\n</mat-menu>\r\n";
     /***/
   },
 
@@ -365,7 +365,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div #originRef\r\n     (click)=\"showPopover(originRef)\"\r\n     [class.bg-hover]=\"dropdownOpen\"\r\n     class=\"flex items-center rounded cursor-pointer relative trans-ease-out select-none py-1 pr-1 pl-3 hover:bg-hover\"\r\n     matRipple>\r\n  <div class=\"body-1 font-medium leading-snug ltr:mr-3 rtl:ml-3\" fxHide.xs>David Smith</div>\r\n  <div [style.background-color]=\"theme.colors.primary['500'] | colorFade:0.9\"\r\n       [style.color]=\"theme.colors.primary['500']\"\r\n       class=\"rounded-full h-9 w-9 flex items-center justify-center\">\r\n    <mat-icon [icIcon]=\"icPerson\"></mat-icon>\r\n  </div>\r\n</div>\r\n";
+    __webpack_exports__["default"] = "<div #originRef\r\n     (click)=\"showPopover(originRef)\"\r\n     [class.bg-hover]=\"dropdownOpen\"\r\n     class=\"flex items-center rounded cursor-pointer relative trans-ease-out select-none py-1 pr-1 pl-3 hover:bg-hover\"\r\n     matRipple>\r\n  <div class=\"body-1 font-medium leading-snug ltr:mr-3 rtl:ml-3\" fxHide.xs>{{username.userName}}</div>\r\n  <div [style.background-color]=\"theme.colors.primary['500'] | colorFade:0.9\"\r\n       [style.color]=\"theme.colors.primary['500']\"\r\n       class=\"rounded-full h-9 w-9 flex items-center justify-center\">\r\n    <mat-icon [icIcon]=\"icPerson\"></mat-icon>\r\n  </div>\r\n</div>\r\n";
     /***/
   },
 
@@ -385,7 +385,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div [class.boxed]=\"isBoxed$ | async\"\r\n     [class.horizontal-layout]=\"!(isLayoutVertical$ | async)\"\r\n     [class.is-mobile]=\"!(isDesktop$ | async)\"\r\n     [class.vertical-layout]=\"isLayoutVertical$ | async\"\r\n     [class.has-fixed-footer]=\"(isFooterFixed$ | async) && isFooterVisible$ | async\"\r\n     [class.has-footer]=\"isFooterVisible$ | async\"\r\n     [class.scroll-disabled]=\"scrollDisabled$ | async\"\r\n     [class.toolbar-fixed]=\"isToolbarFixed$ | async\"\r\n     [class.sidenav-collapsed]=\"sidenavCollapsed$ | async\"\r\n     [class.content-container]=\"containerEnabled$ | async\"\r\n     [class.with-search]=\"searchOpen$ | async\"\r\n     class=\"page-container\">\r\n\r\n  <vex-progress-bar></vex-progress-bar>\r\n\r\n  <vex-search></vex-search>\r\n\r\n  <mat-sidenav-container class=\"sidenav-container\">\r\n    <mat-sidenav #sidenav\r\n                 [disableClose]=\"isDesktop$ | async\"\r\n                 [fixedInViewport]=\"!(isDesktop$ | async)\"\r\n                 [mode]=\"!(isDesktop$ | async) || (isLayoutVertical$ | async) ? 'over' : 'side'\"\r\n                 [opened]=\"(isDesktop$ | async) && !(isLayoutVertical$ | async)\"\r\n                 class=\"sidenav\">\r\n      <ng-container *ngTemplateOutlet=\"sidenavRef\"></ng-container>\r\n    </mat-sidenav>\r\n\r\n    <mat-sidenav #quickpanel\r\n                 [fixedInViewport]=\"!(isDesktop$ | async)\"\r\n                 class=\"quickpanel\"\r\n                 mode=\"over\"\r\n                 position=\"end\">\r\n      <ng-container *ngTemplateOutlet=\"quickpanelRef\"></ng-container>\r\n    </mat-sidenav>\r\n\r\n    <mat-sidenav-content class=\"sidenav-content\">\r\n      <ng-container *ngTemplateOutlet=\"toolbarRef\"></ng-container>\r\n\r\n      <main class=\"content\">\r\n        <!-- <router-outlet></router-outlet> -->\r\n        <button (click)=\"callServerInitTcp()\">Init Tcp</button>\r\n        <button (click)=\"callAuth()\">Initialize Dofus Auth</button>\r\n      </main>\r\n\r\n      <ng-container *ngTemplateOutlet=\"footerRef\"></ng-container>\r\n    </mat-sidenav-content>\r\n  </mat-sidenav-container>\r\n</div>\r\n\r\n";
+    __webpack_exports__["default"] = "<div [class.boxed]=\"isBoxed$ | async\"\r\n     [class.horizontal-layout]=\"!(isLayoutVertical$ | async)\"\r\n     [class.is-mobile]=\"!(isDesktop$ | async)\"\r\n     [class.vertical-layout]=\"isLayoutVertical$ | async\"\r\n     [class.has-fixed-footer]=\"(isFooterFixed$ | async) && isFooterVisible$ | async\"\r\n     [class.has-footer]=\"isFooterVisible$ | async\"\r\n     [class.scroll-disabled]=\"scrollDisabled$ | async\"\r\n     [class.toolbar-fixed]=\"isToolbarFixed$ | async\"\r\n     [class.sidenav-collapsed]=\"sidenavCollapsed$ | async\"\r\n     [class.content-container]=\"containerEnabled$ | async\"\r\n     [class.with-search]=\"searchOpen$ | async\"\r\n     class=\"page-container\">\r\n\r\n  <vex-progress-bar></vex-progress-bar>\r\n\r\n  <vex-search></vex-search>\r\n\r\n  <mat-sidenav-container class=\"sidenav-container\">\r\n    <mat-sidenav #sidenav\r\n                 [disableClose]=\"isDesktop$ | async\"\r\n                 [fixedInViewport]=\"!(isDesktop$ | async)\"\r\n                 [mode]=\"!(isDesktop$ | async) || (isLayoutVertical$ | async) ? 'over' : 'side'\"\r\n                 [opened]=\"(isDesktop$ | async) && !(isLayoutVertical$ | async)\"\r\n                 class=\"sidenav\">\r\n      <ng-container *ngTemplateOutlet=\"sidenavRef\"></ng-container>\r\n    </mat-sidenav>\r\n\r\n    <mat-sidenav #quickpanel\r\n                 [fixedInViewport]=\"!(isDesktop$ | async)\"\r\n                 class=\"quickpanel\"\r\n                 mode=\"over\"\r\n                 position=\"end\">\r\n      <ng-container *ngTemplateOutlet=\"quickpanelRef\"></ng-container>\r\n    </mat-sidenav>\r\n\r\n    <mat-sidenav-content class=\"sidenav-content\">\r\n      <ng-container *ngTemplateOutlet=\"toolbarRef\"></ng-container>\r\n\r\n      <main class=\"content\">\r\n        <router-outlet></router-outlet>\r\n        <!-- <button (click)=\"callServerInitTcp()\">Init Tcp</button>\r\n        <button (click)=\"callAuth()\">Initialize Dofus Auth</button> -->\r\n      </main>\r\n\r\n      <ng-container *ngTemplateOutlet=\"footerRef\"></ng-container>\r\n    </mat-sidenav-content>\r\n  </mat-sidenav-container>\r\n</div>\r\n\r\n";
     /***/
   },
 
@@ -425,7 +425,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div (mouseenter)=\"onMouseEnter()\"\r\n     (mouseleave)=\"onMouseLeave()\"\r\n     [class.collapsed]=\"collapsed\"\r\n     [class.open]=\"collapsed && collapsedOpen$ | async\"\r\n     class=\"sidenav flex flex-col\">\r\n  <div class=\"sidenav-toolbar flex-none flex items-center\">\r\n    <img [src]=\"imageUrl$ | async\" class=\"w-6 select-none flex-none\">\r\n    <h2 class=\"title ltr:pl-4 rtl:pr-4 select-none flex-auto\">{{ title$ | async }}</h2>\r\n    <button (click)=\"toggleCollapse()\"\r\n            *ngIf=\"showCollapsePin$ | async\"\r\n            class=\"w-8 h-8 -mr-2 leading-none flex-none hidden lg:block\"\r\n            mat-icon-button\r\n            type=\"button\">\r\n      <mat-icon *ngIf=\"!collapsed\" [icIcon]=\"icRadioButtonChecked\" size=\"14px\"></mat-icon>\r\n      <mat-icon *ngIf=\"collapsed\" [icIcon]=\"icRadioButtonUnchecked\" size=\"14px\"></mat-icon>\r\n    </button>\r\n  </div>\r\n\r\n  <div class=\"sidenav-items flex-auto\" vexScrollbar>\r\n    <vex-sidenav-item *ngFor=\"let item of items; trackBy: trackByRoute\"\r\n                      [item]=\"item\"\r\n                      [level]=\"0\"></vex-sidenav-item>\r\n  </div>\r\n</div>\r\n";
+    __webpack_exports__["default"] = "<div (mouseenter)=\"onMouseEnter()\"\r\n     (mouseleave)=\"onMouseLeave()\"\r\n     [class.collapsed]=\"collapsed\"\r\n     [class.open]=\"collapsed && collapsedOpen$ | async\"\r\n     class=\"sidenav flex flex-col\">\r\n  <div class=\"sidenav-toolbar flex-none flex items-center\">\r\n    <img [src]=\"imageUrl$ | async\" class=\"w-6 select-none flex-none\">\r\n    <h2 class=\"title ltr:pl-4 rtl:pr-4 select-none flex-auto\">{{ title$ | async }}</h2>\r\n    <button (click)=\"toggleCollapse()\"\r\n            *ngIf=\"showCollapsePin$ | async\"\r\n            class=\"w-8 h-8 -mr-2 leading-none flex-none hidden lg:block\"\r\n            mat-icon-button\r\n            type=\"button\">\r\n      <mat-icon *ngIf=\"!collapsed\" [icIcon]=\"icRadioButtonChecked\" size=\"14px\"></mat-icon>\r\n      <mat-icon *ngIf=\"collapsed\" [icIcon]=\"icRadioButtonUnchecked\" size=\"14px\"></mat-icon>\r\n    </button>\r\n  </div>\r\n\r\n  <div class=\"sidenav-items flex-auto\" vexScrollbar>\r\n    <vex-sidenav-item *ngFor=\"let item of items | async; trackBy: trackByRoute\"\r\n                      [item]=\"item\"\r\n                      [level]=\"0\"></vex-sidenav-item>\r\n  </div>\r\n</div>\r\n";
     /***/
   },
 
@@ -445,7 +445,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<div class=\"toolbar w-full px-gutter\" fxLayout=\"row\" fxLayoutAlign=\"start center\" vexContainer>\r\n  <button (click)=\"openSidenav()\" [fxHide]=\"!mobileQuery\" mat-icon-button type=\"button\">\r\n    <mat-icon [icIcon]=\"icMenu\"></mat-icon>\r\n  </button>\r\n\r\n  <a *ngIf=\"isVerticalLayout$ | async\"\r\n     [routerLink]=\"['/']\"\r\n     class=\"ltr:mr-4 rtl:ml-4 block\"\r\n     fxLayout=\"row\"\r\n     fxLayoutAlign=\"start center\">\r\n    <img class=\"w-8 select-none\" src=\"assets/img/logo/logo-rounded.svg\">\r\n    <h1 [fxHide]=\"mobileQuery\" class=\"title ltr:pl-4 rtl:pr-4 m-0 select-none\">DeepBot</h1>\r\n  </a>\r\n\r\n  <button *ngIf=\"isHorizontalLayout$ | async\"\r\n          [fxHide]=\"mobileQuery\"\r\n          [matMenuTriggerFor]=\"addNewMenu\"\r\n          color=\"primary\"\r\n          mat-raised-button\r\n          type=\"button\">\r\n    Gestion du bot\r\n  </button>\r\n\r\n  <mat-menu #addNewMenu=\"matMenu\" [overlapTrigger]=\"false\" xPosition=\"after\" yPosition=\"below\">\r\n\r\n    <button [matMenuTriggerFor]=\"AccountMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icPersonAdd\"></mat-icon>\r\n      <span>Gerer mes comptes Dofus</span>\r\n    </button>\r\n\r\n    <button [matMenuTriggerFor]=\"GroupMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icDoneAll\"></mat-icon>\r\n      <span>Gérer mes groupes</span>\r\n    </button>\r\n\r\n    <button [matMenuTriggerFor]=\"PathMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignmentTurnedIn\"></mat-icon>\r\n      <span>Gérer mes trajets</span>\r\n    </button>\r\n\r\n    <button [matMenuTriggerFor]=\"IAMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icBallot\"></mat-icon>\r\n      <span>Gérer mes IA</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <mat-menu #IAMenu=\"matMenu\">\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>Creer un trajet</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Modifier un trajet</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <!--menu account-->\r\n  <mat-menu #AccountMenu=\"matMenu\">\r\n    <button mat-menu-item [routerLink]=\"['/createAccount']\">\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>Ajouter un compte Dofus</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Modifier un compte Dofus</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Supprimer un compte Dofus</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <!--menu group-->\r\n  <mat-menu #GroupMenu=\"matMenu\">\r\n    <button mat-menu-item [routerLink]=\"['/createGroup']\">\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>Créer un groupe de bot</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Modifier un groupe</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Supprimer un groupe</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <!--menu trajet-->\r\n  <mat-menu #PathMenu=\"matMenu\">\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>Creer un trajet</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Modifier un trajet</span>\r\n    </button>\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Supprimer un trajet</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <!--menu IA-->\r\n  <mat-menu #IAMenu=\"matMenu\">\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>Creer une IA</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Modifier une IA</span>\r\n    </button>\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>Supprimer une IA</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <div #megaMenuOriginRef class=\"ltr:ml-2 rtl:mr-2\">\r\n    <button *ngIf=\"isHorizontalLayout$ | async\"\r\n            [fxHide]=\"mobileQuery\"\r\n            (click)=\"openMegaMenu(megaMenuOriginRef)\"\r\n            color=\"primary\"\r\n            mat-button\r\n            type=\"button\">\r\n      Menu\r\n      <ic-icon [icon]=\"icArrowDropDown\" class=\"ltr:-mr-1 rtl:-ml-1\" inline=\"true\"></ic-icon>\r\n    </button>\r\n  </div>\r\n\r\n\r\n  <div *ngIf=\"(isVerticalLayout$ | async) && isNavbarInToolbar$ | async\"\r\n       [fxHide]=\"mobileQuery\"\r\n       class=\"px-gutter\"\r\n       fxFlex=\"none\"\r\n       fxLayout=\"row\"\r\n       fxLayoutAlign=\"start center\">\r\n    <vex-navigation-item *ngFor=\"let item of navigationItems\" [item]=\"item\"></vex-navigation-item>\r\n  </div>\r\n\r\n  <span fxFlex></span>\r\n\r\n  <div class=\"-mx-1 flex items-center\">\r\n    <div class=\"px-1\">\r\n      <button (click)=\"openSearch()\" mat-icon-button type=\"button\">\r\n        <mat-icon [icIcon]=\"icSearch\"></mat-icon>\r\n      </button>\r\n    </div>\r\n\r\n    <div class=\"px-1\">\r\n      <vex-toolbar-notifications></vex-toolbar-notifications>\r\n    </div>\r\n\r\n    <div class=\"px-1\">\r\n      <button (click)=\"openQuickpanel()\" mat-icon-button type=\"button\">\r\n        <mat-icon [icIcon]=\"icBookmarks\"></mat-icon>\r\n      </button>\r\n    </div>\r\n\r\n    <div class=\"px-1\">\r\n      <button [matMenuTriggerFor]=\"languageMenu\" mat-icon-button type=\"button\">\r\n        <mat-icon [icIcon]=\"emojioneUS\"></mat-icon>\r\n      </button>\r\n    </div>\r\n\r\n    <div class=\"px-1\">\r\n      <vex-toolbar-user></vex-toolbar-user>\r\n    </div>\r\n\r\n    <mat-menu #languageMenu=\"matMenu\" overlapTrigger=\"false\" xPosition=\"before\" yPosition=\"below\">\r\n      <button mat-menu-item>\r\n        <mat-icon [icIcon]=\"emojioneUS\"></mat-icon>\r\n        <span>English</span>\r\n      </button>\r\n\r\n      <button mat-menu-item>\r\n        <mat-icon [icIcon]=\"emojioneDE\"></mat-icon>\r\n        <span>German</span>\r\n      </button>\r\n    </mat-menu>\r\n  </div>\r\n</div>\r\n\r\n<vex-navigation *ngIf=\"(isVerticalLayout$ | async) && isNavbarBelowToolbar$ | async\"\r\n                [fxHide]=\"mobileQuery\"></vex-navigation>\r\n";
+    __webpack_exports__["default"] = "<div class=\"toolbar w-full px-gutter\" fxLayout=\"row\" fxLayoutAlign=\"start center\" vexContainer>\r\n  <button (click)=\"openSidenav()\" [fxHide]=\"!mobileQuery\" mat-icon-button type=\"button\">\r\n    <mat-icon [icIcon]=\"icMenu\"></mat-icon>\r\n  </button>\r\n\r\n  <a *ngIf=\"isVerticalLayout$ | async\"\r\n     [routerLink]=\"['/']\"\r\n     class=\"ltr:mr-4 rtl:ml-4 block\"\r\n     fxLayout=\"row\"\r\n     fxLayoutAlign=\"start center\">\r\n    <img class=\"w-8 select-none\" src=\"assets/img/logo/logo-rounded.svg\">\r\n    <h1 [fxHide]=\"mobileQuery\" class=\"title ltr:pl-4 rtl:pr-4 m-0 select-none\">DeepBot</h1>\r\n  </a>\r\n\r\n  <button *ngIf=\"isHorizontalLayout$ | async\"\r\n          [fxHide]=\"mobileQuery\"\r\n          [matMenuTriggerFor]=\"addNewMenu\"\r\n          color=\"primary\"\r\n          mat-raised-button\r\n          type=\"button\">\r\n    {{ 'TOOLBAR.BOTHANDLE' | translate}}\r\n  </button>\r\n\r\n  <mat-menu #addNewMenu=\"matMenu\" [overlapTrigger]=\"false\" xPosition=\"after\" yPosition=\"below\">\r\n\r\n    <button [matMenuTriggerFor]=\"AccountMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icPersonAdd\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.HANDLEACCOUNT' | translate}}</span>\r\n    </button>\r\n\r\n    <button [matMenuTriggerFor]=\"GroupMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icDoneAll\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.HANDLEGROUP' | translate}}</span>\r\n    </button>\r\n\r\n    <button [matMenuTriggerFor]=\"PathMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignmentTurnedIn\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.HANDLEPATH' | translate}}</span>\r\n    </button>\r\n\r\n    <button [matMenuTriggerFor]=\"IAMenu\" mat-menu-item>\r\n      <mat-icon [icIcon]=\"icBallot\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.HANDLEIA' | translate}}</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n\r\n  <!--menu account-->\r\n  <mat-menu #AccountMenu=\"matMenu\">\r\n    <button mat-menu-item [routerLink]=\"['/createAccount']\">\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.CREATEACCOUNT' | translate}}</span>\r\n    </button>\r\n\r\n    <button mat-menu-item [routerLink]=\"['/updateAccount']\">\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.UPDATEACCOUNT' | translate}}</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <!--menu group-->\r\n  <mat-menu #GroupMenu=\"matMenu\">\r\n    <button mat-menu-item [routerLink]=\"['/createGroup']\">\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.CREATEGROUP' | translate}}</span>\r\n    </button>\r\n\r\n    <button mat-menu-item [routerLink]=\"['/updateGroup']\">\r\n      <mat-icon [icIcon]=\"icAssignment\" ></mat-icon>\r\n      <span>{{ 'TOOLBAR.UPDATEGROUP' | translate}}</span>\r\n    </button>\r\n\r\n  </mat-menu>\r\n\r\n  <!--menu trajet-->\r\n  <mat-menu #PathMenu=\"matMenu\">\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.CREATEPATH' | translate}}</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.UPDATEPATH' | translate}}</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <!--menu IA-->\r\n  <mat-menu #IAMenu=\"matMenu\">\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icDescription\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.CREATEIA' | translate}}</span>\r\n    </button>\r\n\r\n    <button mat-menu-item>\r\n      <mat-icon [icIcon]=\"icAssignment\"></mat-icon>\r\n      <span>{{ 'TOOLBAR.UPDATEIA' | translate}}</span>\r\n    </button>\r\n  </mat-menu>\r\n\r\n  <div #megaMenuOriginRef class=\"ltr:ml-2 rtl:mr-2\">\r\n    <button *ngIf=\"isHorizontalLayout$ | async\"\r\n            [fxHide]=\"mobileQuery\"\r\n            (click)=\"openMegaMenu(megaMenuOriginRef)\"\r\n            color=\"primary\"\r\n            mat-button\r\n            type=\"button\">\r\n      Menu\r\n      <ic-icon [icon]=\"icArrowDropDown\" class=\"ltr:-mr-1 rtl:-ml-1\" inline=\"true\"></ic-icon>\r\n    </button>\r\n  </div>\r\n\r\n\r\n  <div *ngIf=\"(isVerticalLayout$ | async) && isNavbarInToolbar$ | async\"\r\n       [fxHide]=\"mobileQuery\"\r\n       class=\"px-gutter\"\r\n       fxFlex=\"none\"\r\n       fxLayout=\"row\"\r\n       fxLayoutAlign=\"start center\">\r\n    <vex-navigation-item *ngFor=\"let item of navigationItems\" [item]=\"item\"></vex-navigation-item>\r\n  </div>\r\n\r\n  <span fxFlex></span>\r\n\r\n  <div class=\"-mx-1 flex items-center\">\r\n\r\n    <div class=\"px-1\">\r\n      <button [matMenuTriggerFor]=\"languageMenu\" mat-icon-button type=\"button\">\r\n        <mat-icon *ngIf=\"(user$ | async)?.langue == 'fr'\" [icIcon]=\"emojioneFR\"></mat-icon>\r\n        <mat-icon *ngIf=\"(user$ | async)?.langue == 'es'\" [icIcon]=\"emojioneES\"></mat-icon>\r\n        <mat-icon *ngIf=\"(user$ | async)?.langue == 'en'\" [icIcon]=\"emojioneEN\"></mat-icon>\r\n      </button>\r\n    </div>\r\n\r\n    <div class=\"px-1\">\r\n      <div *ngIf=\"(user$ | async) as Account\">\r\n        <vex-toolbar-user [username]=\"user$ | async\"></vex-toolbar-user>\r\n      </div>\r\n    </div>\r\n\r\n    <mat-menu #languageMenu=\"matMenu\" overlapTrigger=\"false\" xPosition=\"before\" yPosition=\"below\">\r\n      <button mat-menu-item (click)=\"changeLanguage('fr')\">\r\n        <mat-icon [icIcon]=\"emojioneFR\"></mat-icon>\r\n        <span>Français</span>\r\n      </button>\r\n      <button mat-menu-item (click)=\"changeLanguage('en')\" >\r\n        <mat-icon [icIcon]=\"emojioneEN\"></mat-icon>\r\n        <span>English</span>\r\n      </button>\r\n\r\n      <button mat-menu-item (click)=\"changeLanguage('es')\">\r\n        <mat-icon [icIcon]=\"emogioneES\"></mat-icon>\r\n        <span>Espanol</span>\r\n      </button>\r\n    </mat-menu>\r\n  </div>\r\n</div>\r\n\r\n<vex-navigation *ngIf=\"(isVerticalLayout$ | async) && isNavbarBelowToolbar$ | async\"\r\n                [fxHide]=\"mobileQuery\"></vex-navigation>\r\n";
     /***/
   },
 
@@ -465,7 +465,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<router-outlet></router-outlet>\r\n\r\n";
+    __webpack_exports__["default"] = "<ng-http-loader [backdrop]=\"false\"\r\n                [backgroundColor]=\"'#ff0000'\"\r\n                [debounceDelay]=\"100\"\r\n                [extraDuration]=\"300\"\r\n                [minDuration]=\"500\"\r\n                [opacity]=\".6\"\r\n                [spinner]=\"spinkit.skSpinnerPulse\">\r\n  </ng-http-loader>\r\n  <router-outlet></router-outlet>\r\n\r\n";
     /***/
   },
 
@@ -485,7 +485,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony default export */
 
 
-    __webpack_exports__["default"] = "<ng-template #sidenavRef>\r\n  <vex-sidenav [collapsed]=\"sidenavCollapsed$ | async\"></vex-sidenav>\r\n</ng-template>\r\n\r\n<ng-template #toolbarRef>\r\n  <vex-toolbar [hasShadow]=\"toolbarShadowEnabled$ | async\"\r\n               [mobileQuery]=\"!(isDesktop$ | async)\"\r\n               class=\"vex-toolbar\"></vex-toolbar>\r\n</ng-template>\r\n\r\n<ng-template #footerRef>\r\n  <vex-footer *ngIf=\"isFooterVisible$ | async\" class=\"vex-footer\"></vex-footer>\r\n</ng-template>\r\n\r\n<ng-template #quickpanelRef>\r\n  <vex-quickpanel></vex-quickpanel>\r\n</ng-template>\r\n\r\n<vex-layout [footerRef]=\"footerRef\"\r\n            [quickpanelRef]=\"quickpanelRef\"\r\n            [sidenavRef]=\"sidenavRef\"\r\n            [toolbarRef]=\"toolbarRef\"></vex-layout>\r\n\r\n<vex-config-panel-toggle (openConfig)=\"configpanel.open()\"></vex-config-panel-toggle>\r\n\r\n<!-- CONFIGPANEL -->\r\n<vex-sidebar #configpanel [invisibleBackdrop]=\"true\" position=\"right\">\r\n  <vex-config-panel></vex-config-panel>\r\n</vex-sidebar>\r\n<!-- END CONFIGPANEL -->\r\n";
+    __webpack_exports__["default"] = "<ng-template #sidenavRef>\r\n  <vex-sidenav [collapsed]=\"sidenavCollapsed$ | async\"></vex-sidenav>\r\n</ng-template>\r\n\r\n<ng-template #toolbarRef>\r\n  <vex-toolbar [hasShadow]=\"toolbarShadowEnabled$ | async\"\r\n               [mobileQuery]=\"!(isDesktop$ | async)\"\r\n               class=\"vex-toolbar\"></vex-toolbar>\r\n</ng-template>\r\n\r\n<ng-template #footerRef>\r\n  <vex-footer *ngIf=\"isFooterVisible$ | async\" class=\"vex-footer\"></vex-footer>\r\n</ng-template>\r\n\r\n<ng-template #quickpanelRef>\r\n  <vex-quickpanel></vex-quickpanel>\r\n</ng-template>\r\n\r\n<vex-layout [footerRef]=\"footerRef\"\r\n            [quickpanelRef]=\"quickpanelRef\"\r\n            [sidenavRef]=\"sidenavRef\"\r\n            [toolbarRef]=\"toolbarRef\"></vex-layout>\r\n\r\n\r\n";
     /***/
   },
 
@@ -1798,144 +1798,72 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-layers */
-    "./node_modules/@iconify/icons-ic/twotone-layers.js");
+    var _iconify_icons_ic_baseline_forum__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @iconify/icons-ic/baseline-forum */
+    "./node_modules/@iconify/icons-ic/baseline-forum.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_2___default =
+    var _iconify_icons_ic_baseline_forum__WEBPACK_IMPORTED_MODULE_2___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_2__);
+    __webpack_require__.n(_iconify_icons_ic_baseline_forum__WEBPACK_IMPORTED_MODULE_2__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-assignment */
-    "./node_modules/@iconify/icons-ic/twotone-assignment.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_3___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_3__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-contact-support */
     "./node_modules/@iconify/icons-ic/twotone-contact-support.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_4___default =
+    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_3___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_4__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_3__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_contacts__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-contacts */
-    "./node_modules/@iconify/icons-ic/twotone-contacts.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_contacts__WEBPACK_IMPORTED_MODULE_5___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_contacts__WEBPACK_IMPORTED_MODULE_5__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-assessment */
-    "./node_modules/@iconify/icons-ic/twotone-assessment.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_6___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_6__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-book */
     "./node_modules/@iconify/icons-ic/twotone-book.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_7___default =
+    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_4___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_7__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_4__);
     /* harmony import */
 
 
-    var _popover_popover_ref__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _popover_popover_ref__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! ../popover/popover-ref */
     "./src/@vex/components/popover/popover-ref.ts");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
 
     var MegaMenuComponent =
     /*#__PURE__*/
     function () {
-      function MegaMenuComponent(popoverRef) {
+      function MegaMenuComponent(popoverRef, translateService) {
         _classCallCheck(this, MegaMenuComponent);
 
         this.popoverRef = popoverRef;
+        this.translateService = translateService;
         this.features = [{
-          icon: _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_2___default.a,
-          label: 'Dashboard',
+          icon: _iconify_icons_ic_baseline_forum__WEBPACK_IMPORTED_MODULE_2___default.a,
+          label: this.translateService.instant('MENU.FORUM'),
           route: '/'
         }, {
-          icon: _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_3___default.a,
-          label: 'AIO-Table',
-          route: '/apps/aio-table'
-        }, {
-          icon: _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_4___default.a,
-          label: 'Help Center',
-          route: '/apps/help-center'
-        }, {
-          icon: _iconify_icons_ic_twotone_contacts__WEBPACK_IMPORTED_MODULE_5___default.a,
-          label: 'Contacts',
-          route: '/apps/contacts/grid'
-        }, {
-          icon: _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_6___default.a,
-          label: 'Scrumboard',
-          route: '/apps/scrumboard/1'
-        }, {
-          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_7___default.a,
-          label: 'Documentation',
-          route: '/documentation'
-        }];
-        this.pages = [{
-          label: 'All-In-One Table',
-          route: '/apps/aio-table'
-        }, {
-          label: 'Authentication',
-          route: '/login'
-        }, {
-          label: 'Components',
-          route: '/ui/components/overview'
-        }, {
-          label: 'Documentation',
+          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_4___default.a,
+          label: this.translateService.instant('MENU.DOCUMENTATION'),
           route: '/documentation'
         }, {
-          label: 'FAQ',
-          route: '/pages/faq'
-        }, {
-          label: 'Form Elements',
-          route: '/ui/forms/form-elements'
-        }, {
-          label: 'Form Wizard',
-          route: '/ui/forms/form-wizard'
-        }, {
-          label: 'Guides',
-          route: '/pages/guides'
-        }, {
-          label: 'Help Center',
+          icon: _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_3___default.a,
+          label: this.translateService.instant('MENU.SUPPORT'),
           route: '/apps/help-center'
-        }, {
-          label: 'Scrumboard',
-          route: '/apps/scrumboard'
         }];
       }
 
@@ -1954,7 +1882,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     MegaMenuComponent.ctorParameters = function () {
       return [{
-        type: _popover_popover_ref__WEBPACK_IMPORTED_MODULE_8__["PopoverRef"]
+        type: _popover_popover_ref__WEBPACK_IMPORTED_MODULE_5__["PopoverRef"]
+      }, {
+        type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_6__["TranslateService"]
       }];
     };
 
@@ -2034,6 +1964,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
 
     var MegaMenuModule = function MegaMenuModule() {
       _classCallCheck(this, MegaMenuModule);
@@ -2041,7 +1977,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     MegaMenuModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
       declarations: [_mega_menu_component__WEBPACK_IMPORTED_MODULE_3__["MegaMenuComponent"]],
-      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_flex_layout__WEBPACK_IMPORTED_MODULE_4__["FlexLayoutModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"], _visurel_iconify_angular__WEBPACK_IMPORTED_MODULE_6__["IconModule"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["RouterModule"]],
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_flex_layout__WEBPACK_IMPORTED_MODULE_4__["FlexLayoutModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"], _visurel_iconify_angular__WEBPACK_IMPORTED_MODULE_6__["IconModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_8__["TranslateModule"], _angular_router__WEBPACK_IMPORTED_MODULE_7__["RouterModule"]],
       exports: [_mega_menu_component__WEBPACK_IMPORTED_MODULE_3__["MegaMenuComponent"]],
       entryComponents: [_mega_menu_component__WEBPACK_IMPORTED_MODULE_3__["MegaMenuComponent"]]
     })], MegaMenuModule);
@@ -3841,6 +3777,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           return prop instanceof Function;
         }
       }, {
+        key: "dropdownLink",
+        value: function dropdownLink(route) {
+          console.log(route);
+          this.router.navigateByUrl(route);
+        }
+      }, {
         key: "ngOnDestroy",
         value: function ngOnDestroy() {}
       }, {
@@ -4843,246 +4785,296 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-account-circle */
-    "./node_modules/@iconify/icons-ic/twotone-account-circle.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_5___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_5__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-move-to-inbox */
-    "./node_modules/@iconify/icons-ic/twotone-move-to-inbox.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_6___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_6__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_list_alt__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-list-alt */
-    "./node_modules/@iconify/icons-ic/twotone-list-alt.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_list_alt__WEBPACK_IMPORTED_MODULE_7___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_list_alt__WEBPACK_IMPORTED_MODULE_7__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-table-chart */
-    "./node_modules/@iconify/icons-ic/twotone-table-chart.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_8___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_8__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-check-circle */
     "./node_modules/@iconify/icons-ic/twotone-check-circle.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_9___default =
+    var _iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_5___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_9__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_5__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-access-time */
     "./node_modules/@iconify/icons-ic/twotone-access-time.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_10___default =
+    var _iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_6___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_10__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_6__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-do-not-disturb */
     "./node_modules/@iconify/icons-ic/twotone-do-not-disturb.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_11___default =
+    var _iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_7___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_11__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_7__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-offline-bolt */
     "./node_modules/@iconify/icons-ic/twotone-offline-bolt.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_12___default =
+    var _iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_8___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_12__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_8__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-chevron-right */
     "./node_modules/@iconify/icons-ic/twotone-chevron-right.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_13___default =
+    var _iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_9___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_13__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_9__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-arrow-drop-down */
     "./node_modules/@iconify/icons-ic/twotone-arrow-drop-down.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_14___default =
+    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_10___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_14__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_10__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-business */
     "./node_modules/@iconify/icons-ic/twotone-business.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_15___default =
+    var _iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_11___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_15__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_11__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-account-circle */
+    "./node_modules/@iconify/icons-ic/twotone-account-circle.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_12___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_12__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-move-to-inbox */
+    "./node_modules/@iconify/icons-ic/twotone-move-to-inbox.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_13___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_13__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-table-chart */
+    "./node_modules/@iconify/icons-ic/twotone-table-chart.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_14___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_14__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-verified-user */
     "./node_modules/@iconify/icons-ic/twotone-verified-user.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_16___default =
+    var _iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_15___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_16__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_15__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-lock */
     "./node_modules/@iconify/icons-ic/twotone-lock.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_17___default =
+    var _iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_16___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_17__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_16__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-notifications-off */
     "./node_modules/@iconify/icons-ic/twotone-notifications-off.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_18___default =
+    var _iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_17___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_18__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_17__);
     /* harmony import */
 
 
-    var _popover_popover_ref__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+    var _popover_popover_ref__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
     /*! ../../popover/popover-ref */
     "./src/@vex/components/popover/popover-ref.ts");
+    /* harmony import */
+
+
+    var _iconify_icons_fa_solid_check_circle__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+    /*! @iconify/icons-fa-solid/check-circle */
+    "./node_modules/@iconify/icons-fa-solid/check-circle.js");
+    /* harmony import */
+
+
+    var _iconify_icons_fa_solid_check_circle__WEBPACK_IMPORTED_MODULE_19___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_fa_solid_check_circle__WEBPACK_IMPORTED_MODULE_19__);
+    /* harmony import */
+
+
+    var _iconify_icons_fa_solid_exclamation_circle__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
+    /*! @iconify/icons-fa-solid/exclamation-circle */
+    "./node_modules/@iconify/icons-fa-solid/exclamation-circle.js");
+    /* harmony import */
+
+
+    var _iconify_icons_fa_solid_exclamation_circle__WEBPACK_IMPORTED_MODULE_20___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_fa_solid_exclamation_circle__WEBPACK_IMPORTED_MODULE_20__);
+    /* harmony import */
+
+
+    var _iconify_icons_fa_solid_key__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
+    /*! @iconify/icons-fa-solid/key */
+    "./node_modules/@iconify/icons-fa-solid/key.js");
+    /* harmony import */
+
+
+    var _iconify_icons_fa_solid_key__WEBPACK_IMPORTED_MODULE_21___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_fa_solid_key__WEBPACK_IMPORTED_MODULE_21__);
+    /* harmony import */
+
+
+    var _app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+    /*! ../../../../app/app-reducers/webUser/reducers */
+    "./src/app/app-reducers/webUser/reducers/index.ts");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+    /* harmony import */
+
+
+    var _app_services_user_service__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
+    /*! ../../../../app/services/user.service */
+    "./src/app/services/user.service.ts");
 
     var ToolbarUserDropdownComponent =
     /*#__PURE__*/
     function () {
-      function ToolbarUserDropdownComponent(cd, popoverRef) {
+      function ToolbarUserDropdownComponent(cd, popoverRef, store, translate, userService) {
         _classCallCheck(this, ToolbarUserDropdownComponent);
 
+        //this.store.dispatch(AuthActions.getUser());
         this.cd = cd;
         this.popoverRef = popoverRef;
+        this.store = store;
+        this.translate = translate;
+        this.userService = userService;
         this.items = [{
           id: '1',
-          icon: _iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_5___default.a,
-          label: 'My Profile',
-          description: 'Personal Information',
+          icon: _iconify_icons_ic_twotone_account_circle__WEBPACK_IMPORTED_MODULE_12___default.a,
+          label: this.translate.instant('USERPANEL.PROFIL'),
+          description: this.translate.instant('USERPANEL.PROFILDESCRIPTION'),
           colorClass: 'text-teal-500',
           route: '/pages/profile'
         }, {
           id: '2',
-          icon: _iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_6___default.a,
-          label: 'My Inbox',
-          description: 'Messages & Latest News',
+          icon: _iconify_icons_ic_twotone_move_to_inbox__WEBPACK_IMPORTED_MODULE_13___default.a,
+          label: this.translate.instant('USERPANEL.INBOX'),
+          description: this.translate.instant('USERPANEL.INBOXDESCRIPTION'),
           colorClass: 'text-primary-500',
           route: '/apps/chat'
         }, {
-          id: '3',
-          icon: _iconify_icons_ic_twotone_list_alt__WEBPACK_IMPORTED_MODULE_7___default.a,
-          label: 'My Projects',
-          description: 'Tasks & Active Projects',
-          colorClass: 'text-amber-500',
-          route: '/apps/scrumboard'
-        }, {
           id: '4',
-          icon: _iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_8___default.a,
-          label: 'Billing Information',
-          description: 'Pricing & Current Plan',
+          icon: _iconify_icons_ic_twotone_table_chart__WEBPACK_IMPORTED_MODULE_14___default.a,
+          label: this.translate.instant('USERPANEL.SUBSCRIPTION'),
+          description: this.translate.instant('USERPANEL.SUBSCRIPTIONDESCRIPTION'),
           colorClass: 'text-purple-500',
           route: '/pages/pricing'
         }];
         this.statuses = [{
           id: 'online',
           label: 'Online',
-          icon: _iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_9___default.a,
+          icon: _iconify_icons_ic_twotone_check_circle__WEBPACK_IMPORTED_MODULE_5___default.a,
           colorClass: 'text-green-500'
         }, {
           id: 'away',
           label: 'Away',
-          icon: _iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_10___default.a,
+          icon: _iconify_icons_ic_twotone_access_time__WEBPACK_IMPORTED_MODULE_6___default.a,
           colorClass: 'text-orange-500'
         }, {
           id: 'dnd',
           label: 'Do not disturb',
-          icon: _iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_11___default.a,
+          icon: _iconify_icons_ic_twotone_do_not_disturb__WEBPACK_IMPORTED_MODULE_7___default.a,
           colorClass: 'text-red-500'
         }, {
           id: 'offline',
           label: 'Offline',
-          icon: _iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_12___default.a,
+          icon: _iconify_icons_ic_twotone_offline_bolt__WEBPACK_IMPORTED_MODULE_8___default.a,
           colorClass: 'text-gray-500'
         }];
         this.activeStatus = this.statuses[0];
+        this.isCopy = false;
+        this.checkCircle = _iconify_icons_fa_solid_check_circle__WEBPACK_IMPORTED_MODULE_19___default.a;
         this.trackById = _utils_track_by__WEBPACK_IMPORTED_MODULE_2__["trackById"];
         this.icPerson = _iconify_icons_ic_twotone_person__WEBPACK_IMPORTED_MODULE_3___default.a;
         this.icSettings = _iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_4___default.a;
-        this.icChevronRight = _iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_13___default.a;
-        this.icArrowDropDown = _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_14___default.a;
-        this.icBusiness = _iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_15___default.a;
-        this.icVerifiedUser = _iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_16___default.a;
-        this.icLock = _iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_17___default.a;
-        this.icNotificationsOff = _iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_18___default.a;
+        this.icChevronRight = _iconify_icons_ic_twotone_chevron_right__WEBPACK_IMPORTED_MODULE_9___default.a;
+        this.icArrowDropDown = _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_10___default.a;
+        this.exclamationCircle = _iconify_icons_fa_solid_exclamation_circle__WEBPACK_IMPORTED_MODULE_20___default.a;
+        this.icBusiness = _iconify_icons_ic_twotone_business__WEBPACK_IMPORTED_MODULE_11___default.a;
+        this.icVerifiedUser = _iconify_icons_ic_twotone_verified_user__WEBPACK_IMPORTED_MODULE_15___default.a;
+        this.icLock = _iconify_icons_ic_twotone_lock__WEBPACK_IMPORTED_MODULE_16___default.a;
+        this.keyIcon = _iconify_icons_fa_solid_key__WEBPACK_IMPORTED_MODULE_21___default.a;
+        this.icNotificationsOff = _iconify_icons_ic_twotone_notifications_off__WEBPACK_IMPORTED_MODULE_17___default.a;
+        this.user = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_23__["select"])(_app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_22__["getUser"]));
       }
 
       _createClass(ToolbarUserDropdownComponent, [{
@@ -5098,6 +5090,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "close",
         value: function close() {
           this.popoverRef.close();
+          this.userService.logout();
         }
       }]);
 
@@ -5108,7 +5101,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       return [{
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"]
       }, {
-        type: _popover_popover_ref__WEBPACK_IMPORTED_MODULE_19__["PopoverRef"]
+        type: _popover_popover_ref__WEBPACK_IMPORTED_MODULE_18__["PopoverRef"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_23__["Store"]
+      }, {
+        type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_24__["TranslateService"]
+      }, {
+        type: _app_services_user_service__WEBPACK_IMPORTED_MODULE_25__["UserService"]
       }];
     };
 
@@ -5244,6 +5243,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }];
     };
 
+    tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()], ToolbarUserComponent.prototype, "username", void 0);
     ToolbarUserComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
       selector: 'vex-toolbar-user',
       template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
@@ -5363,6 +5363,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _pipes_color_color_fade_module__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
     /*! ../../pipes/color/color-fade.module */
     "./src/@vex/pipes/color/color-fade.module.ts");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
 
     var ToolbarUserModule = function ToolbarUserModule() {
       _classCallCheck(this, ToolbarUserModule);
@@ -5370,7 +5376,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     ToolbarUserModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
       declarations: [_toolbar_user_component__WEBPACK_IMPORTED_MODULE_3__["ToolbarUserComponent"], _toolbar_user_dropdown_toolbar_user_dropdown_component__WEBPACK_IMPORTED_MODULE_4__["ToolbarUserDropdownComponent"]],
-      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_flex_layout__WEBPACK_IMPORTED_MODULE_5__["FlexLayoutModule"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_6__["MatIconModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_7__["MatRippleModule"], _angular_material_menu__WEBPACK_IMPORTED_MODULE_8__["MatMenuModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_9__["MatButtonModule"], _pipes_relative_date_time_relative_date_time_module__WEBPACK_IMPORTED_MODULE_10__["RelativeDateTimeModule"], _angular_router__WEBPACK_IMPORTED_MODULE_11__["RouterModule"], _angular_material_tooltip__WEBPACK_IMPORTED_MODULE_12__["MatTooltipModule"], _visurel_iconify_angular__WEBPACK_IMPORTED_MODULE_13__["IconModule"], _pipes_color_color_fade_module__WEBPACK_IMPORTED_MODULE_14__["ColorFadeModule"]],
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_flex_layout__WEBPACK_IMPORTED_MODULE_5__["FlexLayoutModule"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_6__["MatIconModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_7__["MatRippleModule"], _angular_material_menu__WEBPACK_IMPORTED_MODULE_8__["MatMenuModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_9__["MatButtonModule"], _pipes_relative_date_time_relative_date_time_module__WEBPACK_IMPORTED_MODULE_10__["RelativeDateTimeModule"], _angular_router__WEBPACK_IMPORTED_MODULE_11__["RouterModule"], _angular_material_tooltip__WEBPACK_IMPORTED_MODULE_12__["MatTooltipModule"], _visurel_iconify_angular__WEBPACK_IMPORTED_MODULE_13__["IconModule"], _pipes_color_color_fade_module__WEBPACK_IMPORTED_MODULE_14__["ColorFadeModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_15__["TranslateModule"]],
       exports: [_toolbar_user_component__WEBPACK_IMPORTED_MODULE_3__["ToolbarUserComponent"]],
       entryComponents: [_toolbar_user_dropdown_toolbar_user_dropdown_component__WEBPACK_IMPORTED_MODULE_4__["ToolbarUserDropdownComponent"]]
     })], ToolbarUserModule);
@@ -5676,17 +5682,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _utils_tailwindcss__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! ../utils/tailwindcss */
     "./src/@vex/utils/tailwindcss.ts");
-    /* harmony import */
-
-
-    var src_app_service_TalkService__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
-    /*! src/app/service/TalkService */
-    "./src/app/service/TalkService.ts");
 
     var LayoutComponent =
     /*#__PURE__*/
     function () {
-      function LayoutComponent(cd, breakpointObserver, layoutService, configService, router, hub, document) {
+      function LayoutComponent(cd, breakpointObserver, layoutService, configService, router, document) {
         var _this14 = this;
 
         _classCallCheck(this, LayoutComponent);
@@ -5696,7 +5696,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.layoutService = layoutService;
         this.configService = configService;
         this.router = router;
-        this.hub = hub;
         this.document = document;
         this.isLayoutVertical$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["map"])(function (config) {
           return config.layout === 'vertical';
@@ -5761,17 +5760,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           }), Object(ngx_take_until_destroy__WEBPACK_IMPORTED_MODULE_4__["untilDestroyed"])(this)).subscribe(function () {
             return _this15.sidenav.close();
           });
-        }
-      }, {
-        key: "callServerInitTcp",
-        value: function callServerInitTcp() {
-          this.hub.initNewTcp();
-        }
-      }, {
-        key: "callAuth",
-        value: function callAuth() {
-          this.hub.callAuth();
-        }
+        } // callServerInitTcp(){
+        //   this.hub.initNewTcp();
+        // }
+        // callAuth(){
+        //   this.hub.callAuth();
+        // }
+
       }, {
         key: "ngAfterViewInit",
         value: function ngAfterViewInit() {
@@ -5835,8 +5830,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }, {
         type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"]
       }, {
-        type: src_app_service_TalkService__WEBPACK_IMPORTED_MODULE_12__["TalkService"]
-      }, {
         type: Document,
         decorators: [{
           type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"],
@@ -5866,7 +5859,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(
       /*! ./layout.component.scss */
       "./src/@vex/layout/layout.component.scss")).default]
-    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](6, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_9__["DOCUMENT"]))], LayoutComponent);
+    }), tslib__WEBPACK_IMPORTED_MODULE_0__["__param"](5, Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Inject"])(_angular_common__WEBPACK_IMPORTED_MODULE_9__["DOCUMENT"]))], LayoutComponent);
     /***/
   },
 
@@ -6250,30 +6243,49 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var _app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! ../../../app/app-reducers/webUser/reducers */
+    "./src/app/app-reducers/webUser/reducers/index.ts");
+    /* harmony import */
+
+
+    var _app_app_reducers_webUser_actions__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ../../../app/app-reducers/webUser/actions */
+    "./src/app/app-reducers/webUser/actions/index.ts");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
 
     var SidenavComponent =
     /*#__PURE__*/
     function () {
-      function SidenavComponent(navigationService, layoutService, configService) {
+      function SidenavComponent(navigationService, layoutService, configService, webStore) {
         _classCallCheck(this, SidenavComponent);
 
         this.navigationService = navigationService;
         this.layoutService = layoutService;
         this.configService = configService;
+        this.webStore = webStore;
         this.collapsedOpen$ = this.layoutService.sidenavCollapsedOpen$;
-        this.title$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (config) {
+        this.title$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (config) {
           return config.sidenav.title;
         }));
-        this.imageUrl$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (config) {
+        this.imageUrl$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (config) {
           return config.sidenav.imageUrl;
         }));
-        this.showCollapsePin$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (config) {
+        this.showCollapsePin$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_10__["map"])(function (config) {
           return config.sidenav.showCollapsePin;
         }));
-        this.items = this.navigationService.items;
+        this.items = this.webStore.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_11__["select"])(_app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_8__["getSideNav"]));
         this.trackByRoute = _utils_track_by__WEBPACK_IMPORTED_MODULE_2__["trackByRoute"];
         this.icRadioButtonChecked = _iconify_icons_ic_twotone_radio_button_checked__WEBPACK_IMPORTED_MODULE_4___default.a;
         this.icRadioButtonUnchecked = _iconify_icons_ic_twotone_radio_button_unchecked__WEBPACK_IMPORTED_MODULE_5___default.a;
@@ -6281,7 +6293,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       _createClass(SidenavComponent, [{
         key: "ngOnInit",
-        value: function ngOnInit() {}
+        value: function ngOnInit() {
+          this.webStore.dispatch(_app_app_reducers_webUser_actions__WEBPACK_IMPORTED_MODULE_9__["webUserActions"].getBotNav());
+        }
       }, {
         key: "onMouseEnter",
         value: function onMouseEnter() {
@@ -6309,6 +6323,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         type: _services_layout_service__WEBPACK_IMPORTED_MODULE_6__["LayoutService"]
       }, {
         type: _services_config_service__WEBPACK_IMPORTED_MODULE_7__["ConfigService"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_11__["Store"]
       }];
     };
 
@@ -6495,219 +6511,258 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _iconify_icons_emojione_flag_for_flag_united_states__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
-    /*! @iconify/icons-emojione/flag-for-flag-united-states */
-    "./node_modules/@iconify/icons-emojione/flag-for-flag-united-states.js");
+    var _iconify_icons_emojione_flag_for_flag_united_kingdom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @iconify/icons-emojione/flag-for-flag-united-kingdom */
+    "./node_modules/@iconify/icons-emojione/flag-for-flag-united-kingdom.js");
     /* harmony import */
 
 
-    var _iconify_icons_emojione_flag_for_flag_united_states__WEBPACK_IMPORTED_MODULE_4___default =
+    var _iconify_icons_emojione_flag_for_flag_united_kingdom__WEBPACK_IMPORTED_MODULE_4___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_emojione_flag_for_flag_united_states__WEBPACK_IMPORTED_MODULE_4__);
+    __webpack_require__.n(_iconify_icons_emojione_flag_for_flag_united_kingdom__WEBPACK_IMPORTED_MODULE_4__);
     /* harmony import */
 
 
-    var _iconify_icons_emojione_flag_for_flag_germany__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
-    /*! @iconify/icons-emojione/flag-for-flag-germany */
-    "./node_modules/@iconify/icons-emojione/flag-for-flag-germany.js");
+    var _iconify_icons_emojione_flag_for_flag_france__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @iconify/icons-emojione/flag-for-flag-france */
+    "./node_modules/@iconify/icons-emojione/flag-for-flag-france.js");
     /* harmony import */
 
 
-    var _iconify_icons_emojione_flag_for_flag_germany__WEBPACK_IMPORTED_MODULE_5___default =
+    var _iconify_icons_emojione_flag_for_flag_france__WEBPACK_IMPORTED_MODULE_5___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_emojione_flag_for_flag_germany__WEBPACK_IMPORTED_MODULE_5__);
+    __webpack_require__.n(_iconify_icons_emojione_flag_for_flag_france__WEBPACK_IMPORTED_MODULE_5__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    var _iconify_icons_emojione_flag_for_flag_spain__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! @iconify/icons-emojione/flag-for-flag-spain */
+    "./node_modules/@iconify/icons-emojione/flag-for-flag-spain.js");
+    /* harmony import */
+
+
+    var _iconify_icons_emojione_flag_for_flag_spain__WEBPACK_IMPORTED_MODULE_6___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_emojione_flag_for_flag_spain__WEBPACK_IMPORTED_MODULE_6__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-menu */
     "./node_modules/@iconify/icons-ic/twotone-menu.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_6___default =
+    var _iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_7___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_6__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_7__);
     /* harmony import */
 
 
-    var _services_config_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    var _services_config_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! ../../services/config.service */
     "./src/@vex/services/config.service.ts");
     /* harmony import */
 
 
-    var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! rxjs/operators */
     "./node_modules/rxjs/_esm2015/operators/index.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-person-add */
     "./node_modules/@iconify/icons-ic/twotone-person-add.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_9___default =
+    var _iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_10___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_9__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_10__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-assignment-turned-in */
     "./node_modules/@iconify/icons-ic/twotone-assignment-turned-in.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_10___default =
+    var _iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_11___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_10__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_11__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-ballot */
     "./node_modules/@iconify/icons-ic/twotone-ballot.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_11___default =
+    var _iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_12___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_11__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_12__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-description */
     "./node_modules/@iconify/icons-ic/twotone-description.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_12___default =
+    var _iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_13___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_12__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_13__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-assignment */
     "./node_modules/@iconify/icons-ic/twotone-assignment.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_13___default =
+    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_14___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_13__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_14__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-receipt */
     "./node_modules/@iconify/icons-ic/twotone-receipt.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_14___default =
+    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_15___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_14__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_15__);
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-done-all */
     "./node_modules/@iconify/icons-ic/twotone-done-all.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_15___default =
+    var _iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_16___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_15__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_16__);
     /* harmony import */
 
 
-    var _services_navigation_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    var _services_navigation_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
     /*! ../../services/navigation.service */
     "./src/@vex/services/navigation.service.ts");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-arrow-drop-down */
     "./node_modules/@iconify/icons-ic/twotone-arrow-drop-down.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_17___default =
+    var _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_18___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_17__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_18__);
     /* harmony import */
 
 
-    var _components_popover_popover_service__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    var _components_popover_popover_service__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
     /*! ../../components/popover/popover.service */
     "./src/@vex/components/popover/popover.service.ts");
     /* harmony import */
 
 
-    var _components_mega_menu_mega_menu_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+    var _components_mega_menu_mega_menu_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
     /*! ../../components/mega-menu/mega-menu.component */
     "./src/@vex/components/mega-menu/mega-menu.component.ts");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
+    var _iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
     /*! @iconify/icons-ic/twotone-search */
     "./node_modules/@iconify/icons-ic/twotone-search.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_20___default =
+    var _iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_21___default =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_20__);
+    __webpack_require__.n(_iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_21__);
+    /* harmony import */
+
+
+    var src_app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+    /*! src/app/app-reducers/webUser/reducers */
+    "./src/app/app-reducers/webUser/reducers/index.ts");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _app_services_traduction_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    /*! ../../../app/services/traduction.service */
+    "./src/app/services/traduction.service.ts");
 
     var ToolbarComponent =
     /*#__PURE__*/
     function () {
-      function ToolbarComponent(layoutService, configService, navigationService, popoverService) {
+      function ToolbarComponent(layoutService, configService, navigationService, popoverService, traductionService, store) {
         _classCallCheck(this, ToolbarComponent);
 
         this.layoutService = layoutService;
         this.configService = configService;
         this.navigationService = navigationService;
         this.popoverService = popoverService;
+        this.traductionService = traductionService;
+        this.store = store;
+        this.user$ = this.store.pipe(Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_23__["select"])(src_app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_22__["getUser"]));
         this.navigationItems = this.navigationService.items;
-        this.isHorizontalLayout$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (config) {
+        this.isHorizontalLayout$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (config) {
           return config.layout === 'horizontal';
         }));
-        this.isVerticalLayout$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (config) {
+        this.isVerticalLayout$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (config) {
           return config.layout === 'vertical';
         }));
-        this.isNavbarInToolbar$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (config) {
+        this.isNavbarInToolbar$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (config) {
           return config.navbar.position === 'in-toolbar';
         }));
-        this.isNavbarBelowToolbar$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["map"])(function (config) {
+        this.isNavbarBelowToolbar$ = this.configService.config$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["map"])(function (config) {
           return config.navbar.position === 'below-toolbar';
         }));
-        this.icSearch = _iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_20___default.a;
+        this.icSearch = _iconify_icons_ic_twotone_search__WEBPACK_IMPORTED_MODULE_21___default.a;
         this.icBookmarks = _iconify_icons_ic_twotone_bookmarks__WEBPACK_IMPORTED_MODULE_3___default.a;
-        this.emojioneUS = _iconify_icons_emojione_flag_for_flag_united_states__WEBPACK_IMPORTED_MODULE_4___default.a;
-        this.emojioneDE = _iconify_icons_emojione_flag_for_flag_germany__WEBPACK_IMPORTED_MODULE_5___default.a;
-        this.icMenu = _iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_6___default.a;
-        this.icPersonAdd = _iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_9___default.a;
-        this.icAssignmentTurnedIn = _iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_10___default.a;
-        this.icBallot = _iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_11___default.a;
-        this.icDescription = _iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_12___default.a;
-        this.icAssignment = _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_13___default.a;
-        this.icReceipt = _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_14___default.a;
-        this.icDoneAll = _iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_15___default.a;
-        this.icArrowDropDown = _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_17___default.a;
+        this.emojioneEN = _iconify_icons_emojione_flag_for_flag_united_kingdom__WEBPACK_IMPORTED_MODULE_4___default.a;
+        this.emogioneES = _iconify_icons_emojione_flag_for_flag_spain__WEBPACK_IMPORTED_MODULE_6___default.a;
+        this.emojioneFR = _iconify_icons_emojione_flag_for_flag_france__WEBPACK_IMPORTED_MODULE_5___default.a;
+        this.icMenu = _iconify_icons_ic_twotone_menu__WEBPACK_IMPORTED_MODULE_7___default.a;
+        this.icPersonAdd = _iconify_icons_ic_twotone_person_add__WEBPACK_IMPORTED_MODULE_10___default.a;
+        this.icAssignmentTurnedIn = _iconify_icons_ic_twotone_assignment_turned_in__WEBPACK_IMPORTED_MODULE_11___default.a;
+        this.icBallot = _iconify_icons_ic_twotone_ballot__WEBPACK_IMPORTED_MODULE_12___default.a;
+        this.icDescription = _iconify_icons_ic_twotone_description__WEBPACK_IMPORTED_MODULE_13___default.a;
+        this.icAssignment = _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_14___default.a;
+        this.icReceipt = _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_15___default.a;
+        this.icDoneAll = _iconify_icons_ic_twotone_done_all__WEBPACK_IMPORTED_MODULE_16___default.a;
+        this.icArrowDropDown = _iconify_icons_ic_twotone_arrow_drop_down__WEBPACK_IMPORTED_MODULE_18___default.a;
       }
 
       _createClass(ToolbarComponent, [{
         key: "ngOnInit",
         value: function ngOnInit() {}
+      }, {
+        key: "changeLanguage",
+        value: function changeLanguage(language) {
+          this.traductionService.changLang(language);
+        }
       }, {
         key: "openQuickpanel",
         value: function openQuickpanel() {
@@ -6722,7 +6777,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "openMegaMenu",
         value: function openMegaMenu(origin) {
           this.popoverService.open({
-            content: _components_mega_menu_mega_menu_component__WEBPACK_IMPORTED_MODULE_19__["MegaMenuComponent"],
+            content: _components_mega_menu_mega_menu_component__WEBPACK_IMPORTED_MODULE_20__["MegaMenuComponent"],
             origin: origin,
             position: [{
               originX: 'start',
@@ -6751,11 +6806,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       return [{
         type: _services_layout_service__WEBPACK_IMPORTED_MODULE_2__["LayoutService"]
       }, {
-        type: _services_config_service__WEBPACK_IMPORTED_MODULE_7__["ConfigService"]
+        type: _services_config_service__WEBPACK_IMPORTED_MODULE_8__["ConfigService"]
       }, {
-        type: _services_navigation_service__WEBPACK_IMPORTED_MODULE_16__["NavigationService"]
+        type: _services_navigation_service__WEBPACK_IMPORTED_MODULE_17__["NavigationService"]
       }, {
-        type: _components_popover_popover_service__WEBPACK_IMPORTED_MODULE_18__["PopoverService"]
+        type: _components_popover_popover_service__WEBPACK_IMPORTED_MODULE_19__["PopoverService"]
+      }, {
+        type: _app_services_traduction_service__WEBPACK_IMPORTED_MODULE_24__["TraductionService"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_23__["Store"]
       }];
     };
 
@@ -6900,6 +6959,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _directives_container_container_module__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
     /*! ../../directives/container/container.module */
     "./src/@vex/directives/container/container.module.ts");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
 
     var ToolbarModule = function ToolbarModule() {
       _classCallCheck(this, ToolbarModule);
@@ -6907,7 +6972,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     ToolbarModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
       declarations: [_toolbar_component__WEBPACK_IMPORTED_MODULE_3__["ToolbarComponent"]],
-      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_flex_layout__WEBPACK_IMPORTED_MODULE_4__["FlexLayoutModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_6__["MatIconModule"], _angular_material_menu__WEBPACK_IMPORTED_MODULE_7__["MatMenuModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["MatRippleModule"], _components_toolbar_notifications_toolbar_notifications_module__WEBPACK_IMPORTED_MODULE_9__["ToolbarNotificationsModule"], _components_toolbar_user_toolbar_user_module__WEBPACK_IMPORTED_MODULE_10__["ToolbarUserModule"], _components_toolbar_search_toolbar_search_module__WEBPACK_IMPORTED_MODULE_11__["ToolbarSearchModule"], _visurel_iconify_angular__WEBPACK_IMPORTED_MODULE_12__["IconModule"], _navigation_navigation_module__WEBPACK_IMPORTED_MODULE_13__["NavigationModule"], _angular_router__WEBPACK_IMPORTED_MODULE_14__["RouterModule"], _components_navigation_item_navigation_item_module__WEBPACK_IMPORTED_MODULE_15__["NavigationItemModule"], _components_mega_menu_mega_menu_module__WEBPACK_IMPORTED_MODULE_16__["MegaMenuModule"], _directives_container_container_module__WEBPACK_IMPORTED_MODULE_17__["ContainerModule"]],
+      imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"], _angular_flex_layout__WEBPACK_IMPORTED_MODULE_4__["FlexLayoutModule"], _angular_material_button__WEBPACK_IMPORTED_MODULE_5__["MatButtonModule"], _angular_material_icon__WEBPACK_IMPORTED_MODULE_6__["MatIconModule"], _angular_material_menu__WEBPACK_IMPORTED_MODULE_7__["MatMenuModule"], _angular_material_core__WEBPACK_IMPORTED_MODULE_8__["MatRippleModule"], _components_toolbar_notifications_toolbar_notifications_module__WEBPACK_IMPORTED_MODULE_9__["ToolbarNotificationsModule"], _components_toolbar_user_toolbar_user_module__WEBPACK_IMPORTED_MODULE_10__["ToolbarUserModule"], _components_toolbar_search_toolbar_search_module__WEBPACK_IMPORTED_MODULE_11__["ToolbarSearchModule"], _visurel_iconify_angular__WEBPACK_IMPORTED_MODULE_12__["IconModule"], _navigation_navigation_module__WEBPACK_IMPORTED_MODULE_13__["NavigationModule"], _angular_router__WEBPACK_IMPORTED_MODULE_14__["RouterModule"], _components_navigation_item_navigation_item_module__WEBPACK_IMPORTED_MODULE_15__["NavigationItemModule"], _components_mega_menu_mega_menu_module__WEBPACK_IMPORTED_MODULE_16__["MegaMenuModule"], _directives_container_container_module__WEBPACK_IMPORTED_MODULE_17__["ContainerModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_18__["TranslateModule"]],
       exports: [_toolbar_component__WEBPACK_IMPORTED_MODULE_3__["ToolbarComponent"]]
     })], ToolbarModule);
     /***/
@@ -7611,13 +7676,39 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
     /*! rxjs */
     "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var _layout_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ./layout.service */
+    "./src/@vex/services/layout.service.ts");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ../../environments/environment */
+    "./src/environments/environment.ts");
+
+    var httpOptions = {
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpHeaders"]({
+        'Content-Type': 'application/json'
+      })
+    };
 
     var NavigationService =
     /*#__PURE__*/
     function () {
-      function NavigationService() {
+      function NavigationService(http, layoutService) {
         _classCallCheck(this, NavigationService);
 
+        this.http = http;
+        this.layoutService = layoutService;
         this.items = [];
         this._openChangeSubject = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
         this.openChange$ = this._openChangeSubject.asObservable();
@@ -7637,6 +7728,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "addSubheading",
         value: function addSubheading(item) {
           this.items.push(item);
+        }
+      }, {
+        key: "GenerateNavigation",
+        value: function GenerateNavigation() {
+          return this.http.get("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiURL, "User/CreateSideNavUser"), httpOptions);
         }
       }, {
         key: "triggerOpenChange",
@@ -7662,6 +7758,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       return NavigationService;
     }();
+
+    NavigationService.ctorParameters = function () {
+      return [{
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_4__["HttpClient"]
+      }, {
+        type: _layout_service__WEBPACK_IMPORTED_MODULE_3__["LayoutService"]
+      }];
+    };
 
     NavigationService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
       providedIn: 'root'
@@ -8258,6 +8362,3687 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
+  "./src/app/Services/TalkService.ts":
+  /*!*****************************************!*\
+    !*** ./src/app/Services/TalkService.ts ***!
+    \*****************************************/
+
+  /*! exports provided: TalkService */
+
+  /***/
+  function srcAppServicesTalkServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "TalkService", function () {
+      return TalkService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _aspnet_signalr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @aspnet/signalr */
+    "./node_modules/@aspnet/signalr/dist/esm/index.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _app_reducers_account_actions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ../app-reducers/account/actions */
+    "./src/app/app-reducers/account/actions/index.ts");
+    /* harmony import */
+
+
+    var _app_reducers_character_actions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ../app-reducers/character/actions */
+    "./src/app/app-reducers/character/actions/index.ts");
+
+    var TalkService =
+    /*#__PURE__*/
+    function () {
+      function TalkService(storeUser, storeAccount, storeCharacter) {
+        _classCallCheck(this, TalkService);
+
+        this.storeUser = storeUser;
+        this.storeAccount = storeAccount;
+        this.storeCharacter = storeCharacter;
+        this.messageReceived = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.connectionEstablished = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
+        this.connectIsEstablished = false;
+        this.createConnection(); // this.startConnection();
+      }
+
+      _createClass(TalkService, [{
+        key: "sendMessage",
+        value: function sendMessage(message) {
+          this._hubConnection.invoke('SendPackage', message, '5000');
+        }
+      }, {
+        key: "createConnection",
+        value: function createConnection() {
+          this._hubConnection = new _aspnet_signalr__WEBPACK_IMPORTED_MODULE_2__["HubConnectionBuilder"]().withUrl("https://localhost:44319/deeptalk", {
+            accessTokenFactory: function accessTokenFactory() {
+              return localStorage.getItem('DeepBot');
+            },
+            skipNegotiation: true,
+            transport: _aspnet_signalr__WEBPACK_IMPORTED_MODULE_2__["HttpTransportType"].WebSockets
+          }).build();
+        }
+      }, {
+        key: "createConnexionBot",
+        value: function createConnexionBot(accountName, accountPassword, serverId, isScan) {
+          console.log(accountName);
+
+          this._hubConnection.invoke('CreateConnexion', accountName, accountPassword, serverId, isScan);
+        }
+      }, {
+        key: "startConnection",
+        value: function startConnection() {
+          var _this21 = this;
+
+          this._hubConnection.start().then(function () {
+            _this21.connectIsEstablished = true;
+            console.log('Init connection on DeepTalk');
+
+            _this21.connectionEstablished.emit(true);
+          }).catch(function (err) {
+            console.log('Error on initialize connection with DeepTalk, retrying...', err);
+            setTimeout(function () {
+              this.startConnection();
+            }, 5000);
+          });
+
+          this.GetClientMessage();
+        }
+      }, {
+        key: "GetClientMessage",
+        value: function GetClientMessage() {
+          var _this22 = this;
+
+          this._hubConnection.on("DispatchClient", function (network, tcpId) {
+            console.log(network);
+
+            switch (network.type) {
+              case 0:
+                _this22.storeAccount.dispatch(_app_reducers_account_actions__WEBPACK_IMPORTED_MODULE_4__["AccountActions"].receveidLogs({
+                  network: network
+                }));
+
+                break;
+
+              case 5:
+                _this22.storeAccount.dispatch(_app_reducers_account_actions__WEBPACK_IMPORTED_MODULE_4__["AccountActions"].receveidMaps({
+                  network: network
+                }));
+
+                break;
+
+              case 6:
+                _this22.storeCharacter.dispatch(_app_reducers_character_actions__WEBPACK_IMPORTED_MODULE_5__["CharacterActions"].receveidCharacters({
+                  network: network
+                }));
+
+                break;
+
+              case 7:
+                _this22.storeCharacter.dispatch(_app_reducers_character_actions__WEBPACK_IMPORTED_MODULE_5__["CharacterActions"].receivedCharacteristic({
+                  network: network
+                }));
+
+                break;
+
+              default:
+                break;
+            }
+          });
+        }
+      }]);
+
+      return TalkService;
+    }();
+
+    TalkService.ctorParameters = function () {
+      return [{
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]
+      }];
+    };
+
+    TalkService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()], TalkService);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/account/account.modules.ts":
+  /*!*********************************************************!*\
+    !*** ./src/app/app-reducers/account/account.modules.ts ***!
+    \*********************************************************/
+
+  /*! exports provided: AccountModule */
+
+  /***/
+  function srcAppAppReducersAccountAccountModulesTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AccountModule", function () {
+      return AccountModule;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _account_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../account/reducers */
+    "./src/app/app-reducers/account/reducers/index.ts");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var _effects_account_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ./effects/account.effects */
+    "./src/app/app-reducers/account/effects/account.effects.ts");
+
+    var AccountModule = function AccountModule() {
+      _classCallCheck(this, AccountModule);
+    };
+
+    AccountModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+      imports: [_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["StoreModule"].forFeature('account', _account_reducers__WEBPACK_IMPORTED_MODULE_3__["reducers"]), _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forFeature([_effects_account_effects__WEBPACK_IMPORTED_MODULE_5__["AccountEffects"]])]
+    })], AccountModule);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/account/actions/accountactions.ts":
+  /*!****************************************************************!*\
+    !*** ./src/app/app-reducers/account/actions/accountactions.ts ***!
+    \****************************************************************/
+
+  /*! exports provided: receveidLogs, receveidMaps, createAccount, createAccountSuccess, createAccountFailure, getAllAccount, updateAccount, updateAccountSuccess, updateAccountFailure, deleteAccount, deleteAccountSuccess, deleteAccountFailure */
+
+  /***/
+  function srcAppAppReducersAccountActionsAccountactionsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "receveidLogs", function () {
+      return receveidLogs;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "receveidMaps", function () {
+      return receveidMaps;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "createAccount", function () {
+      return createAccount;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "createAccountSuccess", function () {
+      return createAccountSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "createAccountFailure", function () {
+      return createAccountFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllAccount", function () {
+      return getAllAccount;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateAccount", function () {
+      return updateAccount;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateAccountSuccess", function () {
+      return updateAccountSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateAccountFailure", function () {
+      return updateAccountFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "deleteAccount", function () {
+      return deleteAccount;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "deleteAccountSuccess", function () {
+      return deleteAccountSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "deleteAccountFailure", function () {
+      return deleteAccountFailure;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+
+    var receveidLogs = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/TALK] RECEIVED LOG', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var receveidMaps = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/TALK] RECEIVED MAP', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var createAccount = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] CREATE ACCOUNT', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var createAccountSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] CREATE ACCOUNT SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var createAccountFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] CREATE ACCOUNT ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getAllAccount = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] GET ALL ACCOUNT', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateAccount = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE  ACCOUNT', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateAccountSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE ACCOUNT SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateAccountFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE ACCOUNT ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var deleteAccount = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] DELETE  ACCOUNT', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var deleteAccountSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] DELETE ACCOUNT SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var deleteAccountFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] DELETE ACCOUNT ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/account/actions/index.ts":
+  /*!*******************************************************!*\
+    !*** ./src/app/app-reducers/account/actions/index.ts ***!
+    \*******************************************************/
+
+  /*! exports provided: AccountActions */
+
+  /***/
+  function srcAppAppReducersAccountActionsIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _accountactions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ./accountactions */
+    "./src/app/app-reducers/account/actions/accountactions.ts");
+    /* harmony reexport (module object) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AccountActions", function () {
+      return _accountactions__WEBPACK_IMPORTED_MODULE_1__;
+    });
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/account/effects/account.effects.ts":
+  /*!*****************************************************************!*\
+    !*** ./src/app/app-reducers/account/effects/account.effects.ts ***!
+    \*****************************************************************/
+
+  /*! exports provided: AccountEffects */
+
+  /***/
+  function srcAppAppReducersAccountEffectsAccountEffectsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "AccountEffects", function () {
+      return AccountEffects;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! src/app/Services/TalkService */
+    "./src/app/Services/TalkService.ts");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/account/actions/index.ts");
+    /* harmony import */
+
+
+    var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! ngx-toastr */
+    "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+    /* harmony import */
+
+
+    var _services_account_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ../../../services/account.service */
+    "./src/app/services/account.service.ts");
+    /* harmony import */
+
+
+    var _services_group_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ../../../services/group.service */
+    "./src/app/services/group.service.ts");
+    /* harmony import */
+
+
+    var _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! ../../../../@vex/services/navigation.service */
+    "./src/@vex/services/navigation.service.ts");
+    /* harmony import */
+
+
+    var _webUser_actions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! ../../webUser/actions */
+    "./src/app/app-reducers/webUser/actions/index.ts");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+
+    var AccountEffects = function AccountEffects(actions$, accountService, router, deeptalk, groupService, navigationService, toastr, webStore) {
+      var _this23 = this;
+
+      _classCallCheck(this, AccountEffects);
+
+      this.actions$ = actions$;
+      this.accountService = accountService;
+      this.router = router;
+      this.deeptalk = deeptalk;
+      this.groupService = groupService;
+      this.navigationService = navigationService;
+      this.toastr = toastr;
+      this.webStore = webStore;
+      this.createAccount$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].createAccount), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.acc;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (acc) {
+          return _this23.accountService.createAccount(acc).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (accountCreated) {
+            return _actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].createAccountSuccess({
+              accountBack: accountCreated
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].createAccountFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.createAccountSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].createAccountSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.accountBack;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (accountCreated) {
+          console.log(accountCreated);
+
+          _this23.webStore.dispatch(_webUser_actions__WEBPACK_IMPORTED_MODULE_12__["webUserActions"].getBotNav());
+
+          _this23.toastr.success('', 'Compte ' + accountCreated.accountName + ' ajouté avec succés');
+
+          _this23.router.navigateByUrl('/');
+        }));
+      }, {
+        dispatch: false
+      });
+      this.createAccountFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].createAccountFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+      this.updateAccount$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].updateAccount), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.accountToUpdate;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (accountToUpdate) {
+          return _this23.accountService.updateAccount(accountToUpdate).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (accountToUpdate) {
+            return _actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].updateAccountSuccess({
+              accountToUpdate: accountToUpdate
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].updateAccountFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.updateAccountSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].updateAccountSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.accountToUpdate;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (account) {
+          _this23.toastr.success('', 'Compte ' + account.accountName + ' modifié avec succés');
+        }));
+      }, {
+        dispatch: false
+      });
+      this.updateAccountFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].updateAccountFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+      this.deleteAccount$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].deleteAccount), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.accountKeyToDelete;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (accountKeyToDelete) {
+          return _this23.accountService.deleteAccount(accountKeyToDelete).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (accontName) {
+            return _actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].deleteAccountSuccess({
+              accontName: accontName
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].deleteAccountFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.deleteAccountSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].deleteAccountSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.accontName;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (accountName) {
+          _this23.toastr.success('', 'Compte ' + accountName + ' supprimé avec succés');
+        }));
+      }, {
+        dispatch: false
+      });
+      this.deleteAccountFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this23.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["AccountActions"].deleteAccountFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+    };
+
+    AccountEffects.ctorParameters = function () {
+      return [{
+        type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"]
+      }, {
+        type: _services_account_service__WEBPACK_IMPORTED_MODULE_9__["AccountService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
+      }, {
+        type: src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_6__["TalkService"]
+      }, {
+        type: _services_group_service__WEBPACK_IMPORTED_MODULE_10__["GroupsService"]
+      }, {
+        type: _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_11__["NavigationService"]
+      }, {
+        type: ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrService"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_13__["Store"]
+      }];
+    };
+
+    AccountEffects = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()], AccountEffects);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/account/reducers/account.reducers.ts":
+  /*!*******************************************************************!*\
+    !*** ./src/app/app-reducers/account/reducers/account.reducers.ts ***!
+    \*******************************************************************/
+
+  /*! exports provided: initialState, reducer, getAccountCreated, getAllAccounts, getLogs, getMap */
+
+  /***/
+  function srcAppAppReducersAccountReducersAccountReducersTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "initialState", function () {
+      return initialState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducer", function () {
+      return reducer;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAccountCreated", function () {
+      return getAccountCreated;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllAccounts", function () {
+      return getAllAccounts;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getLogs", function () {
+      return getLogs;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getMap", function () {
+      return getMap;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/account/actions/index.ts");
+
+    var initialState = {
+      logs: [],
+      map: null,
+      allAccounts: null,
+      accountCreated: null,
+      error: null,
+      pending: false
+    };
+    var reducer = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createReducer"])(initialState, Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].receveidLogs, function (state, _ref6) {
+      var network = _ref6.network;
+      return Object.assign({}, state, {
+        logs: state.logs.concat(network)
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].receveidMaps, function (state, _ref7) {
+      var network = _ref7.network;
+      return Object.assign({}, state, {
+        map: network
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].createAccount, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].createAccountSuccess, function (state, _ref8) {
+      var accountBack = _ref8.accountBack;
+      return Object.assign({}, state, {
+        accountCreated: accountBack,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].createAccountFailure, function (state, _ref9) {
+      var error = _ref9.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].getAllAccount, function (state, _ref10) {
+      var allAccounts = _ref10.allAccounts;
+      return Object.assign({}, state, {
+        allAccounts: allAccounts,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].updateAccount, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].updateAccountSuccess, function (state, _ref11) {
+      var accountToUpdate = _ref11.accountToUpdate;
+      return Object.assign({}, state, {
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].updateAccountFailure, function (state, _ref12) {
+      var error = _ref12.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].deleteAccount, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].deleteAccountSuccess, function (state, _ref13) {
+      var accontName = _ref13.accontName;
+      return Object.assign({}, state, {
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AccountActions"].deleteAccountFailure, function (state, _ref14) {
+      var error = _ref14.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }));
+
+    var getAccountCreated = function getAccountCreated(state) {
+      return state.accountCreated;
+    };
+
+    var getAllAccounts = function getAllAccounts(state) {
+      return state.allAccounts;
+    };
+
+    var getLogs = function getLogs(state) {
+      return state.logs;
+    };
+
+    var getMap = function getMap(state) {
+      return state.map;
+    };
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/account/reducers/index.ts":
+  /*!********************************************************!*\
+    !*** ./src/app/app-reducers/account/reducers/index.ts ***!
+    \********************************************************/
+
+  /*! exports provided: reducers, selectAccountState, selectAccountStatusState, getAccountCreated, getAllAccounts, getLogs, getMap */
+
+  /***/
+  function srcAppAppReducersAccountReducersIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducers", function () {
+      return reducers;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectAccountState", function () {
+      return selectAccountState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectAccountStatusState", function () {
+      return selectAccountStatusState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAccountCreated", function () {
+      return getAccountCreated;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllAccounts", function () {
+      return getAllAccounts;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getLogs", function () {
+      return getLogs;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getMap", function () {
+      return getMap;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _reducers_account_reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../reducers/account.reducers */
+    "./src/app/app-reducers/account/reducers/account.reducers.ts");
+
+    function reducers(state, action) {
+      return Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])({
+        status: _reducers_account_reducers__WEBPACK_IMPORTED_MODULE_2__["reducer"]
+      })(state, action);
+    }
+
+    var selectAccountState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createFeatureSelector"])('account');
+    var selectAccountStatusState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAccountState, function (state) {
+      return state.status;
+    });
+    var getAccountCreated = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAccountStatusState, _reducers_account_reducers__WEBPACK_IMPORTED_MODULE_2__["getAccountCreated"]);
+    var getAllAccounts = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAccountStatusState, _reducers_account_reducers__WEBPACK_IMPORTED_MODULE_2__["getAllAccounts"]);
+    var getLogs = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAccountStatusState, _reducers_account_reducers__WEBPACK_IMPORTED_MODULE_2__["getLogs"]);
+    var getMap = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAccountStatusState, _reducers_account_reducers__WEBPACK_IMPORTED_MODULE_2__["getMap"]);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/character/actions/characteractions.ts":
+  /*!********************************************************************!*\
+    !*** ./src/app/app-reducers/character/actions/characteractions.ts ***!
+    \********************************************************************/
+
+  /*! exports provided: receveidCharacters, receivedCharacteristic, resetReceveidCharacters, getAllCharacters, getAllCurrentCharacters, updateCharacterFKGroup, updateCharacterConfig, updateCharacterConfigSuccess, updateCharacterConfigFailure */
+
+  /***/
+  function srcAppAppReducersCharacterActionsCharacteractionsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "receveidCharacters", function () {
+      return receveidCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "receivedCharacteristic", function () {
+      return receivedCharacteristic;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "resetReceveidCharacters", function () {
+      return resetReceveidCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllCharacters", function () {
+      return getAllCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllCurrentCharacters", function () {
+      return getAllCurrentCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateCharacterFKGroup", function () {
+      return updateCharacterFKGroup;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateCharacterConfig", function () {
+      return updateCharacterConfig;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateCharacterConfigSuccess", function () {
+      return updateCharacterConfigSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateCharacterConfigFailure", function () {
+      return updateCharacterConfigFailure;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+
+    var receveidCharacters = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/TALK] RECEIVE CHARACTERS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var receivedCharacteristic = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/TALK] RECEIVE CHARACTERISTICS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var resetReceveidCharacters = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/TALK] RESET RECEIVE CHARACTERS');
+    var getAllCharacters = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/CHARACTER] GET ALLCHARACTERS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getAllCurrentCharacters = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/CHARACTER] GET ALLCURRENTCHARACTERS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateCharacterFKGroup = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/CHARACTER] UPDATE FK_GROUP CHARACTER', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateCharacterConfig = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE  CHARACTER', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateCharacterConfigSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE CHARACTER SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateCharacterConfigFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE CHARACTER ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/character/actions/index.ts":
+  /*!*********************************************************!*\
+    !*** ./src/app/app-reducers/character/actions/index.ts ***!
+    \*********************************************************/
+
+  /*! exports provided: CharacterActions */
+
+  /***/
+  function srcAppAppReducersCharacterActionsIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _characteractions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ./characteractions */
+    "./src/app/app-reducers/character/actions/characteractions.ts");
+    /* harmony reexport (module object) */
+
+
+    __webpack_require__.d(__webpack_exports__, "CharacterActions", function () {
+      return _characteractions__WEBPACK_IMPORTED_MODULE_1__;
+    });
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/character/character.modules.ts":
+  /*!*************************************************************!*\
+    !*** ./src/app/app-reducers/character/character.modules.ts ***!
+    \*************************************************************/
+
+  /*! exports provided: CharacterModule */
+
+  /***/
+  function srcAppAppReducersCharacterCharacterModulesTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "CharacterModule", function () {
+      return CharacterModule;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _character_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../character/reducers */
+    "./src/app/app-reducers/character/reducers/index.ts");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var _effects_character_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ./effects/character.effects */
+    "./src/app/app-reducers/character/effects/character.effects.ts");
+    /* NIQUE SA MERE */
+
+
+    var CharacterModule = function CharacterModule() {
+      _classCallCheck(this, CharacterModule);
+    };
+
+    CharacterModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+      imports: [_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["StoreModule"].forFeature('character', _character_reducers__WEBPACK_IMPORTED_MODULE_3__["reducers"]), _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forFeature([_effects_character_effects__WEBPACK_IMPORTED_MODULE_5__["CharacterEffects"]])]
+    })], CharacterModule);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/character/effects/character.effects.ts":
+  /*!*********************************************************************!*\
+    !*** ./src/app/app-reducers/character/effects/character.effects.ts ***!
+    \*********************************************************************/
+
+  /*! exports provided: CharacterEffects */
+
+  /***/
+  function srcAppAppReducersCharacterEffectsCharacterEffectsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "CharacterEffects", function () {
+      return CharacterEffects;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! src/app/Services/TalkService */
+    "./src/app/Services/TalkService.ts");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/character/actions/index.ts");
+    /* harmony import */
+
+
+    var ngx_toastr__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! ngx-toastr */
+    "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+    /* harmony import */
+
+
+    var _services_group_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ../../../services/group.service */
+    "./src/app/services/group.service.ts");
+    /* harmony import */
+
+
+    var _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ../../../../@vex/services/navigation.service */
+    "./src/@vex/services/navigation.service.ts");
+    /* harmony import */
+
+
+    var _services_character_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! ../../../services/character.service */
+    "./src/app/services/character.service.ts");
+
+    var CharacterEffects = function CharacterEffects(actions$, characterService, router, deeptalk, groupService, navigationService, toastr) {
+      var _this24 = this;
+
+      _classCallCheck(this, CharacterEffects);
+
+      this.actions$ = actions$;
+      this.characterService = characterService;
+      this.router = router;
+      this.deeptalk = deeptalk;
+      this.groupService = groupService;
+      this.navigationService = navigationService;
+      this.toastr = toastr;
+      this.updateCharacterConfig$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this24.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["CharacterActions"].updateCharacterConfig), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.characterConfigToUpdate;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (characterConfigToUpdate) {
+          return _this24.characterService.updateCharacterConfig(characterConfigToUpdate).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (characterConfigToUpdate) {
+            return _actions__WEBPACK_IMPORTED_MODULE_7__["CharacterActions"].updateCharacterConfigSuccess({
+              characterConfigToUpdate: characterConfigToUpdate
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_7__["CharacterActions"].updateCharacterConfigFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.updateCharacterConfigSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this24.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["CharacterActions"].updateCharacterConfigSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.characterConfigToUpdate;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (group) {
+          _this24.toastr.success('', 'Configuration modifié avec succés');
+        }));
+      }, {
+        dispatch: false
+      });
+      this.updateCharacterConfigFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this24.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_7__["CharacterActions"].updateCharacterConfigFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+    };
+
+    CharacterEffects.ctorParameters = function () {
+      return [{
+        type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"]
+      }, {
+        type: _services_character_service__WEBPACK_IMPORTED_MODULE_11__["CharacterService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
+      }, {
+        type: src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_6__["TalkService"]
+      }, {
+        type: _services_group_service__WEBPACK_IMPORTED_MODULE_9__["GroupsService"]
+      }, {
+        type: _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_10__["NavigationService"]
+      }, {
+        type: ngx_toastr__WEBPACK_IMPORTED_MODULE_8__["ToastrService"]
+      }];
+    };
+
+    CharacterEffects = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()], CharacterEffects);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/character/reducers/character.reducers.ts":
+  /*!***********************************************************************!*\
+    !*** ./src/app/app-reducers/character/reducers/character.reducers.ts ***!
+    \***********************************************************************/
+
+  /*! exports provided: initialState, reducer, getScanCharacters, getKamas, getCharacteristicsPoints, getCharacteristics, getAllCharacters, getAllCurrentCharacters */
+
+  /***/
+  function srcAppAppReducersCharacterReducersCharacterReducersTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "initialState", function () {
+      return initialState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducer", function () {
+      return reducer;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getScanCharacters", function () {
+      return getScanCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getKamas", function () {
+      return getKamas;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getCharacteristicsPoints", function () {
+      return getCharacteristicsPoints;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getCharacteristics", function () {
+      return getCharacteristics;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllCharacters", function () {
+      return getAllCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllCurrentCharacters", function () {
+      return getAllCurrentCharacters;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/character/actions/index.ts");
+
+    var initialState = {
+      scanCharacters: [],
+      allCharacters: [],
+      allCurrentCharacters: [],
+      characteristics: {
+        agility: {
+          total: 0
+        },
+        strength: {
+          total: 0
+        },
+        pa: {
+          total: 0
+        },
+        pm: {
+          total: 0
+        },
+        range: {
+          total: 0
+        },
+        luck: {
+          total: 0
+        },
+        experienceLevelUp: 0,
+        experienceActual: 0,
+        energyActual: 0,
+        energyMax: 0,
+        experienceMinLevel: 0,
+        wisdom: {
+          total: 0
+        },
+        vitality: {
+          total: 0
+        },
+        vitalityActual: 0,
+        vitalityMax: 0,
+        initiative: {
+          total: 0
+        },
+        intelligence: {
+          total: 0
+        },
+        invocablesCreatures: {
+          total: 0
+        },
+        prospection: {
+          total: 0
+        }
+      },
+      kamas: 0,
+      characteristicsPoints: 0,
+      error: null,
+      pending: false
+    };
+    var reducer = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createReducer"])(initialState, Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].receveidCharacters, function (state, _ref15) {
+      var network = _ref15.network;
+      return Object.assign({}, state, {
+        scanCharacters: network.characters
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].receivedCharacteristic, function (state, _ref16) {
+      var network = _ref16.network;
+      return Object.assign({}, state, {
+        characteristics: network.characteristic,
+        kamas: network.kamas,
+        characteristicsPoints: network.characteristicsPoints
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].resetReceveidCharacters, function (state) {
+      return Object.assign({}, state, {
+        scanCharacters: []
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].getAllCharacters, function (state, _ref17) {
+      var allCharacters = _ref17.allCharacters;
+      return Object.assign({}, state, {
+        allCharacters: allCharacters,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].getAllCurrentCharacters, function (state, _ref18) {
+      var allCurrentCharacters = _ref18.allCurrentCharacters;
+      return Object.assign({}, state, {
+        allCurrentCharacters: allCurrentCharacters,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].updateCharacterFKGroup, function (state, _ref19) {
+      var fk_Group = _ref19.fk_Group,
+          key = _ref19.key;
+      return Object.assign({}, state, {
+        scanCharacters: [Object.assign({}, state.scanCharacters.find(function (c) {
+          return c.key === key;
+        }), {
+          fk_Group: fk_Group
+        })],
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].updateCharacterConfig, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].updateCharacterConfigSuccess, function (state, _ref20) {
+      var characterConfigToUpdate = _ref20.characterConfigToUpdate;
+      return Object.assign({}, state, {
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["CharacterActions"].updateCharacterConfigFailure, function (state, _ref21) {
+      var error = _ref21.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }));
+
+    var getScanCharacters = function getScanCharacters(state) {
+      return state.scanCharacters;
+    };
+
+    var getKamas = function getKamas(state) {
+      return state.kamas;
+    };
+
+    var getCharacteristicsPoints = function getCharacteristicsPoints(state) {
+      return state.characteristicsPoints;
+    };
+
+    var getCharacteristics = function getCharacteristics(state) {
+      return state.characteristics;
+    };
+
+    var getAllCharacters = function getAllCharacters(State) {
+      return State.allCharacters;
+    };
+
+    var getAllCurrentCharacters = function getAllCurrentCharacters(State) {
+      return State.allCurrentCharacters;
+    };
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/character/reducers/index.ts":
+  /*!**********************************************************!*\
+    !*** ./src/app/app-reducers/character/reducers/index.ts ***!
+    \**********************************************************/
+
+  /*! exports provided: reducers, selectCharacterState, selectCharacterStatusState, getScanCharacters, getKamas, getCharacteristicsPoints, getCharacteristics, getAllCharacters, getAllCurrentCharacters */
+
+  /***/
+  function srcAppAppReducersCharacterReducersIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducers", function () {
+      return reducers;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectCharacterState", function () {
+      return selectCharacterState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectCharacterStatusState", function () {
+      return selectCharacterStatusState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getScanCharacters", function () {
+      return getScanCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getKamas", function () {
+      return getKamas;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getCharacteristicsPoints", function () {
+      return getCharacteristicsPoints;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getCharacteristics", function () {
+      return getCharacteristics;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllCharacters", function () {
+      return getAllCharacters;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllCurrentCharacters", function () {
+      return getAllCurrentCharacters;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../reducers/character.reducers */
+    "./src/app/app-reducers/character/reducers/character.reducers.ts");
+
+    function reducers(state, action) {
+      return Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])({
+        status: _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__["reducer"]
+      })(state, action);
+    }
+
+    var selectCharacterState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createFeatureSelector"])('character');
+    var selectCharacterStatusState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectCharacterState, function (state) {
+      return state.status;
+    });
+    var getScanCharacters = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectCharacterStatusState, _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__["getScanCharacters"]);
+    var getKamas = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectCharacterStatusState, _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__["getKamas"]);
+    var getCharacteristicsPoints = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectCharacterStatusState, _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__["getCharacteristicsPoints"]);
+    var getCharacteristics = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectCharacterStatusState, _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__["getCharacteristics"]);
+    var getAllCharacters = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectCharacterStatusState, _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__["getAllCharacters"]);
+    var getAllCurrentCharacters = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectCharacterStatusState, _reducers_character_reducers__WEBPACK_IMPORTED_MODULE_2__["getAllCurrentCharacters"]);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/group/actions/group.actions.ts":
+  /*!*************************************************************!*\
+    !*** ./src/app/app-reducers/group/actions/group.actions.ts ***!
+    \*************************************************************/
+
+  /*! exports provided: createGroup, createGroupSuccess, createGroupFailure, getAllGroups, getAllGroupsSuccess, getAllGroupsFailure, updateGroup, updateGroupSuccess, updateGroupFailure, deleteGroup, deleteGroupSuccess, deleteGroupFailure */
+
+  /***/
+  function srcAppAppReducersGroupActionsGroupActionsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "createGroup", function () {
+      return createGroup;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "createGroupSuccess", function () {
+      return createGroupSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "createGroupFailure", function () {
+      return createGroupFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllGroups", function () {
+      return getAllGroups;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllGroupsSuccess", function () {
+      return getAllGroupsSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllGroupsFailure", function () {
+      return getAllGroupsFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateGroup", function () {
+      return updateGroup;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateGroupSuccess", function () {
+      return updateGroupSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "updateGroupFailure", function () {
+      return updateGroupFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "deleteGroup", function () {
+      return deleteGroup;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "deleteGroupSuccess", function () {
+      return deleteGroupSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "deleteGroupFailure", function () {
+      return deleteGroupFailure;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+
+    var createGroup = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/GROUP] CREATE GROUP', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var createGroupSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/GROUP] CREATE GROUP SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var createGroupFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/GROUP] CREATE GROUP ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getAllGroups = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/CHARACTER] GET ALLGROUP');
+    var getAllGroupsSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/CHARACTER] GET ALLGROUP SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getAllGroupsFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/CHARACTER] GET ALLGROUP ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateGroup = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE  GROUP', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateGroupSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE GROUP SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var updateGroupFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] UPDATE GROUP ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var deleteGroup = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] DELETE  GROUP', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var deleteGroupSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] DELETE GROUP SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var deleteGroupFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/ACCOUNT] DELETE GROUP ERROR', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/group/actions/index.ts":
+  /*!*****************************************************!*\
+    !*** ./src/app/app-reducers/group/actions/index.ts ***!
+    \*****************************************************/
+
+  /*! exports provided: GroupActions */
+
+  /***/
+  function srcAppAppReducersGroupActionsIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _group_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ./group.actions */
+    "./src/app/app-reducers/group/actions/group.actions.ts");
+    /* harmony reexport (module object) */
+
+
+    __webpack_require__.d(__webpack_exports__, "GroupActions", function () {
+      return _group_actions__WEBPACK_IMPORTED_MODULE_1__;
+    });
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/group/effects/group.effects.ts":
+  /*!*************************************************************!*\
+    !*** ./src/app/app-reducers/group/effects/group.effects.ts ***!
+    \*************************************************************/
+
+  /*! exports provided: GroupEffects */
+
+  /***/
+  function srcAppAppReducersGroupEffectsGroupEffectsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "GroupEffects", function () {
+      return GroupEffects;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/group/actions/index.ts");
+    /* harmony import */
+
+
+    var src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! src/app/Services/TalkService */
+    "./src/app/Services/TalkService.ts");
+    /* harmony import */
+
+
+    var _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! ../../../../@vex/services/navigation.service */
+    "./src/@vex/services/navigation.service.ts");
+    /* harmony import */
+
+
+    var _services_account_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! ../../../services/account.service */
+    "./src/app/services/account.service.ts");
+    /* harmony import */
+
+
+    var ngx_toastr__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ngx-toastr */
+    "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+    /* harmony import */
+
+
+    var _services_group_service__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! ../../../services/group.service */
+    "./src/app/services/group.service.ts");
+
+    var GroupEffects = function GroupEffects(actions$, accountService, groupService, toastr, router, deeptalk, navigationService) {
+      var _this25 = this;
+
+      _classCallCheck(this, GroupEffects);
+
+      this.actions$ = actions$;
+      this.accountService = accountService;
+      this.groupService = groupService;
+      this.toastr = toastr;
+      this.router = router;
+      this.deeptalk = deeptalk;
+      this.navigationService = navigationService;
+      this.createGroup$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].createGroup), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.createdGroup;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (createdGroup) {
+          return _this25.groupService.createGroup(createdGroup).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (createdGroup) {
+            return _actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].createGroupSuccess({
+              createdGroup: createdGroup
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].createGroupFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.createGroupSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].createGroupSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.createdGroup;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (group) {
+          _this25.navigationService.GenerateNavigation();
+
+          _this25.toastr.success('', 'Groupe ' + group.name + ' ajouté avec succés');
+
+          _this25.router.navigateByUrl('/');
+        }));
+      }, {
+        dispatch: false
+      });
+      this.createGroupFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].createGroupFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+      this.getAllGroups$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].getAllGroups), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function () {
+          return _this25.groupService.getAllgroups().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (groups) {
+            return _actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].getAllGroupsSuccess({
+              groups: groups
+            });
+          }));
+        }));
+      });
+      this.getAllGroupsSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].getAllGroupsSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.groups;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (groups) {
+          for (var i = 0; i < groups.length; i++) {
+            var level = 0;
+            var pp = 0;
+            var grouptotal = 0;
+
+            for (var j = 0; j < groups[i].followers.length; j++) {
+              level = level + groups[i].followers[j].level;
+              grouptotal++;
+              if (groups[i].followers[j].characteristic != null) pp = pp + groups[i].followers[j].characteristic.prospection.total;
+            }
+
+            level = level + groups[i].leader.level;
+            grouptotal++;
+            if (groups[i].leader.characteristic != null) pp = pp + groups[i].leader.characteristic.prospection.total;
+            groups[i].groupLevel = level;
+            groups[i].groupProspection = pp;
+            groups[i].groupTotal = grouptotal;
+          }
+        }));
+      }, {
+        dispatch: false
+      });
+      this.getAllGroupsFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].getAllGroupsFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+      this.updateGroup$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].updateGroup), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.groupToUpdate;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (groupToUpdate) {
+          return _this25.groupService.updateGroup(groupToUpdate).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (groupToUpdate) {
+            return _actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].updateGroupSuccess({
+              groupToUpdate: groupToUpdate
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].updateGroupFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.updateGroupSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].updateGroupSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.groupToUpdate;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (group) {
+          _this25.toastr.success('', 'Group ' + group.name + ' modifié avec succés');
+        }));
+      }, {
+        dispatch: false
+      });
+      this.updateGroupFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].updateGroupFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+      this.deleteGroup$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].deleteGroup), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.groupKeyToDelete;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (groupKeyToDelete) {
+          return _this25.groupService.deleteGroup(groupKeyToDelete).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (name) {
+            return _actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].deleteGroupSuccess({
+              name: name
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].deleteGroupFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.deleteGroupSucces$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].deleteGroupSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.name;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (name) {
+          _this25.toastr.success('', 'Group ' + name + ' supprimé avec succés');
+        }));
+      }, {
+        dispatch: false
+      });
+      this.deleteGroupFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this25.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["GroupActions"].deleteGroupFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }));
+      });
+    };
+
+    GroupEffects.ctorParameters = function () {
+      return [{
+        type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"]
+      }, {
+        type: _services_account_service__WEBPACK_IMPORTED_MODULE_9__["AccountService"]
+      }, {
+        type: _services_group_service__WEBPACK_IMPORTED_MODULE_11__["GroupsService"]
+      }, {
+        type: ngx_toastr__WEBPACK_IMPORTED_MODULE_10__["ToastrService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
+      }, {
+        type: src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_7__["TalkService"]
+      }, {
+        type: _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_8__["NavigationService"]
+      }];
+    };
+
+    GroupEffects = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()], GroupEffects);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/group/group.modules.ts":
+  /*!*****************************************************!*\
+    !*** ./src/app/app-reducers/group/group.modules.ts ***!
+    \*****************************************************/
+
+  /*! exports provided: groupModule */
+
+  /***/
+  function srcAppAppReducersGroupGroupModulesTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "groupModule", function () {
+      return groupModule;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _group_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../group/reducers */
+    "./src/app/app-reducers/group/reducers/index.ts");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var _effects_group_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ./effects/group.effects */
+    "./src/app/app-reducers/group/effects/group.effects.ts");
+
+    var groupModule = function groupModule() {
+      _classCallCheck(this, groupModule);
+    };
+
+    groupModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+      imports: [_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["StoreModule"].forFeature('group', _group_reducers__WEBPACK_IMPORTED_MODULE_3__["reducers"]), _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forFeature([_effects_group_effects__WEBPACK_IMPORTED_MODULE_5__["GroupEffects"]])]
+    })], groupModule);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/group/reducers/group.reducers.ts":
+  /*!***************************************************************!*\
+    !*** ./src/app/app-reducers/group/reducers/group.reducers.ts ***!
+    \***************************************************************/
+
+  /*! exports provided: initialState, reducer, getAllGroups */
+
+  /***/
+  function srcAppAppReducersGroupReducersGroupReducersTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "initialState", function () {
+      return initialState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducer", function () {
+      return reducer;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllGroups", function () {
+      return getAllGroups;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/group/actions/index.ts");
+
+    var initialState = {
+      allGroups: [],
+      createdGroup: null,
+      error: null,
+      pending: false
+    };
+    var reducer = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createReducer"])(initialState, Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].createGroup, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].createGroupSuccess, function (state, _ref22) {
+      var createdGroup = _ref22.createdGroup;
+      return Object.assign({}, state, {
+        group: createdGroup,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].createGroupFailure, function (state, _ref23) {
+      var error = _ref23.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].getAllGroups, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].getAllGroupsSuccess, function (state, _ref24) {
+      var groups = _ref24.groups;
+      return Object.assign({}, state, {
+        allGroups: groups,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].getAllGroupsFailure, function (state, _ref25) {
+      var error = _ref25.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].updateGroup, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].updateGroupSuccess, function (state, _ref26) {
+      var groupToUpdate = _ref26.groupToUpdate;
+      return Object.assign({}, state, {
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].updateGroupFailure, function (state, _ref27) {
+      var error = _ref27.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].deleteGroup, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].deleteGroupSuccess, function (state, _ref28) {
+      var name = _ref28.name;
+      return Object.assign({}, state, {
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["GroupActions"].deleteGroupFailure, function (state, _ref29) {
+      var error = _ref29.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }));
+
+    var getAllGroups = function getAllGroups(State) {
+      return State.allGroups;
+    };
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/group/reducers/index.ts":
+  /*!******************************************************!*\
+    !*** ./src/app/app-reducers/group/reducers/index.ts ***!
+    \******************************************************/
+
+  /*! exports provided: reducers, selectGroupState, selectGroupStatusState, getAllGroups */
+
+  /***/
+  function srcAppAppReducersGroupReducersIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducers", function () {
+      return reducers;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectGroupState", function () {
+      return selectGroupState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectGroupStatusState", function () {
+      return selectGroupStatusState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getAllGroups", function () {
+      return getAllGroups;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _reducers_group_reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../reducers/group.reducers */
+    "./src/app/app-reducers/group/reducers/group.reducers.ts");
+
+    function reducers(state, action) {
+      return Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])({
+        status: _reducers_group_reducers__WEBPACK_IMPORTED_MODULE_2__["reducer"]
+      })(state, action);
+    }
+
+    var selectGroupState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createFeatureSelector"])('group');
+    var selectGroupStatusState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectGroupState, function (state) {
+      return state.status;
+    });
+    var getAllGroups = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectGroupStatusState, _reducers_group_reducers__WEBPACK_IMPORTED_MODULE_2__["getAllGroups"]);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/webUser/actions/index.ts":
+  /*!*******************************************************!*\
+    !*** ./src/app/app-reducers/webUser/actions/index.ts ***!
+    \*******************************************************/
+
+  /*! exports provided: webUserActions */
+
+  /***/
+  function srcAppAppReducersWebUserActionsIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _webUser_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! ./webUser.actions */
+    "./src/app/app-reducers/webUser/actions/webUser.actions.ts");
+    /* harmony reexport (module object) */
+
+
+    __webpack_require__.d(__webpack_exports__, "webUserActions", function () {
+      return _webUser_actions__WEBPACK_IMPORTED_MODULE_1__;
+    });
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/webUser/actions/webUser.actions.ts":
+  /*!*****************************************************************!*\
+    !*** ./src/app/app-reducers/webUser/actions/webUser.actions.ts ***!
+    \*****************************************************************/
+
+  /*! exports provided: loginSuccess, login, loginFailure, getUser, getUserSuccess, getUserFailure, getBotNav, getBotNavSuccess, getBotNavFailure, DEBUG */
+
+  /***/
+  function srcAppAppReducersWebUserActionsWebUserActionsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "loginSuccess", function () {
+      return loginSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "login", function () {
+      return login;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "loginFailure", function () {
+      return loginFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getUser", function () {
+      return getUser;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getUserSuccess", function () {
+      return getUserSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getUserFailure", function () {
+      return getUserFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getBotNav", function () {
+      return getBotNav;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getBotNavSuccess", function () {
+      return getBotNavSuccess;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getBotNavFailure", function () {
+      return getBotNavFailure;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "DEBUG", function () {
+      return DEBUG;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+
+    var loginSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH/LOGIN] Login Success', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var login = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH/LOGIN] Login', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var loginFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH/LOGIN] Login Failure', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getUser = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH] GET USER');
+    var getUserSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH] GET USER SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getUserFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH] GET USER FAILURE', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getBotNav = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/NAV] GET BOTS NAV');
+    var getBotNavSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/NAV] GET BOT NAV SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var getBotNavFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[BOT/NAV] GET BOT NAV FAILURE', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
+    var DEBUG = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[DEBUG/STORE] DEBUG');
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/webUser/effects/webUser.effects.ts":
+  /*!*****************************************************************!*\
+    !*** ./src/app/app-reducers/webUser/effects/webUser.effects.ts ***!
+    \*****************************************************************/
+
+  /*! exports provided: webUserEffects */
+
+  /***/
+  function srcAppAppReducersWebUserEffectsWebUserEffectsTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "webUserEffects", function () {
+      return webUserEffects;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! rxjs/operators */
+    "./node_modules/rxjs/_esm2015/operators/index.js");
+    /* harmony import */
+
+
+    var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @angular/router */
+    "./node_modules/@angular/router/fesm2015/router.js");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/webUser/actions/index.ts");
+    /* harmony import */
+
+
+    var _group_actions__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! ../../group/actions */
+    "./src/app/app-reducers/group/actions/index.ts");
+    /* harmony import */
+
+
+    var src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! src/app/Services/TalkService */
+    "./src/app/Services/TalkService.ts");
+    /* harmony import */
+
+
+    var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! src/app/services/user.service */
+    "./src/app/services/user.service.ts");
+    /* harmony import */
+
+
+    var _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ../../../../@vex/services/navigation.service */
+    "./src/@vex/services/navigation.service.ts");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _account_actions__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! ../../account/actions */
+    "./src/app/app-reducers/account/actions/index.ts");
+    /* harmony import */
+
+
+    var _character_actions__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ../../character/actions */
+    "./src/app/app-reducers/character/actions/index.ts");
+    /* harmony import */
+
+
+    var ngx_toastr__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! ngx-toastr */
+    "./node_modules/ngx-toastr/fesm2015/ngx-toastr.js");
+
+    var webUserEffects_1;
+
+    var webUserEffects = webUserEffects_1 = function webUserEffects(actions$, userService, router, toastr, deeptalk, navigationService, accountStore, groupStore, userStore, characterStore) {
+      var _this26 = this;
+
+      _classCallCheck(this, webUserEffects);
+
+      this.actions$ = actions$;
+      this.userService = userService;
+      this.router = router;
+      this.toastr = toastr;
+      this.deeptalk = deeptalk;
+      this.navigationService = navigationService;
+      this.accountStore = accountStore;
+      this.groupStore = groupStore;
+      this.userStore = userStore;
+      this.characterStore = characterStore;
+      this.login$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].login), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.user;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function (user) {
+          return _this26.userService.login(user).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (user) {
+            return _actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].loginSuccess({
+              user: user
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].loginFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.loginSuccess$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].loginSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.user;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (user) {
+          _this26.userStore.dispatch(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getUser());
+
+          _this26.groupStore.dispatch(_group_actions__WEBPACK_IMPORTED_MODULE_7__["GroupActions"].getAllGroups());
+
+          var token = user.token;
+          localStorage.setItem('DeepBot', token);
+
+          _this26.router.navigate(['/']);
+        }));
+      }, {
+        dispatch: false
+      });
+      this.loginFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].loginFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (error) {
+          console.log(error.error.message);
+
+          if (error.error.message === "IdOrPwdIncorrect") {
+            _this26.toastr.error('', 'Identifiants ou mot de passe incorrect.');
+          } else if (error.error.message === "AccountProblemRole") {
+            _this26.toastr.error('Veuillez contacter le support.', 'Votre compte n"a pas été créé correctement');
+          } else if (error.error.message === "MailNotConfirmed") {
+            _this26.toastr.error('', 'Veuillez confirmer votre compte via l"email recu sur votre boite mail.');
+          }
+        }));
+      });
+      this.sideNav$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getBotNav), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function () {
+          return _this26.navigationService.GenerateNavigation().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (sideNav) {
+            return _actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getBotNavSuccess({
+              sideNav: sideNav
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getBotNavFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.sideNavSuccess$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getBotNavSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.sideNav;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (user) {}));
+      }, {
+        dispatch: false
+      });
+      this.sideNavFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getBotNavFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (error) {}));
+      });
+      this.getUser$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getUser), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["exhaustMap"])(function () {
+          return _this26.userService.getUser().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (user) {
+            return _actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getUserSuccess({
+              user: user
+            });
+          }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["catchError"])(function (error) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getUserFailure({
+              error: error
+            }));
+          }));
+        }));
+      });
+      this.getUserSuccess$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getUserSuccess), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.user;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (user) {
+          if (!webUserEffects_1.isConnectedTalker) {
+            _this26.deeptalk.startConnection();
+
+            webUserEffects_1.isConnectedTalker = false;
+          }
+
+          var allAccounts = user.accounts;
+
+          _this26.accountStore.dispatch(_account_actions__WEBPACK_IMPORTED_MODULE_12__["AccountActions"].getAllAccount({
+            allAccounts: allAccounts
+          }));
+
+          var allCurrentCharacters = [];
+          var allCharacters = [];
+
+          for (var i = 0; i < user.accounts.length; i++) {
+            if (user.accounts[i].currentCharacter !== null) allCurrentCharacters.push(user.accounts[i].currentCharacter);
+
+            for (var j = 0; j < user.accounts[i].characters.length; j++) {
+              if (user.accounts[i].characters[j] !== null) allCharacters.push(user.accounts[i].characters[j]);
+            }
+          }
+
+          _this26.characterStore.dispatch(_character_actions__WEBPACK_IMPORTED_MODULE_13__["CharacterActions"].getAllCharacters({
+            allCharacters: allCharacters
+          }));
+
+          _this26.characterStore.dispatch(_character_actions__WEBPACK_IMPORTED_MODULE_13__["CharacterActions"].getAllCurrentCharacters({
+            allCurrentCharacters: allCurrentCharacters
+          }));
+        }));
+      }, {
+        dispatch: false
+      });
+      this.getUserFailure$ = Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["createEffect"])(function () {
+        return _this26.actions$.pipe(Object(_ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["ofType"])(_actions__WEBPACK_IMPORTED_MODULE_6__["webUserActions"].getUserFailure), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function (action) {
+          return action.error;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["tap"])(function (error) {}));
+      });
+    };
+
+    webUserEffects.isConnectedTalker = false;
+
+    webUserEffects.ctorParameters = function () {
+      return [{
+        type: _ngrx_effects__WEBPACK_IMPORTED_MODULE_2__["Actions"]
+      }, {
+        type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_9__["UserService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]
+      }, {
+        type: ngx_toastr__WEBPACK_IMPORTED_MODULE_14__["ToastrService"]
+      }, {
+        type: src_app_Services_TalkService__WEBPACK_IMPORTED_MODULE_8__["TalkService"]
+      }, {
+        type: _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_10__["NavigationService"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_11__["Store"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_11__["Store"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_11__["Store"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_11__["Store"]
+      }];
+    };
+
+    webUserEffects = webUserEffects_1 = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()], webUserEffects);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/webUser/reducers/index.ts":
+  /*!********************************************************!*\
+    !*** ./src/app/app-reducers/webUser/reducers/index.ts ***!
+    \********************************************************/
+
+  /*! exports provided: reducers, selectwebUserState, selectwebUserStatusState, getUser, getError, getPending, getSideNav */
+
+  /***/
+  function srcAppAppReducersWebUserReducersIndexTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducers", function () {
+      return reducers;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectwebUserState", function () {
+      return selectwebUserState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "selectwebUserStatusState", function () {
+      return selectwebUserStatusState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getUser", function () {
+      return getUser;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getError", function () {
+      return getError;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getPending", function () {
+      return getPending;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getSideNav", function () {
+      return getSideNav;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../reducers/webUser.reducers */
+    "./src/app/app-reducers/webUser/reducers/webUser.reducers.ts");
+
+    function reducers(state, action) {
+      return Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])({
+        status: _reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_2__["reducer"]
+      })(state, action);
+    }
+
+    var selectwebUserState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createFeatureSelector"])('webUser');
+    var selectwebUserStatusState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectwebUserState, function (state) {
+      return state.status;
+    });
+    var getUser = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectwebUserStatusState, _reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_2__["getUser"]);
+    var getError = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectwebUserStatusState, _reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_2__["getError"]);
+    var getPending = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectwebUserStatusState, _reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_2__["getPending"]);
+    var getSideNav = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectwebUserStatusState, _reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_2__["getSideNav"]);
+    /***/
+  },
+
+  /***/
+  "./src/app/app-reducers/webUser/reducers/webUser.reducers.ts":
+  /*!*******************************************************************!*\
+    !*** ./src/app/app-reducers/webUser/reducers/webUser.reducers.ts ***!
+    \*******************************************************************/
+
+  /*! exports provided: initialState, reducer, getError, getPending, getUser, getSideNav */
+
+  /***/
+  function srcAppAppReducersWebUserReducersWebUserReducersTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "initialState", function () {
+      return initialState;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "reducer", function () {
+      return reducer;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getError", function () {
+      return getError;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getPending", function () {
+      return getPending;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getUser", function () {
+      return getUser;
+    });
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "getSideNav", function () {
+      return getSideNav;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! ../actions */
+    "./src/app/app-reducers/webUser/actions/index.ts");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-layers */
+    "./node_modules/@iconify/icons-ic/twotone-layers.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-assignment */
+    "./node_modules/@iconify/icons-ic/twotone-assignment.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_4___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_4__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-contact-support */
+    "./node_modules/@iconify/icons-ic/twotone-contact-support.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_5___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_5__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-date-range */
+    "./node_modules/@iconify/icons-ic/twotone-date-range.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_6___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_6__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-chat */
+    "./node_modules/@iconify/icons-ic/twotone-chat.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_7___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_7__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-assessment */
+    "./node_modules/@iconify/icons-ic/twotone-assessment.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_8___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_8__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-watch-later */
+    "./node_modules/@iconify/icons-ic/twotone-watch-later.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_9___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_9__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-error */
+    "./node_modules/@iconify/icons-ic/twotone-error.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_10___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_10__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-attach-money */
+    "./node_modules/@iconify/icons-ic/twotone-attach-money.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_11___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_11__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-person-outline */
+    "./node_modules/@iconify/icons-ic/twotone-person-outline.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_12___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_12__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-receipt */
+    "./node_modules/@iconify/icons-ic/twotone-receipt.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_13___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_13__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-help */
+    "./node_modules/@iconify/icons-ic/twotone-help.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_14___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_14__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-book */
+    "./node_modules/@iconify/icons-ic/twotone-book.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_15___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_15__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-bubble-chart */
+    "./node_modules/@iconify/icons-ic/twotone-bubble-chart.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_16___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_16__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-format-color-text */
+    "./node_modules/@iconify/icons-ic/twotone-format-color-text.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_17___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_17__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-star */
+    "./node_modules/@iconify/icons-ic/twotone-star.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_18___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_18__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-view-compact */
+    "./node_modules/@iconify/icons-ic/twotone-view-compact.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_19___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_19__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-picture-in-picture */
+    "./node_modules/@iconify/icons-ic/twotone-picture-in-picture.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_20___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_20__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-settings */
+    "./node_modules/@iconify/icons-ic/twotone-settings.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_21___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_21__);
+    /* harmony import */
+
+
+    var _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+    /*! ../../../../@vex/utils/tailwindcss */
+    "./src/@vex/utils/tailwindcss.ts");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-chrome-reader-mode */
+    "./node_modules/@iconify/icons-ic/twotone-chrome-reader-mode.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_23___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_23__);
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    /*! @iconify/icons-ic/twotone-update */
+    "./node_modules/@iconify/icons-ic/twotone-update.js");
+    /* harmony import */
+
+
+    var _iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_24___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_24__);
+
+    var initialState = {
+      user: null,
+      error: null,
+      sideNav: [{
+        type: 'link',
+        label: 'Tableau de bord',
+        route: '/dashboards',
+        icon: _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3___default.a
+      }, {
+        type: 'subheading',
+        label: 'Mes bot',
+        children: []
+      }],
+      pending: false
+    };
+    var reducer = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createReducer"])(initialState, Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].login, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].loginSuccess, function (state, _ref30) {
+      var user = _ref30.user;
+      return Object.assign({}, state, {
+        user: user,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].loginFailure, function (state, _ref31) {
+      var error = _ref31.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].getUser, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].getUserSuccess, function (state, _ref32) {
+      var user = _ref32.user;
+      return Object.assign({}, state, {
+        user: user,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].getUserFailure, function (state, _ref33) {
+      var error = _ref33.error;
+      return Object.assign({}, state, {
+        error: error,
+        pending: false
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].getBotNav, function (state) {
+      return Object.assign({}, state, {
+        pending: true
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].getBotNavSuccess, function (state, _ref34) {
+      var sideNav = _ref34.sideNav;
+      var sideItems = [];
+      var item;
+      var group = null;
+      var itemGroup = null;
+      sideItems.push({
+        type: 'link',
+        label: 'Tableau de bord',
+        route: '/dashboards',
+        icon: _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3___default.a
+      });
+      sideItems.push({
+        type: 'subheading',
+        label: 'Mes bot',
+        children: []
+      });
+
+      for (var i = 0; i < sideNav.items.length; i++) {
+        group = {
+          children: null,
+          label: null,
+          type: null,
+          badge: null,
+          icon: null
+        };
+        group.children = [];
+
+        if (sideNav.items[i].isGroup) {
+          group.label = sideNav.items[i].name;
+          group.route = '/group-dashboard/' + sideNav.items[i].id;
+          group.type = 'dropdown';
+          group.icon = _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3___default.a;
+
+          for (var j = 0; j < sideNav.items[i].children.length; j++) {
+            itemGroup = {
+              label: null,
+              route: null,
+              type: null,
+              badge: null,
+              fragment: null
+            };
+            itemGroup.label = sideNav.items[i].children[j].name;
+            itemGroup.route = '/bot-dashboard/' + sideNav.items[i].children[j].id;
+            itemGroup.icon = _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3___default.a;
+            itemGroup.type = 'link';
+            group.children.push(itemGroup);
+          }
+
+          sideItems.push(group);
+        } else {
+          item = {
+            label: null,
+            route: null,
+            type: null,
+            badge: null,
+            fragment: null
+          };
+          item.label = sideNav.items[i].name;
+          item.type = 'link';
+          item.icon = _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_3___default.a;
+          item.route = '/bot-dashboard/' + sideNav.items[i].id;
+          sideItems.push(item);
+        }
+      }
+
+      sideItems.push({
+        type: 'subheading',
+        label: 'Customiser',
+        children: [{
+          type: 'link',
+          label: 'Configuration',
+          route: function route() {
+            return undefined.layoutService.openConfigpanel();
+          },
+          icon: _iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_21___default.a
+        }]
+      });
+      sideItems.push({
+        type: 'dropdown',
+        label: 'Vex',
+        icon: _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_5___default.a,
+        children: [{
+          type: 'link',
+          label: 'All-In-One Table',
+          route: '/apps/aio-table',
+          icon: _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_4___default.a
+        }, {
+          type: 'link',
+          label: 'Getting Started',
+          route: '/apps/help-center/getting-started'
+        }, {
+          type: 'link',
+          label: 'Pricing & Plans',
+          route: '/apps/help-center/pricing'
+        }, {
+          type: 'link',
+          label: 'FAQ',
+          route: '/apps/help-center/faq'
+        }, {
+          type: 'link',
+          label: 'Guides',
+          route: '/apps/help-center/guides'
+        }, {
+          type: 'link',
+          label: 'Calendar',
+          route: '/apps/calendar',
+          icon: _iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_6___default.a,
+          badge: {
+            value: '12',
+            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].colors['deep-purple']['500'],
+            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].textColor['deep-purple-contrast']['500']
+          }
+        }, {
+          type: 'link',
+          label: 'Chat',
+          route: '/apps/chat',
+          icon: _iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_7___default.a,
+          badge: {
+            value: '16',
+            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].colors.cyan['500'],
+            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].textColor['cyan-contrast']['600']
+          }
+        }, {
+          type: 'link',
+          label: 'WYSIWYG Editor',
+          route: '/apps/editor',
+          icon: _iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_23___default.a
+        }, {
+          type: 'link',
+          label: 'List - Grid',
+          route: '/apps/contacts/grid'
+        }, {
+          type: 'link',
+          label: 'List - Table',
+          route: '/apps/contacts/table'
+        }, {
+          type: 'link',
+          label: 'Scrumboard',
+          route: '/apps/scrumboard',
+          icon: _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_8___default.a,
+          badge: {
+            value: 'NEW',
+            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].colors.primary['500'],
+            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].textColor['primary-contrast']['500']
+          }
+        }, {
+          type: 'link',
+          label: 'Login',
+          route: '/login'
+        }, {
+          type: 'link',
+          label: 'Register',
+          route: '/register'
+        }, {
+          type: 'link',
+          label: 'Forgot Password',
+          route: '/forgot-password'
+        }, {
+          type: 'link',
+          label: 'Coming Soon',
+          icon: _iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_9___default.a,
+          route: '/coming-soon'
+        }, {
+          type: 'dropdown',
+          label: 'Errors',
+          icon: _iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_10___default.a,
+          badge: {
+            value: '4',
+            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].colors.green['500'],
+            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].textColor['green-contrast']['600']
+          },
+          children: [{
+            type: 'link',
+            label: '404',
+            route: '/pages/error-404'
+          }, {
+            type: 'link',
+            label: '500',
+            route: '/pages/error-500'
+          }, {
+            type: 'link',
+            label: 'Pricing',
+            icon: _iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_11___default.a,
+            route: '/pages/pricing'
+          }, {
+            type: 'link',
+            label: 'Profile',
+            icon: _iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_12___default.a,
+            route: '/pages/profile'
+          }, {
+            type: 'link',
+            label: 'Invoice',
+            icon: _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_13___default.a,
+            route: '/pages/invoice'
+          }, {
+            type: 'link',
+            label: 'FAQ',
+            icon: _iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_14___default.a,
+            route: '/pages/faq'
+          }, {
+            type: 'link',
+            label: 'Guides',
+            icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_15___default.a,
+            route: '/pages/guides',
+            badge: {
+              value: '18',
+              background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].colors.teal['500'],
+              color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_22__["default"].textColor['teal-contrast']['500']
+            }
+          }]
+        }, {
+          type: 'dropdown',
+          label: 'Components',
+          icon: _iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_16___default.a,
+          children: [{
+            type: 'link',
+            label: 'Overview',
+            route: '/ui/components/overview'
+          }, {
+            type: 'link',
+            label: 'Autocomplete',
+            route: '/ui/components/autocomplete'
+          }, {
+            type: 'link',
+            label: 'Buttons',
+            route: '/ui/components/buttons'
+          }, {
+            type: 'link',
+            label: 'Button Group',
+            route: '/ui/components/button-group'
+          }, {
+            type: 'link',
+            label: 'Cards',
+            route: '/ui/components/cards'
+          }, {
+            type: 'link',
+            label: 'Checkbox',
+            route: '/ui/components/checkbox'
+          }, {
+            type: 'link',
+            label: 'Dialogs',
+            route: '/ui/components/dialogs'
+          }, {
+            type: 'link',
+            label: 'Grid List',
+            route: '/ui/components/grid-list'
+          }, {
+            type: 'link',
+            label: 'Input',
+            route: '/ui/components/input'
+          }, {
+            type: 'link',
+            label: 'Lists',
+            route: '/ui/components/lists'
+          }, {
+            type: 'link',
+            label: 'Menu',
+            route: '/ui/components/menu'
+          }, {
+            type: 'link',
+            label: 'Progress',
+            route: '/ui/components/progress'
+          }, {
+            type: 'link',
+            label: 'Progress Spinner',
+            route: '/ui/components/progress-spinner'
+          }, {
+            type: 'link',
+            label: 'Radio',
+            route: '/ui/components/radio'
+          }, {
+            type: 'link',
+            label: 'Slide Toggle',
+            route: '/ui/components/slide-toggle'
+          }, {
+            type: 'link',
+            label: 'Slider',
+            route: '/ui/components/slider'
+          }, {
+            type: 'link',
+            label: 'Snack Bar',
+            route: '/ui/components/snack-bar'
+          }, {
+            type: 'link',
+            label: 'Tooltip',
+            route: '/ui/components/tooltip'
+          }]
+        }, {
+          type: 'dropdown',
+          label: 'Forms',
+          icon: _iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_17___default.a,
+          children: [{
+            type: 'link',
+            label: 'Form Elements',
+            route: '/ui/forms/form-elements'
+          }, {
+            type: 'link',
+            label: 'Form Wizard',
+            route: '/ui/forms/form-wizard'
+          }]
+        }, {
+          type: 'dropdown',
+          label: 'Icons',
+          icon: _iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_18___default.a,
+          children: [{
+            type: 'link',
+            label: 'Material Icons',
+            route: '/ui/icons/ic'
+          }, {
+            type: 'link',
+            label: 'FontAwesome Icons',
+            route: '/ui/icons/fa'
+          }]
+        }, {
+          type: 'dropdown',
+          label: 'Page Layouts',
+          icon: _iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_19___default.a,
+          children: [{
+            type: 'dropdown',
+            label: 'Card',
+            children: [{
+              type: 'link',
+              label: 'Default',
+              route: '/ui/page-layouts/card',
+              routerLinkActive: {
+                exact: true
+              }
+            }, {
+              type: 'link',
+              label: 'Tabbed',
+              route: '/ui/page-layouts/card/tabbed'
+            }, {
+              type: 'link',
+              label: 'Large Header',
+              route: '/ui/page-layouts/card/large-header',
+              routerLinkActive: {
+                exact: true
+              }
+            }, {
+              type: 'link',
+              label: 'Tabbed & Large Header',
+              route: '/ui/page-layouts/card/large-header/tabbed'
+            }]
+          }, {
+            type: 'dropdown',
+            label: 'Simple',
+            children: [{
+              type: 'link',
+              label: 'Default',
+              route: '/ui/page-layouts/simple',
+              routerLinkActive: {
+                exact: true
+              }
+            }, {
+              type: 'link',
+              label: 'Tabbed',
+              route: '/ui/page-layouts/simple/tabbed'
+            }, {
+              type: 'link',
+              label: 'Large Header',
+              route: '/ui/page-layouts/simple/large-header',
+              routerLinkActive: {
+                exact: true
+              }
+            }, {
+              type: 'link',
+              label: 'Tabbed & Large Header',
+              route: '/ui/page-layouts/simple/large-header/tabbed'
+            }]
+          }, {
+            type: 'link',
+            label: 'Blank',
+            icon: _iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_20___default.a,
+            route: '/ui/page-layouts/blank'
+          }]
+        }, {
+          type: 'link',
+          label: 'Changelog',
+          route: '/documentation/changelog',
+          icon: _iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_24___default.a
+        }, {
+          type: 'dropdown',
+          label: 'Getting Started',
+          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_15___default.a,
+          children: [{
+            type: 'link',
+            label: 'Introduction',
+            route: '/documentation/introduction',
+            fragment: 'introduction',
+            routerLinkActive: {
+              exact: true
+            }
+          }, {
+            type: 'link',
+            label: 'Folder Structure',
+            route: '/documentation/folder-structure',
+            fragment: 'folder-structure',
+            routerLinkActive: {
+              exact: true
+            }
+          }, {
+            type: 'link',
+            label: 'Installation',
+            route: '/documentation/installation',
+            fragment: 'installation',
+            routerLinkActive: {
+              exact: true
+            }
+          }, {
+            type: 'link',
+            label: 'Development Server',
+            route: '/documentation/start-development-server',
+            fragment: 'start-development-server',
+            routerLinkActive: {
+              exact: true
+            }
+          }, {
+            type: 'link',
+            label: 'Build for Production',
+            route: '/documentation/build-for-production',
+            fragment: 'build-for-production',
+            routerLinkActive: {
+              exact: true
+            }
+          }]
+        }, {
+          type: 'dropdown',
+          label: 'Customization',
+          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_15___default.a,
+          children: [{
+            type: 'link',
+            label: 'Configuration',
+            route: '/documentation/configuration',
+            fragment: 'configuration',
+            routerLinkActive: {
+              exact: true
+            }
+          }, {
+            type: 'link',
+            label: 'Changing Styling',
+            route: '/documentation/changing-styling-and-css-variables',
+            fragment: 'changing-styling-and-css-variables',
+            routerLinkActive: {
+              exact: true
+            }
+          }, {
+            type: 'link',
+            label: 'Using Custom Colors',
+            route: '/documentation/using-custom-colors-for-the-primarysecondarywarn-palettes',
+            fragment: 'using-custom-colors-for-the-primarysecondarywarn-palettes',
+            routerLinkActive: {
+              exact: true
+            }
+          }, {
+            type: 'link',
+            label: 'Adding Menu Items',
+            route: '/documentation/adding-menu-items',
+            fragment: 'adding-menu-items',
+            routerLinkActive: {
+              exact: true
+            }
+          }]
+        }, {
+          type: 'link',
+          label: 'Further Help',
+          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_15___default.a,
+          route: '/documentation/further-help',
+          fragment: 'further-help',
+          routerLinkActive: {
+            exact: true
+          }
+        }]
+      });
+      return Object.assign({}, state, {
+        sideNav: sideItems
+      });
+    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["webUserActions"].getBotNavFailure, function (state, _ref35) {
+      var error = _ref35.error;
+      return Object.assign({}, state, {
+        error: error
+      });
+    }));
+
+    var getError = function getError(state) {
+      return state.error;
+    };
+
+    var getPending = function getPending(state) {
+      return state.pending;
+    };
+
+    var getUser = function getUser(state) {
+      return state.user;
+    };
+
+    var getSideNav = function getSideNav(state) {
+      return state.sideNav;
+    };
+    /***/
+
+  },
+
+  /***/
+  "./src/app/app-reducers/webUser/webUser.modules.ts":
+  /*!*********************************************************!*\
+    !*** ./src/app/app-reducers/webUser/webUser.modules.ts ***!
+    \*********************************************************/
+
+  /*! exports provided: webUserModule */
+
+  /***/
+  function srcAppAppReducersWebUserWebUserModulesTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "webUserModule", function () {
+      return webUserModule;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _webUser_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../webUser/reducers */
+    "./src/app/app-reducers/webUser/reducers/index.ts");
+    /* harmony import */
+
+
+    var _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! @ngrx/effects */
+    "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var _effects_webUser_effects__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ./effects/webUser.effects */
+    "./src/app/app-reducers/webUser/effects/webUser.effects.ts");
+
+    var webUserModule = function webUserModule() {
+      _classCallCheck(this, webUserModule);
+    };
+
+    webUserModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+      imports: [_ngrx_store__WEBPACK_IMPORTED_MODULE_2__["StoreModule"].forFeature('webUser', _webUser_reducers__WEBPACK_IMPORTED_MODULE_3__["reducers"]), _ngrx_effects__WEBPACK_IMPORTED_MODULE_4__["EffectsModule"].forFeature([_effects_webUser_effects__WEBPACK_IMPORTED_MODULE_5__["webUserEffects"]])]
+    })], webUserModule);
+    /***/
+  },
+
+  /***/
   "./src/app/app-routing.module.ts":
   /*!***************************************!*\
     !*** ./src/app/app-routing.module.ts ***!
@@ -8316,7 +12101,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       loadChildren: function loadChildren() {
         return Promise.all(
         /*! import() | pages-dashboards-dashboard-analytics-dashboard-analytics-module */
-        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~b331ba3b"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~4dd3a8b6"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~941d6308"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~94c39815"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~79b51f5e"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~066d5d7c"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~272a35cb"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~8facdcc8"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~d4e8dac3"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~f5b2becc"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~1584ce16"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-create-account-c~9e96a011"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~9374e7e8"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-create-account-c~1ab7b25c"), __webpack_require__.e("common"), __webpack_require__.e("pages-dashboards-dashboard-analytics-dashboard-analytics-module")]).then(__webpack_require__.bind(null,
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-bot-dashboard-bo~ba0867f0"), __webpack_require__.e("common"), __webpack_require__.e("pages-dashboards-dashboard-analytics-dashboard-analytics-module")]).then(__webpack_require__.bind(null,
         /*! ./pages/dashboards/dashboard-analytics/dashboard-analytics.module */
         "./src/app/pages/dashboards/dashboard-analytics/dashboard-analytics.module.ts")).then(function (m) {
           return m.DashboardAnalyticsModule;
@@ -8327,7 +12112,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       loadChildren: function loadChildren() {
         return Promise.all(
         /*! import() | pages-pages-create-account-create-account-module */
-        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~b331ba3b"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~4dd3a8b6"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~941d6308"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~94c39815"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~79b51f5e"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~066d5d7c"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~272a35cb"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~8facdcc8"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~d4e8dac3"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~f5b2becc"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~1584ce16"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-create-account-c~9e96a011"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~9374e7e8"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-create-account-c~1ab7b25c"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-create-account-create-account-module")]).then(__webpack_require__.bind(null,
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-create-account-create-account-module")]).then(__webpack_require__.bind(null,
         /*! ./pages/pages/create-account/create-account.module */
         "./src/app/pages/pages/create-account/create-account.module.ts")).then(function (m) {
           return m.CreateAccountModule;
@@ -8338,10 +12123,54 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       loadChildren: function loadChildren() {
         return Promise.all(
         /*! import() | pages-pages-create-group-create-group-module */
-        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~b331ba3b"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~4dd3a8b6"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~941d6308"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~94c39815"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~79b51f5e"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~066d5d7c"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~272a35cb"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~8facdcc8"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~d4e8dac3"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~f5b2becc"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~1584ce16"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-create-account-c~9e96a011"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~9374e7e8"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-create-account-c~1ab7b25c"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-create-group-create-group-module")]).then(__webpack_require__.bind(null,
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("pages-pages-create-group-create-group-module")]).then(__webpack_require__.bind(null,
         /*! ./pages/pages/create-group/create-group.module */
         "./src/app/pages/pages/create-group/create-group.module.ts")).then(function (m) {
           return m.CreateGroupModule;
+        });
+      }
+    }, {
+      path: 'updateGroup',
+      loadChildren: function loadChildren() {
+        return Promise.all(
+        /*! import() | pages-pages-update-group-update-group-module */
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-update-group-update-group-module")]).then(__webpack_require__.bind(null,
+        /*! ./pages/pages/update-group/update-group.module */
+        "./src/app/pages/pages/update-group/update-group.module.ts")).then(function (m) {
+          return m.UpdateGroupModule;
+        });
+      }
+    }, {
+      path: 'updateAccount',
+      loadChildren: function loadChildren() {
+        return Promise.all(
+        /*! import() | pages-pages-update-account-update-account-module */
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-update-account-update-account-module")]).then(__webpack_require__.bind(null,
+        /*! ./pages/pages/update-account/update-account.module */
+        "./src/app/pages/pages/update-account/update-account.module.ts")).then(function (m) {
+          return m.UpdateAccountModule;
+        });
+      }
+    }, {
+      path: 'bot-dashboard/:id',
+      loadChildren: function loadChildren() {
+        return Promise.all(
+        /*! import() | pages-pages-bot-dashboard-bot-dashboard-module */
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-bot-dashboard-bo~ba0867f0"), __webpack_require__.e("default~pages-pages-bot-dashboard-bot-dashboard-module~pages-pages-group-dashboard-group-dashboard-module"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-bot-dashboard-bot-dashboard-module")]).then(__webpack_require__.bind(null,
+        /*! ./pages/pages/bot-dashboard/bot-dashboard.module */
+        "./src/app/pages/pages/bot-dashboard/bot-dashboard.module.ts")).then(function (m) {
+          return m.BotDashboardModule;
+        });
+      }
+    }, {
+      path: 'group-dashboard/:id',
+      loadChildren: function loadChildren() {
+        return Promise.all(
+        /*! import() | pages-pages-group-dashboard-group-dashboard-module */
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-bot-dashboard-bo~ba0867f0"), __webpack_require__.e("default~pages-pages-bot-dashboard-bot-dashboard-module~pages-pages-group-dashboard-group-dashboard-module"), __webpack_require__.e("pages-pages-group-dashboard-group-dashboard-module")]).then(__webpack_require__.bind(null,
+        /*! ./pages/pages/group-dashboard/group-dashboard.module */
+        "./src/app/pages/pages/group-dashboard/group-dashboard.module.ts")).then(function (m) {
+          return m.GroupDashboardModule;
         });
       }
     }, {
@@ -8351,7 +12180,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-apps-chat-chat-module */
-          [__webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~9374e7e8"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-chat-chat-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-chat-chat-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/apps/chat/chat.module */
           "./src/app/pages/apps/chat/chat.module.ts")).then(function (m) {
             return m.ChatModule;
@@ -8376,7 +12205,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-apps-calendar-calendar-module */
-          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~4dd3a8b6"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~94c39815"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-calendar-calendar-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-calendar-calendar-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/apps/calendar/calendar.module */
           "./src/app/pages/apps/calendar/calendar.module.ts")).then(function (m) {
             return m.CalendarModule;
@@ -8390,7 +12219,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-apps-aio-table-aio-table-module */
-          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~b331ba3b"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~941d6308"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~d4e8dac3"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-aio-table-aio-table-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-aio-table-aio-table-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/apps/aio-table/aio-table.module */
           "./src/app/pages/apps/aio-table/aio-table.module.ts")).then(function (m) {
             return m.AioTableModule;
@@ -8412,7 +12241,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-apps-scrumboard-scrumboard-module */
-          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~b331ba3b"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-scrumboard-scrumboard-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("common"), __webpack_require__.e("pages-apps-scrumboard-scrumboard-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/apps/scrumboard/scrumboard.module */
           "./src/app/pages/apps/scrumboard/scrumboard.module.ts")).then(function (m) {
             return m.ScrumboardModule;
@@ -8448,7 +12277,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-pages-faq-faq-module */
-          [__webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~272a35cb"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-faq-faq-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-faq-faq-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/pages/faq/faq.module */
           "./src/app/pages/pages/faq/faq.module.ts")).then(function (m) {
             return m.FaqModule;
@@ -8459,7 +12288,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-pages-guides-guides-module */
-          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~help-center-guides-help-center-guides-module~pages-pages-guides-guides-module"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-guides-guides-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~help-center-guides-help-center-guides-module~pages-pages-guides-guides-module"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-guides-guides-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/pages/guides/guides.module */
           "./src/app/pages/pages/guides/guides.module.ts")).then(function (m) {
             return m.GuidesModule;
@@ -8528,7 +12357,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-ui-forms-form-elements-form-elements-module */
-          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~e6379b84"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~b331ba3b"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~94c39815"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~79b51f5e"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~066d5d7c"), __webpack_require__.e("common"), __webpack_require__.e("pages-ui-forms-form-elements-form-elements-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("common"), __webpack_require__.e("pages-ui-forms-form-elements-form-elements-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/ui/forms/form-elements/form-elements.module */
           "./src/app/pages/ui/forms/form-elements/form-elements.module.ts")).then(function (m) {
             return m.FormElementsModule;
@@ -8542,7 +12371,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         loadChildren: function loadChildren() {
           return Promise.all(
           /*! import() | pages-ui-forms-form-wizard-form-wizard-module */
-          [__webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~b331ba3b"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~4dd3a8b6"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-create-account-c~9e96a011"), __webpack_require__.e("common"), __webpack_require__.e("pages-ui-forms-form-wizard-form-wizard-module")]).then(__webpack_require__.bind(null,
+          [__webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("common"), __webpack_require__.e("pages-ui-forms-form-wizard-form-wizard-module")]).then(__webpack_require__.bind(null,
           /*! ./pages/ui/forms/form-wizard/form-wizard.module */
           "./src/app/pages/ui/forms/form-wizard/form-wizard.module.ts")).then(function (m) {
             return m.FormWizardModule;
@@ -8602,7 +12431,18 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       loadChildren: function loadChildren() {
         return Promise.all(
         /*! import() | pages-pages-auth-login-login-module */
-        [__webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~4dd3a8b6"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~8facdcc8"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-auth-login-login-module")]).then(__webpack_require__.bind(null,
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-auth-login-login-module")]).then(__webpack_require__.bind(null,
+        /*! ./pages/pages/auth/login/login.module */
+        "./src/app/pages/pages/auth/login/login.module.ts")).then(function (m) {
+          return m.LoginModule;
+        });
+      }
+    }, {
+      path: 'login/:succes',
+      loadChildren: function loadChildren() {
+        return Promise.all(
+        /*! import() | pages-pages-auth-login-login-module */
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-auth-login-login-module")]).then(__webpack_require__.bind(null,
         /*! ./pages/pages/auth/login/login.module */
         "./src/app/pages/pages/auth/login/login.module.ts")).then(function (m) {
           return m.LoginModule;
@@ -8613,7 +12453,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       loadChildren: function loadChildren() {
         return Promise.all(
         /*! import() | pages-pages-auth-register-register-module */
-        [__webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~6d92bdf7"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-auth-register-register-module")]).then(__webpack_require__.bind(null,
+        [__webpack_require__.e("default~components-dialogs-components-dialogs-module~components-overview-components-overview-module~~ee806bf3"), __webpack_require__.e("default~components-checkbox-components-checkbox-module~components-overview-components-overview-modul~3ce130f4"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-apps-scrumb~e699dfa9"), __webpack_require__.e("default~components-button-group-components-button-group-module~components-buttons-components-buttons~2594c91c"), __webpack_require__.e("default~contacts-grid-contacts-grid-module~contacts-table-contacts-table-module~pages-apps-calendar-~d07a97dd"), __webpack_require__.e("default~components-overview-components-overview-module~components-snack-bar-components-snack-bar-mod~a3378689"), __webpack_require__.e("default~components-autocomplete-components-autocomplete-module~components-overview-components-overvi~bd5b7275"), __webpack_require__.e("default~components-overview-components-overview-module~components-slider-components-slider-module~pa~3ba3c3b4"), __webpack_require__.e("default~help-center-faq-help-center-faq-module~help-center-getting-started-help-center-getting-start~9755396f"), __webpack_require__.e("default~contacts-table-contacts-table-module~pages-apps-aio-table-aio-table-module~pages-dashboards-~637f86c9"), __webpack_require__.e("default~components-grid-list-components-grid-list-module~components-overview-components-overview-mod~0751a1d5"), __webpack_require__.e("default~components-overview-components-overview-module~components-progress-spinner-components-progre~8ac1191e"), __webpack_require__.e("default~components-cards-components-cards-module~components-overview-components-overview-module~page~cae1202c"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~ab3c422d"), __webpack_require__.e("default~pages-apps-chat-chat-module~pages-dashboards-dashboard-analytics-dashboard-analytics-module~~5af2adfb"), __webpack_require__.e("default~pages-dashboards-dashboard-analytics-dashboard-analytics-module~pages-pages-auth-login-login~7618b169"), __webpack_require__.e("common"), __webpack_require__.e("pages-pages-auth-register-register-module")]).then(__webpack_require__.bind(null,
         /*! ./pages/pages/auth/register/register.module */
         "./src/app/pages/pages/auth/register/register.module.ts")).then(function (m) {
           return m.RegisterModule;
@@ -8633,9 +12473,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     }, {
       path: 'coming-soon',
       loadChildren: function loadChildren() {
-        return Promise.all(
+        return __webpack_require__.e(
         /*! import() | pages-pages-coming-soon-coming-soon-module */
-        [__webpack_require__.e("common"), __webpack_require__.e("pages-pages-coming-soon-coming-soon-module")]).then(__webpack_require__.bind(null,
+        "pages-pages-coming-soon-coming-soon-module").then(__webpack_require__.bind(null,
         /*! ./pages/pages/coming-soon/coming-soon.module */
         "./src/app/pages/pages/coming-soon/coming-soon.module.ts")).then(function (m) {
           return m.ComingSoonModule;
@@ -8754,778 +12594,160 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-layers */
-    "./node_modules/@iconify/icons-ic/twotone-layers.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_7___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_7__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-assignment */
-    "./node_modules/@iconify/icons-ic/twotone-assignment.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_8___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_8__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-contact-support */
-    "./node_modules/@iconify/icons-ic/twotone-contact-support.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_9___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_9__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-date-range */
-    "./node_modules/@iconify/icons-ic/twotone-date-range.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_10___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_10__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-chat */
-    "./node_modules/@iconify/icons-ic/twotone-chat.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_11___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_11__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-assessment */
-    "./node_modules/@iconify/icons-ic/twotone-assessment.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_12___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_12__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-watch-later */
-    "./node_modules/@iconify/icons-ic/twotone-watch-later.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_13___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_13__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-error */
-    "./node_modules/@iconify/icons-ic/twotone-error.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_14___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_14__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-attach-money */
-    "./node_modules/@iconify/icons-ic/twotone-attach-money.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_15___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_15__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-person-outline */
-    "./node_modules/@iconify/icons-ic/twotone-person-outline.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_16___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_16__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-receipt */
-    "./node_modules/@iconify/icons-ic/twotone-receipt.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_17___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_17__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-help */
-    "./node_modules/@iconify/icons-ic/twotone-help.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_18___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_18__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-book */
-    "./node_modules/@iconify/icons-ic/twotone-book.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_19___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_19__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-bubble-chart */
-    "./node_modules/@iconify/icons-ic/twotone-bubble-chart.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_20___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_20__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-format-color-text */
-    "./node_modules/@iconify/icons-ic/twotone-format-color-text.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_21___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_21__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-star */
-    "./node_modules/@iconify/icons-ic/twotone-star.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_22___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_22__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-view-compact */
-    "./node_modules/@iconify/icons-ic/twotone-view-compact.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_23___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_23__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-picture-in-picture */
-    "./node_modules/@iconify/icons-ic/twotone-picture-in-picture.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_24___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_24__);
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-settings */
-    "./node_modules/@iconify/icons-ic/twotone-settings.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_25___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_25__);
-    /* harmony import */
-
-
-    var _vex_services_layout_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(
-    /*! ../@vex/services/layout.service */
-    "./src/@vex/services/layout.service.ts");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-update */
-    "./node_modules/@iconify/icons-ic/twotone-update.js");
-    /* harmony import */
-
-
-    var _iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_27___default =
-    /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_27__);
-    /* harmony import */
-
-
-    var _angular_router__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(
+    var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @angular/router */
     "./node_modules/@angular/router/fesm2015/router.js");
     /* harmony import */
 
 
-    var rxjs_operators__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(
-    /*! rxjs/operators */
-    "./node_modules/rxjs/_esm2015/operators/index.js");
-    /* harmony import */
-
-
-    var _angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(
-    /*! @angular/cdk/coercion */
-    "./node_modules/@angular/cdk/esm2015/coercion.js");
-    /* harmony import */
-
-
-    var _vex_services_splash_screen_service__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(
+    var _vex_services_splash_screen_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! ../@vex/services/splash-screen.service */
     "./src/@vex/services/splash-screen.service.ts");
     /* harmony import */
 
 
-    var _vex_services_style_service__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(
+    var _vex_services_style_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
     /*! ../@vex/services/style.service */
     "./src/@vex/services/style.service.ts");
     /* harmony import */
 
 
-    var _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(
-    /*! ../@vex/utils/tailwindcss */
-    "./src/@vex/utils/tailwindcss.ts");
+    var _services_traduction_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(
+    /*! ./services/traduction.service */
+    "./src/app/services/traduction.service.ts");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(
-    /*! @iconify/icons-ic/twotone-chrome-reader-mode */
-    "./node_modules/@iconify/icons-ic/twotone-chrome-reader-mode.js");
+    var _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(
+    /*! @ng-select/ng-select */
+    "./node_modules/@ng-select/ng-select/fesm2015/ng-select-ng-select.js");
     /* harmony import */
 
 
-    var _iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_34___default =
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+    /* harmony import */
+
+
+    var ng_http_loader__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(
+    /*! ng-http-loader */
+    "./node_modules/ng-http-loader/fesm2015/ng-http-loader.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _app_reducers_webUser_actions__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(
+    /*! ./app-reducers/webUser/actions */
+    "./src/app/app-reducers/webUser/actions/index.ts");
+    /* harmony import */
+
+
+    var _app_reducers_group_actions__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(
+    /*! ./app-reducers/group/actions */
+    "./src/app/app-reducers/group/actions/index.ts");
+    /* harmony import */
+
+
+    var _services_user_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
+    /*! ./services/user.service */
+    "./src/app/services/user.service.ts");
+
+    var AppComponent =
     /*#__PURE__*/
-    __webpack_require__.n(_iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_34__);
+    function () {
+      function AppComponent(configService, styleService, renderer, platform, document, localeId, route, navigationService, tradService, translate, userService, config, storeUser, storeGroup, storeAccount, splashScreenService, router) {
+        _classCallCheck(this, AppComponent);
 
-    var AppComponent = function AppComponent(configService, styleService, renderer, platform, document, localeId, layoutService, route, navigationService, splashScreenService) {
-      var _this21 = this;
+        this.configService = configService;
+        this.styleService = styleService;
+        this.renderer = renderer;
+        this.platform = platform;
+        this.document = document;
+        this.localeId = localeId;
+        this.route = route;
+        this.navigationService = navigationService;
+        this.translate = translate;
+        this.userService = userService;
+        this.storeUser = storeUser;
+        this.storeGroup = storeGroup;
+        this.storeAccount = storeAccount;
+        this.splashScreenService = splashScreenService;
+        this.router = router;
+        this.title = 'DeppBot';
+        this.spinkit = ng_http_loader__WEBPACK_IMPORTED_MODULE_13__["Spinkit"];
+        translate.setDefaultLang('fr');
+        translate.currentLang = 'fr';
+        luxon__WEBPACK_IMPORTED_MODULE_3__["Settings"].defaultLocale = this.localeId;
 
-      _classCallCheck(this, AppComponent);
+        if (this.platform.BLINK) {
+          this.renderer.addClass(this.document.body, 'is-blink');
+        }
 
-      this.configService = configService;
-      this.styleService = styleService;
-      this.renderer = renderer;
-      this.platform = platform;
-      this.document = document;
-      this.localeId = localeId;
-      this.layoutService = layoutService;
-      this.route = route;
-      this.navigationService = navigationService;
-      this.splashScreenService = splashScreenService;
-      this.title = 'DeppBot';
-      luxon__WEBPACK_IMPORTED_MODULE_3__["Settings"].defaultLocale = this.localeId;
-
-      if (this.platform.BLINK) {
-        this.renderer.addClass(this.document.body, 'is-blink');
+        this.configService.updateConfig({
+          sidenav: {
+            title: 'DeepBot',
+            imageUrl: 'assets/img/logo/logo-rounded.svg',
+            showCollapsePin: false
+          },
+          footer: {
+            visible: false
+          }
+        });
       }
 
-      this.configService.updateConfig({
-        sidenav: {
-          title: 'DeepBot',
-          imageUrl: 'assets/img/logo/logo-rounded.svg',
-          showCollapsePin: false
-        },
-        footer: {
-          visible: false
+      _createClass(AppComponent, [{
+        key: "ngOnInit",
+        value: function ngOnInit() {
+          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
+          /*#__PURE__*/
+          regeneratorRuntime.mark(function _callee() {
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+              while (1) {
+                switch (_context.prev = _context.next) {
+                  case 0:
+                    _context.next = 2;
+                    return this.userService.isConnected();
+
+                  case 2:
+                    if (!_context.sent) {
+                      _context.next = 8;
+                      break;
+                    }
+
+                    this.storeUser.dispatch(_app_reducers_webUser_actions__WEBPACK_IMPORTED_MODULE_15__["webUserActions"].getUser());
+                    this.storeGroup.dispatch(_app_reducers_group_actions__WEBPACK_IMPORTED_MODULE_16__["GroupActions"].getAllGroups());
+                    this.navigationService.GenerateNavigation();
+                    _context.next = 10;
+                    break;
+
+                  case 8:
+                    this.userService.logout();
+                    this.router.navigate(['/login']);
+
+                  case 10:
+                  case "end":
+                    return _context.stop();
+                }
+              }
+            }, _callee, this);
+          }));
         }
-      });
-      /**
-       * Config Related Subscriptions
-       * You can remove this if you don't need the functionality of being able to enable specific configs with queryParams
-       * Example: example.com/?layout=apollo&style=default
-       */
+      }]);
 
-      this.route.queryParamMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_29__["filter"])(function (queryParamMap) {
-        return queryParamMap.has('rtl') && Object(_angular_cdk_coercion__WEBPACK_IMPORTED_MODULE_30__["coerceBooleanProperty"])(queryParamMap.get('rtl'));
-      })).subscribe(function (queryParamMap) {
-        _this21.document.body.dir = 'rtl';
-
-        _this21.configService.updateConfig({
-          rtl: true
-        });
-      });
-      this.route.queryParamMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_29__["filter"])(function (queryParamMap) {
-        return queryParamMap.has('layout');
-      })).subscribe(function (queryParamMap) {
-        return _this21.configService.setConfig(queryParamMap.get('layout'));
-      });
-      this.route.queryParamMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_29__["filter"])(function (queryParamMap) {
-        return queryParamMap.has('style');
-      })).subscribe(function (queryParamMap) {
-        return _this21.styleService.setStyle(queryParamMap.get('style'));
-      });
-      /**
-       * Add your own routes here
-       */
-
-      this.navigationService.items = [{
-        type: 'link',
-        label: 'Tableau de bord',
-        route: '/dashboards',
-        icon: _iconify_icons_ic_twotone_layers__WEBPACK_IMPORTED_MODULE_7___default.a
-      }, {
-        type: 'subheading',
-        label: 'Customiser',
-        children: [{
-          type: 'link',
-          label: 'Configuration',
-          route: function route() {
-            return _this21.layoutService.openConfigpanel();
-          },
-          icon: _iconify_icons_ic_twotone_settings__WEBPACK_IMPORTED_MODULE_25___default.a
-        }]
-      }, {
-        type: 'dropdown',
-        label: 'Vex',
-        icon: _iconify_icons_ic_twotone_contact_support__WEBPACK_IMPORTED_MODULE_9___default.a,
-        children: [{
-          type: 'link',
-          label: 'All-In-One Table',
-          route: '/apps/aio-table',
-          icon: _iconify_icons_ic_twotone_assignment__WEBPACK_IMPORTED_MODULE_8___default.a
-        }, {
-          type: 'link',
-          label: 'Getting Started',
-          route: '/apps/help-center/getting-started'
-        }, {
-          type: 'link',
-          label: 'Pricing & Plans',
-          route: '/apps/help-center/pricing'
-        }, {
-          type: 'link',
-          label: 'FAQ',
-          route: '/apps/help-center/faq'
-        }, {
-          type: 'link',
-          label: 'Guides',
-          route: '/apps/help-center/guides'
-        }, {
-          type: 'link',
-          label: 'Calendar',
-          route: '/apps/calendar',
-          icon: _iconify_icons_ic_twotone_date_range__WEBPACK_IMPORTED_MODULE_10___default.a,
-          badge: {
-            value: '12',
-            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].colors['deep-purple']['500'],
-            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].textColor['deep-purple-contrast']['500']
-          }
-        }, {
-          type: 'link',
-          label: 'Chat',
-          route: '/apps/chat',
-          icon: _iconify_icons_ic_twotone_chat__WEBPACK_IMPORTED_MODULE_11___default.a,
-          badge: {
-            value: '16',
-            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].colors.cyan['500'],
-            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].textColor['cyan-contrast']['600']
-          }
-        }, {
-          type: 'link',
-          label: 'WYSIWYG Editor',
-          route: '/apps/editor',
-          icon: _iconify_icons_ic_twotone_chrome_reader_mode__WEBPACK_IMPORTED_MODULE_34___default.a
-        }, {
-          type: 'link',
-          label: 'List - Grid',
-          route: '/apps/contacts/grid'
-        }, {
-          type: 'link',
-          label: 'List - Table',
-          route: '/apps/contacts/table'
-        }, {
-          type: 'link',
-          label: 'Scrumboard',
-          route: '/apps/scrumboard',
-          icon: _iconify_icons_ic_twotone_assessment__WEBPACK_IMPORTED_MODULE_12___default.a,
-          badge: {
-            value: 'NEW',
-            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].colors.primary['500'],
-            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].textColor['primary-contrast']['500']
-          }
-        }, {
-          type: 'link',
-          label: 'Login',
-          route: '/login'
-        }, {
-          type: 'link',
-          label: 'Register',
-          route: '/register'
-        }, {
-          type: 'link',
-          label: 'Forgot Password',
-          route: '/forgot-password'
-        }, {
-          type: 'link',
-          label: 'Coming Soon',
-          icon: _iconify_icons_ic_twotone_watch_later__WEBPACK_IMPORTED_MODULE_13___default.a,
-          route: '/coming-soon'
-        }, {
-          type: 'dropdown',
-          label: 'Errors',
-          icon: _iconify_icons_ic_twotone_error__WEBPACK_IMPORTED_MODULE_14___default.a,
-          badge: {
-            value: '4',
-            background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].colors.green['500'],
-            color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].textColor['green-contrast']['600']
-          },
-          children: [{
-            type: 'link',
-            label: '404',
-            route: '/pages/error-404'
-          }, {
-            type: 'link',
-            label: '500',
-            route: '/pages/error-500'
-          }, {
-            type: 'link',
-            label: 'Pricing',
-            icon: _iconify_icons_ic_twotone_attach_money__WEBPACK_IMPORTED_MODULE_15___default.a,
-            route: '/pages/pricing'
-          }, {
-            type: 'link',
-            label: 'Profile',
-            icon: _iconify_icons_ic_twotone_person_outline__WEBPACK_IMPORTED_MODULE_16___default.a,
-            route: '/pages/profile'
-          }, {
-            type: 'link',
-            label: 'Invoice',
-            icon: _iconify_icons_ic_twotone_receipt__WEBPACK_IMPORTED_MODULE_17___default.a,
-            route: '/pages/invoice'
-          }, {
-            type: 'link',
-            label: 'FAQ',
-            icon: _iconify_icons_ic_twotone_help__WEBPACK_IMPORTED_MODULE_18___default.a,
-            route: '/pages/faq'
-          }, {
-            type: 'link',
-            label: 'Guides',
-            icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_19___default.a,
-            route: '/pages/guides',
-            badge: {
-              value: '18',
-              background: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].colors.teal['500'],
-              color: _vex_utils_tailwindcss__WEBPACK_IMPORTED_MODULE_33__["default"].textColor['teal-contrast']['500']
-            }
-          }]
-        }, {
-          type: 'dropdown',
-          label: 'Components',
-          icon: _iconify_icons_ic_twotone_bubble_chart__WEBPACK_IMPORTED_MODULE_20___default.a,
-          children: [{
-            type: 'link',
-            label: 'Overview',
-            route: '/ui/components/overview'
-          }, {
-            type: 'link',
-            label: 'Autocomplete',
-            route: '/ui/components/autocomplete'
-          }, {
-            type: 'link',
-            label: 'Buttons',
-            route: '/ui/components/buttons'
-          }, {
-            type: 'link',
-            label: 'Button Group',
-            route: '/ui/components/button-group'
-          }, {
-            type: 'link',
-            label: 'Cards',
-            route: '/ui/components/cards'
-          }, {
-            type: 'link',
-            label: 'Checkbox',
-            route: '/ui/components/checkbox'
-          }, {
-            type: 'link',
-            label: 'Dialogs',
-            route: '/ui/components/dialogs'
-          }, {
-            type: 'link',
-            label: 'Grid List',
-            route: '/ui/components/grid-list'
-          }, {
-            type: 'link',
-            label: 'Input',
-            route: '/ui/components/input'
-          }, {
-            type: 'link',
-            label: 'Lists',
-            route: '/ui/components/lists'
-          }, {
-            type: 'link',
-            label: 'Menu',
-            route: '/ui/components/menu'
-          }, {
-            type: 'link',
-            label: 'Progress',
-            route: '/ui/components/progress'
-          }, {
-            type: 'link',
-            label: 'Progress Spinner',
-            route: '/ui/components/progress-spinner'
-          }, {
-            type: 'link',
-            label: 'Radio',
-            route: '/ui/components/radio'
-          }, {
-            type: 'link',
-            label: 'Slide Toggle',
-            route: '/ui/components/slide-toggle'
-          }, {
-            type: 'link',
-            label: 'Slider',
-            route: '/ui/components/slider'
-          }, {
-            type: 'link',
-            label: 'Snack Bar',
-            route: '/ui/components/snack-bar'
-          }, {
-            type: 'link',
-            label: 'Tooltip',
-            route: '/ui/components/tooltip'
-          }]
-        }, {
-          type: 'dropdown',
-          label: 'Forms',
-          icon: _iconify_icons_ic_twotone_format_color_text__WEBPACK_IMPORTED_MODULE_21___default.a,
-          children: [{
-            type: 'link',
-            label: 'Form Elements',
-            route: '/ui/forms/form-elements'
-          }, {
-            type: 'link',
-            label: 'Form Wizard',
-            route: '/ui/forms/form-wizard'
-          }]
-        }, {
-          type: 'dropdown',
-          label: 'Icons',
-          icon: _iconify_icons_ic_twotone_star__WEBPACK_IMPORTED_MODULE_22___default.a,
-          children: [{
-            type: 'link',
-            label: 'Material Icons',
-            route: '/ui/icons/ic'
-          }, {
-            type: 'link',
-            label: 'FontAwesome Icons',
-            route: '/ui/icons/fa'
-          }]
-        }, {
-          type: 'dropdown',
-          label: 'Page Layouts',
-          icon: _iconify_icons_ic_twotone_view_compact__WEBPACK_IMPORTED_MODULE_23___default.a,
-          children: [{
-            type: 'dropdown',
-            label: 'Card',
-            children: [{
-              type: 'link',
-              label: 'Default',
-              route: '/ui/page-layouts/card',
-              routerLinkActive: {
-                exact: true
-              }
-            }, {
-              type: 'link',
-              label: 'Tabbed',
-              route: '/ui/page-layouts/card/tabbed'
-            }, {
-              type: 'link',
-              label: 'Large Header',
-              route: '/ui/page-layouts/card/large-header',
-              routerLinkActive: {
-                exact: true
-              }
-            }, {
-              type: 'link',
-              label: 'Tabbed & Large Header',
-              route: '/ui/page-layouts/card/large-header/tabbed'
-            }]
-          }, {
-            type: 'dropdown',
-            label: 'Simple',
-            children: [{
-              type: 'link',
-              label: 'Default',
-              route: '/ui/page-layouts/simple',
-              routerLinkActive: {
-                exact: true
-              }
-            }, {
-              type: 'link',
-              label: 'Tabbed',
-              route: '/ui/page-layouts/simple/tabbed'
-            }, {
-              type: 'link',
-              label: 'Large Header',
-              route: '/ui/page-layouts/simple/large-header',
-              routerLinkActive: {
-                exact: true
-              }
-            }, {
-              type: 'link',
-              label: 'Tabbed & Large Header',
-              route: '/ui/page-layouts/simple/large-header/tabbed'
-            }]
-          }, {
-            type: 'link',
-            label: 'Blank',
-            icon: _iconify_icons_ic_twotone_picture_in_picture__WEBPACK_IMPORTED_MODULE_24___default.a,
-            route: '/ui/page-layouts/blank'
-          }]
-        }, {
-          type: 'link',
-          label: 'Changelog',
-          route: '/documentation/changelog',
-          icon: _iconify_icons_ic_twotone_update__WEBPACK_IMPORTED_MODULE_27___default.a
-        }, {
-          type: 'dropdown',
-          label: 'Getting Started',
-          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_19___default.a,
-          children: [{
-            type: 'link',
-            label: 'Introduction',
-            route: '/documentation/introduction',
-            fragment: 'introduction',
-            routerLinkActive: {
-              exact: true
-            }
-          }, {
-            type: 'link',
-            label: 'Folder Structure',
-            route: '/documentation/folder-structure',
-            fragment: 'folder-structure',
-            routerLinkActive: {
-              exact: true
-            }
-          }, {
-            type: 'link',
-            label: 'Installation',
-            route: '/documentation/installation',
-            fragment: 'installation',
-            routerLinkActive: {
-              exact: true
-            }
-          }, {
-            type: 'link',
-            label: 'Development Server',
-            route: '/documentation/start-development-server',
-            fragment: 'start-development-server',
-            routerLinkActive: {
-              exact: true
-            }
-          }, {
-            type: 'link',
-            label: 'Build for Production',
-            route: '/documentation/build-for-production',
-            fragment: 'build-for-production',
-            routerLinkActive: {
-              exact: true
-            }
-          }]
-        }, {
-          type: 'dropdown',
-          label: 'Customization',
-          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_19___default.a,
-          children: [{
-            type: 'link',
-            label: 'Configuration',
-            route: '/documentation/configuration',
-            fragment: 'configuration',
-            routerLinkActive: {
-              exact: true
-            }
-          }, {
-            type: 'link',
-            label: 'Changing Styling',
-            route: '/documentation/changing-styling-and-css-variables',
-            fragment: 'changing-styling-and-css-variables',
-            routerLinkActive: {
-              exact: true
-            }
-          }, {
-            type: 'link',
-            label: 'Using Custom Colors',
-            route: '/documentation/using-custom-colors-for-the-primarysecondarywarn-palettes',
-            fragment: 'using-custom-colors-for-the-primarysecondarywarn-palettes',
-            routerLinkActive: {
-              exact: true
-            }
-          }, {
-            type: 'link',
-            label: 'Adding Menu Items',
-            route: '/documentation/adding-menu-items',
-            fragment: 'adding-menu-items',
-            routerLinkActive: {
-              exact: true
-            }
-          }]
-        }, {
-          type: 'link',
-          label: 'Further Help',
-          icon: _iconify_icons_ic_twotone_book__WEBPACK_IMPORTED_MODULE_19___default.a,
-          route: '/documentation/further-help',
-          fragment: 'further-help',
-          routerLinkActive: {
-            exact: true
-          }
-        }]
-      }];
-    };
+      return AppComponent;
+    }();
 
     AppComponent.ctorParameters = function () {
       return [{
         type: _vex_services_config_service__WEBPACK_IMPORTED_MODULE_2__["ConfigService"]
       }, {
-        type: _vex_services_style_service__WEBPACK_IMPORTED_MODULE_32__["StyleService"]
+        type: _vex_services_style_service__WEBPACK_IMPORTED_MODULE_9__["StyleService"]
       }, {
         type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"]
       }, {
@@ -9543,13 +12765,27 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           args: [_angular_core__WEBPACK_IMPORTED_MODULE_1__["LOCALE_ID"]]
         }]
       }, {
-        type: _vex_services_layout_service__WEBPACK_IMPORTED_MODULE_26__["LayoutService"]
-      }, {
-        type: _angular_router__WEBPACK_IMPORTED_MODULE_28__["ActivatedRoute"]
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"]
       }, {
         type: _vex_services_navigation_service__WEBPACK_IMPORTED_MODULE_6__["NavigationService"]
       }, {
-        type: _vex_services_splash_screen_service__WEBPACK_IMPORTED_MODULE_31__["SplashScreenService"]
+        type: _services_traduction_service__WEBPACK_IMPORTED_MODULE_10__["TraductionService"]
+      }, {
+        type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_12__["TranslateService"]
+      }, {
+        type: _services_user_service__WEBPACK_IMPORTED_MODULE_17__["UserService"]
+      }, {
+        type: _ng_select_ng_select__WEBPACK_IMPORTED_MODULE_11__["NgSelectConfig"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_14__["Store"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_14__["Store"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_14__["Store"]
+      }, {
+        type: _vex_services_splash_screen_service__WEBPACK_IMPORTED_MODULE_8__["SplashScreenService"]
+      }, {
+        type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"]
       }];
     };
 
@@ -9571,13 +12807,19 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     !*** ./src/app/app.module.ts ***!
     \*******************************/
 
-  /*! exports provided: AppModule */
+  /*! exports provided: createTranslateLoader, AppModule */
 
   /***/
   function srcAppAppModuleTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "createTranslateLoader", function () {
+      return createTranslateLoader;
+    });
     /* harmony export (binding) */
 
 
@@ -9692,6 +12934,84 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _ngrx_effects__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(
     /*! @ngrx/effects */
     "./node_modules/@ngrx/effects/fesm2015/effects.js");
+    /* harmony import */
+
+
+    var _Services_TalkService__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(
+    /*! ./Services/TalkService */
+    "./src/app/Services/TalkService.ts");
+    /* harmony import */
+
+
+    var _app_reducers_webUser_webUser_modules__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(
+    /*! ./app-reducers/webUser/webUser.modules */
+    "./src/app/app-reducers/webUser/webUser.modules.ts");
+    /* harmony import */
+
+
+    var _app_reducers_account_account_modules__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(
+    /*! ./app-reducers/account/account.modules */
+    "./src/app/app-reducers/account/account.modules.ts");
+    /* harmony import */
+
+
+    var _app_reducers_character_character_modules__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(
+    /*! ./app-reducers/character/character.modules */
+    "./src/app/app-reducers/character/character.modules.ts");
+    /* harmony import */
+
+
+    var _app_reducers_group_group_modules__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(
+    /*! ./app-reducers/group/group.modules */
+    "./src/app/app-reducers/group/group.modules.ts");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+    /* harmony import */
+
+
+    var _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(
+    /*! @ngx-translate/http-loader */
+    "./node_modules/@ngx-translate/http-loader/fesm2015/ngx-translate-http-loader.js");
+    /* harmony import */
+
+
+    var _modules_my_missing_translation_handler_module__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(
+    /*! ./modules/my-missing-translation-handler.module */
+    "./src/app/modules/my-missing-translation-handler.module.ts");
+    /* harmony import */
+
+
+    var ng_http_loader__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(
+    /*! ng-http-loader */
+    "./node_modules/ng-http-loader/fesm2015/ng-http-loader.js");
+    /* harmony import */
+
+
+    var _angular_common__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(
+    /*! @angular/common */
+    "./node_modules/@angular/common/fesm2015/common.js");
+    /* harmony import */
+
+
+    var _angular_common_locales_fr__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(
+    /*! @angular/common/locales/fr */
+    "./node_modules/@angular/common/locales/fr.js");
+    /* harmony import */
+
+
+    var _angular_common_locales_fr__WEBPACK_IMPORTED_MODULE_28___default =
+    /*#__PURE__*/
+    __webpack_require__.n(_angular_common_locales_fr__WEBPACK_IMPORTED_MODULE_28__);
+
+    Object(_angular_common__WEBPACK_IMPORTED_MODULE_27__["registerLocaleData"])(_angular_common_locales_fr__WEBPACK_IMPORTED_MODULE_28___default.a, 'fr-FR');
+
+    function createTranslateLoader(http) {
+      return new _ngx_translate_http_loader__WEBPACK_IMPORTED_MODULE_24__["TranslateHttpLoader"](http, './assets/i18n/', '.json');
+    }
 
     var AppModule = function AppModule() {
       _classCallCheck(this, AppModule);
@@ -9699,16 +13019,30 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
       declarations: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]],
-      imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClientModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_11__["ToastrModule"].forRoot(), // Vex
-      _vex_vex_module__WEBPACK_IMPORTED_MODULE_6__["VexModule"], _custom_layout_custom_layout_module__WEBPACK_IMPORTED_MODULE_8__["CustomLayoutModule"], _ngrx_store__WEBPACK_IMPORTED_MODULE_12__["StoreModule"].forRoot(_reducers__WEBPACK_IMPORTED_MODULE_13__["ROOT_REDUCERS"], {
+      imports: [_angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"], _app_reducers_webUser_webUser_modules__WEBPACK_IMPORTED_MODULE_19__["webUserModule"], _app_reducers_account_account_modules__WEBPACK_IMPORTED_MODULE_20__["AccountModule"], _app_reducers_character_character_modules__WEBPACK_IMPORTED_MODULE_21__["CharacterModule"], _app_reducers_group_group_modules__WEBPACK_IMPORTED_MODULE_22__["groupModule"], _app_routing_module__WEBPACK_IMPORTED_MODULE_3__["AppRoutingModule"], _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_5__["BrowserAnimationsModule"], _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClientModule"], ngx_toastr__WEBPACK_IMPORTED_MODULE_11__["ToastrModule"].forRoot({
+        timeOut: 5000,
+        progressBar: true
+      }), // Vex
+      _vex_vex_module__WEBPACK_IMPORTED_MODULE_6__["VexModule"], _custom_layout_custom_layout_module__WEBPACK_IMPORTED_MODULE_8__["CustomLayoutModule"], _ngx_translate_core__WEBPACK_IMPORTED_MODULE_23__["TranslateModule"].forRoot({
+        loader: {
+          provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_23__["TranslateLoader"],
+          useFactory: createTranslateLoader,
+          deps: [_angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HttpClient"]]
+        },
+        missingTranslationHandler: {
+          provide: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_23__["MissingTranslationHandler"],
+          useClass: _modules_my_missing_translation_handler_module__WEBPACK_IMPORTED_MODULE_25__["MyMissingTranslationHandler"]
+        },
+        useDefaultLang: true
+      }), _ngrx_store__WEBPACK_IMPORTED_MODULE_12__["StoreModule"].forRoot(_reducers__WEBPACK_IMPORTED_MODULE_13__["ROOT_REDUCERS"], {
         metaReducers: _reducers__WEBPACK_IMPORTED_MODULE_13__["metaReducers"],
         runtimeChecks: {
-          strictStateImmutability: true,
-          strictActionImmutability: true,
+          strictStateImmutability: false,
+          strictActionImmutability: false,
           strictStateSerializability: true,
           strictActionSerializability: true
         }
-      }), _ngrx_router_store__WEBPACK_IMPORTED_MODULE_14__["StoreRouterConnectingModule"].forRoot({
+      }), ng_http_loader__WEBPACK_IMPORTED_MODULE_26__["NgHttpLoaderModule"].forRoot(), _ngrx_router_store__WEBPACK_IMPORTED_MODULE_14__["StoreRouterConnectingModule"].forRoot({
         routerState: 1
         /* Minimal */
 
@@ -9722,7 +13056,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         provide: _angular_common_http__WEBPACK_IMPORTED_MODULE_7__["HTTP_INTERCEPTORS"],
         useClass: _interceptor_auth_incerpetor__WEBPACK_IMPORTED_MODULE_9__["AuthInterceptor"],
         multi: true
-      }],
+      }, _Services_TalkService__WEBPACK_IMPORTED_MODULE_18__["TalkService"]],
       bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
     })], AppModule);
     /***/
@@ -9821,18 +13155,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var _vex_services_config_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(
     /*! ../../@vex/services/config.service */
     "./src/@vex/services/config.service.ts");
-    /* harmony import */
-
-
-    var ngx_take_until_destroy__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(
-    /*! ngx-take-until-destroy */
-    "./node_modules/ngx-take-until-destroy/fesm2015/ngx-take-until-destroy.js");
 
     var CustomLayoutComponent =
     /*#__PURE__*/
     function () {
       function CustomLayoutComponent(layoutService, configService, breakpointObserver, router) {
-        var _this22 = this;
+        var _this27 = this;
 
         _classCallCheck(this, CustomLayoutComponent);
 
@@ -9850,7 +13178,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.toolbarShadowEnabled$ = this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(function (event) {
           return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_5__["NavigationEnd"];
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["startWith"])(null), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["map"])(function () {
-          return Object(_vex_utils_check_router_childs_data__WEBPACK_IMPORTED_MODULE_6__["checkRouterChildsData"])(_this22.router.routerState.root.snapshot, function (data) {
+          return Object(_vex_utils_check_router_childs_data__WEBPACK_IMPORTED_MODULE_6__["checkRouterChildsData"])(_this27.router.routerState.root.snapshot, function (data) {
             return data.toolbarShadowEnabled;
           });
         }));
@@ -9858,13 +13186,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       _createClass(CustomLayoutComponent, [{
         key: "ngOnInit",
-        value: function ngOnInit() {
-          var _this23 = this;
-
-          this.layoutService.configpanelOpen$.pipe(Object(ngx_take_until_destroy__WEBPACK_IMPORTED_MODULE_9__["untilDestroyed"])(this)).subscribe(function (open) {
-            return open ? _this23.configpanel.open() : _this23.configpanel.close();
-          });
-        }
+        value: function ngOnInit() {}
       }, {
         key: "ngOnDestroy",
         value: function ngOnDestroy() {}
@@ -10058,7 +13380,6 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         key: "canActivate",
         value: function canActivate(next, state) {
           if (localStorage.getItem("DeepBot") != null) {
-            //let roles = next.data['permittedRoles'] as Array<string>
             var payLoad = JSON.parse(window.atob(localStorage.getItem('DeepBot').split('.')[1]));
             var roles = [payLoad.role];
 
@@ -10155,7 +13476,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       _createClass(AuthInterceptor, [{
         key: "intercept",
         value: function intercept(req, next) {
-          var _this24 = this;
+          var _this28 = this;
 
           if (localStorage.getItem("DeepBot") != null) {
             var clonedReq = req.clone({
@@ -10165,9 +13486,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
               if (err.status == 401) {
                 localStorage.removeItem('DeepBot');
 
-                _this24.router.navigateByUrl('login');
+                _this28.router.navigateByUrl('login');
               } else if (err.status == 403) {
-                _this24.router.navigateByUrl('forbiden');
+                _this28.router.navigateByUrl('forbiden');
               }
             }));
           } else {
@@ -10190,47 +13511,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
-  "./src/app/pages/pages/auth/actions/auth.actions.ts":
-  /*!**********************************************************!*\
-    !*** ./src/app/pages/pages/auth/actions/auth.actions.ts ***!
-    \**********************************************************/
+  "./src/app/modules/my-missing-translation-handler.module.ts":
+  /*!******************************************************************!*\
+    !*** ./src/app/modules/my-missing-translation-handler.module.ts ***!
+    \******************************************************************/
 
-  /*! exports provided: loginSuccess, login, loginFailure, getUser, getUserSuccess */
+  /*! exports provided: MyMissingTranslationHandler */
 
   /***/
-  function srcAppPagesPagesAuthActionsAuthActionsTs(module, __webpack_exports__, __webpack_require__) {
+  function srcAppModulesMyMissingTranslationHandlerModuleTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "loginSuccess", function () {
-      return loginSuccess;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "login", function () {
-      return login;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "loginFailure", function () {
-      return loginFailure;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getUser", function () {
-      return getUser;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getUserSuccess", function () {
-      return getUserSuccess;
+    __webpack_require__.d(__webpack_exports__, "MyMissingTranslationHandler", function () {
+      return MyMissingTranslationHandler;
     });
     /* harmony import */
 
@@ -10238,248 +13535,26 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
     /*! tslib */
     "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
 
+    var MyMissingTranslationHandler =
+    /*#__PURE__*/
+    function () {
+      function MyMissingTranslationHandler() {
+        _classCallCheck(this, MyMissingTranslationHandler);
+      }
 
-    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @ngrx/store */
-    "./node_modules/@ngrx/store/fesm2015/store.js");
+      _createClass(MyMissingTranslationHandler, [{
+        key: "handle",
+        value: function handle(params) {
+          console.log(params);
+          return '## WARNING ## The phrase for the key \'' + params.key + '\' has not been translated into your language. ' + params.translateService.defaultLang + ' ## WARNING ##';
+        }
+      }]);
 
-    var loginSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH/LOGIN] Login Success', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
-    var login = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH/LOGIN] Login', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
-    var loginFailure = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH/LOGIN] Login Failure', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
-    var getUser = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH] GET USER');
-    var getUserSuccess = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createAction"])('[AUTH] GET USER SUCCESS', Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["props"])());
-    /***/
-  },
-
-  /***/
-  "./src/app/pages/pages/auth/actions/index.ts":
-  /*!***************************************************!*\
-    !*** ./src/app/pages/pages/auth/actions/index.ts ***!
-    \***************************************************/
-
-  /*! exports provided: AuthActions */
-
-  /***/
-  function srcAppPagesPagesAuthActionsIndexTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
-
-
-    var _auth_actions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! ./auth.actions */
-    "./src/app/pages/pages/auth/actions/auth.actions.ts");
-    /* harmony reexport (module object) */
-
-
-    __webpack_require__.d(__webpack_exports__, "AuthActions", function () {
-      return _auth_actions__WEBPACK_IMPORTED_MODULE_1__;
-    });
+      return MyMissingTranslationHandler;
+    }();
     /***/
 
-  },
-
-  /***/
-  "./src/app/pages/pages/auth/reducers/auth.reducers.ts":
-  /*!************************************************************!*\
-    !*** ./src/app/pages/pages/auth/reducers/auth.reducers.ts ***!
-    \************************************************************/
-
-  /*! exports provided: initialState, reducer, getUser, getError, getPending */
-
-  /***/
-  function srcAppPagesPagesAuthReducersAuthReducersTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "initialState", function () {
-      return initialState;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "reducer", function () {
-      return reducer;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getUser", function () {
-      return getUser;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getError", function () {
-      return getError;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getPending", function () {
-      return getPending;
-    });
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
-
-
-    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @ngrx/store */
-    "./node_modules/@ngrx/store/fesm2015/store.js");
-    /* harmony import */
-
-
-    var _actions__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! ../actions */
-    "./src/app/pages/pages/auth/actions/index.ts");
-
-    var initialState = {
-      account: null,
-      error: null,
-      pending: false
-    };
-    var reducer = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createReducer"])(initialState, Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AuthActions"].login, function (state) {
-      return Object.assign({}, state, {
-        pending: true
-      });
-    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AuthActions"].loginSuccess, function (state, _ref6) {
-      var user = _ref6.user;
-      return Object.assign({}, state, {
-        user: user,
-        pending: false
-      });
-    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AuthActions"].loginFailure, function (state, _ref7) {
-      var error = _ref7.error;
-      return Object.assign({}, state, {
-        error: error,
-        pending: false
-      });
-    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AuthActions"].getUser, function (state) {
-      return Object.assign({}, state, {
-        pending: true
-      });
-    }), Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["on"])(_actions__WEBPACK_IMPORTED_MODULE_2__["AuthActions"].getUserSuccess, function (state, _ref8) {
-      var account = _ref8.account;
-      return Object.assign({}, state, {
-        account: account,
-        pending: false
-      });
-    }));
-
-    var getUser = function getUser(state) {
-      return state.account;
-    };
-
-    var getError = function getError(state) {
-      return state.error;
-    };
-
-    var getPending = function getPending(state) {
-      return state.pending;
-    };
-    /***/
-
-  },
-
-  /***/
-  "./src/app/pages/pages/auth/reducers/index.ts":
-  /*!****************************************************!*\
-    !*** ./src/app/pages/pages/auth/reducers/index.ts ***!
-    \****************************************************/
-
-  /*! exports provided: reducers, selectAuthState, selectAuthStatusState, getUser, getError, getPending */
-
-  /***/
-  function srcAppPagesPagesAuthReducersIndexTs(module, __webpack_exports__, __webpack_require__) {
-    "use strict";
-
-    __webpack_require__.r(__webpack_exports__);
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "reducers", function () {
-      return reducers;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "selectAuthState", function () {
-      return selectAuthState;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "selectAuthStatusState", function () {
-      return selectAuthStatusState;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getUser", function () {
-      return getUser;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getError", function () {
-      return getError;
-    });
-    /* harmony export (binding) */
-
-
-    __webpack_require__.d(__webpack_exports__, "getPending", function () {
-      return getPending;
-    });
-    /* harmony import */
-
-
-    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
-    /*! tslib */
-    "./node_modules/tslib/tslib.es6.js");
-    /* harmony import */
-
-
-    var _ngrx_store__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
-    /*! @ngrx/store */
-    "./node_modules/@ngrx/store/fesm2015/store.js");
-    /* harmony import */
-
-
-    var _reducers_auth_reducers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! ../reducers/auth.reducers */
-    "./src/app/pages/pages/auth/reducers/auth.reducers.ts");
-
-    function reducers(state, action) {
-      return Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["combineReducers"])({
-        status: _reducers_auth_reducers__WEBPACK_IMPORTED_MODULE_2__["reducer"]
-      })(state, action);
-    }
-
-    var selectAuthState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createFeatureSelector"])('auth');
-    var selectAuthStatusState = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAuthState, function (state) {
-      return state.status;
-    });
-    var getUser = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAuthStatusState, _reducers_auth_reducers__WEBPACK_IMPORTED_MODULE_2__["getUser"]);
-    var getError = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAuthStatusState, _reducers_auth_reducers__WEBPACK_IMPORTED_MODULE_2__["getError"]);
-    var getPending = Object(_ngrx_store__WEBPACK_IMPORTED_MODULE_1__["createSelector"])(selectAuthStatusState, _reducers_auth_reducers__WEBPACK_IMPORTED_MODULE_2__["getPending"]);
-    /***/
   },
 
   /***/
@@ -10534,13 +13609,31 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _pages_pages_auth_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! ../pages/pages/auth/reducers */
-    "./src/app/pages/pages/auth/reducers/index.ts");
+    var src_app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! src/app/app-reducers/webUser/reducers */
+    "./src/app/app-reducers/webUser/reducers/index.ts");
     /* harmony import */
 
 
-    var _angular_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    var src_app_app_reducers_account_reducers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! src/app/app-reducers/account/reducers */
+    "./src/app/app-reducers/account/reducers/index.ts");
+    /* harmony import */
+
+
+    var src_app_app_reducers_group_reducers__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! src/app/app-reducers/group/reducers */
+    "./src/app/app-reducers/group/reducers/index.ts");
+    /* harmony import */
+
+
+    var src_app_app_reducers_character_reducers__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! src/app/app-reducers/character/reducers */
+    "./src/app/app-reducers/character/reducers/index.ts");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(
     /*! @angular/core */
     "./node_modules/@angular/core/fesm2015/core.js");
     /**
@@ -10557,11 +13650,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
      */
 
 
-    var ROOT_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_4__["InjectionToken"]('Root reducers token', {
+    var ROOT_REDUCERS = new _angular_core__WEBPACK_IMPORTED_MODULE_7__["InjectionToken"]('Root reducers token', {
       factory: function factory() {
         return {
           router: _ngrx_router_store__WEBPACK_IMPORTED_MODULE_2__["routerReducer"],
-          auth: _pages_pages_auth_reducers__WEBPACK_IMPORTED_MODULE_3__["reducers"]
+          webUser: src_app_app_reducers_webUser_reducers__WEBPACK_IMPORTED_MODULE_3__["reducers"],
+          account: src_app_app_reducers_account_reducers__WEBPACK_IMPORTED_MODULE_4__["reducers"],
+          character: src_app_app_reducers_character_reducers__WEBPACK_IMPORTED_MODULE_6__["reducers"],
+          group: src_app_app_reducers_group_reducers__WEBPACK_IMPORTED_MODULE_5__["reducers"]
         };
       }
     }); // console.log all actions
@@ -10589,23 +13685,23 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
-  "./src/app/service/TalkService.ts":
-  /*!****************************************!*\
-    !*** ./src/app/service/TalkService.ts ***!
-    \****************************************/
+  "./src/app/services/account.service.ts":
+  /*!*********************************************!*\
+    !*** ./src/app/services/account.service.ts ***!
+    \*********************************************/
 
-  /*! exports provided: TalkService */
+  /*! exports provided: AccountService */
 
   /***/
-  function srcAppServiceTalkServiceTs(module, __webpack_exports__, __webpack_require__) {
+  function srcAppServicesAccountServiceTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
     /* harmony export (binding) */
 
 
-    __webpack_require__.d(__webpack_exports__, "TalkService", function () {
-      return TalkService;
+    __webpack_require__.d(__webpack_exports__, "AccountService", function () {
+      return AccountService;
     });
     /* harmony import */
 
@@ -10622,114 +13718,463 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _aspnet_signalr__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
-    /*! @aspnet/signalr */
-    "./node_modules/@aspnet/signalr/dist/esm/index.js");
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
     /* harmony import */
 
 
     var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
     /*! @ngrx/store */
     "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
 
-    var TalkService =
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./../../environments/environment */
+    "./src/environments/environment.ts");
+
+    var httpOptions = {
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    var AccountService =
     /*#__PURE__*/
     function () {
-      function TalkService(store) {
-        _classCallCheck(this, TalkService);
+      function AccountService(http, store) {
+        _classCallCheck(this, AccountService);
 
+        this.http = http;
         this.store = store;
-        this.messageReceived = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-        this.connectionEstablished = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
-        this.connectIsEstablished = false;
-        this.createConnection();
-        this.InitGetData(); // this.startConnection();
-        // this.joinRoom();
-        // this.initNewTcp();
       }
 
-      _createClass(TalkService, [{
-        key: "sendMessage",
-        value: function sendMessage(message) {
-          this._hubConnection.invoke('SendPackage', message, '5000');
+      _createClass(AccountService, [{
+        key: "createAccount",
+        value: function createAccount(acc) {
+          console.log(acc);
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Account/CreateAccount"), acc, httpOptions);
         }
       }, {
-        key: "createConnection",
-        value: function createConnection() {
-          this._hubConnection = new _aspnet_signalr__WEBPACK_IMPORTED_MODULE_2__["HubConnectionBuilder"]().withUrl("https://localhost:44319/deeptalk", {
-            accessTokenFactory: function accessTokenFactory() {
-              return localStorage.getItem('DeepBot');
-            },
-            skipNegotiation: true,
-            transport: _aspnet_signalr__WEBPACK_IMPORTED_MODULE_2__["HttpTransportType"].WebSockets
-          }).build();
+        key: "updateAccount",
+        value: function updateAccount(account) {
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Account/UpdateAccount"), account, httpOptions);
         }
       }, {
-        key: "joinRoom",
-        value: function joinRoom() {
-          console.log('passe bien ici');
-
-          this._hubConnection.invoke('JoinRoomClient');
-        }
-      }, {
-        key: "sendPackage",
-        value: function sendPackage() {
-          this._hubConnection.invoke('SendPackage', 'test', '500');
-        }
-      }, {
-        key: "initNewTcp",
-        value: function initNewTcp() {
-          this._hubConnection.invoke('InitTcpCli');
-        }
-      }, {
-        key: "InitGetData",
-        value: function InitGetData() {
-          this._hubConnection.on('DispatchClient', function (type, value) {
-            switch (type) {
-              case "LOG":
-                break;
-
-              default:
-                break;
-            }
-          });
-        }
-      }, {
-        key: "callAuth",
-        value: function callAuth() {
-          this._hubConnection.invoke('CreateConnexion');
-        }
-      }, {
-        key: "startConnection",
-        value: function startConnection() {
-          var _this25 = this;
-
-          this._hubConnection.start().then(function () {
-            _this25.connectIsEstablished = true;
-            console.log('Init connection on DeepTalk');
-
-            _this25.connectionEstablished.emit(true);
-
-            _this25._hubConnection.invoke('JoinRoomClient');
-          }).catch(function (err) {
-            console.log('Error on initialize connection with DeepTalk, retrying...');
-            setTimeout(function () {
-              this.startConnection();
-            }, 5000);
-          });
+        key: "deleteAccount",
+        value: function deleteAccount(key) {
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Account/DeleteAccount"), {
+            key: key
+          }, httpOptions);
         }
       }]);
 
-      return TalkService;
+      return AccountService;
     }();
 
-    TalkService.ctorParameters = function () {
+    AccountService.ctorParameters = function () {
       return [{
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
         type: _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]
       }];
     };
 
-    TalkService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()], TalkService);
+    AccountService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+      providedIn: 'root'
+    })], AccountService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/character.service.ts":
+  /*!***********************************************!*\
+    !*** ./src/app/services/character.service.ts ***!
+    \***********************************************/
+
+  /*! exports provided: CharacterService */
+
+  /***/
+  function srcAppServicesCharacterServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "CharacterService", function () {
+      return CharacterService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./../../environments/environment */
+    "./src/environments/environment.ts");
+
+    var httpOptions = {
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    var CharacterService =
+    /*#__PURE__*/
+    function () {
+      function CharacterService(http, store) {
+        _classCallCheck(this, CharacterService);
+
+        this.http = http;
+        this.store = store;
+      }
+
+      _createClass(CharacterService, [{
+        key: "getAllCharacters",
+        value: function getAllCharacters() {
+          return this.http.get("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Character/GetAllCharacters"), httpOptions);
+        }
+      }, {
+        key: "updateCharacterConfig",
+        value: function updateCharacterConfig(config) {
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "ConfigCharacter/UpdateConfigCharacter"), config, httpOptions);
+        }
+      }, {
+        key: "getCharacterIcon",
+        value: function getCharacterIcon(breedId) {
+          switch (breedId) {
+            case 10:
+              return 'assets/img/classe/m_feca.png';
+
+            case 11:
+              return 'assets/img/classe/f_feca.png';
+
+            case 20:
+              return 'assets/img/classe/m_osamoadas.png';
+
+            case 21:
+              return 'assets/img/classe/f_osamodas.png';
+
+            case 30:
+              return 'assets/img/classe/m_enutrof.png';
+
+            case 31:
+              return 'assets/img/classe/f_enutrof.png';
+
+            case 40:
+              return 'assets/img/classe/m_sram.png';
+
+            case 41:
+              return 'assets/img/classe/f_sram.png';
+
+            case 50:
+              return 'assets/img/classe/m_xelor.png';
+
+            case 51:
+              return 'assets/img/classe/f_xelor.png';
+
+            case 60:
+              return 'assets/img/classe/m_ecaflip.png';
+
+            case 61:
+              return 'assets/img/classe/f_ecaflip.png';
+
+            case 70:
+              return 'assets/img/classe/m_eniripsa.png';
+
+            case 71:
+              return 'assets/img/classe/f_eniripsa.png';
+
+            case 80:
+              return 'assets/img/classe/m_eniripsa.png';
+
+            case 81:
+              return 'assets/img/classe/f_eniripsa.png';
+
+            case 90:
+              return 'assets/img/classe/m_cra.png';
+
+            case 91:
+              return 'assets/img/classe/f_cra.png';
+
+            case 100:
+              return 'assets/img/classe/m_sadida.png';
+
+            case 101:
+              return 'assets/img/classe/f_sadida.png';
+
+            case 110:
+              return 'assets/img/classe/m_sacrieur.png';
+
+            case 111:
+              return 'assets/img/classe/f_sacrieur.png';
+
+            case 120:
+              return 'assets/img/classe/m_pandawa.png';
+
+            case 121:
+              return 'assets/img/classe/f_pandawa.png';
+
+            default:
+              return 'breed id mauvais';
+          }
+        }
+      }]);
+
+      return CharacterService;
+    }();
+
+    CharacterService.ctorParameters = function () {
+      return [{
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]
+      }];
+    };
+
+    CharacterService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+      providedIn: 'root'
+    })], CharacterService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/group.service.ts":
+  /*!*******************************************!*\
+    !*** ./src/app/services/group.service.ts ***!
+    \*******************************************/
+
+  /*! exports provided: GroupsService */
+
+  /***/
+  function srcAppServicesGroupServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "GroupsService", function () {
+      return GroupsService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! ./../../environments/environment */
+    "./src/environments/environment.ts");
+
+    var httpOptions = {
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    var GroupsService =
+    /*#__PURE__*/
+    function () {
+      function GroupsService(http, store) {
+        _classCallCheck(this, GroupsService);
+
+        this.http = http;
+        this.store = store;
+      }
+
+      _createClass(GroupsService, [{
+        key: "getAllgroups",
+        value: function getAllgroups() {
+          return this.http.get("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Group/GetAllGroups"), httpOptions);
+        }
+      }, {
+        key: "createGroup",
+        value: function createGroup(createdGroup) {
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Group/CreateGroup"), createdGroup, httpOptions);
+        }
+      }, {
+        key: "updateGroup",
+        value: function updateGroup(group) {
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Group/UpdateGroup"), group, httpOptions);
+        }
+      }, {
+        key: "deleteGroup",
+        value: function deleteGroup(key) {
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].apiURL, "Group/DeleteGroup"), {
+            key: key
+          }, httpOptions);
+        }
+      }]);
+
+      return GroupsService;
+    }();
+
+    GroupsService.ctorParameters = function () {
+      return [{
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_3__["Store"]
+      }];
+    };
+
+    GroupsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+      providedIn: 'root'
+    })], GroupsService);
+    /***/
+  },
+
+  /***/
+  "./src/app/services/traduction.service.ts":
+  /*!************************************************!*\
+    !*** ./src/app/services/traduction.service.ts ***!
+    \************************************************/
+
+  /*! exports provided: TraductionService */
+
+  /***/
+  function srcAppServicesTraductionServiceTs(module, __webpack_exports__, __webpack_require__) {
+    "use strict";
+
+    __webpack_require__.r(__webpack_exports__);
+    /* harmony export (binding) */
+
+
+    __webpack_require__.d(__webpack_exports__, "TraductionService", function () {
+      return TraductionService;
+    });
+    /* harmony import */
+
+
+    var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(
+    /*! tslib */
+    "./node_modules/tslib/tslib.es6.js");
+    /* harmony import */
+
+
+    var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(
+    /*! @angular/core */
+    "./node_modules/@angular/core/fesm2015/core.js");
+    /* harmony import */
+
+
+    var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(
+    /*! @angular/common/http */
+    "./node_modules/@angular/common/fesm2015/http.js");
+    /* harmony import */
+
+
+    var _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! @ngx-translate/core */
+    "./node_modules/@ngx-translate/core/fesm2015/ngx-translate-core.js");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+
+    var httpOptions = {
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    var TraductionService =
+    /*#__PURE__*/
+    function () {
+      function TraductionService(http, translate) {
+        _classCallCheck(this, TraductionService);
+
+        this.http = http;
+        this.translate = translate;
+        this._langueCourante = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        this.langueCourante$ = this._langueCourante.asObservable();
+        var defaultLanguage = 'fr';
+        translate.setDefaultLang(defaultLanguage);
+        var langUser = 'fr';
+        /* récupérer langue de l'utilisateur  depuis user dans store*/
+
+        if (false) {}
+      }
+
+      _createClass(TraductionService, [{
+        key: "changLang",
+        value: function changLang(langueSelectionnee) {
+          var isUpdate = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+          if (isUpdate) {
+            /* update user.langue */
+
+            /* update UserDB via API */
+          }
+
+          this._langueCourante.next(langueSelectionnee);
+
+          this.translate.setDefaultLang(langueSelectionnee);
+          this.translate.use(langueSelectionnee);
+        }
+      }]);
+
+      return TraductionService;
+    }();
+
+    TraductionService.ctorParameters = function () {
+      return [{
+        type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
+        type: _ngx_translate_core__WEBPACK_IMPORTED_MODULE_3__["TranslateService"]
+      }];
+    };
+
+    TraductionService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+      providedIn: 'root'
+    })], TraductionService);
     /***/
   },
 
@@ -10773,21 +14218,89 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     /* harmony import */
 
 
-    var _webModel_UserModel__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
-    /*! ../../webModel/UserModel */
-    "./src/webModel/UserModel.ts");
+    var _webModel_User__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(
+    /*! ../../webModel/User */
+    "./src/webModel/User.ts");
+    /* harmony import */
+
+
+    var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(
+    /*! rxjs */
+    "./node_modules/rxjs/_esm2015/index.js");
+    /* harmony import */
+
+
+    var _environments_environment__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(
+    /*! ../../environments/environment */
+    "./src/environments/environment.ts");
+    /* harmony import */
+
+
+    var _ngrx_store__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(
+    /*! @ngrx/store */
+    "./node_modules/@ngrx/store/fesm2015/store.js");
+
+    var httpOptions = {
+      headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+        'Content-Type': 'application/json'
+      })
+    };
 
     var UserService =
     /*#__PURE__*/
     function () {
-      function UserService(http) {
+      function UserService(http, store) {
         _classCallCheck(this, UserService);
 
         this.http = http;
-        this.user = new _webModel_UserModel__WEBPACK_IMPORTED_MODULE_3__["User"]();
+        this.store = store;
+        this._user = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
+        this.user = new _webModel_User__WEBPACK_IMPORTED_MODULE_3__["User"]();
       }
 
       _createClass(UserService, [{
+        key: "login",
+        value: function login(_ref36) {
+          var userName = _ref36.userName,
+              userPassword = _ref36.userPassword;
+          var body = {
+            UserName: userName,
+            Password: userPassword
+          };
+          return this.http.post("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiURL, "User/Login"), body, httpOptions);
+        }
+      }, {
+        key: "isConnected",
+        value: function isConnected() {
+          return tslib__WEBPACK_IMPORTED_MODULE_0__["__awaiter"](this, void 0, void 0,
+          /*#__PURE__*/
+          regeneratorRuntime.mark(function _callee2() {
+            var retour;
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+              while (1) {
+                switch (_context2.prev = _context2.next) {
+                  case 0:
+                    _context2.next = 2;
+                    return this.http.get("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiURL, "User/isActive"), httpOptions).toPromise();
+
+                  case 2:
+                    retour = _context2.sent;
+                    return _context2.abrupt("return", retour);
+
+                  case 4:
+                  case "end":
+                    return _context2.stop();
+                }
+              }
+            }, _callee2, this);
+          }));
+        }
+      }, {
+        key: "getUser",
+        value: function getUser() {
+          return this.http.get("".concat(_environments_environment__WEBPACK_IMPORTED_MODULE_5__["environment"].apiURL, "User/getUser"));
+        }
+      }, {
         key: "roleMatch",
         value: function roleMatch(allowedRoles) {
           var isMatch = false;
@@ -10796,10 +14309,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           allowedRoles.forEach(function (element) {
             if (userRole == element) {
               isMatch = true;
-              return false;
             }
           });
           return isMatch;
+        }
+      }, {
+        key: "logout",
+        value: function logout() {
+          localStorage.removeItem('DeepBot');
         }
       }]);
 
@@ -10809,10 +14326,14 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
     UserService.ctorParameters = function () {
       return [{
         type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"]
+      }, {
+        type: _ngrx_store__WEBPACK_IMPORTED_MODULE_6__["Store"]
       }];
     };
 
-    UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()], UserService);
+    UserService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+      providedIn: 'root'
+    })], UserService);
     /***/
   },
 
@@ -10847,7 +14368,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
     var environment = {
       production: false,
-      apiURL: 'https://localhost:44319/api/'
+      apiURL: 'https://deepbot.eu:44319/api/'
     };
     /*
      * For easier debugging in development mode, you can import the following file
@@ -10928,15 +14449,15 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
   },
 
   /***/
-  "./src/webModel/UserModel.ts":
-  /*!***********************************!*\
-    !*** ./src/webModel/UserModel.ts ***!
-    \***********************************/
+  "./src/webModel/User.ts":
+  /*!******************************!*\
+    !*** ./src/webModel/User.ts ***!
+    \******************************/
 
   /*! exports provided: User */
 
   /***/
-  function srcWebModelUserModelTs(module, __webpack_exports__, __webpack_require__) {
+  function srcWebModelUserTs(module, __webpack_exports__, __webpack_require__) {
     "use strict";
 
     __webpack_require__.r(__webpack_exports__);
@@ -11338,8 +14859,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           disc: 'disc',
           decimal: 'decimal'
         },
-        margin: function margin(theme, _ref9) {
-          var negative = _ref9.negative;
+        margin: function margin(theme, _ref37) {
+          var negative = _ref37.negative;
           return _objectSpread({
             auto: 'auto'
           }, theme('spacing'), {}, negative(theme('spacing')), {}, negative({
@@ -11684,22 +15205,22 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         zIndex: ['responsive']
       },
       corePlugins: {},
-      plugins: [function (_ref10) {
-        var addVariant = _ref10.addVariant,
-            e = _ref10.e;
-        addVariant('ltr', function (_ref11) {
-          var separator = _ref11.separator,
-              modifySelectors = _ref11.modifySelectors;
-          modifySelectors(function (_ref12) {
-            var className = _ref12.className;
+      plugins: [function (_ref38) {
+        var addVariant = _ref38.addVariant,
+            e = _ref38.e;
+        addVariant('ltr', function (_ref39) {
+          var separator = _ref39.separator,
+              modifySelectors = _ref39.modifySelectors;
+          modifySelectors(function (_ref40) {
+            var className = _ref40.className;
             return "[dir=ltr] .ltr".concat(e(separator)).concat(className);
           });
         });
-        addVariant('rtl', function (_ref13) {
-          var separator = _ref13.separator,
-              modifySelectors = _ref13.modifySelectors;
-          modifySelectors(function (_ref14) {
-            var className = _ref14.className;
+        addVariant('rtl', function (_ref41) {
+          var separator = _ref41.separator,
+              modifySelectors = _ref41.modifySelectors;
+          modifySelectors(function (_ref42) {
+            var className = _ref42.className;
             return "[dir=rtl] .rtl".concat(e(separator)).concat(className);
           });
         });

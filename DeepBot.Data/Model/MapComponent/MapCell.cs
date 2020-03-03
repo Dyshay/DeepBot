@@ -23,7 +23,5 @@ namespace DeepBot.Data.Model
         public bool IsWalkable => IsActive && Type != CellTypes.NOT_WALKABLE && !IsInLineOfSight && !IsInteractiveCell;
         public bool IsTeleportCell => TeleportTexturesSpritesId.Contains(LayerObject1) || TeleportTexturesSpritesId.Contains(LayerObject2);
         public bool IsInteractiveCell => Type == CellTypes.INTERACTIVE_OBJECT || InteractiveObject != -1;
-
-
     }
 }

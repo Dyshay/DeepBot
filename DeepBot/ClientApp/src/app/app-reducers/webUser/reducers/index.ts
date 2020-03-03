@@ -27,6 +27,7 @@ export const selectwebUserStatusState = createSelector(
 export const getUser = createSelector(selectwebUserStatusState, fromwebUser.getUser);
 export const getError = createSelector(selectwebUserStatusState, fromwebUser.getError);
 export const getPending = createSelector(selectwebUserStatusState, fromwebUser.getPending);
+export const getSideNav = createSelector(selectwebUserStatusState, fromwebUser.getSideNav);
 
 
 

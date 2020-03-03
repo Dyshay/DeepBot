@@ -56,5 +56,27 @@ namespace DeepBot.Controllers
             }
                 return null;
         }
+
+        [HttpGet]
+        [Authorize]
+        [Route("GetCharacter/{id}")]
+        public async Task<Character> GetCharacterByIdAsync(int id)
+        {
+            Character character = new Character();
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user != null)
+            {
+                character = user.Accounts.Select(c => c.CurrentCharacter).FirstOrDefault(c => c.Key == id);
+
+                if (character != null)
+                    return character;
+
+                return null;
+            }
+
+            return null;
+        }
     }
 }

@@ -44,7 +44,6 @@ export class webUserEffects {
         this.groupStore.dispatch(GroupActions.getAllGroups());
         let token = user.token;
         localStorage.setItem('DeepBot', token);
-        this.navigationService.GenerateNavigation();
         this.router.navigate(['/']);
       })
     ),
@@ -66,6 +65,37 @@ export class webUserEffects {
         else if (error.error.message === "MailNotConfirmed") {
           this.toastr.error('', 'Veuillez confirmer votre compte via l"email recu sur votre boite mail.');
         }
+      })
+    )
+  );
+
+  sideNav$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(webUserActions.getBotNav),
+      map(action => action),
+      exhaustMap(() =>
+        this.navigationService.GenerateNavigation().pipe(
+          map(sideNav => webUserActions.getBotNavSuccess({ sideNav })),
+          catchError(error => of(webUserActions.getBotNavFailure({ error }))))
+      )
+    )
+  );
+
+  sideNavSuccess$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(webUserActions.getBotNavSuccess),
+      map(action => action.sideNav),
+      tap((user: any) => {
+      })
+    ),
+    { dispatch: false }
+  );
+
+  sideNavFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(webUserActions.getBotNavFailure),
+      map(action => action.error),
+      tap((error: any) => {
       })
     )
   );

@@ -6,10 +6,24 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Database\Resources\Interactives.json" />
+    <None Remove="Database\Resources\Items.json" />
+    <None Remove="Database\Resources\Maps.json" />
+    <None Remove="Database\Resources\Spells.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AspNetCore.Identity.Mongo" Version="6.1.3" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.10.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Database\Resources\Interactives.json" />
+    <EmbeddedResource Include="Database\Resources\Items.json" />
+    <EmbeddedResource Include="Database\Resources\Maps.json" />
+    <EmbeddedResource Include="Database\Resources\Spells.json" />
   </ItemGroup>
 
 </Project>

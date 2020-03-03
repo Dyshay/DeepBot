@@ -20,21 +20,21 @@ export class Character {
   name: string;
   level: number;
   breedId: number;
-  sex: number =0;
-  kamas?: number;
-  availableCharactericsPts?: number;
-  availableSpellPts?: number;
+  sex: number;
+  kamas: number;
+  availableCharactericsPts: number;
+  availableSpellPts: number;
   serverId: number;
-  cell?: Cell;
-  trajet?: Trajet;
-  config?: ConfigCharacter;
-  group?: Group;
-  ia?: IA;
-  spells?: Spell[];
+  cell?: Cell | null;
+  trajet?: Trajet | null;
+  config?: ConfigCharacter | null;
+  group?: Group| null;
+  ia?: IA| null;
+  spells?: Spell[]| null;
   characteristic?: Caracteristic;
   inventory?: Inventory;
-  jobs?: Job[];
-  map?: CharacterMap;
+  jobs?: Job[]| null;
+  map?: CharacterMap| null;
 }
 
 
