@@ -4,6 +4,7 @@ using DeepBot.ControllersModel;
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Data.Database;
+using DeepBot.Data.Database.Loaders;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.CharacterInfo;
@@ -19,6 +20,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -113,23 +115,17 @@ namespace DeepBot
                 };
             });
 
-            //Map.Initialize();
-            //foreach (var item in Map.Maps.Values)
-            //{
-            //    MapDB map = new MapDB()
-            //    {
-            //        AreaId = item.AreaId,
-            //        AreaName = item.AreaName,
-            //        GlobalAreaName = item.GlobalAreaName,
-            //        Height = item.Height,
-            //        Width = item.Width,
-            //        MapId = item.MapId,
-            //        Cells = item.Cells,
-            //        CellsTeleport = item.CellsTeleport,
-            //        Coordinate = item.Coordinate,
-            //    };
-            //    map.Insert();
-            //}
+            if (Database.Maps.FindSync(FilterDefinition<MapDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Maps not imported, processing import");
+                Loader.LoadMaps();
+            }
+
+            if (Database.Items.FindSync(FilterDefinition<ItemDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Items not imported, processing import");
+                Loader.LoadItems();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
