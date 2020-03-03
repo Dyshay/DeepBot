@@ -286,6 +286,9 @@
     "DEPLACEMENT": "Direction de déplacement",
     "CONSOMMABLEUSED": "Consommable utilisé",
     "FIGHTHERE": "Le bot va combattre sur cette map",
-    "GATHERHERE": "Le bot va récolter sur cette map"
+    "GATHERHERE": "Le bot va récolter sur cette map",
+    "SYNTHESIS": "Synthése",
+    "SYNTHESISLABEL": "Synthése de votre trajet",
+    "SYNTHESISLABELINFO": "Visualisez le trajet généré puis générez le"
   }
 }

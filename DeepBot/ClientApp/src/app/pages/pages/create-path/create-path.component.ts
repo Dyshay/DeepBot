@@ -79,6 +79,8 @@ export class CreatePathComponent implements OnInit {
     this.pathToCreate.pathAction = [];
   }
 
+ 
+
   ngAfterViewInit() {
     var self = this;
       $(document).ready(function () {
@@ -221,6 +223,10 @@ export class CreatePathComponent implements OnInit {
       this.pathService.direction.push('Right');
     if (this.directionBottom)
       this.pathService.direction.push('Bottom');
+  }
+
+  createPath() {
+
   }
 
 

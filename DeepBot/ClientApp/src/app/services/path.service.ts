@@ -15,7 +15,7 @@ const httpOptions = {
 export class PathService {
   statePath: number;
   direction: string[] = [];
-  path: Path;
+  path: Path =new Path;
   pathActionToAdd: PathAction = new PathAction;
   mapActionToAdd: MapAction = new MapAction;
   moveActionToAdd: MoveAction = new MoveAction;
@@ -167,7 +167,7 @@ export class PathService {
     var order = this.getOrdre(position);
     this.interactionActionToAdd = {
       interactiveIdObject: payload.interactiveIdObject,
-      InteractiveIdResponse: payload.InteractiveIdResponse
+      interactiveIdResponse: payload.interactiveIdResponse
     };
     this.addActionMapOnMap(position, order, this.interactionActionToAdd, 'InteractionAction');
 
@@ -278,6 +278,9 @@ export class PathService {
       console.log('addzaapi');
       this.toastr.success('', 'Action zaapi ajouté avec succés en (' + position + ') destination ( ' + action.destination + ')');
     }
+
+
+    this.path.pathAction.find(o => o.mapPos === position).actions.sort(o => o.order);
   }
 
 
