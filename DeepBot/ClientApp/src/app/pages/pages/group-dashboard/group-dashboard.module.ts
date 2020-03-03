@@ -26,10 +26,12 @@ import { WidgetAssistantModule } from '../../../../@vex/components/widgets/widge
 import { WidgetLargeChartModule } from '../../../../@vex/components/widgets/widget-large-chart/widget-large-chart.module';
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { WidgetTableModule } from '../../../../@vex/components/widgets/widget-table/widget-table.module';
+import { ListeComponent } from '../../../generic-components/liste/liste.component';
+import { ListeGroupComponent } from '../../../generic-components/liste/liste-group.component';
 
 
 @NgModule({
-  declarations: [GroupDashboardComponent,DashboardGroupComponent,GroupFightComponent,GroupInventoryComponent,GroupParametersComponent],
+  declarations: [GroupDashboardComponent, DashboardGroupComponent, GroupFightComponent, GroupInventoryComponent, GroupParametersComponent,ListeGroupComponent],
   imports: [
     CommonModule,
     GroupDashboardRoutingModule,
@@ -42,24 +44,19 @@ import { WidgetTableModule } from '../../../../@vex/components/widgets/widget-ta
     IconModule,
     FormsModule,
     MatButtonModule,
-    MatIconModule,
     MatTooltipModule,
     MatRippleModule,
     MatProgressBarModule,
     MatListModule,
     ChartModule,
-    MatIconModule,
     WidgetQuickLineChartModule,
     WidgetQuickValueCenterModule,
     WidgetQuickValueStartModule,
     WidgetLargeGoalChartModule,
-    IconModule,
     WidgetAssistantModule,
     WidgetLargeChartModule,
     WidgetTableModule,
     SecondaryToolbarModule,
-    MatButtonModule,
-    PageLayoutModule,
     MatInputModule,
     ContainerModule,
     MatSelectModule,

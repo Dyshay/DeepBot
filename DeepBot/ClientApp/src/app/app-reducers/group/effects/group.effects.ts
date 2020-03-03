@@ -11,6 +11,7 @@ import { AccountService } from '../../../services/account.service';
 import { Group } from '../../../../webModel/Group';
 import { ToastrService } from 'ngx-toastr';
 import { GroupsService } from '../../../services/group.service';
+import { ConfigGroup } from '../../../../webModel/ConfigGroup';
 
 @Injectable()
 export class GroupEffects {
@@ -158,6 +159,39 @@ export class GroupEffects {
   deleteGroupFailure$ = createEffect(() =>
     this.actions$.pipe(
       ofType(GroupActions.deleteGroupFailure),
+      map(action => action.error),
+
+    )
+  );
+
+
+  updateGroupConfig$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroupConfig),
+      map(action => action.groupConfigToUpdate),
+      exhaustMap((groupConfigToUpdate: ConfigGroup) =>
+        this.groupService.updateGroupConfig(groupConfigToUpdate).pipe(
+          map(groupConfigToUpdate => GroupActions.updateGroupConfigSuccess({ groupConfigToUpdate })),
+          catchError(error => of(GroupActions.updateGroupConfigFailure({ error }))))
+      )
+    )
+
+  );
+
+  updateGroupConfigSucces$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroupConfigSuccess),
+      map(action => action.groupConfigToUpdate),
+      tap((config: any) => {
+        this.toastr.success('', 'Configuration modifié avec succés');
+      })
+    ),
+    { dispatch: false }
+  );
+
+  updateGroupConfigFailure$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(GroupActions.updateGroupConfigFailure),
       map(action => action.error),
 
     )

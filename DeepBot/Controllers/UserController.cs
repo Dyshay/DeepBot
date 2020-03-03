@@ -81,7 +81,6 @@ namespace DeepBot.Controllers
                 }
 
             }
-
             if (user != null)
             {
 

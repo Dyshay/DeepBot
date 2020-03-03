@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>{{ 'CREATEPATH.CHOICEINTERACTION' | translate }}</h1>
+<div mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>{{ 'CREATEPATH.IDINTERACTIVE' | translate }}</mat-label>
+    <input type="number" matInput [(ngModel)]="data.interactiveIdObject">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>{{ 'CREATEPATH.IDACTIONINTERACTIVE' | translate }}</mat-label>
+    <input type="number" matInput [(ngModel)]="data.InteractiveIdResponse">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()">{{ 'GLOBAL.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>{{ 'GLOBAL.VALIDATE' | translate }}</button>
+</div>

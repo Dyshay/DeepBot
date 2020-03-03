@@ -4,6 +4,9 @@ import { ToolbarUserDropdownComponent } from './toolbar-user-dropdown/toolbar-us
 import icPerson from '@iconify/icons-ic/twotone-person';
 import theme from '../../utils/tailwindcss';
 import { Account } from 'src/webModel/Account';
+import { User } from '../../../webModel/User';
+import * as fromwebuser from 'src/app/app-reducers/webUser/reducers';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'vex-toolbar-user',
@@ -16,12 +19,18 @@ export class ToolbarUserComponent implements OnInit {
   icPerson = icPerson;
 
   theme = theme;
-  @Input() username : Account | null;
+  user : User ;
 
   constructor(private popover: PopoverService,
+    private storeUser: Store<fromwebuser.State>,
               private cd: ChangeDetectorRef) { }
 
   ngOnInit() {
+    this.storeUser.pipe(select(fromwebuser.getUser)).subscribe(
+      (result) => {
+        this.user = result;
+      }
+    );
   }
 
   showPopover(originRef: HTMLElement) {

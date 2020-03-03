@@ -63,11 +63,11 @@ namespace DeepBot.Controllers
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
             var account = user.Accounts.Find(c => c.AccountName == acc.accountName);
-            account.isScan = false;
             account.CurrentCharacter = account.Characters.Find(c => c.Key == acc.currentCharacterId);
             await CreateConfigAsync(account.CurrentCharacter.Key);
 
             user.Accounts.RemoveAll(o=> o.isScan);
+            account.isScan = false;
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
             account.ExpirationDateBan = null;

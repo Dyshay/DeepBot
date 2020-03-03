@@ -5,6 +5,8 @@ import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animati
 import { scaleFadeIn400ms } from '../../../../../@vex/animations/scale-fade-in.animation';
 import { GroupInterface } from '../../../../../webModel/Interface/group.interface';
 import { TableColumn } from '../../../../../@vex/interfaces/table-column.interface';
+import icStar from '@iconify/icons-ic/twotone-star';
+import icStarBorder from'@iconify/icons-ic/star-border'
 
 @Component({
     selector: 'app-update-group-data-table',
@@ -35,6 +37,8 @@ export class UpdateGroupDataTableComponent<T> implements OnInit, OnChanges, Afte
   @Output() openGroup = new EventEmitter<GroupInterface['name']>();
 
   visibleColumns: Array<keyof T | string>;
+  icStar = icStar;
+  icStarBorder = icStarBorder;
   dataSource = new MatTableDataSource<T>();
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
