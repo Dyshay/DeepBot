@@ -1,6 +1,7 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.Global;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -41,6 +42,21 @@ namespace DeepBot.Data.Database.Loaders
             foreach (var map in Maps.Values)
             {
                 map.Insert();
+            }
+        }
+
+        public static void LoadSpells()
+        {
+            var Spells = new Dictionary<int, SpellDB>();
+            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DeepBot.Data.Database.Resources.Spells.json");
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                Spells = JsonSerializer.Deserialize<List<SpellJson>>(result).ToDictionary(c => c.Id, c => DecompressSpell(c));
+            }
+            foreach (var spell in Spells.Values)
+            {
+                spell.Insert();
             }
         }
 
@@ -119,6 +135,43 @@ namespace DeepBot.Data.Database.Loaders
                 Y = loc5 - loc7
             };
             return cell;
+        }
+
+        public static SpellDB DecompressSpell(SpellJson spellj)
+        {
+            SpellDB spell = new SpellDB();
+            spell.Key = spellj.Id;
+            spell.Stats = new List<SpellStat>();
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelOne));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelTwo));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelThree));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelFour));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelFive));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelSix));
+            return spell;
+        }
+
+        public static SpellStat DecompressSpellStat(string data)
+        {
+            if (data == "-1")
+                return null;
+            var stat = new SpellStat();
+            var datas = data.Split(',');
+            stat.PA = byte.Parse(datas[2]);
+            stat.RangeMinimum = byte.Parse(datas[3]);
+            stat.RangeMaximum = byte.Parse(datas[4]);
+            stat.CriticalRate = short.Parse(datas[5]);
+            stat.EchecRate = short.Parse(datas[6]);
+            stat.LineOnly = bool.Parse(datas[7]);
+            stat.LineOfSight = bool.Parse(datas[8]);
+            stat.FreeCell = bool.Parse(datas[9]);
+            stat.CanBoostRange = bool.Parse(datas[10]);
+            stat.LaunchCountByTurn = byte.Parse(datas[11]);
+            stat.LaunchCountByTarget = byte.Parse(datas[12]);
+            stat.CoolDown = byte.Parse(datas[14]);
+            stat.RangeType = datas[15];
+            stat.RequiredLevel = byte.Parse(datas[18]);
+            return stat;
         }
     }
 }

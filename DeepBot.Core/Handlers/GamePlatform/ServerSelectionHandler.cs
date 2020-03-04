@@ -1,4 +1,5 @@
-﻿using DeepBot.Core.Hubs;
+﻿using DeepBot.Core.Extensions;
+using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
@@ -93,7 +94,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             account.CurrentCharacter.Level = byte.Parse(splittedData[2]);
             account.CurrentCharacter.BreedId = byte.Parse(splittedData[3]);
             account.CurrentCharacter.Sex = byte.Parse(splittedData[4]);
-            //account.CurrentCharacter.Inventory.getInventory(splittedData[9]);
+            account.CurrentCharacter.Inventory.DeserializeInventory(splittedData[9]);
 
             account.State = AccountState.IDLE;
             hub.SendPackage("GC1", tcpId);

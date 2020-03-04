@@ -120,11 +120,15 @@ namespace DeepBot
                 Console.WriteLine("Maps not imported, processing import");
                 Loader.LoadMaps();
             }
-
             if (Database.Items.FindSync(FilterDefinition<ItemDB>.Empty).FirstOrDefault() == null)
             {
                 Console.WriteLine("Items not imported, processing import");
                 Loader.LoadItems();
+            }
+            if (Database.Spells.FindSync(FilterDefinition<SpellDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Spells not imported, processing import");
+                Loader.LoadSpells();
             }
         }
 
