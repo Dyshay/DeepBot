@@ -41,5 +41,36 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 characterGame.Spells.DeserializeSpells(package.Substring(2));
             }
         }
+
+        [Receiver("PIK")]
+        public void PodsUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            string[] pods = package.Substring(2).Split('|');
+            characterGame.Inventory.ActualPods = short.Parse(pods[0]);
+            characterGame.Inventory.MaxPods = short.Parse(pods[1]);
+        }
+
+        [Receiver("DV")]
+        public void NPCDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { }
+
+        [Receiver("EV")]
+        public void OtherDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { }
+
+        [Receiver("PIK")]
+        public void GroupRequestPacketHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            if (characterGame.HasGroup && package.Substring(3).Split('|')[0].ToLower() == characterGame.Group.Leader.Name.ToLower())
+            {
+                // TODO cliente.account.connexion.SendPacket("PA");
+                // TODO notify
+            } else
+            {
+                // TODO cliente.account.connexion.SendPacket("PR");
+                // TODO notify
+            }
+        }
+
     }
 }
