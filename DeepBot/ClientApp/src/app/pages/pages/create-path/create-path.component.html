@@ -461,6 +461,9 @@
                   <div *ngIf="mapAction.zaapiAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
                     <p>Utilisation du Zaapi : {{mapAction.zaapiAction.zaapiId}}, destination {{mapAction.zaapiAction.destination}}</p>
                   </div>
+                  <div *ngIf="mapAction.bankAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                    <p>Echange avec Banquier</p>
+                  </div>
                   <mat-divider class="width-30 mt-1"></mat-divider>
                 </div>
               </mat-expansion-panel>

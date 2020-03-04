@@ -278,6 +278,7 @@
     "SPECIFICLEVELMAX": "Level maximum de monstre",
     "SPECIFICLEVELMAXHINT": "N'attaque pas le groupe si le level de monstre de cette ID est supérieur",
     "INTERACTION": "Intéragir avec l'environnement",
+    "BANKACTION": "Map banque (entrer,échanger,sortir)",
     "IDINTERACTIVE": "ID de l'objet ou PNJ d'interaction",
     "IDACTIONINTERACTIVE": "ID de l'interaction avec l'Objet ou PNJ",
     "CHOICEINTERACTION": "Choisissez l'interaction avec l'envrionnement",
@@ -289,6 +290,7 @@
     "GATHERHERE": "Le bot va récolter sur cette map",
     "SYNTHESIS": "Synthése",
     "SYNTHESISLABEL": "Synthése de votre trajet",
-    "SYNTHESISLABELINFO": "Visualisez le trajet généré puis générez le"
+    "SYNTHESISLABELINFO": "Visualisez le trajet généré puis générez le",
+    "BANKEXCHANGE": "Echange avec Banquier"
   }
 }

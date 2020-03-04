@@ -58,21 +58,17 @@ export class DialogListActionComponent implements OnInit {
   }
 
   updateAction() {
-    console.log(this.zaapSelected);
     if (this.zaapSelected !== null) {
       this.data.actions.find(o => o.moveAction.cellId == this.Zaaps.find(o => o.id == this.data.actions.find(o => o.zaapAction).zaapAction.zaapId).cellId).moveAction.cellId = this.zaapSelected.cellId;
-      this.data.actions.find(o => o.zaapAction).zaapAction = {
-        destination: this.zaapSelected.destination,
-        zaapId: this.zaapSelected.id
-      }
+      this.data.actions.find(o => o.zaapAction != null).zaapAction.destination = this.zaapSelected.destination;
+      this.data.actions.find(o => o.zaapAction != null).zaapAction.zaapId = this.zaapSelected.id;
     }
 
     if (this.zaapiSelected != null) {
       this.data.actions.find(o => o.moveAction.cellId == ListZaap.Zaaps.find(o => o.id == this.data.actions.find(o => o.zaapAction).zaapiAction.zaapiId).cellId).moveAction.cellId = this.zaapiSelected.cellId;
-      this.data.actions.find(o => o.zaapiAction).zaapiAction = {
-        destination: this.zaapiSelected.destination,
-        zaapiId: this.zaapiSelected.cellId
-      }
+
+      this.data.actions.find(o => o.zaapiAction != null).zaapiAction.destination = this.zaapiSelected.destination;
+      this.data.actions.find(o => o.zaapiAction != null).zaapiAction.zaapiId = this.zaapiSelected.cellId;
     }
 
 

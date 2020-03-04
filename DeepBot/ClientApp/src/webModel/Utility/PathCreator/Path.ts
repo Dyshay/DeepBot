@@ -50,6 +50,7 @@ export class MapAction {
   interactionAction?: InteractionAction;
   zaapAction?: ZaapAction;
   zaapiAction?: ZaapiAction;
+  bankAction?: BankAction;
 }
 export class MoveAction {
   direction?: string[];
@@ -59,6 +60,8 @@ export class MoveAction {
 }
 export class UseItemAction {
   itemId: number;
+  toGoBank: boolean;
+  toBackBank: boolean;
 }
 export class FightAction {
   isAlone: boolean;
@@ -71,14 +74,23 @@ export class GatherAction {
 export class InteractionAction {
   interactiveIdObject: number;
   interactiveIdResponse: number;
+  toGoBank: boolean;
+  toBackBank: boolean;
 }
 
 export class ZaapAction {
   zaapId: number;
   destination: string;
+  toGoBank: boolean;
+  toBackBank: boolean;
 }
 
 export class ZaapiAction {
   zaapiId: number;
   destination: string;
+  toGoBank: boolean;
+  toBackBank: boolean;
+}
+
+export class BankAction {
 }

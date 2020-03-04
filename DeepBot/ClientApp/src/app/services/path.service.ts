@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Path, PathAction, MapAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, ZaapAction, ZaapiAction } from '../../webModel/Utility/PathCreator/Path';
+import { Path, PathAction, MapAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, ZaapAction, ZaapiAction, BankAction } from '../../webModel/Utility/PathCreator/Path';
 import { ToastrService } from 'ngx-toastr';
+import { ListBank } from '../../webModel/Utility/PathCreator/Bank';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -15,7 +16,7 @@ const httpOptions = {
 export class PathService {
   statePath: number;
   direction: string[] = [];
-  path: Path =new Path;
+  path: Path = new Path;
   pathActionToAdd: PathAction = new PathAction;
   mapActionToAdd: MapAction = new MapAction;
   moveActionToAdd: MoveAction = new MoveAction;
@@ -25,41 +26,158 @@ export class PathService {
   interactionActionToAdd: InteractionAction = new InteractionAction;
   zaapActionToAdd: ZaapAction = new ZaapAction;
   zaapiActiontoAdd: ZaapiAction = new ZaapiAction;
+  bankActionToAdd: BankAction = new BankAction;
+
   constructor(private http: HttpClient, private toastr: ToastrService) {
     this.toastr.toastrConfig.timeOut = 3300;
     this.toastr.toastrConfig.maxOpened = 4;
     this.toastr.toastrConfig.autoDismiss = true;
     this.toastr.toastrConfig.newestOnTop = true;
-    this.toastr.toastrConfig.positionClass ='toast-top-full-width'
+    this.toastr.toastrConfig.positionClass = 'toast-top-full-width'
   }
 
 
   receivedActionToadd(position: string) {
     var index = this.path.pathAction.findIndex(o => o.mapPos == position);
     var toDelete = false;
-    if (index !== -1 && this.statePath === 3) {
-      console.log(this.path.pathAction[index].actions);
-      var index2 = this.path.pathAction[index].actions.findIndex(o => o.moveAction != null && o.moveAction.toGoBank === false);
-      if (index2 !== -1) {
-        toDelete = true;
+    var deletedactionsGoBank = false;
+    var deletedactionsBackBank = false;
+    if (index !== -1 && this.statePath === 3) { 
+      for (var i = 0; i < this.path.pathAction[index].actions.length; i++) {
+        if (this.path.pathAction[index].actions[i].interactionAction ? this.path.pathAction[index].actions[i].interactionAction.toBackBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsBackBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].moveAction ? this.path.pathAction[index].actions[i].moveAction.toBackBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else if (this.path.pathAction[index].actions[i].moveAction.cellId ==null) {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsBackBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].useItemAction ? this.path.pathAction[index].actions[i].useItemAction.toBackBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsBackBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].zaapAction ? this.path.pathAction[index].actions[i].zaapAction.toBackBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsBackBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].zaapiAction ? this.path.pathAction[index].actions[i].zaapiAction.toBackBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsBackBank = true;
+            continue;
+          }
+        }
       }
     }
     else if (index !== -1 && this.statePath === 2) {
-      var index2 = this.path.pathAction[index].actions.findIndex(o => o.moveAction != null && o.moveAction.toBackBank === false);
-      if (index2 !== -1) {
-        toDelete = true;
+      for (var i = 0; i < this.path.pathAction[index].actions.length; i++) {
+        if (this.path.pathAction[index].actions[i].interactionAction ? this.path.pathAction[index].actions[i].interactionAction.toGoBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsGoBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].moveAction ? this.path.pathAction[index].actions[i].moveAction.toGoBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsGoBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].useItemAction ? this.path.pathAction[index].actions[i].useItemAction.toGoBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsGoBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].zaapAction ? this.path.pathAction[index].actions[i].zaapAction.toGoBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsGoBank = true;
+            continue;
+          }
+        }
+        if (this.path.pathAction[index].actions[i].zaapiAction ? this.path.pathAction[index].actions[i].zaapiAction.toGoBank:false) {
+          if (this.path.pathAction[index].actions.length == 1) {
+            this.deleteActionOnMap(position);
+            return;
+          }
+          else {
+            this.path.pathAction[index].actions.splice(i, 1);
+            deletedactionsGoBank = true;
+            continue;
+          }
+        }
       }
     }
     else if (this.statePath === 0 || this.statePath === 1) {
       if (index !== -1)
         toDelete = true;
     }
+    if (deletedactionsGoBank) {
+      this.toastr.success('', 'Actions associées au retour en banque supprimées avec succés');
+      return;
+    }
+    if (deletedactionsBackBank) {
+      this.toastr.success('', 'Actions associées au retour vers la zone supprimées avec succés');
+      return;
+    }
 
     /*l'action  sur la map n'existe pas */
     if (toDelete === false) {
 
-    /* création de la map action */
-      if (index ===-1)
+      /* création de la map action */
+      if (index === -1)
         this.createActionOnMap(position);
 
       /* création action combat + move */
@@ -75,7 +193,7 @@ export class PathService {
         this.addMoveAction(position);
       }
       else {
-        if (this.statePath === 2 )
+        if (this.statePath === 2)
           this.toastr.warning('Atention map ajoutée au trajet sans aucune action !', 'Ajout map ' + position + ' au trajet retour en banque');
         else
           this.toastr.warning('Atention map ajoutée au trajet sans aucune action !', 'Ajout map ' + position + ' au trajet retour de banque vers zone');
@@ -119,12 +237,18 @@ export class PathService {
     }
     else if (type === 'interaction') {
       this.addInteractionAction(position, payload);
-
+    }
+    else if (type = 'bankProcess') {
+      let cellIdEnter = ListBank.Banks.find(o => o.posBank == position).enterBankCellId;
+      this.addMoveAction(position, cellIdEnter);
+      this.addBankAction(position);
+      let cellIdExit = ListBank.Banks.find(o => o.posBank == position).exitBankCellId;
+      this.addMoveAction(position, cellIdExit,true);
     }
     console.log(this.path);
   }
 
-  getAlActionsOnMap(position):PathAction {
+  getAlActionsOnMap(position): PathAction {
     return this.path.pathAction.find(o => o.mapPos === position);
   }
 
@@ -147,28 +271,56 @@ export class PathService {
 
   addUseItemAction(position, item) {
     var order = this.getOrdre(position);
+    if(this.statePath ==2)
     this.useItemActionToAdd = {
-      itemId: item
-    }
+      itemId: item,
+      toBackBank: false,
+      toGoBank:true
+      }
+    else
+      this.useItemActionToAdd = {
+        itemId: item,
+        toBackBank: true,
+        toGoBank: false
+      }
     this.addActionMapOnMap(position, order, this.useItemActionToAdd, 'UseItemAction');
   }
   addZaapAction(position, payload) {
     this.addMoveAction(position, payload.cellId);
     var order = this.getOrdre(position);
-    // voir les prop necessaire  pour zaap */ 
-    this.zaapActionToAdd = {
-      destination: payload.destination,
-      zaapId: payload.id
-    };
+    if (this.statePath == 2)
+      this.zaapActionToAdd = {
+        destination: payload.destination,
+        zaapId: payload.id,
+        toBackBank: false,
+        toGoBank: true
+      };
+    else
+      this.zaapActionToAdd = {
+        destination: payload.destination,
+        zaapId: payload.id,
+        toBackBank: true,
+        toGoBank: false
+      };
     this.addActionMapOnMap(position, order, this.zaapActionToAdd, 'ZaapAction');
   }
 
   addInteractionAction(position, payload) {
     var order = this.getOrdre(position);
-    this.interactionActionToAdd = {
-      interactiveIdObject: payload.interactiveIdObject,
-      interactiveIdResponse: payload.interactiveIdResponse
-    };
+    if (this.statePath == 2)
+      this.interactionActionToAdd = {
+        interactiveIdObject: payload.interactiveIdObject,
+        interactiveIdResponse: payload.interactiveIdResponse,
+        toBackBank: false,
+        toGoBank: true
+      };
+    else
+      this.interactionActionToAdd = {
+        interactiveIdObject: payload.interactiveIdObject,
+        interactiveIdResponse: payload.interactiveIdResponse,
+        toBackBank: true,
+        toGoBank: false
+      };
     this.addActionMapOnMap(position, order, this.interactionActionToAdd, 'InteractionAction');
 
   }
@@ -177,11 +329,20 @@ export class PathService {
 
     this.addMoveAction(position, payload.cellId);
     var order = this.getOrdre(position);
-    // voir les prop necessaire  pour zaapi */
-    this.zaapiActiontoAdd = {
-      destination: payload.destination,
-      zaapiId: payload.id
-    };
+    if (this.statePath == 2)
+      this.zaapiActiontoAdd = {
+        destination: payload.destination,
+        zaapiId: payload.id,
+        toBackBank: false,
+        toGoBank: true
+      };
+    else
+      this.zaapiActiontoAdd = {
+        destination: payload.destination,
+        zaapiId: payload.id,
+        toBackBank: true,
+        toGoBank: false
+      };
     this.addActionMapOnMap(position, order, this.zaapiActiontoAdd, 'ZaapiAction');
   }
 
@@ -256,19 +417,26 @@ export class PathService {
         this.toastr.success('', 'Action récolte ajouté avec succés en (' + position + ')');
       }
     }
+    else if (type === 'BankAction') {
+      this.path.pathAction.find(o => o.mapPos === position).actions.push({
+        order: order,
+        bankAction: action
+      });
+        this.toastr.success('', 'Action échange avec banquier ajouté avec succés en (' + position + ')');
+    }
     else if (type === 'InteractionAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({
         order: order,
         interactionAction: action
       });
-      this.toastr.success('', 'Action Interaction ajouté avec succés en (' + position + '), interaction ( objet/pnj :' + action.interactiveIdObject + ' , action : ' + action.InteractiveIdResponse +')');
+      this.toastr.success('', 'Action Interaction ajouté avec succés en (' + position + '), interaction ( objet/pnj :' + action.interactiveIdObject + ' , action : ' + action.InteractiveIdResponse + ')');
     }
     else if (type === 'ZaapAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({
         order: order,
         zaapAction: action
       });
-      this.toastr.success('', 'Action zaap ajouté avec succés en (' + position + ') destination ( ' + action.destination +')' );
+      this.toastr.success('', 'Action zaap ajouté avec succés en (' + position + ') destination ( ' + action.destination + ')');
     }
     else if (type === 'ZaapiAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({
@@ -284,10 +452,10 @@ export class PathService {
   }
 
 
-  addMoveAction(position, cell: number = null) {
+  addMoveAction(position, cell: number = null,overstate:boolean = false) {
     var ordre = this.getOrdre(position);
-    if (this.statePath === 2) {
-      if (cell === null)
+    if (this.statePath === 2 && !overstate) {
+      if (cell === null )
         this.moveActionToAdd = {
           direction: this.direction,
           toGoBank: true,
@@ -301,7 +469,7 @@ export class PathService {
         }
 
     }
-    else if (this.statePath === 3) {
+    else if (this.statePath === 3 || overstate) {
       if (cell == null)
         this.moveActionToAdd = {
           direction: this.direction,
@@ -325,7 +493,7 @@ export class PathService {
       else
         this.moveActionToAdd = {
           cellId: cell,
-          toGoBank: true,
+          toGoBank: false,
           toBackBank: false
         }
     }
@@ -346,6 +514,12 @@ export class PathService {
     var ordre = this.getOrdre(position)
     this.gatherActionToAdd = {};
     this.addActionMapOnMap(position, ordre, this.gatherActionToAdd, 'GatherAction');
+
+  }
+  addBankAction(position) {
+    var ordre = this.getOrdre(position)
+    this.bankActionToAdd = {};
+    this.addActionMapOnMap(position, ordre, this.bankActionToAdd, 'BankAction');
 
   }
 

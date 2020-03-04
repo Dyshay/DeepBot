@@ -88,7 +88,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             string[] splittedData = package.Substring(4).Split('|');
             
             Account account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
-            account.CurrentCharacter.Id = int.Parse(splittedData[0]);
+            account.CurrentCharacter.Key = int.Parse(splittedData[0]);
             account.CurrentCharacter.Name = splittedData[1];
             account.CurrentCharacter.Level = byte.Parse(splittedData[2]);
             account.CurrentCharacter.BreedId = byte.Parse(splittedData[3]);

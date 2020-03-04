@@ -24,7 +24,7 @@
           <input type="number" matInput [(ngModel)]="mapaction.useItemAction.itemId">
         </mat-form-field>
       </div>
-      <div *ngIf="mapaction.fightAction != null"  fxLayout="column" fxLayoutAlign="center center" fxFlex="80" class="ml-3">
+      <div *ngIf="mapaction.fightAction != null" fxLayout="column" fxLayoutAlign="center center" fxFlex="80" class="ml-3">
         <mat-slide-toggle color="primary" [(ngModel)]="mapaction.fightAction.isAlone">{{'CREATEPATH.FIGHTALONE' | translate}}</mat-slide-toggle>
         <mat-hint>{{'CREATEPATH.FIGHTHERE' | translate}}</mat-hint>
       </div>
@@ -51,24 +51,26 @@
       </div>
       <div *ngIf="mapaction.zaapiAction != null" fxLayout="row" fxLayoutAlign="center center" fxFlex="80" class="ml-3">
         <mat-form-field class="full-width">
-        <mat-label>Zaapi</mat-label>
-        <input [formControl]="zaapiCtrl" [matAutocomplete]="auto" matInput>
-        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-          <mat-option *ngFor="let zaapi of filteredZaapi$ | async" [value]="zaapi">
-            <span class="body-1">
-              {{ zaapi.destinationName }} ( {{zaapi.destination}} )
-            </span>
-          </mat-option>
-        </mat-autocomplete>
-        <button (click)="zaapiCtrl.reset()" *ngIf="zaapiCtrl.value" mat-icon-button matSuffix type="button">
-          <mat-icon [icIcon]="icClose"></mat-icon>
-        </button>
-        <button *ngIf="!zaapiCtrl.value" mat-icon-button matSuffix type="button">
-          <mat-icon [icIcon]="icArrowDropDown" height="24px" width="24px"></mat-icon>
-        </button>
+          <mat-label>Zaapi</mat-label>
+          <input [formControl]="zaapiCtrl" [matAutocomplete]="auto" matInput>
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let zaapi of filteredZaapi$ | async" [value]="zaapi">
+              <span class="body-1">
+                {{ zaapi.destinationName }} ( {{zaapi.destination}} )
+              </span>
+            </mat-option>
+          </mat-autocomplete>
+          <button (click)="zaapiCtrl.reset()" *ngIf="zaapiCtrl.value" mat-icon-button matSuffix type="button">
+            <mat-icon [icIcon]="icClose"></mat-icon>
+          </button>
+          <button *ngIf="!zaapiCtrl.value" mat-icon-button matSuffix type="button">
+            <mat-icon [icIcon]="icArrowDropDown" height="24px" width="24px"></mat-icon>
+          </button>
         </mat-form-field>
       </div>
-      
+      <div *ngIf="mapaction.bankAction != null" fxLayout="column" fxLayoutAlign="center center" fxFlex="80" class="ml-3">
+        <mat-slide-toggle color="primary" [checked]="true" [disabled]="true">{{'CREATEPATH.BANKEXCHANGE' | translate }}</mat-slide-toggle>
+      </div>
 
       <div fxFlex="10">
         <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="deleteAction(mapaction.order)">

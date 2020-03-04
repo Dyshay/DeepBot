@@ -68,9 +68,14 @@ export class MapBontaBanqueComponent {
         payload: consommable
       });
     }
-
-
   }
+  onContextMenuActionBank() {
+    this.specificActionEvent.next({
+      position: this.rightClickPos,
+      event: 'bankProcess',
+    })
+  }
+
   onContextMenuActionCell() {
     var cells;
     const dialogRef = this.dialog.open(DialogCellComponent, {
