@@ -16,6 +16,9 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { filter } from 'rxjs/operators';
 import { NavigationService } from '../../services/navigation.service';
 import icKeyboardArrowRight from '@iconify/icons-ic/twotone-keyboard-arrow-right';
+import { CharacterActions } from '../../../app/app-reducers/character/actions';
+import * as fromCharacter from '../../../app/app-reducers/character/reducers';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'vex-sidenav-item',
@@ -38,7 +41,7 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private router: Router,
               private cd: ChangeDetectorRef,
-              private navigationService: NavigationService) { }
+              private navigationService: NavigationService, private characterStore: Store<fromCharacter.State>) { }
 
   @HostBinding('class')
   get levelClass() {
@@ -67,6 +70,7 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
   switchBot(item){
     var regex = /([0-9]){3,}/;
     let id = regex.exec(item)[0];
+    this.characterStore.dispatch(CharacterActions.ResetCharacteristics());
   }
 
   toggleOpen() {
