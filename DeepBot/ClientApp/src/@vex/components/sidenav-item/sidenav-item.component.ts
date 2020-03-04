@@ -64,6 +64,11 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  switchBot(item){
+    var regex = /([0-9]){3,}/;
+    let id = regex.exec(item)[0];
+  }
+
   toggleOpen() {
     this.isOpen = !this.isOpen;
     this.navigationService.triggerOpenChange(this.item as NavigationDropdown);
