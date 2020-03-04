@@ -63,9 +63,11 @@ export const reducer = createReducer(initialState,
   on(CharacterActions.updateCharacterConfig, (state) => ({ ...state, pending: true })),
   on(CharacterActions.updateCharacterConfigSuccess, (state, { characterConfigToUpdate }) => ({ ...state, pending: false })),
   on(CharacterActions.updateCharacterConfigFailure, (state, { error }) => ({ ...state, error, pending: false })),
-  on(CharacterActions.addOnCurrentCharacter, (state, {currentCharacter}) => ({...state, allCurrentCharacters: state.allCurrentCharacters.concat(currentCharacter)}))
-
-
+  on(CharacterActions.addOnCurrentCharacter, (state, {currentCharacter}) => ({...state, allCurrentCharacters: state.allCurrentCharacters.concat(currentCharacter)})),
+  on(CharacterActions.ResetCharacteristics, (state) => ({...state, characteristics: initialState.characteristics, kamas: initialState.kamas, characteristicsPoints: initialState.characteristicsPoints})),
+  on(CharacterActions.updateCharacteristics, (state, {characteristics}) => ({...state, characteristics})),
+  on(CharacterActions.updateKamas, (state, {kamas}) => ({...state, kamas})),
+  on(CharacterActions.updatecharacteristicsPoints, (state, {characteristicsPoints}) => ({...state, characteristicsPoints})),
 )
 
 export const getScanCharacters = (state: State) => state.scanCharacters;

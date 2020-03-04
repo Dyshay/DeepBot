@@ -2,6 +2,7 @@ import { props, createAction } from '@ngrx/store';
 import { CharacterMessage, Character } from 'src/webModel/Character';
 import { ConfigCharacter } from '../../../../webModel/ConfigCharacter';
 import { CharacteristicsMessage } from 'src/webModel/CharacteristicsMessage';
+import { Caracteristic } from 'src/webModel/Caracteristic';
 
 
 export const receveidCharacters = createAction('[BOT/TALK] RECEIVE CHARACTERS', props<{ network: CharacterMessage }>());
@@ -19,3 +20,7 @@ export const updateCharacterConfigFailure = createAction('[BOT/ACCOUNT] UPDATE C
 
 export const addOnCurrentCharacter = createAction('[BOT/ACCOUNT] ADD NEW CURRENT CHARACTER', props<{currentCharacter: Character}>());
 
+export const ResetCharacteristics = createAction('[BOT/CHARACTER] RESET CHARACTERISTRICS');
+export const updateCharacteristics = createAction('[BOT/CHARACTER] UPDATE CHARACTERISTICS', props<{characteristics: Caracteristic}>());
+export const updateKamas = createAction('[BOT/CHARACTER] UPDATE KAMAS', props<{kamas: number}>());
+export const updatecharacteristicsPoints = createAction('[BOT/CHARACTER] UPDATE characteristicsPoints', props<{characteristicsPoints: number}>());
