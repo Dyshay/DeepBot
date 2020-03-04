@@ -19,10 +19,12 @@ namespace DeepBot.Core.Hubs
     [Authorize]
     public class DeepTalk : Hub
     {
+        private static List<string> ConnectedBot = new List<string>();
         private readonly UserManager<UserDB> Manager;
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
         private Task<UserDB> UserDB => Manager.FindByIdAsync(userId);
         private string CliID => Manager.FindByIdAsync(userId).Result.CliConnectionId;
+
         public static Dictionary<string, bool> IsScans = new Dictionary<string, bool>();
         public readonly IMongoCollection<UserDB> _userCollection;
 
@@ -46,6 +48,7 @@ namespace DeepBot.Core.Hubs
 
         public async Task JoinRoomClient()
         {
+            var CurrentUser = await UserDB;
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
@@ -71,7 +74,10 @@ namespace DeepBot.Core.Hubs
                     .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
 
             else if (!isScan)
+            {
+                ConnectedBot.Add(tcpId);
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
+            }
 
 
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
@@ -91,6 +97,9 @@ namespace DeepBot.Core.Hubs
 
         public async Task DisconnectCli(string tcpId)
         {
+            if (ConnectedBot.Contains(tcpId))
+                ConnectedBot.Remove(tcpId);
+
             await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
         }
 
@@ -100,10 +109,6 @@ namespace DeepBot.Core.Hubs
         }
 
         #region CheckScan
-        public void ScanCallBack(bool isScan, string tcpId)
-        {
-            //IsScans.Add(tcpId, isScan);
-        }
 
         public async Task CallCheck(string tcpId)
         {
