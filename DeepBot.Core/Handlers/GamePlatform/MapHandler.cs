@@ -7,6 +7,7 @@ using DeepBot.Data.Model.MapComponent;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace DeepBot.Core.Handlers.GamePlatform
@@ -22,14 +23,14 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 if(int.TryParse(_loc3[1], out int mapId))
                 {
                     hub.SendPackage($"Gdm{mapId}", tcpId);
-                    var map = Database.Maps.Find(FilterDefinition<MapDB>.Empty).ToList().Find(c => c.Key == mapId);
+                    var map = Database.Maps.Find(c => c.Key == mapId).Single();
                     hub.DispatchToClient(new MapMessage(map.Cells, map.Width, map.Height, map.AreaName, map.Coordinate, tcpId), tcpId).Wait();
                 }
             }
             else
             {
                 if(int.TryParse(package.Substring(4).Split('|')[0], out int mapId)){
-                    var map = Database.Maps.Find(FilterDefinition<MapDB>.Empty).ToList().Find(c => c.Key == mapId);
+                    var map = Database.Maps.Find(c => c.Key == mapId).Single();
                     hub.DispatchToClient(new MapMessage(map.Cells, map.Width, map.Height,map.AreaName, map.Coordinate, tcpId), tcpId).Wait();
                     hub.SendPackage("GI", tcpId);
                 }
