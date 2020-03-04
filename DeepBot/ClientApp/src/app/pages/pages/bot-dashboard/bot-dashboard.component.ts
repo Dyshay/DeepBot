@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { fadeInUp400ms } from '../../../../@vex/animations/fade-in-up.animation';
 import { fadeInRight400ms } from '../../../../@vex/animations/fade-in-right.animation';
@@ -76,7 +76,7 @@ export class BotDashboardComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log('init');
     this.activatedRoute.paramMap.subscribe(params => {
       this.store.pipe(select(fromCharacter.getAllCurrentCharacters)).subscribe(
         (result: Character[]) => {
@@ -90,7 +90,7 @@ export class BotDashboardComponent implements OnInit {
                   this.groupName = result.find(o => o.key == this.character.fk_Group).name;
                 }
               );
-              
+
             }
           }
         })
