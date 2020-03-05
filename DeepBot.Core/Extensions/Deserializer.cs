@@ -28,7 +28,7 @@ namespace DeepBot.Core.Extensions
                     string[] values = data.Split('~');
                     Item item = new Item();
                     item.DeserializeItem(data);
-                    inventory.Items.Add(item);
+                    inventory.Items.TryAdd(item.InventoryId, item);
                 }
             }
         }
@@ -39,7 +39,6 @@ namespace DeepBot.Core.Extensions
 
             if (values.Length >= 4)
             {
-
                 item.InventoryId = Convert.ToInt32(values[0], 16);
                 item.BaseId = Convert.ToInt32(values[1], 16);
                 item.Quantity = Convert.ToInt32(values[2], 16);
