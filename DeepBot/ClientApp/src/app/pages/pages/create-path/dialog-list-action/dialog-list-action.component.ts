@@ -78,6 +78,10 @@ export class DialogListActionComponent implements OnInit {
 
   deleteAction(ordre) {
     var index = this.data.actions.findIndex(o => o.order == ordre);
+    if (this.data.actions[index].zaapAction != null)
+      this.zaapSelected = null;
+    if (this.data.actions[index].zaapiAction != null)
+      this.zaapiSelected = null;
     this.data.actions.splice(index,1);
     this.toastr.success('', 'Actions de la map supprimé avec succés');
   }

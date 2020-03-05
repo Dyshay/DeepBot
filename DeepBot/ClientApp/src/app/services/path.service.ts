@@ -3,6 +3,8 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Path, PathAction, MapAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, ZaapAction, ZaapiAction, BankAction } from '../../webModel/Utility/PathCreator/Path';
 import { ToastrService } from 'ngx-toastr';
 import { ListBank } from '../../webModel/Utility/PathCreator/Bank';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -34,6 +36,12 @@ export class PathService {
     this.toastr.toastrConfig.autoDismiss = true;
     this.toastr.toastrConfig.newestOnTop = true;
     this.toastr.toastrConfig.positionClass = 'toast-top-full-width'
+  }
+
+
+
+  createPath(createdPath: Path): Observable<any> {
+    return this.http.post<Path>(`${environment.apiURL}Path/CreatePath`, createdPath, httpOptions)
   }
 
 

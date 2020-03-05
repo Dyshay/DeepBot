@@ -470,7 +470,7 @@
             </mat-accordion>
             <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
               <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(3)">{{ 'GLOBAL.BACK' | translate }}</button>
-              <button color="primary" mat-raised-button matStepperNext click="createPath()">
+              <button color="primary" mat-raised-button  (click)="createPath()">
                 {{ 'CREATEPATH.GENERATEPATH' | translate }}
               </button>
             </div>

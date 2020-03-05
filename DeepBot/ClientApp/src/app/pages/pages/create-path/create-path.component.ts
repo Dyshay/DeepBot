@@ -16,7 +16,9 @@ import { PathService } from '../../../services/path.service';
 import { Path, SpecificMonsterLevel, SpecificMonsterQuantity, CaptureMonsterQuantity, PathAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction } from '../../../../webModel/Utility/PathCreator/Path';
 import { MapArea } from '../../../../webModel/Utility/PathCreator/areas';
 declare var $: any;
-
+import * as frompath from 'src/app/app-reducers/path/reducers';
+import { PathActions } from 'src/app/app-reducers/path/actions';
+import { Store } from '@ngrx/store';
 declare global {
   interface JQuery {
     mapster(): JQuery;
@@ -66,7 +68,7 @@ export class CreatePathComponent implements OnInit {
   statePath;
   rightClickPos: string;
     /** create-path ctor */
-  constructor(private fb: FormBuilder, private pathService: PathService) {
+  constructor(private fb: FormBuilder, private pathService: PathService, private storePath: Store<frompath.State>) {
     this.pathToCreate = new Path;
   }
   ngOnInit() {
@@ -226,7 +228,9 @@ export class CreatePathComponent implements OnInit {
   }
 
   createPath() {
+    let createdPath = this.pathService.path;
 
+    this.storePath.dispatch(PathActions.createPath({ createdPath }));
   }
 
 

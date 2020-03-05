@@ -3,17 +3,17 @@
 export class Path {
   name: string;
   type: number; /* 0 fight , 1 gather */
-  maxPod: number;
-  monsterQuantityMin: number;
-  monsterQuantityMax: number;
-  groupLevelMin: number;
-  groupLevelMax: number;
+  maxPod: number=80;
+  monsterQuantityMin: number =0;
+  monsterQuantityMax: number =8;
+  groupLevelMin: number =0;
+  groupLevelMax: number=9999;
   isCapture: boolean =false;
   leaderBank: boolean = false;
   captureItem: number;
-  monsterLevel: SpecificMonsterLevel[];
-  monsterQuantity: SpecificMonsterQuantity[];
-  monsterCapture: CaptureMonsterQuantity[];
+  monsterLevel?: SpecificMonsterLevel[];
+  monsterQuantity?: SpecificMonsterQuantity[];
+  monsterCapture?: CaptureMonsterQuantity[];
   pathAction: PathAction[];
 }
 
