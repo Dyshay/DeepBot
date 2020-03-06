@@ -17,7 +17,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("GDM")]
         public void GetMapHandler(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = account.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter
+            var characterGame = account.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             if (package.Length == 21)
             {
                 string[] _loc3 = package.Split('|');
