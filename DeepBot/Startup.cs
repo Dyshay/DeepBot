@@ -53,7 +53,7 @@ namespace DeepBot
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .AddJsonOptions (opt => {
-                    opt.JsonSerializerOptions.MaxDepth =10;
+                    opt.JsonSerializerOptions.MaxDepth =15;
                     opt.JsonSerializerOptions.WriteIndented = true;
                 });
 

@@ -7,6 +7,9 @@ import { PathService } from '../../../../services/path.service';
 import { DialogInteractionComponent } from '../dialog-interaction/dialog-interaction.component';
 import { DialogZaapiComponent } from '../dialog-zaapi/dialog-zaapi.component';
 import { DialogListActionComponent } from '../dialog-list-action/dialog-list-action.component';
+import { ListZaap } from '../../../../../webModel/Utility/PathCreator/Zaap';
+import { ListZaapi } from '../../../../../webModel/Utility/PathCreator/Zaapi';
+import { ListBank } from '../../../../../webModel/Utility/PathCreator/Bank';
 
 
 declare global {
@@ -22,6 +25,9 @@ declare global {
 })
 /** map-bonta component*/
 export class MapBontaBanqueComponent {
+  isZaapMap: boolean = false;
+  isZaapiMap: boolean = false;
+  isBankMap: boolean = false;
   @Output() selectMapEvent = new EventEmitter<string>();
   @Output() specificActionEvent = new EventEmitter<{ position: string, event: string, payload?: any }>();
   rightClickPos: string;
@@ -35,6 +41,16 @@ export class MapBontaBanqueComponent {
 
   onContextMenu(event) {
     this.rightClickPos = event.target.alt;
+    this.isZaapMap = false;
+    this.isZaapiMap = false;
+    this.isBankMap = false;
+    this.rightClickPos = event.target.alt;
+    if (ListZaap.Zaaps.map(o => o.destination).includes(this.rightClickPos))
+      this.isZaapMap = true;
+    if (ListZaapi.Zaapis.map(o => o.destination).includes(this.rightClickPos))
+      this.isZaapiMap = true;
+    if (ListBank.Banks.map(o => o.posBank).includes(this.rightClickPos))
+      this.isBankMap = true;
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';

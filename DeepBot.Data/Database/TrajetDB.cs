@@ -11,8 +11,9 @@ namespace DeepBot.Data.Database
     public class TrajetDB : Document<Guid>
     {
         public string Name { get; set; }
+        public List<string> Zones { get; set; }
         public Guid Fk_User { get; set; }
-        public int Type { get; set; }
+        public TypePath Type { get; set; }
         public int MaxPod { get; set; }
         public int MonsterQuantityMin { get; set; }
         public int MonsterQuantityMax { get; set; }
@@ -26,5 +27,11 @@ namespace DeepBot.Data.Database
         public List<CaptureMonsterQuantity> MonsterCapture { get; set; }
         public List<PathAction> PathAction { get; set; }
 
+    }
+
+    public enum TypePath
+    {
+        FIGHT = 0,
+        GATHER = 1
     }
 }

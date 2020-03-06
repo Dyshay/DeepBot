@@ -40,8 +40,9 @@ export class PathService {
 
 
 
-  createPath(createdPath: Path): Observable<any> {
-    return this.http.post<Path>(`${environment.apiURL}Path/CreatePath`, createdPath, httpOptions)
+  createPath(createdPath: any): Observable<any> {
+    console.log("tt");
+    return this.http.post<any>(`${environment.apiURL}Path/CreatePath`, createdPath, httpOptions)
   }
 
 
@@ -50,7 +51,9 @@ export class PathService {
     var toDelete = false;
     var deletedactionsGoBank = false;
     var deletedactionsBackBank = false;
-    if (index !== -1 && this.statePath === 3) { 
+    if (index !== -1 && this.statePath === 3) {
+      if (this.path.pathAction[index].actions.length == 0)
+        toDelete = true;
       for (var i = 0; i < this.path.pathAction[index].actions.length; i++) {
         if (this.path.pathAction[index].actions[i].interactionAction ? this.path.pathAction[index].actions[i].interactionAction.toBackBank:false) {
           if (this.path.pathAction[index].actions.length == 1) {
@@ -110,6 +113,8 @@ export class PathService {
       }
     }
     else if (index !== -1 && this.statePath === 2) {
+      if (this.path.pathAction[index].actions.length == 0)
+        toDelete = true;
       for (var i = 0; i < this.path.pathAction[index].actions.length; i++) {
         if (this.path.pathAction[index].actions[i].interactionAction ? this.path.pathAction[index].actions[i].interactionAction.toGoBank:false) {
           if (this.path.pathAction[index].actions.length == 1) {
@@ -248,10 +253,12 @@ export class PathService {
     }
     else if (type = 'bankProcess') {
       let cellIdEnter = ListBank.Banks.find(o => o.posBank == position).enterBankCellId;
-      this.addMoveAction(position, cellIdEnter);
+      let MapIdExt = ListBank.Banks.find(o => o.posBank == position).extMapId;
+      let MapIdInt = ListBank.Banks.find(o => o.posBank == position).intMapId;
+      this.addMoveAction(position, cellIdEnter,false, MapIdExt);
       this.addBankAction(position);
       let cellIdExit = ListBank.Banks.find(o => o.posBank == position).exitBankCellId;
-      this.addMoveAction(position, cellIdExit,true);
+      this.addMoveAction(position, cellIdExit, true, MapIdInt);
     }
     console.log(this.path);
   }
@@ -312,7 +319,6 @@ export class PathService {
       };
     this.addActionMapOnMap(position, order, this.zaapActionToAdd, 'ZaapAction');
   }
-
   addInteractionAction(position, payload) {
     var order = this.getOrdre(position);
     if (this.statePath == 2)
@@ -332,7 +338,6 @@ export class PathService {
     this.addActionMapOnMap(position, order, this.interactionActionToAdd, 'InteractionAction');
 
   }
-
   addZaapiAction(position, payload) {
 
     this.addMoveAction(position, payload.cellId);
@@ -460,8 +465,11 @@ export class PathService {
   }
 
 
-  addMoveAction(position, cell: number = null,overstate:boolean = false) {
+  addMoveAction(position, cell: number = null,overstate:boolean = false,mapId:number = null) {
     var ordre = this.getOrdre(position);
+    if (mapId == null && ListBank.Banks.map(o => o.posBank).includes(position)) {
+      mapId = ListBank.Banks.find(o => o.posBank == position).extMapId;
+    }
     if (this.statePath === 2 && !overstate) {
       if (cell === null )
         this.moveActionToAdd = {
@@ -475,7 +483,8 @@ export class PathService {
           toGoBank: true,
           toBackBank: false
         }
-
+      if (mapId != null)
+        this.moveActionToAdd.mapId = mapId;
     }
     else if (this.statePath === 3 || overstate) {
       if (cell == null)
@@ -490,6 +499,8 @@ export class PathService {
           toGoBank: false,
           toBackBank: true
         }
+      if (mapId != null)
+        this.moveActionToAdd.mapId = mapId;
     }
     else {
       if (cell === null)
@@ -526,7 +537,9 @@ export class PathService {
   }
   addBankAction(position) {
     var ordre = this.getOrdre(position)
-    this.bankActionToAdd = {};
+    this.bankActionToAdd = {
+      mapId: ListBank.Banks.find(o => o.posBank == position). intMapId
+    };
     this.addActionMapOnMap(position, ordre, this.bankActionToAdd, 'BankAction');
 
   }

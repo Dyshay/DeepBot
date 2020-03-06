@@ -4,8 +4,8 @@ using System.Text;
 
 namespace DeepBot.Data.Model.Path
 {
-    public class FightAction:MapAction
+    public class BankAction:MapAction
     {
-        public bool IsAlone { get; set; }
+        public int? MapId { get; set; }
     }
 }

@@ -1,8 +1,9 @@
 
 
 export class Path {
+  key?: string;
   name: string;
-  type: number; /* 0 fight , 1 gather */
+  type: number; 
   maxPod: number=80;
   monsterQuantityMin: number =0;
   monsterQuantityMax: number =8;
@@ -16,7 +17,14 @@ export class Path {
   monsterCapture?: CaptureMonsterQuantity[];
   pathAction: PathAction[];
 }
-
+export class PathMinDisplayed {
+  name: string;
+  type: number;
+  usedNumber: number;
+  isCapture: number;
+  zones: string[];
+  key: string;
+}
 
 export class SpecificMonsterLevel {
   monsterId: number;
@@ -39,6 +47,7 @@ export class CaptureMonsterQuantity {
 export class PathAction {
   mapPos: string;
   actions: MapAction[];
+  
 } 
 
 export class MapAction {
@@ -51,10 +60,13 @@ export class MapAction {
   zaapAction?: ZaapAction;
   zaapiAction?: ZaapiAction;
   bankAction?: BankAction;
+  
+  
 }
 export class MoveAction {
   direction?: string[];
   cellId?: number;
+  mapId?: number;
   toGoBank: boolean;
   toBackBank: boolean;
 }
@@ -93,4 +105,5 @@ export class ZaapiAction {
 }
 
 export class BankAction {
+  mapId: number;
 }

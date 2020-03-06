@@ -7,6 +7,8 @@ import { DialogUseItemComponent } from '../dialog-use-item/dialog-use-item.compo
 import { DialogInteractionComponent } from '../dialog-interaction/dialog-interaction.component';
 import { DialogZaapiComponent } from '../dialog-zaapi/dialog-zaapi.component';
 import { DialogListActionComponent } from '../dialog-list-action/dialog-list-action.component';
+import { ListZaap } from '../../../../../webModel/Utility/PathCreator/Zaap';
+import { ListZaapi } from '../../../../../webModel/Utility/PathCreator/Zaapi';
 
 
 declare global {
@@ -23,6 +25,8 @@ declare global {
 /** map-bonta component*/
 export class MapBontaRetourComponent {
   rightClickPos: string;
+  isZaapMap: boolean = false;
+  isZaapiMap: boolean = false;
   @Output() selectMapEvent = new EventEmitter<string>();
   @Output() specificActionEvent = new EventEmitter<{ position: string, event: string, payload?: any }>();
 
@@ -34,7 +38,13 @@ export class MapBontaRetourComponent {
   }
  
   onContextMenu(event) {
+    this.isZaapMap = false;
+    this.isZaapiMap = false;
     this.rightClickPos = event.target.alt;
+    if (ListZaap.Zaaps.map(o => o.destination).includes(this.rightClickPos))
+      this.isZaapMap = true;
+    if (ListZaapi.Zaapis.map(o => o.destination).includes(this.rightClickPos))
+      this.isZaapiMap = true;
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';

@@ -27,6 +27,7 @@ import { MyMissingTranslationHandler } from './modules/my-missing-translation-ha
 import { NgHttpLoaderModule } from 'ng-http-loader';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
+import { pathModule } from './app-reducers/path/path.modules';
 registerLocaleData(localeFr, 'fr-FR');
 
 export function createTranslateLoader(http: HttpClient) {
@@ -41,6 +42,7 @@ export function createTranslateLoader(http: HttpClient) {
     AccountModule,
     CharacterModule,
     groupModule,
+    pathModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,

@@ -228,9 +228,9 @@ export class CreatePathComponent implements OnInit {
   }
 
   createPath() {
+    
     let createdPath = this.pathService.path;
-
-    this.storePath.dispatch(PathActions.createPath({ createdPath }));
+    this.storePath.dispatch(PathActions.createPath({ createdPath: JSON.parse(JSON.stringify(createdPath)) }));
   }
 
 

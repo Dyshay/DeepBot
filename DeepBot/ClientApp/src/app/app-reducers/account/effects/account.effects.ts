@@ -41,7 +41,6 @@ export class AccountEffects {
       ofType(AccountActions.createAccountSuccess),
       map(action => action.accountBack),
       tap((accountCreated: Account) => {
-        console.log(accountCreated);
         this.characterStore.dispatch(CharacterActions.addOnCurrentCharacter({currentCharacter: accountCreated.currentCharacter}));
         this.webStore.dispatch(webUserActions.getBotNav());
         this.toastr.success('', 'Compte ' + accountCreated.accountName + ' ajouté avec succés');
