@@ -19,7 +19,7 @@ namespace DeepBot.Core.Hubs
     [Authorize]
     public class DeepTalk : Hub
     {
-        private static List<string> ConnectedBot = new List<string>();
+        private static Dictionary<string, List<string>> ConnectedBot = new Dictionary<string, List<string>>();
         private readonly UserManager<UserDB> Manager;
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
         private Task<UserDB> UserDB => Manager.FindByIdAsync(userId);
@@ -49,6 +49,7 @@ namespace DeepBot.Core.Hubs
         public async Task JoinRoomClient()
         {
             var CurrentUser = await UserDB;
+            GetConnected().Wait();
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
         }
 
@@ -75,7 +76,11 @@ namespace DeepBot.Core.Hubs
 
             else if (!isScan)
             {
-                ConnectedBot.Add(tcpId);
+                if (ConnectedBot[CurrentUser.Id] == null)
+                    ConnectedBot[CurrentUser.Id] = new List<string>();
+
+                ConnectedBot[CurrentUser.Id].Add(tcpId);
+                GetConnected().Wait();
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
             }
 
@@ -97,8 +102,11 @@ namespace DeepBot.Core.Hubs
 
         public async Task DisconnectCli(string tcpId)
         {
-            if (ConnectedBot.Contains(tcpId))
-                ConnectedBot.Remove(tcpId);
+            var currentUser = await UserDB;
+
+            if(ConnectedBot[userId] != null)
+                ConnectedBot[userId].Remove(tcpId);
+
 
             await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
         }
@@ -117,6 +125,12 @@ namespace DeepBot.Core.Hubs
 
         #endregion
 
+        public async Task GetConnected()
+        {
+            var currentUser = await UserDB;
+            await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("StatusAccount", ConnectedBot[currentUser.Id]);
+        }
+
         private string GetApiKey()
         {
             return Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
@@ -132,6 +146,7 @@ namespace DeepBot.Core.Hubs
             var CurrentUser = await UserDB;
             if (CurrentUser.CliConnectionId == Context.ConnectionId)
             {
+                ConnectedBot[CurrentUser.Id] = new List<string>();
                 CurrentUser.CliConnectionId = "";
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());

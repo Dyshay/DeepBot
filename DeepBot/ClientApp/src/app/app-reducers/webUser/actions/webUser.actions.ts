@@ -15,4 +15,6 @@ export const getBotNav = createAction('[BOT/NAV] GET BOTS NAV');
 export const getBotNavSuccess = createAction('[BOT/NAV] GET BOT NAV SUCCESS', props<{sideNav: SideNav }>());
 export const getBotNavFailure = createAction('[BOT/NAV] GET BOT NAV FAILURE', props<{error: any}>());
 
+export const getConnectedBot = createAction('[BOT/STATUS] GET CONNECTED BOT', props<{ids: string[]}>());
+
 export const DEBUG = createAction('[DEBUG/STORE] DEBUG');

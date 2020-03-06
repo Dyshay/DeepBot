@@ -33,6 +33,7 @@ export interface State {
   error: any | null,
   sideNav: NavigationItem[],
   pending: boolean,
+  connectedBots: string[],
 }
 
 export const initialState: State = {
@@ -49,6 +50,7 @@ export const initialState: State = {
     children: []
   }],
   pending: false,
+  connectedBots: [],
 }
 
 
@@ -577,9 +579,11 @@ export const reducer = createReducer(initialState,
   ),
 
   on(webUserActions.getBotNavFailure, (state, {error}) => ({...state, error})),
+  on(webUserActions.getConnectedBot, (state, {ids}) => ({...state, connectedBots: ids}))
 )
 
 export const getError = (state: State) => state.error;
 export const getPending = (state: State) => state.pending;
 export const getUser = (state: State) => state.user;
 export const getSideNav = (state: State) => state.sideNav;
+export const getConnectedBot = (state: State) => state.connectedBots;

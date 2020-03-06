@@ -57,6 +57,7 @@ export class TalkService {
         }, 5000);
       });
     this.GetClientMessage();
+    this.GetConnected();
   }
 
   private GetClientMessage(): void {
@@ -78,6 +79,12 @@ export class TalkService {
         default:
           break;
       }
+    })
+  }
+
+  private GetConnected(): void{
+    this._hubConnection.on("StatusAccount", (accounts) => {
+      this.storeUser.dispatch(webUserActions.getConnectedBot(accounts));
     })
   }
 }
