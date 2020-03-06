@@ -38,7 +38,6 @@ export class TalkService {
   }
 
   createConnexionBot(accountName, accountPassword, serverId, isScan) {
-    console.log(accountName);
     this._hubConnection.invoke('CreateConnexion', accountName, accountPassword, serverId, isScan);
   }
 
@@ -58,6 +57,7 @@ export class TalkService {
       });
     this.GetClientMessage();
     this.GetConnected();
+    this.GetChangeCurrentUser();
   }
 
   private GetClientMessage(): void {
@@ -85,6 +85,11 @@ export class TalkService {
   private GetConnected(): void{
     this._hubConnection.on("StatusAccount", (accounts) => {
       this.storeUser.dispatch(webUserActions.getConnectedBot(accounts));
+    })
+  }
+  private GetChangeCurrentUser():void{
+    this._hubConnection.on("UpdateCharac", (account) => {
+      this.storeCharacter.dispatch(CharacterActions.updateAccount(account));
     })
   }
 }

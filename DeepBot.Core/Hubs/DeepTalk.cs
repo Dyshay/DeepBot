@@ -81,6 +81,7 @@ namespace DeepBot.Core.Hubs
 
                 GetConnected().Wait();
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
+                await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", CurrentUser.Accounts.Find(c => c.AccountName == userName));
             }
 
 
