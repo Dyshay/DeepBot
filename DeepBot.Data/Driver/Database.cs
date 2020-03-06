@@ -19,7 +19,8 @@ namespace DeepBot.Data.Driver
         public static readonly IMongoCollection<ConfigCharacterDB> ConfigsCharacter = Base.GetCollection<ConfigCharacterDB>("ConfigCharacter");
         public static readonly IMongoCollection<ConfigGroupDB> ConfigsGroup = Base.GetCollection<ConfigGroupDB>("ConfigGroup");
         public static readonly IMongoCollection<MapDB> Maps = Base.GetCollection<MapDB>("Maps");
-
+        public static readonly IMongoCollection<ItemDB> Items = Base.GetCollection<ItemDB>("Items");
+        public static readonly IMongoCollection<TrajetDB> Paths = Base.GetCollection<TrajetDB>("Paths");
 
         public static void Insert<TDocument>(this TDocument document)
         {
@@ -45,6 +46,9 @@ namespace DeepBot.Data.Driver
                     break;
                 case MapDB e:
                     Maps.InsertOne(e);
+                    break;
+                case ItemDB e:
+                    Items.InsertOne(e);
                     break;
                 default:
                     throw new NotImplementedException();

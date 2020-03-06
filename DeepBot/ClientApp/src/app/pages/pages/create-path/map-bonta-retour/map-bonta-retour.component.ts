@@ -6,6 +6,7 @@ import { DialogCellComponent } from '../dialog-cell/dialog-cell.component';
 import { DialogUseItemComponent } from '../dialog-use-item/dialog-use-item.component';
 import { DialogInteractionComponent } from '../dialog-interaction/dialog-interaction.component';
 import { DialogZaapiComponent } from '../dialog-zaapi/dialog-zaapi.component';
+import { DialogListActionComponent } from '../dialog-list-action/dialog-list-action.component';
 
 
 declare global {
@@ -141,6 +142,13 @@ export class MapBontaRetourComponent {
     });
   }
   onContextMenuActionList() {
+    var actions = this.pathService.getAlActionsOnMap(this.rightClickPos);
+    if(actions.actions.length>0)
+     this.dialog.open(DialogListActionComponent, {
+      width: '600px',
+      height: '500px',
+      data: actions
+    });
 
   }
 

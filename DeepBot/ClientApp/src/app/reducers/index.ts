@@ -13,7 +13,7 @@ import * as fromWebUser from 'src/app/app-reducers/webUser/reducers';
 import * as fromAccount from 'src/app/app-reducers/account/reducers';
 import * as fromGroup from 'src/app/app-reducers/group/reducers';
 import * as fromCharacter from 'src/app/app-reducers/character/reducers'
-
+import * as fromPath from 'src/app/app-reducers/path/reducers'
 /**
  * Every reducer module's default export is the reducer function itself. In
  * addition, each module should export a type or interface that describes
@@ -32,7 +32,8 @@ export interface State {
   webUser: fromWebUser.webUserState,
   account: fromAccount.AccountState,
   group: fromGroup.groupState,
-  character: fromCharacter.CharacterState
+  character: fromCharacter.CharacterState,
+  path:fromPath.pathState
 }
 
 /**
@@ -48,7 +49,8 @@ export const ROOT_REDUCERS = new InjectionToken<
     webUser: fromWebUser.reducers,
     account: fromAccount.reducers,
     character: fromCharacter.reducers,
-    group: fromGroup.reducers
+    group: fromGroup.reducers,
+    path:fromPath.reducers
   }),
 });
 
