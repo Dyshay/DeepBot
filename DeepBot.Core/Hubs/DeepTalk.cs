@@ -76,10 +76,9 @@ namespace DeepBot.Core.Hubs
 
             else if (!isScan)
             {
-                if (ConnectedBot[CurrentUser.Id] == null)
-                    ConnectedBot[CurrentUser.Id] = new List<string>();
+                if(!string.IsNullOrEmpty(CurrentUser.CliConnectionId))
+                    ConnectedBot[CurrentUser.Id].Add(tcpId);
 
-                ConnectedBot[CurrentUser.Id].Add(tcpId);
                 GetConnected().Wait();
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
             }
@@ -148,6 +147,7 @@ namespace DeepBot.Core.Hubs
             {
                 ConnectedBot[CurrentUser.Id] = new List<string>();
                 CurrentUser.CliConnectionId = "";
+                CurrentUser.Accounts.ForEach(c =>  c.TcpId = "");
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
             }
