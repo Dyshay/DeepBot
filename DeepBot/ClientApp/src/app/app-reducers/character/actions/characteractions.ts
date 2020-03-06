@@ -3,6 +3,7 @@ import { CharacterMessage, Character } from 'src/webModel/Character';
 import { ConfigCharacter } from '../../../../webModel/ConfigCharacter';
 import { CharacteristicsMessage } from 'src/webModel/CharacteristicsMessage';
 import { Caracteristic } from 'src/webModel/Caracteristic';
+import { LogMessage } from 'src/webModel/LogMessage';
 
 
 export const receveidCharacters = createAction('[BOT/TALK] RECEIVE CHARACTERS', props<{ network: CharacterMessage }>());
@@ -24,3 +25,6 @@ export const ResetCharacteristics = createAction('[BOT/CHARACTER] RESET CHARACTE
 export const updateCharacteristics = createAction('[BOT/CHARACTER] UPDATE CHARACTERISTICS', props<{characteristics: Caracteristic}>());
 export const updateKamas = createAction('[BOT/CHARACTER] UPDATE KAMAS', props<{kamas: number}>());
 export const updatecharacteristicsPoints = createAction('[BOT/CHARACTER] UPDATE characteristicsPoints', props<{characteristicsPoints: number}>());
+
+export const getLogs = createAction('[BOT/LOGS] RECEIVED LOG', props<{logs: LogMessage}>());
+export const updateAccount = createAction('[BOT/UPDATE] UPDATE ACCOUNT', props<{character: Character}>());

@@ -6,7 +6,6 @@ import { AccountModel } from 'src/webModel/AccountModel';
 
 
 
-export const receveidLogs = createAction('[BOT/TALK] RECEIVED LOG', props<{ network: LogMessage }>());
 export const receveidMaps = createAction('[BOT/TALK] RECEIVED MAP', props<{ network: MapMessage }>());
 
 export const createAccount = createAction('[BOT/ACCOUNT] CREATE ACCOUNT', props<{ acc: AccountModel  }>());

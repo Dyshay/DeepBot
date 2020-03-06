@@ -13,11 +13,14 @@ export interface State {
   pending: boolean,
   characteristics: Caracteristic,
   characteristicsPoints: number,
+  logsCharacters: [],
+  currentUser: any
 }
 
 export const initialState: State = {
   scanCharacters: [],
   allCharacters: [],
+  currentUser: {},
   allCurrentCharacters: [],
   characteristics: {
     agility: { total: 0 },
@@ -43,6 +46,7 @@ export const initialState: State = {
   kamas: 0,
   characteristicsPoints: 0,
   error: null,
+  logsCharacters: [],
   pending: false
 }
 
@@ -68,6 +72,20 @@ export const reducer = createReducer(initialState,
   on(CharacterActions.updateCharacteristics, (state, {characteristics}) => ({...state, characteristics})),
   on(CharacterActions.updateKamas, (state, {kamas}) => ({...state, kamas})),
   on(CharacterActions.updatecharacteristicsPoints, (state, {characteristicsPoints}) => ({...state, characteristicsPoints})),
+  on(CharacterActions.getLogs, (state, {logs}) => {
+    let temporyLogs = state.logsCharacters;
+    temporyLogs[logs.tcpId].concat({message : logs.message, type: logs.logType});
+    return { ...state, logsCharacters: temporyLogs};
+  }),
+  on(CharacterActions.updateAccount, (state, {character}) => {
+  let charactersMemory = state.allCurrentCharacters;
+  charactersMemory.forEach(c => {
+    if(c.key === character.key){
+      c = character;
+    }
+  })
+  return { ...state, allCurrentCharacters: charactersMemory};
+  }),
 )
 
 export const getScanCharacters = (state: State) => state.scanCharacters;
@@ -76,3 +94,4 @@ export const getCharacteristicsPoints = (state: State) => state.characteristicsP
 export const getCharacteristics = (state: State) => state.characteristics;
 export const getAllCharacters = (State: State) => State.allCharacters;
 export const getAllCurrentCharacters = (State: State) => State.allCurrentCharacters;
+export const getLogsUser = (state: State) => state.logsCharacters;
