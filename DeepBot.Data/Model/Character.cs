@@ -38,7 +38,7 @@ namespace DeepBot.Data.Model
         public Inventory Inventory { get; set; }
         [BsonIgnore]
         public List<Job> Jobs { get; set; }
-        public Map  Map { get; set; }
+        public MapDB  Map { get; set; }
         [BsonIgnore]
         public GroupDB Group { get; set; }
         [BsonIgnore]
