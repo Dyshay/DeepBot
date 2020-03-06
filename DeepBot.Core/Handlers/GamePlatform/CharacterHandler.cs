@@ -25,13 +25,47 @@ namespace DeepBot.Core.Handlers.GamePlatform
             hub.DispatchToClient(new CharacteristicMessage(characterGame.Characteristic, characterGame.Kamas, characterGame.AvailableCharactericsPts, tcpId), tcpId).Wait();
         }
 
+        [Receiver("AN")]
+        public void NewLevelHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            characterGame.Level = Convert.ToByte(package.Substring(2));
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+        }
+
         [Receiver("SL")]
         public void SpellsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            characterGame.Spells = new List<SpellDB>();
             if (!package[2].Equals('o'))
-                characterGame.Spells.DeserializeSpells(package.Substring(2));
+            {
+                var datas = package.Replace("_;", "_").Split(';');
+                foreach (var data in datas)
+                {
+                    SpellDB spell = new SpellDB();
+                    spell.DeserializeSpell(data);
+                    characterGame.Spells.Add(spell);
+                }
+            }
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            // TODO send hub spell msg
+        }
+
+        [Receiver("SUK")]
+        public void SpellUpdateSuccess(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            SpellDB spell = new SpellDB();
+            spell.DeserializeSpell(package.Substring(3));
+            characterGame.Spells.Where(spel => spel.Key == spell.Key).FirstOrDefault().Level = spell.Level;
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            // TODO send hub spell msg
+        }
+
+        [Receiver("SUE")]
+        public void SpellUpdateError(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
             // TODO send hub spell msg
         }
 
@@ -49,14 +83,13 @@ namespace DeepBot.Core.Handlers.GamePlatform
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             string[] data = package.Substring(2).Split('|');
-
-            if (characterGame.Inventory.Items.TryGetValue(Convert.ToInt32(data[0]), out Item item))
+            Item item = characterGame.Inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
+            if (item != null)
             {
                 if (String.IsNullOrEmpty(data[1]))
                     item.Position = ItemSlotEnum.SLOT_INVENTORY;
                 else
                     item.Position = (ItemSlotEnum)Convert.ToInt32(data[1]);
-                characterGame.Inventory.Items[Convert.ToInt32(data[0])] = item;
             }
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             //TODO send update inventory message
@@ -67,11 +100,10 @@ namespace DeepBot.Core.Handlers.GamePlatform
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             string[] data = package.Substring(2).Split('|');
-
-            if (characterGame.Inventory.Items.TryGetValue(Convert.ToInt32(data[0]), out Item item))
+            Item item = characterGame.Inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
+            if (item != null)
             {
                 item.Quantity = Convert.ToInt32(data[1]);
-                characterGame.Inventory.Items[Convert.ToInt32(data[0])] = item;
             }
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             //TODO send update inventory message
@@ -84,7 +116,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             string[] data = package.Substring(2).Split(';');
             Item item = new Item();
             item.DeserializeItem(data[1]);
-            characterGame.Inventory.Items[item.InventoryId] = item;
+            characterGame.Inventory.Items[characterGame.Inventory.Items.FindIndex(it => it.InventoryId == item.InventoryId)] = item;
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             //TODO send update inventory message
         }

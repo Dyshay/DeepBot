@@ -25,10 +25,9 @@ namespace DeepBot.Core.Extensions
             {
                 if (!string.IsNullOrEmpty(data))
                 {
-                    string[] values = data.Split('~');
                     Item item = new Item();
                     item.DeserializeItem(data);
-                    inventory.Items.TryAdd(item.InventoryId, item);
+                    inventory.Items.Add(item);
                 }
             }
         }
@@ -64,18 +63,12 @@ namespace DeepBot.Core.Extensions
             }
         }
 
-        public static void DeserializeSpells(this List<SpellDB> spells, string rawData)
+        public static void DeserializeSpell(this SpellDB spell, string rawData)
         {
-            spells.Clear();
-            var datas = rawData.Replace("_;", "_").Split(';');
-            foreach (var dat in datas)
-            {
-                var split = dat.Split('~');
-                int spellId = int.Parse(split[0]);
-                var spell = Database.Spells.FindSync(FilterDefinition<SpellDB>.Empty).ToList().FirstOrDefault(o => o.Key == spellId);
-                spell.Level = byte.Parse(split[1]);
-                spells.Add(spell);
-            }
+            var split = rawData.Split('~');
+            int spellId = int.Parse(split[0]);
+            spell = Database.Spells.FindSync(FilterDefinition<SpellDB>.Empty).ToList().FirstOrDefault(o => o.Key == spellId);
+            spell.Level = byte.Parse(split[1]);
         }
     }
 }
