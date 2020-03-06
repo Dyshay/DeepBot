@@ -34,6 +34,8 @@ import { Icon } from '@visurel/iconify-angular';
 import { MatTabChangeEvent } from '@angular/material';
 import { TalkService } from 'src/app/Services/TalkService';
 import * as fromAccount from '../../../app-reducers/account/reducers';
+import * as fromWeb from '../../../app-reducers/webUser/reducers';
+import { webUserActions } from '../../../app-reducers/webUser/actions';
 import { LogMessage } from 'src/webModel/LogMessage';
 import { Account } from 'src/webModel/Account';
 import { CharacterService } from '../../../services/character.service';
@@ -63,20 +65,21 @@ export class BotDashboardComponent implements OnInit {
   character: Character = new Character();
   indexSelected: number = 0;
   iconCharacter: string;
-  groupName: string='';
+  groupName: string = '';
   logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   map$ = this.accountStore.pipe(select(fromAccount.getMap));
   characteristics$ = this.characterStore.pipe(select(fromCharacter.getCharacteristics));
+  connectedAccounts$ = this.webUser.pipe(select(fromWeb.getConnectedBot));
   kamas$ = this.characterStore.pipe(select(fromCharacter.getKamas));
   characteristicsPoints$ = this.characterStore.pipe(select(fromCharacter.getCharacteristicsPoints));
   /** bot-dashboard ctor */
   constructor(private activatedRoute: ActivatedRoute, private characterService: CharacterService,
     private groupStore: Store<fromGroup.State>,
-    private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService, private accountStore: Store<fromAccount.State>, private characterStore: Store<fromCharacter.State>) {
+    private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService,
+    private accountStore: Store<fromAccount.State>, private characterStore: Store<fromCharacter.State>, private webUser: Store<fromWeb.State>) {
   }
 
   ngOnInit() {
-    console.log('init');
     this.activatedRoute.paramMap.subscribe(params => {
       this.store.pipe(select(fromCharacter.getAllCurrentCharacters)).subscribe(
         (result: Character[]) => {
@@ -87,7 +90,8 @@ export class BotDashboardComponent implements OnInit {
             if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
               this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
                 (result: Group[]) => {
-                  this.groupName = result.find(o => o.key == this.character.fk_Group).name;
+                  if (result.find(o => o.key == this.character.fk_Group).name !== undefined)
+                    this.groupName = result.find(o => o.key == this.character.fk_Group).name;
                 }
               );
 
@@ -104,8 +108,10 @@ export class BotDashboardComponent implements OnInit {
     });
   }
 
+
+
   initConnection() {
-          this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.serverId, false);
+    this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.serverId, false);
   }
 
   links: Link[] = [
