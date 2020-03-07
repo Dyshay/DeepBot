@@ -22,7 +22,7 @@ export class DashboardComponent implements OnInit {
   @Input() kamas: number;
   @Input() character: Character;
   @Input() account: Account;
-  @Input() logs: LogMessage[];
+  @Input() logs: any[];
   @Input() experienceActual: string;
   @Input() experienceLevelUp: string;
   theme = theme;

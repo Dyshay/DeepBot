@@ -80,7 +80,7 @@ export const reducer = createReducer(initialState,
     if (temporyLogs[logs.tcpId] === undefined) {
       temporyLogs[logs.tcpId] = [];
     }
-    temporyLogs[logs.tcpId].push([{ message: logs.message, type: logs.logType }]);
+    temporyLogs[logs.tcpId].push({ message: logs.message, type: logs.logType });
     return { ...state, logsCharacters: temporyLogs };
   }),
   on(CharacterActions.updateAccount, (state, { character, tcpId }) => {

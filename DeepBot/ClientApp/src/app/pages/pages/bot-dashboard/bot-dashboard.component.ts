@@ -127,8 +127,8 @@ this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: 
 
 
 initConnection() {
-  console.log('passe bien ici', `${this.account.accountName} ${this.account.password}`)
   this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.server.id, false);
+  this.deeptalk.FetchTcpId(this.character.key);
 }
 
 links: Link[] = [
