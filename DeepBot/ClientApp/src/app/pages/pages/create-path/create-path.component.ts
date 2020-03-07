@@ -97,6 +97,7 @@ export class CreatePathComponent implements OnInit {
               $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' } );
               $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744'});
               $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+              $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
               return false;
             }
             else {
@@ -142,7 +143,26 @@ export class CreatePathComponent implements OnInit {
           ,
 
         });
+        $('#zone2').mapster({
+          mapKey: 'data-key',
+          showToolTip: true,
+          fillOpacity: 0.6,
+          areas: MapArea.mapAreaCania,
+          onClick: function (e) {
 
+            if (e.selected) {
+              $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+              $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
+              $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+              $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+              return false;
+            }
+            else {
+              $('#zone1Banque').mapster('set', false, e.key);
+              $('#zone1Retour').mapster('set', false, e.key);
+            }
+          }
+        });
       });
   }
 

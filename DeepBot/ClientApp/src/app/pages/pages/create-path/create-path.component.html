@@ -250,7 +250,7 @@
                   <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
                   <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
-                    <mat-option [value]="1">ZONE 2</mat-option>
+                    <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">ZONE 3</mat-option>
                     <mat-option [value]="3">ZONE 4</mat-option>
                     <mat-option [value]="4">ZONE 5</mat-option>
@@ -269,6 +269,10 @@
                                  [hidden]="zoneChoose !== 0">
 
                   </app-map-bonta>
+                  <app-map-cania-abraknydes (selectMapEvent)="selectMap($event)"
+                                 (specificActionEvent)="specificAction($event)"
+                                 [hidden]="zoneChoose !== 1"></app-map-cania-abraknydes>
+
                   <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
                     <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
                       <span class="font-medium"> Choix de la direction</span>
@@ -314,7 +318,7 @@
                   <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
                   <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
-                    <mat-option [value]="1">ZONE 2</mat-option>
+                    <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">ZONE 3</mat-option>
                     <mat-option [value]="3">ZONE 4</mat-option>
                     <mat-option [value]="4">ZONE 5</mat-option>
@@ -331,6 +335,11 @@
                   <app-map-bonta-banque (selectMapEvent)="selectMap($event)"
                                         (specificActionEvent)="specificAction($event)"
                                         [hidden]="zoneChoose !== 0"></app-map-bonta-banque>
+
+                  <app-map-cania-abraknydes-banque (selectMapEvent)="selectMap($event)"
+                                        (specificActionEvent)="specificAction($event)"
+                                        [hidden]="zoneChoose !== 1"></app-map-cania-abraknydes-banque>
+
                   <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
                     <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
                       <span class="font-medium"> Choix de la direction</span>
@@ -372,7 +381,7 @@
                   <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
                   <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
-                    <mat-option [value]="1">ZONE 2</mat-option>
+                    <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">ZONE 3</mat-option>
                     <mat-option [value]="3">ZONE 4</mat-option>
                     <mat-option [value]="4">ZONE 5</mat-option>
@@ -391,6 +400,11 @@
                                         [hidden]="zoneChoose !== 0">
 
                   </app-map-bonta-retour>
+                  <app-map-cania-abraknydes-retour (selectMapEvent)="selectMap($event)"
+                                                   (specificActionEvent)="specificAction($event)"
+                                                   [hidden]="zoneChoose !== 1">
+
+                  </app-map-cania-abraknydes-retour>
                   <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
                     <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
                       <span class="font-medium"> Choix de la direction</span>
