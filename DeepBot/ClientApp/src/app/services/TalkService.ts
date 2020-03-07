@@ -7,6 +7,8 @@ import { AccountActions } from '../app-reducers/account/actions';
 import * as fromAccount from '../app-reducers/account/reducers';
 import * as fromCharacter from '../app-reducers/character/reducers';
 import { CharacterActions } from '../app-reducers/character/actions';
+import { Character } from 'src/webModel/Character';
+import { Account } from 'src/webModel/Account';
 @Injectable()
 export class TalkService {
   messageReceived = new EventEmitter<string>();
@@ -58,14 +60,25 @@ export class TalkService {
     this.GetClientMessage();
     this.GetConnected();
     this.GetChangeCurrentUser();
+    this.GetTcpId();
+  }
+
+  public FetchTcpId(key: number): void{
+    this._hubConnection.invoke("GetTcpId", key);
+  }
+
+  private GetTcpId(){
+    this._hubConnection.on("GetCurrentTcpId", (tcpId: string) => {
+      this.storeCharacter.dispatch(CharacterActions.updateTcpClient({tcpId}));
+    })
   }
 
   private GetClientMessage(): void {
     this._hubConnection.on("DispatchClient", (network, tcpId) => {
-      console.log(network);
       switch (network.type) {
         case 0:
-          this.storeAccount.dispatch(AccountActions.receveidLogs({ network }));
+          this.storeCharacter.dispatch(CharacterActions.getLogs({logs: network}))
+          // this.storeAccount.dispatch(AccountActions.receveidLogs({ network }));
           break;
         case 5:
           this.storeAccount.dispatch(AccountActions.receveidMaps({ network }));
@@ -88,8 +101,9 @@ export class TalkService {
     })
   }
   private GetChangeCurrentUser():void{
-    this._hubConnection.on("UpdateCharac", (account) => {
-      this.storeCharacter.dispatch(CharacterActions.updateAccount(account));
+    this._hubConnection.on("UpdateCharac", (character : Character, tcpId: string) => {
+      this.storeUser.dispatch(webUserActions.getBotNav());
+      this.storeCharacter.dispatch(CharacterActions.updateAccount({ character, tcpId}));
     })
   }
 }

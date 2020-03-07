@@ -17,7 +17,6 @@ import { LogMessage } from 'src/webModel/LogMessage';
 /** dashboard component*/
 export class DashboardComponent implements OnInit {
     ngOnInit(): void {
-      console.log(this.logs);
     }
 
   @Input() kamas: number;
@@ -33,6 +32,6 @@ export class DashboardComponent implements OnInit {
   icPOD = icPOD;
     /** dashboard ctor */
     constructor(private translateService:TranslateService) {
-      
+
     }
 }

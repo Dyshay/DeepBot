@@ -42,6 +42,8 @@ namespace DeepBot.Core.Hubs
             if (CurrentUser.Accounts.Count == 0)
                 CurrentUser.Accounts = new List<Account>();
 
+            ConnectedBot.TryAdd(CurrentUser.Id,new List<string>());
+
             CurrentUser.CliConnectionId = Context.ConnectionId;
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
         }
@@ -51,6 +53,12 @@ namespace DeepBot.Core.Hubs
             var CurrentUser = await UserDB;
             GetConnected().Wait();
             await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
+        }
+
+        public async Task GetTcpId(int key)
+        {
+            var currentUser = await UserDB;
+            await Clients.Caller.SendAsync("GetCurrentTcpId", currentUser.Accounts.Find(c => c.CurrentCharacter.Key == key).TcpId);
         }
 
         public async Task SendLog(string log)
@@ -81,7 +89,9 @@ namespace DeepBot.Core.Hubs
 
                 GetConnected().Wait();
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
-                await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", CurrentUser.Accounts.Find(c => c.AccountName == userName));
+                CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected = true;
+                var account = CurrentUser.Accounts.Find(c => c.AccountName == userName);
+                await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account);
             }
 
 
@@ -100,12 +110,15 @@ namespace DeepBot.Core.Hubs
         }
 
 
-        public async Task DisconnectCli(string tcpId)
+        public async Task DisconnectCli(string tcpId,bool invisible)
         {
             var currentUser = await UserDB;
 
             if(ConnectedBot[userId] != null)
                 ConnectedBot[userId].Remove(tcpId);
+
+            if (!invisible)
+                currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected = false;
 
 
             await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
@@ -148,7 +161,7 @@ namespace DeepBot.Core.Hubs
             {
                 ConnectedBot[CurrentUser.Id] = new List<string>();
                 CurrentUser.CliConnectionId = "";
-                CurrentUser.Accounts.ForEach(c =>  c.TcpId = "");
+                CurrentUser.Accounts.ForEach(c => { c.TcpId = ""; c.isConnected = false; }) ;
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
             }

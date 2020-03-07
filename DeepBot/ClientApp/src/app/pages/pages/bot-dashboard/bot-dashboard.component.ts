@@ -40,6 +40,7 @@ import { LogMessage } from 'src/webModel/LogMessage';
 import { Account } from 'src/webModel/Account';
 import { CharacterService } from '../../../services/character.service';
 import { Group } from '../../../../webModel/Group';
+import { CharacterActions } from 'src/app/app-reducers/character/actions';
 
 export interface FriendSuggestion {
   name: string;
@@ -60,13 +61,18 @@ export interface FriendSuggestion {
   ]
 })
 /** bot-dashboard component*/
-export class BotDashboardComponent implements OnInit {
+export class BotDashboardComponent implements OnInit, OnChanges {
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    console.log('test');
+  }
   account: Account;
   character: Character = new Character();
   indexSelected: number = 0;
   iconCharacter: string;
+  character$ = this.characterStore.pipe(select(fromCharacter.getCurrentCharacter));
   groupName: string = '';
-  logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
+  // logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
+  logs$ = this.characterStore.pipe(select(fromCharacter.getCurrentlogs));
   map$ = this.accountStore.pipe(select(fromAccount.getMap));
   characteristics$ = this.characterStore.pipe(select(fromCharacter.getCharacteristics));
   connectedAccounts$ = this.webUser.pipe(select(fromWeb.getConnectedBot));
@@ -84,122 +90,133 @@ export class BotDashboardComponent implements OnInit {
       this.store.pipe(select(fromCharacter.getAllCurrentCharacters)).subscribe(
         (result: Character[]) => {
           for (var i = 0; i < result.length; i++) {
-            if (result[i].key.toString() == params.get('id'))
+            if (result[i].key.toString() == params.get('id')) {
               this.character = result[i];
-            this.iconCharacter = this.characterService.getCharacterIcon(this.character.breedId);
-            if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
-              this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
-                (result: Group[]) => {
-                  if (result.find(o => o.key == this.character.fk_Group).name !== undefined)
-                    this.groupName = result.find(o => o.key == this.character.fk_Group).name;
+              this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accountStoring: Account[]) => {
+                for (let c = 0; c < accountStoring.length; c++) {
+                  if (accountStoring[c].currentCharacter.key === this.character.key) {
+                    this.characterStore.dispatch(CharacterActions.updateAccount({ character: this.character, tcpId: this.character.key.toString() }));
+                  }
+
                 }
-              );
 
-            }
-          }
-        })
-    });
-    this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: Account[]) => {
-      accounts.forEach(acc => {
-        if (acc.characters.find(c => c.name == this.character.name)) {
-          this.account = acc;
-        }
-      })
-    });
-  }
-
-
-
-  initConnection() {
-    this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.serverId, false);
-  }
-
-  links: Link[] = [
-    {
-      label: this.translateService.instant('GLOBAL.DASHBOARD'),
-      route: 'dashboard',
-      icon: icTableaudeBord
-    },
-    {
-      label: this.translateService.instant('DASHBOARDBOT.CHARACTER'),
-      route: 'character',
-      icon: icPersonnage
-    },
-    {
-      label: this.translateService.instant('DASHBOARDBOT.FIGHT'),
-      route: 'fight',
-      icon: icCombat
-    },
-    {
-      label: this.translateService.instant('DASHBOARDBOT.JOB'),
-      route: 'job',
-      icon: icJob
-    },
-    {
-      label: this.translateService.instant('DASHBOARDBOT.INVENTORY'),
-      route: 'inventory',
-      icon: icInventory
-    },
-    {
-      label: this.translateService.instant('DASHBOARDBOT.MAP'),
-      route: 'map',
-      icon: icMap
-    },
-    {
-      label: this.translateService.instant('DASHBOARDBOT.PARAMETERS'),
-      route: 'setting',
-      icon: icSetting
+          })
     }
-  ];
+            this.iconCharacter = this.characterService.getCharacterIcon(this.character.breedId);
+    if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
+      this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
+        (result: Group[]) => {
+          if (result.find(o => o.key == this.character.fk_Group).name !== undefined)
+            this.groupName = result.find(o => o.key == this.character.fk_Group).name;
+        }
+      );
 
-  suggestions = friendSuggestions;
+    }
+  }
+})
+    });
+this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: Account[]) => {
+  accounts.forEach(acc => {
+    if (acc.characters.find(c => c.name == this.character.name)) {
+      this.account = acc;
+    }
+  })
+});
+  }
 
-  icWork = icWork;
-  icPhone = icPhone;
-  icPersonAdd = icPersonAdd;
-  icCheck = icCheck;
-  icMail = icMail;
-  icAccessTime = icAccessTime;
-  icAdd = icAdd;
-  icWhatshot = icWhatshot;
-  icTableaudeBord = icTableaudeBord;
-  icPersonnage = icPersonnage;
-  icCombat = icCombat;
-  icJob = icJob;
-  icInventory = icInventory;
-  icMap = icMap;
-  icSetting = icSetting;
-  icToConnect = icToConnect;
-  icToDisconnect = icToDisconnect;
-  icPause = icPause;
 
-  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-    switch (tabChangeEvent.index) {
+
+initConnection() {
+  console.log('passe bien ici', `${this.account.accountName} ${this.account.password}`)
+  this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.server.id, false);
+}
+
+links: Link[] = [
+  {
+    label: this.translateService.instant('GLOBAL.DASHBOARD'),
+    route: 'dashboard',
+    icon: icTableaudeBord
+  },
+  {
+    label: this.translateService.instant('DASHBOARDBOT.CHARACTER'),
+    route: 'character',
+    icon: icPersonnage
+  },
+  {
+    label: this.translateService.instant('DASHBOARDBOT.FIGHT'),
+    route: 'fight',
+    icon: icCombat
+  },
+  {
+    label: this.translateService.instant('DASHBOARDBOT.JOB'),
+    route: 'job',
+    icon: icJob
+  },
+  {
+    label: this.translateService.instant('DASHBOARDBOT.INVENTORY'),
+    route: 'inventory',
+    icon: icInventory
+  },
+  {
+    label: this.translateService.instant('DASHBOARDBOT.MAP'),
+    route: 'map',
+    icon: icMap
+  },
+  {
+    label: this.translateService.instant('DASHBOARDBOT.PARAMETERS'),
+    route: 'setting',
+    icon: icSetting
+  }
+];
+
+suggestions = friendSuggestions;
+
+icWork = icWork;
+icPhone = icPhone;
+icPersonAdd = icPersonAdd;
+icCheck = icCheck;
+icMail = icMail;
+icAccessTime = icAccessTime;
+icAdd = icAdd;
+icWhatshot = icWhatshot;
+icTableaudeBord = icTableaudeBord;
+icPersonnage = icPersonnage;
+icCombat = icCombat;
+icJob = icJob;
+icInventory = icInventory;
+icMap = icMap;
+icSetting = icSetting;
+icToConnect = icToConnect;
+icToDisconnect = icToDisconnect;
+icPause = icPause;
+
+tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+  switch(tabChangeEvent.index) {
       case 0:
-        this.indexSelected = 0;
-        break;
+  this.indexSelected = 0;
+  break;
       case 1:
-        this.indexSelected = 1;
-        break;
+  this.indexSelected = 1;
+  break;
       case 2:
-        this.indexSelected = 2;
-        break;
+  this.indexSelected = 2;
+  break;
       case 3:
-        this.indexSelected = 3;
-        break;
+  this.indexSelected = 3;
+  break;
       case 4:
-        this.indexSelected = 4;
-        break;
+  this.indexSelected = 4;
+  break;
       case 5:
-        this.indexSelected = 5;
-        break;
+  this.indexSelected = 5;
+  break;
       case 6:
-        this.indexSelected = 6;
-        break;
+  this.indexSelected = 6;
+  break;
 
       default:
-        break;
-    }
+  break;
+}
   }
 
 }

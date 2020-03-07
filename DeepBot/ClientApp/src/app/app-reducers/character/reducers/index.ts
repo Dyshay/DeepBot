@@ -30,4 +30,5 @@ export const getCharacteristicsPoints = createSelector(selectCharacterStatusStat
 export const getCharacteristics = createSelector(selectCharacterStatusState, fromCharacter.getCharacteristics);
 export const getAllCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCharacters);
 export const getAllCurrentCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCurrentCharacters);
+export const getCurrentCharacter = createSelector(selectCharacterStatusState, fromCharacter.getCurrrentUser);
 export const getCurrentlogs = createSelector(selectCharacterStatusState, fromCharacter.getLogsUser);

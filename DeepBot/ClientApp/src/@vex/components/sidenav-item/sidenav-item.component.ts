@@ -17,8 +17,11 @@ import { filter } from 'rxjs/operators';
 import { NavigationService } from '../../services/navigation.service';
 import icKeyboardArrowRight from '@iconify/icons-ic/twotone-keyboard-arrow-right';
 import { CharacterActions } from '../../../app/app-reducers/character/actions';
+import { webUserActions } from '../../../app/app-reducers/webUser/actions';
 import * as fromCharacter from '../../../app/app-reducers/character/reducers';
+import * as fromWeb from '../../../app/app-reducers/webUser/reducers';
 import { Store } from '@ngrx/store';
+import { TalkService } from 'src/app/Services/TalkService';
 
 @Component({
   selector: 'vex-sidenav-item',
@@ -41,7 +44,7 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
 
   constructor(private router: Router,
               private cd: ChangeDetectorRef,
-              private navigationService: NavigationService, private characterStore: Store<fromCharacter.State>) { }
+              private navigationService: NavigationService, private characterStore: Store<fromCharacter.State>, private webStore: Store<fromWeb.State>, private hub: TalkService) { }
 
   @HostBinding('class')
   get levelClass() {
@@ -70,6 +73,7 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
   switchBot(item){
     var regex = /([0-9]){3,}/;
     let id = regex.exec(item)[0];
+    this.hub.FetchTcpId(Number.parseInt(id));
     this.characterStore.dispatch(CharacterActions.ResetCharacteristics());
   }
 
