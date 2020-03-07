@@ -141,6 +141,7 @@ namespace DeepBot.Data.Database.Loaders
         {
             SpellDB spell = new SpellDB();
             spell.Key = spellj.Id;
+            spell.Name = spellj.Name;
             spell.Stats = new List<SpellStat>();
             spell.Stats.Add(DecompressSpellStat(spellj.LevelOne));
             spell.Stats.Add(DecompressSpellStat(spellj.LevelTwo));

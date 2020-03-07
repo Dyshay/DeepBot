@@ -39,7 +39,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ALK")]
         public void SelectCharacter(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var currentCharacter = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
+            var currentAccount = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
             bool found = false;
@@ -60,9 +60,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 if (isScan)
                     characters.Add(new Character() { BreedId = model, Key = id, Name = characterName, Level = Level });
 
-                if (!isScan && currentCharacter != null)
+                if (!isScan && currentAccount != null)
                 {
-                    if(characterName.ToLower().Equals(currentCharacter.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
+                    if(characterName.ToLower().Equals(currentAccount.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
                     {
                         hub.SendPackage($"AS{id}", tcpId, true);
                         hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
@@ -89,7 +89,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             string[] splittedData = package.Substring(4).Split('|');
             
             Account account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
-            account.CurrentCharacter.Id = int.Parse(splittedData[0]);
+            account.CurrentCharacter.Key = int.Parse(splittedData[0]);
             account.CurrentCharacter.Name = splittedData[1];
             account.CurrentCharacter.Level = byte.Parse(splittedData[2]);
             account.CurrentCharacter.BreedId = byte.Parse(splittedData[3]);

@@ -9,7 +9,8 @@ namespace DeepBot.Data.Database
 {
     public class SpellDB : Document<int>
     {
-        public List<SpellStat> Stats;
+        public string Name { get; set; }
+        public List<SpellStat> Stats { get; set; }
         [BsonIgnore]
         public byte Level { get; set; }
     }

@@ -126,7 +126,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             string[] data = package.Substring(2).Split(';');
-            characterGame.Inventory.Items.Remove(Convert.ToInt32(package.Substring(2)));
+            characterGame.Inventory.Items.RemoveAt(characterGame.Inventory.Items.FindIndex(it => it.InventoryId == Convert.ToInt32(package.Substring(2))));
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             //TODO send update inventory message
         }
