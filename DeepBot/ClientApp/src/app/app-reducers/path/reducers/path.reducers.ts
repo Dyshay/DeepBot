@@ -22,7 +22,9 @@ export const reducer = createReducer(initialState,
   on(PathActions.createPath, (state) => ({ ...state, pending: true })),
   on(PathActions.createPathSuccess, (state, { createdPath }) => ({ ...state, createdPath: createdPath, pending: false })),
   on(PathActions.createPathFailure, (state, { error }) => ({ ...state, error, pending: false })),
-  on(PathActions.getAllPath, (state, { allPaths }) => ({ ...state, allPaths: allPaths, pending: false })),
+  on(PathActions.getAllPaths, (state) => ({ ...state, pending: true })),
+  on(PathActions.getAllPathsSuccess, (state, { allPaths }) => ({ ...state, allPaths: allPaths, pending: false })),
+  on(PathActions.getAllPathsFailure, (state, { error }) => ({ ...state, error, pending: false })),
   on(PathActions.addOnAllPaths, (state, { path }) => ({ ...state, allPaths: state.allPaths.concat(path) }))
 
 )

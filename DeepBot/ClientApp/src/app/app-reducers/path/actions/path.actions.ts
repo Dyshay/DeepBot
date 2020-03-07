@@ -8,4 +8,6 @@ export const createPathFailure = createAction('[BOT/GROUP] CREATE PATH ERROR', p
 
 export const addOnAllPaths = createAction('[BOT/PATH] ADD NEW PATH', props<{ path: PathMinDisplayed }>());
 
-export const getAllPath = createAction('[BOT/PATH] GET ALL PATH', props<{ allPaths: PathMinDisplayed[] }>());
+export const getAllPaths = createAction('[BOT/PATH] GET ALLPATH');
+export const getAllPathsSuccess = createAction('[BOT/PATH] GET ALLPATH SUCCESS', props<{ allPaths: PathMinDisplayed[] }>());
+export const getAllPathsFailure = createAction('[BOT/PATH] GET ALLPATH ERROR', props<{ error: any }>());

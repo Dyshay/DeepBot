@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { Path, PathAction, MapAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, ZaapAction, ZaapiAction, BankAction } from '../../webModel/Utility/PathCreator/Path';
+import { Path, PathAction, MapAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, ZaapAction, ZaapiAction, BankAction, PathMinDisplayed } from '../../webModel/Utility/PathCreator/Path';
 import { ToastrService } from 'ngx-toastr';
 import { ListBank } from '../../webModel/Utility/PathCreator/Bank';
 import { Observable } from 'rxjs';
@@ -45,7 +45,10 @@ export class PathService {
     return this.http.post<any>(`${environment.apiURL}Path/CreatePath`, createdPath, httpOptions)
   }
 
-
+  
+  getAllPaths(): Observable<PathMinDisplayed[]> {
+    return this.http.get<PathMinDisplayed[]>(`${environment.apiURL}Path/GetAllPaths`, httpOptions);
+  }
   receivedActionToadd(position: string) {
     var index = this.path.pathAction.findIndex(o => o.mapPos == position);
     var toDelete = false;

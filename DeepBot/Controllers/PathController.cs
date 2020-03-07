@@ -25,7 +25,6 @@ namespace DeepBot.Controllers
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
         private List<TrajetDB> _paths = Database.Paths.Find(FilterDefinition<TrajetDB>.Empty).ToList();
-        private List<MapDB> _maps = Database.Maps.Find(FilterDefinition<MapDB>.Empty).ToList();
         private List<string> ListBank = new List<string>() { "-29;-58", "-23;40", "2;-2", "4;-16", "-16;4", "24;-36" };
         public PathController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -38,8 +37,8 @@ namespace DeepBot.Controllers
 
         [HttpGet]
         [Authorize]
-        [Route("GetAllPath")]
-        public async Task<List<PathMinDisplayed>> GetAllPath()
+        [Route("GetAllPaths")]
+        public async Task<List<PathMinDisplayed>> GetAllPaths()
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             List<TrajetDB> listTrajet = _paths.Where(o => o.Fk_User.ToString() == userId).ToList();
@@ -124,7 +123,8 @@ namespace DeepBot.Controllers
                 PathAction pathActionToCreate = new PathAction();
                 if (!ListBank.Contains(action.MapPos))
                 {
-                    MapDB map = _maps.FirstOrDefault(o => o.Coordinate == ("[" + action.MapPos.Replace(';', ',') + "]"));
+                    MapDB map = Database.Maps.Find(o => o.Coordinate == ("[" + action.MapPos.Replace(';', ',') + "]")).First();
+
                     mapId = map.Key;
                     if (!zones.Contains(map.AreaName))
                         zones.Add(map.AreaName);
@@ -195,7 +195,7 @@ namespace DeepBot.Controllers
                         }
                         else if (item.ZaapAction != null)
                         {
-                            int zaapDestination = _maps.FirstOrDefault(o => o.Coordinate == ("[" + item.ZaapAction.Destination.Replace(';', ',') + "]")).Key;
+                            int zaapDestination = Database.Maps.Find(o => o.Coordinate == ("[" + action.MapPos.Replace(';', ',') + "]")).First().Key;
 
                             ZaapAction UseItemActionctionToCreate = new ZaapAction()
                             {
@@ -209,7 +209,7 @@ namespace DeepBot.Controllers
                         }
                         else if (item.ZaapiAction != null)
                         {
-                            int zaapiDestination = _maps.FirstOrDefault(o => o.Coordinate == ("[" + item.ZaapiAction.Destination.Replace(';', ',') + "]")).Key;
+                            int zaapiDestination = Database.Maps.Find(o => o.Coordinate == ("[" + action.MapPos.Replace(';', ',') + "]")).First().Key;
                             ZaapAction UseItemActionctionToCreate = new ZaapAction()
                             {
                                 Order = item.Order,
