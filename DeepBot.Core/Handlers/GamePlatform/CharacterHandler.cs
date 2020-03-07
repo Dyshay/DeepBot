@@ -3,12 +3,14 @@ using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
+using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.Global;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
@@ -20,7 +22,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void StatsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
-            characterGame.UpdateCharacteristics(package);
+            characterGame.DeserializeCharacter(package);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             hub.DispatchToClient(new CharacteristicMessage(characterGame.Characteristic, characterGame.Kamas, characterGame.AvailableCharactericsPts, tcpId), tcpId).Wait();
         }
@@ -37,15 +39,18 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void SpellsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
-            characterGame.Spells = new List<SpellDB>();
             if (!package[2].Equals('o'))
             {
-                var datas = package.Replace("_;", "_").Split(';');
-                foreach (var data in datas)
+                foreach (var data in package.Substring(2, package.Length - 3).Replace("_;", "_").Split(';'))
                 {
-                    SpellDB spell = new SpellDB();
-                    spell.DeserializeSpell(data);
-                    characterGame.Spells.Add(spell);
+                    var split = data.Split('~');
+                    var pair = new KeyValuePair<int, byte>(Convert.ToInt32(split[0]), Convert.ToByte(split[1]));
+                    Debug.WriteLine("Add spell " + pair.Key);
+                    var index = characterGame.Fk_Spells.FindIndex(spell => spell.Key == pair.Key);
+                    if (index >= 0)
+                        characterGame.Fk_Spells[index] = pair;
+                    else
+                        characterGame.Fk_Spells.Add(pair);
                 }
             }
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
@@ -56,9 +61,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void SpellUpdateSuccess(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
-            SpellDB spell = new SpellDB();
-            spell.DeserializeSpell(package.Substring(3));
-            characterGame.Spells.Where(spel => spel.Key == spell.Key).FirstOrDefault().Level = spell.Level;
+            var split = package.Substring(3).Split('~');
+            var pair = new KeyValuePair<int, byte>(Convert.ToInt32(split[0]), Convert.ToByte(split[1]));
+            characterGame.Fk_Spells[characterGame.Fk_Spells.FindIndex(spell => spell.Key == pair.Key)] = pair;
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             // TODO send hub spell msg
         }
@@ -72,8 +77,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("OAKO")]
         public void ItemAddHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
-            characterGame.Inventory.DeserializeInventory(package.Substring(4));
+            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
+            inventory.DeserializeInventory(package.Substring(4));
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             // TODO send hub inventory message
         }
@@ -81,9 +86,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("OM")]
         public void ItemMoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
             string[] data = package.Substring(2).Split('|');
-            Item item = characterGame.Inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
+            Item item = inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
             if (item != null)
             {
                 if (String.IsNullOrEmpty(data[1]))
@@ -98,9 +103,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("OQ")]
         public void ItemQuantityUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
             string[] data = package.Substring(2).Split('|');
-            Item item = characterGame.Inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
+            Item item = inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
             if (item != null)
             {
                 item.Quantity = Convert.ToInt32(data[1]);
@@ -112,11 +117,11 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("OC")]
         public void ItemUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
             string[] data = package.Substring(2).Split(';');
             Item item = new Item();
             item.DeserializeItem(data[1]);
-            characterGame.Inventory.Items[characterGame.Inventory.Items.FindIndex(it => it.InventoryId == item.InventoryId)] = item;
+            inventory.Items[inventory.Items.FindIndex(it => it.InventoryId == item.InventoryId)] = item;
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             //TODO send update inventory message
         }
@@ -124,9 +129,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("OR")]
         public void ItemRemoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
             string[] data = package.Substring(2).Split(';');
-            characterGame.Inventory.Items.RemoveAt(characterGame.Inventory.Items.FindIndex(it => it.InventoryId == Convert.ToInt32(package.Substring(2))));
+            inventory.Items.RemoveAt(inventory.Items.FindIndex(it => it.InventoryId == Convert.ToInt32(package.Substring(2))));
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             //TODO send update inventory message
         }
@@ -136,8 +141,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             string[] pods = package.Substring(2).Split('|');
-            characterGame.Inventory.ActualPods = short.Parse(pods[0]);
-            characterGame.Inventory.MaxPods = short.Parse(pods[1]);
+            characterGame.ActualPods = short.Parse(pods[0]);
+            characterGame.MaxPods = short.Parse(pods[1]);
         }
 
         [Receiver("DV")]

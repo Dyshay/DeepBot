@@ -21,6 +21,7 @@ namespace DeepBot.Data.Driver
         public static readonly IMongoCollection<MapDB> Maps = Base.GetCollection<MapDB>("Maps");
         public static readonly IMongoCollection<ItemDB> Items = Base.GetCollection<ItemDB>("Items");
         public static readonly IMongoCollection<SpellDB> Spells = Base.GetCollection<SpellDB>("Spells");
+        public static readonly IMongoCollection<InventoryDB> Inventories = Base.GetCollection<InventoryDB>("Inventories");
 
         public static void Insert<TDocument>(this TDocument document)
         {
@@ -52,6 +53,9 @@ namespace DeepBot.Data.Driver
                     break;
                 case SpellDB e:
                     Spells.InsertOne(e);
+                    break;
+                case InventoryDB e:
+                    Inventories.InsertOne(e);
                     break;
                 default:
                     throw new NotImplementedException();

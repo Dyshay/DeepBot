@@ -28,8 +28,9 @@ export class TalkService {
   }
 
   private createConnection(): void {
+    console.log("coucou");
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl("https://localhost:44319/deeptalk", {
+      .withUrl("https://localhost:443/deeptalk", {
         accessTokenFactory: () => {
           return localStorage.getItem('DeepBot');
         }, skipNegotiation: true, transport: HttpTransportType.WebSockets

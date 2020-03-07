@@ -74,6 +74,9 @@ namespace DeepBot.Data.Database.Loaders
             item.Buff = itemj.Buff;
             item.Usable = itemj.Usable;
             item.Targetable = itemj.Targetable;
+            item.Equipable = ItemTypeEnum.TYPE_PIERRE_AME == item.Type || ItemTypeEnum.TYPE_PELLE == item.Type || ItemTypeEnum.TYPE_OUTIL == item.Type || ItemTypeEnum.TYPE_PIOCHE == item.Type || ItemTypeEnum.TYPE_COIFFE == item.Type
+                || ItemTypeEnum.TYPE_ANNEAU == item.Type || ItemTypeEnum.TYPE_AMULETTE == item.Type || ItemTypeEnum.TYPE_BOTTES == item.Type || ItemTypeEnum.TYPE_CEINTURE == item.Type || ItemTypeEnum.TYPE_DAGUES == item.Type || ItemTypeEnum.TYPE_DOFUS == item.Type
+                || ItemTypeEnum.TYPE_EPEE == item.Type || ItemTypeEnum.TYPE_FAUX == item.Type || ItemTypeEnum.TYPE_HACHE == item.Type || ItemTypeEnum.TYPE_BATON == item.Type || ItemTypeEnum.TYPE_BAGUETTE == item.Type || ItemTypeEnum.TYPE_ARC == item.Type;
             item.Conditions = itemj.Conditions;
             item.BaseEffects = itemj.Effects;
             item.SetId = itemj.SetId;

@@ -114,7 +114,7 @@ namespace DeepBot.CLI.Model
             Client = new HttpClient();
 
             var JsonString = JsonSerializer.Serialize(Identification);
-            var response = await Client.PostAsync("https://localhost:44319/api/User/Login", new StringContent(JsonString, Encoding.UTF8, "application/json"));
+            var response = await Client.PostAsync("https://localhost/api/User/Login", new StringContent(JsonString, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {

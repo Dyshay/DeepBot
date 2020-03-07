@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Net;
@@ -60,7 +61,6 @@ namespace DeepBot.Controllers
                 if(item.CurrentCharacter != null)
                   item.CurrentCharacter.Config = _configCharacter.FirstOrDefault(o => o.Fk_Character == item.CurrentCharacter.Key);
             }
-
             return user;
 
         }
@@ -247,11 +247,11 @@ namespace DeepBot.Controllers
             if(result == IdentityResult.Success)
             {
               
-                return Redirect("https://localhost:44319/login/"+"succes");
+                return Redirect("https://localhost/login/"+"succes");
             }
             else
             {
-                return Redirect("https://localhost:44319/login");
+                return Redirect("https://localhost/login");
             }
         }
 

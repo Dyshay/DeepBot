@@ -17,7 +17,7 @@ namespace DeepBot.CLI.Service
 
         public TalkHubService(string token)
         {
-            string url = "https://localhost:44319/deeptalk";
+            string url = "https://localhost:443/deeptalk";
             Connection = new HubConnectionBuilder()
                 .WithUrl(url, options =>
                 {

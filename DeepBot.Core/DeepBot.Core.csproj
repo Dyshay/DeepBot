@@ -12,5 +12,4 @@
   <ItemGroup>
     <ProjectReference Include="..\DeepBot.Data\DeepBot.Data.csproj" />
   </ItemGroup>
-
 </Project>
