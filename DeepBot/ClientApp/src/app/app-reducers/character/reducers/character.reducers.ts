@@ -92,6 +92,7 @@ export const reducer = createReducer(initialState,
     })
     return { ...state, allCurrentCharacters: charactersMemory, currentUser: character };
   }),
+  on(CharacterActions.updateCharacter, (state, {character, key}) => ({...state, currentUser: character ? character : state.allCurrentCharacters.find(c  => c.key === key)})),
   on(CharacterActions.updateTcpClient, (state, {tcpId}) => ({...state, currentTcp: tcpId}))
 
 )

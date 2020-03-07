@@ -69,7 +69,6 @@ export class BotDashboardComponent implements OnInit, OnChanges {
   character: Character = new Character();
   indexSelected: number = 0;
   iconCharacter: string;
-  character$ = this.characterStore.pipe(select(fromCharacter.getCurrentCharacter));
   groupName: string = '';
   // logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   logs$ = this.characterStore.pipe(select(fromCharacter.getCurrentlogs));
@@ -87,6 +86,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
+      this.deeptalk.FetchTcpId(Number.parseInt(params.get('id')));
       this.store.pipe(select(fromCharacter.getAllCurrentCharacters)).subscribe(
         (result: Character[]) => {
           for (var i = 0; i < result.length; i++) {
@@ -100,123 +100,124 @@ export class BotDashboardComponent implements OnInit, OnChanges {
 
                 }
 
-          })
-    }
+              })
+            }
             this.iconCharacter = this.characterService.getCharacterIcon(this.character.breedId);
-    if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
-      this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
-        (result: Group[]) => {
-          if (result.find(o => o.key == this.character.fk_Group).name !== undefined)
-            this.groupName = result.find(o => o.key == this.character.fk_Group).name;
-        }
-      );
+            if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
+              this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
+                (result: Group[]) => {
+                  if (result.find(o => o.key == this.character.fk_Group).name !== undefined)
+                    this.groupName = result.find(o => o.key == this.character.fk_Group).name;
+                }
+              );
 
-    }
-  }
-})
+            }
+          }
+        })
     });
-this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: Account[]) => {
-  accounts.forEach(acc => {
-    if (acc.characters.find(c => c.name == this.character.name)) {
-      this.account = acc;
+    this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: Account[]) => {
+      accounts.forEach(acc => {
+        if (acc.characters.find(c => c.name == this.character.name)) {
+          this.account = acc;
+        }
+      })
+    });
+  }
+
+
+
+  initConnection() {
+    console.log('ACCOUNT NAME',this.account.accountName);
+    this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.server.id, false);
+    this.deeptalk.FetchTcpId(this.character.key);
+  }
+
+  links: Link[] = [
+    {
+      label: this.translateService.instant('GLOBAL.DASHBOARD'),
+      route: 'dashboard',
+      icon: icTableaudeBord
+    },
+    {
+      label: this.translateService.instant('DASHBOARDBOT.CHARACTER'),
+      route: 'character',
+      icon: icPersonnage
+    },
+    {
+      label: this.translateService.instant('DASHBOARDBOT.FIGHT'),
+      route: 'fight',
+      icon: icCombat
+    },
+    {
+      label: this.translateService.instant('DASHBOARDBOT.JOB'),
+      route: 'job',
+      icon: icJob
+    },
+    {
+      label: this.translateService.instant('DASHBOARDBOT.INVENTORY'),
+      route: 'inventory',
+      icon: icInventory
+    },
+    {
+      label: this.translateService.instant('DASHBOARDBOT.MAP'),
+      route: 'map',
+      icon: icMap
+    },
+    {
+      label: this.translateService.instant('DASHBOARDBOT.PARAMETERS'),
+      route: 'setting',
+      icon: icSetting
     }
-  })
-});
-  }
+  ];
 
+  suggestions = friendSuggestions;
 
+  icWork = icWork;
+  icPhone = icPhone;
+  icPersonAdd = icPersonAdd;
+  icCheck = icCheck;
+  icMail = icMail;
+  icAccessTime = icAccessTime;
+  icAdd = icAdd;
+  icWhatshot = icWhatshot;
+  icTableaudeBord = icTableaudeBord;
+  icPersonnage = icPersonnage;
+  icCombat = icCombat;
+  icJob = icJob;
+  icInventory = icInventory;
+  icMap = icMap;
+  icSetting = icSetting;
+  icToConnect = icToConnect;
+  icToDisconnect = icToDisconnect;
+  icPause = icPause;
 
-initConnection() {
-  this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.server.id, false);
-  this.deeptalk.FetchTcpId(this.character.key);
-}
-
-links: Link[] = [
-  {
-    label: this.translateService.instant('GLOBAL.DASHBOARD'),
-    route: 'dashboard',
-    icon: icTableaudeBord
-  },
-  {
-    label: this.translateService.instant('DASHBOARDBOT.CHARACTER'),
-    route: 'character',
-    icon: icPersonnage
-  },
-  {
-    label: this.translateService.instant('DASHBOARDBOT.FIGHT'),
-    route: 'fight',
-    icon: icCombat
-  },
-  {
-    label: this.translateService.instant('DASHBOARDBOT.JOB'),
-    route: 'job',
-    icon: icJob
-  },
-  {
-    label: this.translateService.instant('DASHBOARDBOT.INVENTORY'),
-    route: 'inventory',
-    icon: icInventory
-  },
-  {
-    label: this.translateService.instant('DASHBOARDBOT.MAP'),
-    route: 'map',
-    icon: icMap
-  },
-  {
-    label: this.translateService.instant('DASHBOARDBOT.PARAMETERS'),
-    route: 'setting',
-    icon: icSetting
-  }
-];
-
-suggestions = friendSuggestions;
-
-icWork = icWork;
-icPhone = icPhone;
-icPersonAdd = icPersonAdd;
-icCheck = icCheck;
-icMail = icMail;
-icAccessTime = icAccessTime;
-icAdd = icAdd;
-icWhatshot = icWhatshot;
-icTableaudeBord = icTableaudeBord;
-icPersonnage = icPersonnage;
-icCombat = icCombat;
-icJob = icJob;
-icInventory = icInventory;
-icMap = icMap;
-icSetting = icSetting;
-icToConnect = icToConnect;
-icToDisconnect = icToDisconnect;
-icPause = icPause;
-
-tabChanged(tabChangeEvent: MatTabChangeEvent): void {
-  switch(tabChangeEvent.index) {
+  tabChanged(tabChangeEvent: MatTabChangeEvent): void {
+    switch (tabChangeEvent.index) {
       case 0:
-  this.indexSelected = 0;
-  break;
+        this.indexSelected = 0;
+        break;
       case 1:
-  this.indexSelected = 1;
-  break;
+        this.indexSelected = 1;
+        break;
       case 2:
-  this.indexSelected = 2;
-  break;
+        this.indexSelected = 2;
+        break;
       case 3:
-  this.indexSelected = 3;
-  break;
+        this.indexSelected = 3;
+        break;
       case 4:
-  this.indexSelected = 4;
-  break;
+        this.indexSelected = 4;
+        break;
       case 5:
-  this.indexSelected = 5;
-  break;
+        this.indexSelected = 5;
+        break;
       case 6:
-  this.indexSelected = 6;
-  break;
+        this.indexSelected = 6;
+        break;
 
       default:
-  break;
-}
+        break;
+    }
   }
 
 }

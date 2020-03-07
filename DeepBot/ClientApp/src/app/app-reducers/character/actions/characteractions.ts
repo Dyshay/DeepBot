@@ -30,3 +30,4 @@ export const getLogs = createAction('[BOT/LOGS] RECEIVED LOG', props<{logs: LogM
 export const updateAccount = createAction('[BOT/UPDATE] UPDATE ACCOUNT', props<{character: Character, tcpId: string}>());
 
 export const updateTcpClient = createAction('[BOT/TCPID] UPDATE THE TCP ID', props<{tcpId: string}>());
+export const updateCharacter = createAction('[BOT/CHARACTER] UPDATE CHARACTER', props<{character: Character, key: number | undefined}>());

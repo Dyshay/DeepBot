@@ -74,6 +74,7 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
     var regex = /([0-9]){3,}/;
     let id = regex.exec(item)[0];
     this.hub.FetchTcpId(Number.parseInt(id));
+    this.characterStore.dispatch(CharacterActions.updateCharacter({character: undefined, key: Number.parseInt(id)}))
     this.characterStore.dispatch(CharacterActions.ResetCharacteristics());
   }
 
