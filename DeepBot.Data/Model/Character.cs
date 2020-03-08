@@ -45,6 +45,8 @@ namespace DeepBot.Data.Model
             }
         }
         [BsonIgnore]
+        public List<Job> Jobs { get; set; }
+        [BsonIgnore]
         public MapDB Map { get; set; }
         [BsonIgnore]
         public GroupDB Group { get; set; }

@@ -3,7 +3,6 @@ using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
-using DeepBot.Data.Model;
 using MongoDB.Driver;
 using System;
 
@@ -23,20 +22,13 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("JX")]
         public void JobXpHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            Guid jobsId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Jobs;
-            var jobsBook = Database.Jobs.Find(i => i.Key == jobsId).First();
-            jobsBook.Jobs.DeserializeJobsXp(package.Substring(3));
-            Database.Jobs.ReplaceOneAsync(i => i.Key == jobsId, jobsBook);
+            var data = package.Substring(2);
         }
 
         [Receiver("JN")]
         public void JobLevelUpHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            Guid jobsId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Jobs;
-            var datas = package.Substring(2).Split('|');
-            var jobsBook = Database.Jobs.Find(i => i.Key == jobsId).First();
-            jobsBook.Jobs.Find(x => x.Id == (JobIdEnum)Convert.ToInt32(datas[0])).Level = Convert.ToInt32(datas[1]);
-            Database.Jobs.ReplaceOneAsync(i => i.Key == jobsId, jobsBook);
+            var data = package.Substring(2);
         }
     }
 }

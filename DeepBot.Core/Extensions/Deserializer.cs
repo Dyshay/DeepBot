@@ -164,23 +164,5 @@ namespace DeepBot.Core.Extensions
                 }
             }
         }
-
-        public static void DeserializeJobsXp(this List<Job> jobs, string rawData)
-        {
-            foreach (var dataJob in rawData.Split('|'))
-            {
-                var datas = dataJob.Split(';');
-                if (datas.Length < 4)
-                    return;
-                var job = jobs.Find(x => x.Id == (JobIdEnum)Convert.ToInt32(datas[0]));
-                job.Level = Convert.ToInt32(datas[1]);
-                job.ExperienceMinLevel = Convert.ToInt32(datas[2]);
-                job.ExperienceActual = Convert.ToInt32(datas[3]);
-                if (job.Level < 100 && datas.Length > 4)
-                    job.ExperienceLevelUp = Convert.ToInt32(datas[4]);
-                else
-                    job.ExperienceLevelUp = 0;
-            }
-        }
     }
 }
