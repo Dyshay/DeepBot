@@ -14,7 +14,8 @@ namespace DeepBot.Data.Model
         WALKING = 3,
         GATHERING = 4,
         FIGHTING = 5,
-        DIALOGING = 6
+        DIALOGING = 6,
+        REGENERATING
     }
     #endregion
 

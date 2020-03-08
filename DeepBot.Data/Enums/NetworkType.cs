@@ -14,5 +14,6 @@ namespace DeepBot.Data.Enums
         MAP,
         CHARACTERS,
         CHARACTERISTIC,
+        JOBS
     }
 }

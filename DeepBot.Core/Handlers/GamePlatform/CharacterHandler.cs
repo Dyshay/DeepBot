@@ -81,7 +81,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
             inventory.DeserializeInventory(package.Substring(4));
             Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
-            // TODO send hub inventory message
+            hub.DispatchToClient(new InventoryMessage(tcpId), tcpId).Wait();
         }
 
         [Receiver("OM")]
@@ -99,7 +99,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                     item.Position = (ItemSlotEnum)Convert.ToInt32(data[1]);
             }
             Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
-            //TODO send update inventory message
+            hub.DispatchToClient(new InventoryMessage(tcpId), tcpId).Wait();
         }
 
         [Receiver("OQ")]
@@ -114,7 +114,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 item.Quantity = Convert.ToInt32(data[1]);
             }
             Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
-            //TODO send update inventory message
+            hub.DispatchToClient(new InventoryMessage(tcpId), tcpId).Wait();
         }
 
         [Receiver("OC")]
@@ -127,7 +127,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             item.DeserializeItem(data[1]);
             inventory.Items[inventory.Items.FindIndex(it => it.InventoryId == item.InventoryId)] = item;
             Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
-            //TODO send update inventory message
+            hub.DispatchToClient(new InventoryMessage(tcpId), tcpId).Wait();
         }
 
         [Receiver("OR")]
@@ -138,7 +138,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             string[] data = package.Substring(2).Split(';');
             inventory.Items.RemoveAt(inventory.Items.FindIndex(it => it.InventoryId == Convert.ToInt32(package.Substring(2))));
             Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
-            //TODO send update inventory message
+            hub.DispatchToClient(new InventoryMessage(tcpId), tcpId).Wait();
         }
 
         [Receiver("PIK")]
@@ -148,28 +148,74 @@ namespace DeepBot.Core.Handlers.GamePlatform
             string[] pods = package.Substring(2).Split('|');
             characterGame.ActualPods = short.Parse(pods[0]);
             characterGame.MaxPods = short.Parse(pods[1]);
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
         }
 
         [Receiver("DV")]
-        public void NPCDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { }
+        public void NPCDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { } // TODO
 
         [Receiver("EV")]
-        public void OtherDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { }
+        public void OtherDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { } // TODO
 
         [Receiver("PIK")]
-        public void GroupRequestPacketHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GroupInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, package.Substring(3).Split('|')[0].ToLower() + " t'invite à rejoindre son groupe.", tcpId), tcpId).Wait();
             if (characterGame.HasGroup && package.Substring(3).Split('|')[0].ToLower() == characterGame.Group.Leader.Name.ToLower())
             {
-                // TODO cliente.account.connexion.SendPacket("PA");
+                hub.SendPackage("PA", tcpId);
                 hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Invitation acceptée.", tcpId), tcpId).Wait();
             } else
             {
-                // TODO cliente.account.connexion.SendPacket("PR");
+                hub.SendPackage("PR", tcpId);
                 hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Invitation refusée.", tcpId), tcpId).Wait();
             }
+        }
+
+        [Receiver("ERK")]
+        public void ExchangeRequestHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { } // TODO
+
+        [Receiver("ILS")]
+        public void RegenTimerHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            int regenTime = Convert.ToInt32(package.Substring(3));
+            // TODO
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Votre personnage récupère 1 pdv chaque {regenTime / 1000} secondes", tcpId), tcpId).Wait();
+        }
+
+        [Receiver("ILS")]
+        public void CharacterRegenHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            int regen = Convert.ToInt32(package.Substring(3));
+            user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Characteristic.VitalityActual += regen;
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Vous avez récupéré {regen} points de vie", tcpId), tcpId).Wait();
+        }
+
+        [Receiver("eUK")]
+        public void PlayerEmoteHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            var split = package.Substring(3).Split('|');
+            int playerId = Convert.ToInt32(split[0]), emoteId = Convert.ToInt32(split[1]);
+            var character = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+
+            if (character.Key != playerId)
+                return;
+            if (emoteId == 1 && character.State != CharacterState.REGENERATING)
+                character.State = CharacterState.REGENERATING;
+            else if (emoteId == 0 && character.State == CharacterState.REGENERATING)
+                character.State = CharacterState.IDLE;
+
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+        }
+
+        [Receiver("gJR")]
+        public void GuildInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, package.Substring(3) + " t'invite à rejoindre sa guilde.", tcpId), tcpId).Wait();
+            hub.SendPackage("gJE", tcpId);
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Invitation à rejoindre la guilde refusée", tcpId), tcpId).Wait();
         }
     }
 }
