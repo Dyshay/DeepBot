@@ -6,13 +6,10 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
-using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
@@ -63,7 +60,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
 
                 if (!isScan && currentAccount != null)
                 {
-                    if(characterName.ToLower().Equals(currentAccount.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
+                    if (characterName.ToLower().Equals(currentAccount.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
                     {
                         hub.SendPackage($"AS{id}", tcpId, true);
                         hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
@@ -88,7 +85,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             string[] splittedData = package.Substring(4).Split('|');
-            
+
             Account account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
             Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();

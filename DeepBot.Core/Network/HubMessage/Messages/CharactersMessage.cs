@@ -1,8 +1,6 @@
 ﻿using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Core.Network.HubMessage.Messages
 {

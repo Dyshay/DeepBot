@@ -16,6 +16,7 @@ namespace DeepBot.Data.Model
         public Guid Fk_Configuration { get; set; }
         public Guid Fk_Trajet { get; set; }
         public Guid Fk_Inventory { get; set; }
+        public Guid Fk_Jobs { get; set; }
         public List<KeyValuePair<int, byte>> Fk_Spells { get; set; } = new List<KeyValuePair<int, byte>>();
         public string Name { get; set; }
         public byte Level { get; set; }
@@ -46,7 +47,7 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public List<Job> Jobs { get; set; }
         [BsonIgnore]
-        public MapDB  Map { get; set; }
+        public MapDB Map { get; set; }
         [BsonIgnore]
         public GroupDB Group { get; set; }
         [BsonIgnore]

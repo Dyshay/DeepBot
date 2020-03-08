@@ -1,7 +1,6 @@
 ﻿using DeepBot.CLI.Model;
 using DeepBot.CLI.Network.Packages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Buffers.Text;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace DeepBot.Extensions
 {
@@ -20,7 +17,7 @@ namespace DeepBot.Extensions
             Span<byte> guidBytes = stackalloc byte[16];
             Span<byte> encodedBytes = stackalloc byte[24];
 
-            MemoryMarshal.TryWrite(guidBytes, ref guid); 
+            MemoryMarshal.TryWrite(guidBytes, ref guid);
             Base64.EncodeToUtf8(guidBytes, encodedBytes, out _, out _);
 
             for (var i = 0; i < 22; i++)

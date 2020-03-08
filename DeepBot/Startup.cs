@@ -7,12 +7,9 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Database.Loaders;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
-using DeepBot.Data.Model.CharacterInfo;
-using DeepBot.Data.Model.MapComponent;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -52,8 +49,9 @@ namespace DeepBot
 
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
-                .AddJsonOptions (opt => {
-                    opt.JsonSerializerOptions.MaxDepth =10;
+                .AddJsonOptions(opt =>
+                {
+                    opt.JsonSerializerOptions.MaxDepth = 10;
                     opt.JsonSerializerOptions.WriteIndented = true;
                 });
 
@@ -62,16 +60,16 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<Character>();
             BsonClassMap.RegisterClassMap<Proxy>();
 
-            services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
-            {
-                identity.Password.RequireDigit = false;
-                identity.Password.RequireLowercase = false;
-                identity.Password.RequireNonAlphanumeric = false;
-                identity.Password.RequireUppercase = false;
-                identity.Password.RequiredLength = 1;
-                identity.Password.RequiredUniqueChars = 0;
-                identity.SignIn.RequireConfirmedEmail = true;
-            },
+            services.AddIdentityMongoDbProvider<UserDB, RoleDB>(identity =>
+             {
+                 identity.Password.RequireDigit = false;
+                 identity.Password.RequireLowercase = false;
+                 identity.Password.RequireNonAlphanumeric = false;
+                 identity.Password.RequireUppercase = false;
+                 identity.Password.RequiredLength = 1;
+                 identity.Password.RequiredUniqueChars = 0;
+                 identity.SignIn.RequireConfirmedEmail = true;
+             },
                 mongo =>
                 {
                     mongo.ConnectionString = ConnectionString;

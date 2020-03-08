@@ -1,15 +1,11 @@
 ﻿using DeepBot.Core.Handlers;
 using DeepBot.Core.Hubs;
 using DeepBot.Data.Database;
-using DeepBot.Data.Model;
-using DeepBot.Data.Model;
-using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace DeepBot.Core.Network
 {
@@ -31,7 +27,7 @@ namespace DeepBot.Core.Network
             }
         }
 
-        public static void Receive(DeepTalk hub, string package, UserDB user , string tcpId, IMongoCollection<UserDB> Manager)
+        public static void Receive(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> Manager)
         {
             ReceiverData method = methods.Find(m => package.StartsWith(m.HandlerName));
 

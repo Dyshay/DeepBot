@@ -1,13 +1,11 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
-using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.Global;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 
 namespace DeepBot.Data.Database.Loaders

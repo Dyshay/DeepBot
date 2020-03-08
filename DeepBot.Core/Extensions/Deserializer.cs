@@ -1,13 +1,10 @@
-﻿using DeepBot.Data.Database;
-using DeepBot.Data.Driver;
+﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
-using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.Global;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DeepBot.Core.Extensions
 {
@@ -137,6 +134,34 @@ namespace DeepBot.Core.Extensions
                 if (stats.Length > 4)
                     effect.Args = stats[4];
                 effects.Add(effect);
+            }
+        }
+
+        public static void DeserializeSkills(this List<Job> jobs, string rawData)
+        {
+            foreach (var dataJob in rawData.Substring(3).Split('|'))
+            {
+                var jobId = (JobIdEnum)Convert.ToInt32(dataJob.Split(';')[0]);
+                var job = jobs.Find(x => x.Id == jobId);
+                if (job == null)
+                {
+                    job = new Job();
+                    job.Id = jobId;
+                    jobs.Add(job);
+                }
+                foreach (var dataSkill in dataJob.Split(';')[1].Split(','))
+                {
+                    var data = dataSkill.Split('~');
+                    var skillId = (SkillIdEnum)Convert.ToInt32(data[0]);
+                    var skill = job.Skills.Find(x => x.Id == skillId);
+                    if (skill == null)
+                        skill = new JobSkill();
+                    skill.Id = skillId;
+                    skill.QuantityMin = Convert.ToInt32(data[1]);
+                    skill.QuantityMax = Convert.ToInt32(data[2]);
+                    skill.Time = Convert.ToDouble(data[3]);
+                    job.Skills.Add(skill);
+                }
             }
         }
     }

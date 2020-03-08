@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DeepBot.Core.Network.HubMessage.Messages.NetworkModel
+﻿namespace DeepBot.Core.Network.HubMessage.Messages.NetworkModel
 {
     public class Character
     {

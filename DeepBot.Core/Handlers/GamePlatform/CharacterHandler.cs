@@ -6,13 +6,11 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
-using DeepBot.Data.Model.Global;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
@@ -90,7 +88,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
             {
                 hub.SendPackage("PA", tcpId);
                 hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Invitation acceptée.", tcpId), tcpId).Wait();
-            } else
+            }
+            else
             {
                 hub.SendPackage("PR", tcpId);
                 hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Invitation refusée.", tcpId), tcpId).Wait();

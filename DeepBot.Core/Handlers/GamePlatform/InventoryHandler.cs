@@ -8,9 +8,7 @@ using DeepBot.Data.Model;
 using DeepBot.Data.Model.Global;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
@@ -131,7 +129,6 @@ namespace DeepBot.Core.Handlers.GamePlatform
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             characterGame.State = CharacterState.IDLE;
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
         }
 
         [Receiver("EK")]
@@ -139,7 +136,6 @@ namespace DeepBot.Core.Handlers.GamePlatform
         {
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             characterGame.State = CharacterState.IDLE;
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
         }
 
         [Receiver("EL")]
