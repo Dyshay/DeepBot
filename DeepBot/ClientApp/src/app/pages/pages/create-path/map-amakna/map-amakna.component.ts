@@ -69,10 +69,10 @@ export class MapAmaknaComponent {
           data: actions
         });
       else
-        this.toastr.warning('', this.translateService.instant('GLOBAL.PATHACTIONMSG16'));
+        this.toastr.warning('', this.translateService.instant('CREATEPATH.PATHACTIONMSG16'));
     }
     else {
-      this.toastr.warning('', this.translateService.instant('GLOBAL.PATHACTIONMSG17'));
+      this.toastr.warning('', this.translateService.instant('CREATEPATH.PATHACTIONMSG17'));
     }
   }
 
