@@ -16,6 +16,5 @@ namespace DeepBot.Core.Network.HubMessage.Messages
             Characters = characters.ToArray();
             TcpId = tcpId;
         }
-
     }
 }
