@@ -21,7 +21,9 @@ namespace DeepBot.Core.Extensions
             character.Characteristic.ExperienceActual = double.Parse(_loc5[0]);
             character.Characteristic.ExperienceMinLevel = double.Parse(_loc5[1]);
             character.Characteristic.ExperienceLevelUp = double.Parse(_loc5[2]);
-            character.Kamas = int.Parse(_loc3[1]);
+            var inventory = Database.Inventories.Find(i => i.Key == character.Fk_Inventory).First();
+            inventory.Kamas = int.Parse(_loc3[1]);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == character.Fk_Inventory, inventory);
             character.AvailableCharactericsPts = int.Parse(_loc3[2]);
 
             _loc5 = _loc3[5].Split(',');
@@ -88,15 +90,19 @@ namespace DeepBot.Core.Extensions
             }
         }
 
-        public static void DeserializeInventory(this InventoryDB inventory, string rawData)
+        public static void DeserializeItems(this List<Item> items, string rawData)
         {
             foreach (string data in rawData.Split(';'))
             {
                 if (!string.IsNullOrEmpty(data))
                 {
                     Item item = new Item();
-                    item.DeserializeItem(data);
-                    inventory.Items.Add(item);
+                    if (data.StartsWith("O"))
+                        item.DeserializeItem(data.Substring(1));
+                    else if (data.StartsWith("G")) { }
+                    else
+                        item.DeserializeItem(data);
+                    items.Add(item);
                 }
             }
         }
@@ -112,7 +118,8 @@ namespace DeepBot.Core.Extensions
                 item.Quantity = Convert.ToInt32(values[2], 16);
                 item.Position = string.IsNullOrEmpty(values[3]) ? ItemSlotEnum.SLOT_INVENTORY : (ItemSlotEnum)Convert.ToInt32(values[3], 16);
                 item.Effects = new List<Effect>();
-                item.Effects.DeserializeEffects(values[4]);
+                if (!String.IsNullOrEmpty(values[4]))
+                    item.Effects.DeserializeEffects(values[4]);
             }
         }
 

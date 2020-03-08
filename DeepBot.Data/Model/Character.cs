@@ -21,9 +21,6 @@ namespace DeepBot.Data.Model
         public byte Level { get; set; }
         public int ServerId { get; set; }
         public short BreedId { get; set; }
-        public int Kamas { get; set; }
-        public int MaxPods { get; set; }
-        public int ActualPods { get; set; }
         public int AvailableCharactericsPts { get; set; }
         public int AvailableSpellPts { get; set; }
         public Caracteristic Characteristic { get; set; } = new Caracteristic();

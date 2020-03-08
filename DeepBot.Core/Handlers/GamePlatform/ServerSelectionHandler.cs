@@ -99,7 +99,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             account.CurrentCharacter.Level = byte.Parse(splittedData[2]);
             account.CurrentCharacter.BreedId = byte.Parse(splittedData[3]);
             account.CurrentCharacter.Sex = byte.Parse(splittedData[4]);
-            inventory.DeserializeInventory(splittedData[9]);
+            inventory.Items.DeserializeItems(splittedData[9]);
 
             account.State = AccountState.IDLE;
             hub.SendPackage("GC1", tcpId);
