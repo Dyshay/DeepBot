@@ -6,7 +6,7 @@ namespace DeepBot.CLI.Network.Packages
     {
         public static void Receive(string package, Account acc, string tcpId)
         {
-            System.Console.WriteLine($"[{tcpId} | [Dofus] {package}");
+            System.Console.WriteLine($"[{tcpId}] | [Dofus] {package}");
             acc.TalkingService.SendHandlePackageToServer(package, tcpId).Wait();
         }
     }
