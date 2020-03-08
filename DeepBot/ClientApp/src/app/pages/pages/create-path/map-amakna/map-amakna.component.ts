@@ -5,26 +5,26 @@ import { DialogListActionComponent } from '../dialog-list-action/dialog-list-act
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
+
 declare global {
   interface JQuery {
     mapster(): JQuery;
   }
 }
-
 @Component({
-    selector: 'app-map-cania-abraknydes',
-    templateUrl: './map-cania-abraknydes.component.html',
-    styleUrls: ['./map-cania-abraknydes.component.scss']
+    selector: 'app-map-amakna',
+    templateUrl: './map-amakna.component.html',
+    styleUrls: ['./map-amakna.component.scss']
 })
-/** map-cania-abraknydes component*/
-export class MapCaniaAbraknydesComponent {
+/** map-amakna component*/
+export class MapAmaknaComponent {
   @Output() selectMapEvent = new EventEmitter<string>();
   @Output() specificActionEvent = new EventEmitter<{ position: string, event: string, payload?: any }>();
 
   rightClickPos: string;
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuZone: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
-    /** map-cania-abraknydes ctor */
+    /** map-amakna ctor */
   constructor(public dialog: MatDialog, private pathService: PathService, private toastr: ToastrService, private translateService: TranslateService) {
 
   }
@@ -79,4 +79,5 @@ export class MapCaniaAbraknydesComponent {
   selectMap(event) {
     this.selectMapEvent.next(event.target.alt);
   }
+
 }

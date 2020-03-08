@@ -25,12 +25,16 @@ import { DialogListActionComponent } from './dialog-list-action/dialog-list-acti
 import { MapCaniaAbraknydesComponent } from './map-cania-abraknydes/map-cania-abraknydes.component';
 import { MapCaniaAbraknydesBanqueComponent } from './map-cania-abraknydes-banque/map-cania-abraknydes-banque.component';
 import { MapCaniaAbraknydesRetourComponent } from './map-cania-abraknydes-retour/map-cania-abraknydes-retour.component';
+import { MapAmaknaComponent } from './map-amakna/map-amakna.component';
+import { MapAmaknaBanqueComponent } from './map-amakna-banque/map-amakna-banque.component';
+import { MapAmaknaRetourComponent } from './map-amakna-retour/map-amakna-retour.component';
 
 
 @NgModule({
   declarations: [CreatePathComponent,
     MapBontaComponent, MapBontaBanqueComponent, MapBontaRetourComponent,
-    MapCaniaAbraknydesComponent,MapCaniaAbraknydesBanqueComponent,MapCaniaAbraknydesRetourComponent,
+    MapCaniaAbraknydesComponent, MapCaniaAbraknydesBanqueComponent, MapCaniaAbraknydesRetourComponent,
+    MapAmaknaComponent,MapAmaknaBanqueComponent,MapAmaknaRetourComponent,
     DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
     DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent],
   imports: [

@@ -9,6 +9,8 @@ import { DialogZaapiComponent } from '../dialog-zaapi/dialog-zaapi.component';
 import { DialogListActionComponent } from '../dialog-list-action/dialog-list-action.component';
 import { ListZaap } from '../../../../../webModel/Utility/PathCreator/Zaap';
 import { ListZaapi } from '../../../../../webModel/Utility/PathCreator/Zaapi';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 
 declare global {
@@ -33,7 +35,7 @@ export class MapBontaRetourComponent {
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanqueRetour: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
     /** map-bonta ctor */
-  constructor(private pathService: PathService, public dialog: MatDialog) {
+  constructor(private pathService: PathService, public dialog: MatDialog, private toastr: ToastrService, private translateService: TranslateService) {
 
   }
  
@@ -153,13 +155,19 @@ export class MapBontaRetourComponent {
   }
   onContextMenuActionList() {
     var actions = this.pathService.getAlActionsOnMap(this.rightClickPos);
-    if(actions.actions.length>0)
-     this.dialog.open(DialogListActionComponent, {
-      width: '600px',
-      height: '500px',
-      data: actions
-    });
-
+    if (actions != null) {
+      if (actions.actions.length > 0)
+        this.dialog.open(DialogListActionComponent, {
+          width: '600px',
+          height: '500px',
+          data: actions
+        });
+      else
+        this.toastr.warning('', this.translateService.instant('GLOBAL.PATHACTIONMSG16'));
+    }
+    else {
+      this.toastr.warning('', this.translateService.instant('GLOBAL.PATHACTIONMSG17'));
+    }
   }
 
   selectMap(event) {

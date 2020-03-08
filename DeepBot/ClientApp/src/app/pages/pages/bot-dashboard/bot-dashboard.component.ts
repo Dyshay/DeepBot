@@ -80,9 +80,7 @@ export class BotDashboardComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.store.pipe(select(fromCharacter.getAllCurrentCharacters)).subscribe(
         (result: Character[]) => {
-          for (var i = 0; i < result.length; i++) {
-            if (result[i].key.toString() == params.get('id'))
-              this.character = result[i];
+          this.character = result.find(o => o.key.toString() == params.get('id'));
             this.iconCharacter = this.characterService.getCharacterIcon(this.character.breedId);
             if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
               this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
@@ -90,18 +88,14 @@ export class BotDashboardComponent implements OnInit {
                   this.groupName = result.find(o => o.key == this.character.fk_Group).name;
                 }
               );
-              
             }
-          }
+          this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe(
+            (result: Account[]) => {
+              this.account = result.find(o => o.currentCharacter.key == this.character.key);
+            });
         })
     });
-    this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: Account[]) => {
-      accounts.forEach(acc => {
-        if (acc.characters.find(c => c.name == this.character.name)) {
-          this.account = acc;
-        }
-      })
-    });
+
   }
 
   initConnection() {

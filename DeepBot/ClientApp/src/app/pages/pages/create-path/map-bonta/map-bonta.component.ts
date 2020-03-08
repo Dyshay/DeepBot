@@ -2,6 +2,8 @@ import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core
 import { MatMenuTrigger, MatDialog } from '@angular/material';
 import { PathService } from '../../../../services/path.service';
 import { DialogListActionComponent } from '../dialog-list-action/dialog-list-action.component';
+import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 
 declare global {
@@ -24,7 +26,7 @@ export class MapBontaComponent {
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuZone: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
     /** map-bonta ctor */
-  constructor(public dialog: MatDialog,private pathService:PathService) {
+  constructor(public dialog: MatDialog, private pathService: PathService, private toastr: ToastrService, private translateService: TranslateService) {
 
   }
 
@@ -61,13 +63,19 @@ export class MapBontaComponent {
   }
   onContextMenuActionList() {
     var actions = this.pathService.getAlActionsOnMap(this.rightClickPos);
-    if (actions.actions.length > 0)
-    this.dialog.open(DialogListActionComponent, {
-      width: '600px',
-      height:'500px',
-      data: actions
-    });
-
+    if (actions != null) {
+      if (actions.actions.length > 0)
+        this.dialog.open(DialogListActionComponent, {
+          width: '600px',
+          height: '500px',
+          data: actions
+        });
+      else
+        this.toastr.warning('', this.translateService.instant('GLOBAL.PATHACTIONMSG16'));
+    }
+    else {
+      this.toastr.warning('', this.translateService.instant('GLOBAL.PATHACTIONMSG17'));
+    }
   }
 
   selectMap(event) {

@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ListBank } from '../../webModel/Utility/PathCreator/Bank';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -30,7 +31,7 @@ export class PathService {
   zaapiActiontoAdd: ZaapiAction = new ZaapiAction;
   bankActionToAdd: BankAction = new BankAction;
 
-  constructor(private http: HttpClient, private toastr: ToastrService) {
+  constructor(private http: HttpClient, private toastr: ToastrService, private translateService: TranslateService) {
     this.toastr.toastrConfig.timeOut = 3300;
     this.toastr.toastrConfig.maxOpened = 4;
     this.toastr.toastrConfig.autoDismiss = true;
@@ -181,11 +182,11 @@ export class PathService {
         toDelete = true;
     }
     if (deletedactionsGoBank) {
-      this.toastr.success('', 'Actions associées au retour en banque supprimées avec succés');
+      this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG'));
       return;
     }
     if (deletedactionsBackBank) {
-      this.toastr.success('', 'Actions associées au retour vers la zone supprimées avec succés');
+      this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG2'));
       return;
     }
 
@@ -210,9 +211,9 @@ export class PathService {
       }
       else {
         if (this.statePath === 2)
-          this.toastr.warning('Atention map ajoutée au trajet sans aucune action !', 'Ajout map ' + position + ' au trajet retour en banque');
+          this.toastr.warning(this.translateService.instant('CREATEPATH.PATHACTIONMSG3'), this.translateService.instant('CREATEPATH.PATHACTIONMSG4') + position + this.translateService.instant('CREATEPATH.PATHACTIONMSG5'));
         else
-          this.toastr.warning('Atention map ajoutée au trajet sans aucune action !', 'Ajout map ' + position + ' au trajet retour de banque vers zone');
+          this.toastr.warning(this.translateService.instant('CREATEPATH.PATHACTIONMSG3'), this.translateService.instant('CREATEPATH.PATHACTIONMSG4') + position + this.translateService.instant('CREATEPATH.PATHACTIONMSG6'));
       }
     }
     /* map action to delete */
@@ -225,11 +226,11 @@ export class PathService {
   receivedSpecificActionToAdd(position, type, payload) {
     var index = this.path.pathAction.findIndex(o => o.mapPos == position)
     if (position.length == 0) {
-      this.toastr.error('Position non trouvée, veuillez bien cliquer sur la case ciblé', 'Action non créé');
+      this.toastr.error(this.translateService.instant('CREATEPATH.PATHACTIONMSG7'), this.translateService.instant('CREATEPATH.PATHACTIONMSG8'));
       return;
     }
     if (index === -1) {
-      this.toastr.error('Veuillez selectionner la map (' + position + ') avant de définir une action spécifique', 'Action non créé');
+      this.toastr.error(this.translateService.instant('CREATEPATH.PATHACTIONMSG9') + position + this.translateService.instant('CREATEPATH.PATHACTIONMSG10'), this.translateService.instant('CREATEPATH.PATHACTIONMSG8'));
       return;
     }
 
@@ -263,7 +264,6 @@ export class PathService {
       let cellIdExit = ListBank.Banks.find(o => o.posBank == position).exitBankCellId;
       this.addMoveAction(position, cellIdExit, true, MapIdInt);
     }
-    console.log(this.path);
   }
 
   getAlActionsOnMap(position): PathAction {
@@ -273,20 +273,19 @@ export class PathService {
   updateAction(position, type) {
     if (type === 'separateGroup') {
       this.path.pathAction.find(o => o.mapPos === position).actions.find(o => o.fightAction != null).fightAction.isAlone = true;
-      this.toastr.success('Ajout de l"action avec succés', 'Action combattre seul ajouté avec succés en (' + position + ')');
+      this.toastr.success(this.translateService.instant('CREATEPATH.PATHACTIONMSG11'), this.translateService.instant('CREATEPATH.PATHACTIONMSG12') + position + ')');
     }
     else if (type === 'noFight') {
       var index = this.path.pathAction.find(o => o.mapPos === position).actions.findIndex(o => o.fightAction != null);
       this.path.pathAction.find(o => o.mapPos === position).actions.splice(index, 1)
-      this.toastr.success('Ajout de l"action avec succés', 'Action ne pas combattre ajouté avec succés en (' + position + ')');
+      this.toastr.success(this.translateService.instant('CREATEPATH.PATHACTIONMSG11'), this.translateService.instant('CREATEPATH.PATHACTIONMSG13') + position + ')');
     }
     else if (type === 'noGather') {
       var index = this.path.pathAction.find(o => o.mapPos === position).actions.findIndex(o => o.gatherAction != null);
       this.path.pathAction.find(o => o.mapPos === position).actions.splice(index, 1)
-      this.toastr.success('Ajout de l"action avec succés', 'Action ne pas récolté ajouté avec succés en (' + position + ')');
+      this.toastr.success(this.translateService.instant('CREATEPATH.PATHACTIONMSG11'), this.translateService.instant('CREATEPATH.PATHACTIONMSG14') + position + ')');
     }
   }
-
   addUseItemAction(position, item) {
     var order = this.getOrdre(position);
     if(this.statePath ==2)
@@ -384,7 +383,7 @@ export class PathService {
     var index = this.path.pathAction.findIndex(o => o.mapPos === position);
     this.path.pathAction.splice(index, 1);
     if (index != -1)
-      this.toastr.success('', 'Action supprimé avec succés');
+      this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG15'));
   }
   addActionMapOnMap(position, order, action, type) {
     if (type === 'MoveAction') {
@@ -393,13 +392,13 @@ export class PathService {
         moveAction: action
       });
       if (this.direction.length === 0 && action.cellId === null) {
-        this.toastr.warning('Atention aucune direction selectionnée !', 'Action déplacement ajouté avec succés en (' + position + ')');
+        this.toastr.warning(this.translateService.instant('CREATEPATH.PATHACTIONMSG20'), this.translateService.instant('CREATEPATH.PATHACTIONMSG21') + position + ')');
       }
       else if (this.direction.length !== 0) {
-        this.toastr.success('Direction : ' + this.direction.join(), 'Action déplacement ajouté avec succés en (' + position + ')');
+        this.toastr.success('Direction : ' + this.direction.join(), this.translateService.instant('CREATEPATH.PATHACTIONMSG21') + position + ')');
       }
       else {
-        this.toastr.success('Cell : ' + action.cellId, 'Action déplacement ajouté avec succés en (' + position + ')');
+        this.toastr.success('Cell : ' + action.cellId, this.translateService.instant('CREATEPATH.PATHACTIONMSG21') + position + ')');
       }
     }
     else if (type === 'UseItemAction') {
@@ -407,7 +406,7 @@ export class PathService {
         order: order,
         useItemAction: action
       });
-      this.toastr.success('Ajout de l"action avec succés', 'Action utiliser (' + action.itemId + ') ajouté avec succés en (' + position + ')');
+      this.toastr.success(this.translateService.instant('CREATEPATH.PATHACTIONMSG11'), this.translateService.instant('CREATEPATH.PATHACTIONMSG22') + action.itemId + this.translateService.instant('CREATEPATH.PATHACTIONMSG23') + position + ')');
     }
     else if (type === 'FightAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({
@@ -415,10 +414,10 @@ export class PathService {
         fightAction: action
       });
       if (this.direction.length == 0) {
-        this.toastr.warning('Atention aucune direction selectionnée !', 'Action combat ajouté avec succés en (' + position + ')');
+        this.toastr.warning(this.translateService.instant('CREATEPATH.PATHACTIONMSG20'), this.translateService.instant('CREATEPATH.PATHACTIONMSG24') + position + ')');
       }
       else {
-        this.toastr.success('', 'Action combat ajouté avec succés en (' + position + ')');
+        this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG24') + position + ')');
       }
     }
     else if (type === 'GatherAction') {
@@ -427,10 +426,10 @@ export class PathService {
         gatherAction: action
       });
       if (this.direction.length == 0) {
-        this.toastr.warning('Atention aucune direction selectionnée !', 'Action récolte ajouté avec succés en (' + position + ')');
+        this.toastr.warning(this.translateService.instant('CREATEPATH.PATHACTIONMSG20'), this.translateService.instant('CREATEPATH.PATHACTIONMSG25') + position + ')');
       }
       else {
-        this.toastr.success('', 'Action récolte ajouté avec succés en (' + position + ')');
+        this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG25') + position + ')');
       }
     }
     else if (type === 'BankAction') {
@@ -438,21 +437,21 @@ export class PathService {
         order: order,
         bankAction: action
       });
-        this.toastr.success('', 'Action échange avec banquier ajouté avec succés en (' + position + ')');
+      this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG26') + position + ')');
     }
     else if (type === 'InteractionAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({
         order: order,
         interactionAction: action
       });
-      this.toastr.success('', 'Action Interaction ajouté avec succés en (' + position + '), interaction ( objet/pnj :' + action.interactiveIdObject + ' , action : ' + action.InteractiveIdResponse + ')');
+      this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG27') + position + this.translateService.instant('CREATEPATH.PATHACTIONMSG28') + action.interactiveIdObject + this.translateService.instant('CREATEPATH.PATHACTIONMSG29') + action.InteractiveIdResponse + ')');
     }
     else if (type === 'ZaapAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({
         order: order,
         zaapAction: action
       });
-      this.toastr.success('', 'Action zaap ajouté avec succés en (' + position + ') destination ( ' + action.destination + ')');
+      this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG30') + position + this.translateService.instant('CREATEPATH.PATHACTIONMSG31') + action.destination + ')');
     }
     else if (type === 'ZaapiAction') {
       this.path.pathAction.find(o => o.mapPos === position).actions.push({
@@ -460,7 +459,7 @@ export class PathService {
         zaapiAction: action
       });
       console.log('addzaapi');
-      this.toastr.success('', 'Action zaapi ajouté avec succés en (' + position + ') destination ( ' + action.destination + ')');
+      this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG32') + position + this.translateService.instant('CREATEPATH.PATHACTIONMSG31') + action.destination + ')');
     }
 
 

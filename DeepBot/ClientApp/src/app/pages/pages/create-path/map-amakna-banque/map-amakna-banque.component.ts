@@ -21,12 +21,13 @@ declare global {
 }
 
 @Component({
-  selector: 'app-map-bonta-banque',
-  templateUrl: './map-bonta-banque.component.html',
-  styleUrls: ['./map-bonta-banque.component.scss']
+    selector: 'app-map-amakna-banque',
+    templateUrl: './map-amakna-banque.component.html',
+    styleUrls: ['./map-amakna-banque.component.scss']
 })
-/** map-bonta component*/
-export class MapBontaBanqueComponent {
+/** map-amakna-banque component*/
+export class MapAmaknaBanqueComponent {
+
   isZaapMap: boolean = false;
   isZaapiMap: boolean = false;
   isBankMap: boolean = false;
@@ -35,7 +36,7 @@ export class MapBontaBanqueComponent {
   rightClickPos: string;
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanque: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
-  /** map-bonta ctor */
+    /** map-amakna-banque ctor */
   constructor(public dialog: MatDialog, private pathService: PathService, private toastr: ToastrService, private translateService: TranslateService) {
 
   }
@@ -71,11 +72,11 @@ export class MapBontaBanqueComponent {
       dialogRef.afterClosed().subscribe(result => {
         consommable = result;
         if (consommable != null)
-        this.specificActionEvent.next({
-          position: this.rightClickPos,
-          event: 'useItem',
-          payload: consommable
-        });
+          this.specificActionEvent.next({
+            position: this.rightClickPos,
+            event: 'useItem',
+            payload: consommable
+          });
       });
     }
     else {
@@ -103,11 +104,11 @@ export class MapBontaBanqueComponent {
     dialogRef.afterClosed().subscribe(result => {
       cells = result;
       if (cells != null)
-      this.specificActionEvent.next({
-        position: this.rightClickPos,
-        event: 'cellMove',
-        payload: cells
-      });
+        this.specificActionEvent.next({
+          position: this.rightClickPos,
+          event: 'cellMove',
+          payload: cells
+        });
     });
 
   }
@@ -137,11 +138,11 @@ export class MapBontaBanqueComponent {
     dialogRef.afterClosed().subscribe(result => {
       zaap = result;
       if (zaap != null)
-      this.specificActionEvent.next({
-        position: this.rightClickPos,
-        event: 'useZaap',
-        payload: result
-      });
+        this.specificActionEvent.next({
+          position: this.rightClickPos,
+          event: 'useZaap',
+          payload: result
+        });
     });
   }
   onContextMenuActionInteraction() {
@@ -152,12 +153,12 @@ export class MapBontaBanqueComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       interaction = result;
-      if(interaction != null)
-      this.specificActionEvent.next({
-        position: this.rightClickPos,
-        event: 'interaction',
-        payload: interaction
-      });
+      if (interaction != null)
+        this.specificActionEvent.next({
+          position: this.rightClickPos,
+          event: 'interaction',
+          payload: interaction
+        });
     });
   }
 
