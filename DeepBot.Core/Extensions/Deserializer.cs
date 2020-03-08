@@ -90,8 +90,6 @@ namespace DeepBot.Core.Extensions
 
         public static void DeserializeInventory(this InventoryDB inventory, string rawData)
         {
-            if (inventory == null)
-                inventory = new InventoryDB();
             foreach (string data in rawData.Split(';'))
             {
                 if (!string.IsNullOrEmpty(data))
@@ -113,26 +111,25 @@ namespace DeepBot.Core.Extensions
                 item.Fk_ItemId = Convert.ToInt32(values[1], 16);
                 item.Quantity = Convert.ToInt32(values[2], 16);
                 item.Position = string.IsNullOrEmpty(values[3]) ? ItemSlotEnum.SLOT_INVENTORY : (ItemSlotEnum)Convert.ToInt32(values[3], 16);
+                item.Effects = new List<Effect>();
                 item.Effects.DeserializeEffects(values[4]);
             }
         }
 
         public static void DeserializeEffects(this List<Effect> effects, string rawData)
         {
-            if (effects == null)
-                effects = new List<Effect>();
-            string[] effect_split = rawData.Split(',');
+            string[] effect_split = rawData.Substring(0, rawData.Length - 1).Split(',');
             for (int i = 0; i < effect_split.Length; i++)
             {
                 string[] stats = effect_split[i].Split('#');
-                for (int x = 0; x < stats.Length; x++)
-                {
-                    if (!string.IsNullOrEmpty(stats[x]))
-                    {
-                        EffectEnum type = (EffectEnum)Convert.ToInt32(stats[0], 16);
-                        effects.Add(new Effect(type));
-                    }
-                }
+                Effect effect = new Effect();
+                effect.Id = (EffectEnum)Convert.ToInt32(stats[0], 16);
+                effect.Value1 = Convert.ToInt32(stats[1], 16);
+                effect.Value2 = Convert.ToInt32(stats[2], 16);
+                effect.Value3 = Convert.ToInt32(stats[3], 16);
+                if (stats.Length > 4)
+                    effect.Args = stats[4];
+                effects.Add(effect);
             }
         }
     }

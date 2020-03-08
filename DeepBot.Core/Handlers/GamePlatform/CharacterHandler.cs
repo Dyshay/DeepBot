@@ -41,7 +41,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
             if (!package[2].Equals('o'))
             {
-                foreach (var data in package.Substring(2, package.Length - 3).Replace("_;", "_").Split(';'))
+                foreach (var data in package.Substring(2, package.Length - 3).Split(';'))
                 {
                     var split = data.Split('~');
                     var pair = new KeyValuePair<int, byte>(Convert.ToInt32(split[0]), Convert.ToByte(split[1]));
@@ -77,16 +77,18 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("OAKO")]
         public void ItemAddHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
+            Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
+            var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
             inventory.DeserializeInventory(package.Substring(4));
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
             // TODO send hub inventory message
         }
 
         [Receiver("OM")]
         public void ItemMoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
+            Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
+            var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
             string[] data = package.Substring(2).Split('|');
             Item item = inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
             if (item != null)
@@ -96,43 +98,46 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 else
                     item.Position = (ItemSlotEnum)Convert.ToInt32(data[1]);
             }
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
             //TODO send update inventory message
         }
 
         [Receiver("OQ")]
         public void ItemQuantityUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
+            Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
+            var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
             string[] data = package.Substring(2).Split('|');
             Item item = inventory.Items.Find(it => it.InventoryId == Convert.ToInt32(data[0]));
             if (item != null)
             {
                 item.Quantity = Convert.ToInt32(data[1]);
             }
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
             //TODO send update inventory message
         }
 
         [Receiver("OC")]
         public void ItemUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
+            Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
+            var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
             string[] data = package.Substring(2).Split(';');
             Item item = new Item();
             item.DeserializeItem(data[1]);
             inventory.Items[inventory.Items.FindIndex(it => it.InventoryId == item.InventoryId)] = item;
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
             //TODO send update inventory message
         }
 
         [Receiver("OR")]
         public void ItemRemoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var inventory = Database.Inventories.Find(i => i.Key == user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory).First();
+            Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
+            var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
             string[] data = package.Substring(2).Split(';');
             inventory.Items.RemoveAt(inventory.Items.FindIndex(it => it.InventoryId == Convert.ToInt32(package.Substring(2))));
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
             //TODO send update inventory message
         }
 
@@ -166,6 +171,5 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Invitation refusée.", tcpId), tcpId).Wait();
             }
         }
-
     }
 }

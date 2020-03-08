@@ -65,6 +65,7 @@ namespace DeepBot.Controllers
             var account = user.Accounts.Find(c => c.AccountName == acc.accountName);
             account.CurrentCharacter = account.Characters.Find(c => c.Key == acc.currentCharacterId);
             await CreateConfigAsync(account.CurrentCharacter.Key);
+            await CreateInventoryAsync(account.CurrentCharacter.Key);
 
             user.Accounts.RemoveAll(o=> o.isScan);
             account.isScan = false;
@@ -74,6 +75,7 @@ namespace DeepBot.Controllers
             account.EndAnakamaSubscribe = null;
 
             account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+            account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(FilterDefinition<InventoryDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
             if (user.Accounts == null)
             {
                 user.Accounts = new List<Account>() { account };
@@ -164,16 +166,21 @@ namespace DeepBot.Controllers
             return JsonSerializer.Serialize(accountToDelete.AccountName);
         }
 
-            public async Task CreateConfigAsync(int characterId)
+        public async Task CreateConfigAsync(int characterId)
         {
             ConfigCharacterDB config = new ConfigCharacterDB();
             config.Fk_Character = characterId;
             config.Fk_User = new Guid(User.Claims.First(c => c.Type == "UserID").Value);
             config.CreationDate = DateTime.Now;
-
-
             await Database.ConfigsCharacter.InsertOneAsync(config);
+        }
 
+        public async Task CreateInventoryAsync(int characterId)
+        {
+            InventoryDB inventory = new InventoryDB();
+            inventory.Fk_Character = characterId;
+            inventory.Fk_User = new Guid(User.Claims.First(c => c.Type == "UserID").Value);
+            await Database.Inventories.InsertOneAsync(inventory);
         }
     }
 
