@@ -10,6 +10,7 @@ import { startWith, map } from 'rxjs/operators';
 import icArrowDropDown from '@iconify/icons-ic/twotone-arrow-drop-down';
 import icClose from '@iconify/icons-ic/twotone-close';
 import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
     selector: 'app-dialog-list-action',
@@ -29,7 +30,7 @@ export class DialogListActionComponent implements OnInit {
   filteredZaapi$: Observable<Zaapi[]>;
 
     /** dialog-list-action ctor */
-  constructor(public dialogRef: MatDialogRef<DialogListActionComponent>, @Inject(MAT_DIALOG_DATA) public data: PathAction, private toastr: ToastrService) {
+  constructor(public dialogRef: MatDialogRef<DialogListActionComponent>, @Inject(MAT_DIALOG_DATA) public data: PathAction, private toastr: ToastrService, private translateService: TranslateService) {
     for (var i = 0; i < data.actions.length; i++) {
       if (data.actions[i].zaapAction != null)
         this.zaapSelected = this.Zaaps.find(o => o.id = data.actions[i].zaapAction.zaapId);
@@ -72,7 +73,7 @@ export class DialogListActionComponent implements OnInit {
     }
 
 
-    this.toastr.success('', 'Actions de la map modifé avec succés');
+    this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG18'));
     this.onNoClick();
   }
 
@@ -83,7 +84,7 @@ export class DialogListActionComponent implements OnInit {
     if (this.data.actions[index].zaapiAction != null)
       this.zaapiSelected = null;
     this.data.actions.splice(index,1);
-    this.toastr.success('', 'Actions de la map supprimé avec succés');
+    this.toastr.success('', this.translateService.instant('CREATEPATH.PATHACTIONMSG19'));
   }
 
 

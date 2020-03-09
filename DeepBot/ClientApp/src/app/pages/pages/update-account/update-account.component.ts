@@ -22,6 +22,7 @@ import { pipe } from 'rxjs';
 import { User } from '../../../../webModel/User';
 import * as fromgroup from 'src/app/app-reducers/group/reducers';
 import * as fromCharacter from 'src/app/app-reducers/character/reducers';
+import * as fromAccount from 'src/app/app-reducers/account/reducers';
 import { Group } from '../../../../webModel/Group';
 import { Character } from '../../../../webModel/Character';
 import { Account } from '../../../../webModel/Account';
@@ -113,26 +114,26 @@ export class UpdateAccountComponent implements OnInit {
   icMenu = icMenu;
 
 
-  constructor(private dialog: MatDialog, private translateService: TranslateService, private storeUser: Store<fromwebUser.State>, private storeGroup: Store<fromgroup.State>) { }
+  constructor(private dialog: MatDialog, private translateService: TranslateService, private storeAccount: Store<fromAccount.State>, private storeUser: Store<fromwebUser.State>, private storeGroup: Store<fromgroup.State>) { }
 
 
   ngOnInit() {
     this.storeGroup.pipe(select(fromgroup.getAllGroups)).subscribe(
       (result0: Group[]) => {
-        this.storeUser.pipe(select(fromwebUser.getUser)).subscribe(
-          (result: User) => {
-            for (var i = 0; i < result.accounts.length; i++) {
-              if (result0.findIndex(o => o.key == result.accounts[i].currentCharacter.fk_Group) != -1) {
+        this.storeAccount.pipe(select(fromAccount.getAllAccounts)).subscribe(
+          (result: Account[]) => {
+            for (var i = 0; i < result.length; i++) {
+              if (result0.findIndex(o => o.key == result[i].currentCharacter.fk_Group) != -1) {
                 var isleader = false;
-                if (result0.findIndex(o => o.fk_Leader == result.accounts[i].currentCharacter.key) != -1)
+                if (result0.findIndex(o => o.fk_Leader == result[i].currentCharacter.key) != -1)
                   isleader = true;
                 this.tableData.push(
                   {
-                    accountName: result.accounts[i].accountName,
-                    characterName: result.accounts[i].currentCharacter.name,
-                    creationDate: result.accounts[i].creationDate,
-                    server: this.serverList.find(o=>o.id==  result.accounts[i].serverId).name,
-                    groupName: result0.find(o => o.key == result.accounts[i].currentCharacter.fk_Group).name,
+                    accountName: result[i].accountName,
+                    characterName: result[i].currentCharacter.name,
+                    creationDate: result[i].creationDate,
+                    server: this.serverList.find(o=>o.id==  result[i].serverId).name,
+                    groupName: result0.find(o => o.key == result[i].currentCharacter.fk_Group).name,
                     imageSrc: 'assets/img/classe/m_cra.png',
                     isLeader: isleader
                   }
@@ -141,10 +142,10 @@ export class UpdateAccountComponent implements OnInit {
               else
                 this.tableData.push(
                   {
-                    accountName: result.accounts[i].accountName,
-                    characterName: result.accounts[i].currentCharacter.name,
-                    creationDate: result.accounts[i].creationDate,
-                    server: this.serverList.find(o => o.id == result.accounts[i].serverId).name,
+                    accountName: result[i].accountName,
+                    characterName: result[i].currentCharacter.name,
+                    creationDate: result[i].creationDate,
+                    server: this.serverList.find(o => o.id == result[i].serverId).name,
                     groupName: 'Aucun groupe',
                     imageSrc: 'assets/img/classe/m_cra.png',
                     isLeader: false

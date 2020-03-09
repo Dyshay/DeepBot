@@ -22,11 +22,20 @@ import { DialogUseItemComponent } from './dialog-use-item/dialog-use-item.compon
 import { DialogInteractionComponent } from './dialog-interaction/dialog-interaction.component';
 import { DialogZaapiComponent } from './dialog-zaapi/dialog-zaapi.component';
 import { DialogListActionComponent } from './dialog-list-action/dialog-list-action.component';
+import { MapCaniaAbraknydesComponent } from './map-cania-abraknydes/map-cania-abraknydes.component';
+import { MapCaniaAbraknydesBanqueComponent } from './map-cania-abraknydes-banque/map-cania-abraknydes-banque.component';
+import { MapCaniaAbraknydesRetourComponent } from './map-cania-abraknydes-retour/map-cania-abraknydes-retour.component';
+import { MapAmaknaComponent } from './map-amakna/map-amakna.component';
+import { MapAmaknaBanqueComponent } from './map-amakna-banque/map-amakna-banque.component';
+import { MapAmaknaRetourComponent } from './map-amakna-retour/map-amakna-retour.component';
 
 
 @NgModule({
-  declarations: [CreatePathComponent, MapBontaComponent, MapBontaBanqueComponent,
-    MapBontaRetourComponent, DialogZaapComponent,DialogZaapiComponent,DialogListActionComponent,
+  declarations: [CreatePathComponent,
+    MapBontaComponent, MapBontaBanqueComponent, MapBontaRetourComponent,
+    MapCaniaAbraknydesComponent, MapCaniaAbraknydesBanqueComponent, MapCaniaAbraknydesRetourComponent,
+    MapAmaknaComponent,MapAmaknaBanqueComponent,MapAmaknaRetourComponent,
+    DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
     DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent],
   imports: [
     CommonModule,
