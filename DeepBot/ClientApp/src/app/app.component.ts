@@ -105,10 +105,10 @@ export class AppComponent implements OnInit {
   }
   async ngOnInit() {
     if (await this.userService.isConnected()) {
-      this.storeUser.dispatch(webUserActions.getUser());
-      this.storeGroup.dispatch(GroupActions.getAllGroups());
-      this.storePath.dispatch(PathActions.getAllPaths());
-      this.navigationService.GenerateNavigation();
+      await this.storeUser.dispatch(webUserActions.getUser());
+      await this.storeGroup.dispatch(GroupActions.getAllGroups());
+      await this.storePath.dispatch(PathActions.getAllPaths());
+      await this.navigationService.GenerateNavigation();
     }
     else {
       this.userService.logout();

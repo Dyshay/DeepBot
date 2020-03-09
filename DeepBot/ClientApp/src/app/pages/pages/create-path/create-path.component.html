@@ -248,7 +248,7 @@
               <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
                 <mat-form-field class="mt-1 full-width">
                   <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
-                  <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
+                  <mat-select [(ngModel)]="zoneChoose" (selectionChange)="zoneChanged($event)">
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
                     <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
@@ -320,7 +320,7 @@
               <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
                 <mat-form-field class="mt-1 full-width">
                   <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
-                  <mat-select [(ngModel)]="zoneChoose" (selectionChange)="changeZone($event)">
+                  <mat-select [(ngModel)]="zoneChoose" (selectionChange)="zoneChanged($event)">
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
                     <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
