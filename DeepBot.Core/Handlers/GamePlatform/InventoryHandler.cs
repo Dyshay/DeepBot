@@ -12,7 +12,7 @@ using System.Linq;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
-    public class InventoryHandler : IHandler
+    public class InventoryHandler //: IHandler
     {
 
         [Receiver("OAKO")]
