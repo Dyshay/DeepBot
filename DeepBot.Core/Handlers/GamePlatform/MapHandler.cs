@@ -3,7 +3,6 @@ using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
-using DeepBot.Data.Model.MapComponent;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;

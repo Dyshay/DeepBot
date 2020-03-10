@@ -1,10 +1,7 @@
 ﻿using AspNetCore.Identity.Mongo.Model;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Identity;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Database
 {
@@ -22,12 +19,12 @@ namespace DeepBot.Data.Database
         public List<Account> Accounts { get; set; }
         public ApiKey ApiKey { get; set; }
         public ConfigUser Config { get; set; }
-        public string Langue { get; set; } 
+        public string Langue { get; set; }
         public string AddressIP { get; set; }
         public short AppCliOnline { get; set; }
         public string CliConnectionId { get; set; }
         public bool isActive { get; set; }
 
     }
- 
+
 }

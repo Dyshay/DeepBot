@@ -1,8 +1,5 @@
 ﻿using DeepBot.CLI.Model;
-using DeepBot.CLI.Network.Packages;
-using DeepBot.CLI.Network.Tcp;
 using System;
-using System.Collections.Generic;
 
 namespace DeepBot.CLI
 {

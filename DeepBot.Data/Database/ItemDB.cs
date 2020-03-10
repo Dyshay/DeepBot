@@ -1,15 +1,5 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
-using DeepBot.Data.Model.CharacterInfo;
-using DeepBot.Data.Model.Global;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
 
 namespace DeepBot.Data.Database
 {
@@ -25,6 +15,7 @@ namespace DeepBot.Data.Database
         public bool Buff { get; set; }
         public bool Usable { get; set; }
         public bool Targetable { get; set; }
+        public bool Equipable { get; set; }
         public string Conditions { get; set; }
         public string BaseEffects { get; set; }
         public int SetId { get; set; }

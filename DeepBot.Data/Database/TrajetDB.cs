@@ -1,10 +1,7 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model.Path;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Database
 {

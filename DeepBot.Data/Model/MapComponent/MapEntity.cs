@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DeepBot.Data.Model.MapComponent
+﻿namespace DeepBot.Data.Model.MapComponent
 {
     public abstract class MapEntity
     {

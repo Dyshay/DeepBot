@@ -1,14 +1,13 @@
-﻿using DeepBot.CLI.Service;
+﻿using DeepBot.CLI.Network.Tcp;
+using DeepBot.CLI.Service;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
-using DeepBot.CLI.Network.Tcp;
 using System.IO;
+using System.Net.Http;
 using System.Reflection;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DeepBot.CLI.Model
 {
@@ -76,7 +75,7 @@ namespace DeepBot.CLI.Model
             TalkingService.CallCallBackCheck(tcpId, IsScan);
         }
 
-        private void DispatchConnect(string ip, int port, bool isSwitch, string tcpId,bool _isScan=false)
+        private void DispatchConnect(string ip, int port, bool isSwitch, string tcpId, bool _isScan = false)
         {
             if (isSwitch)
             {
@@ -114,7 +113,7 @@ namespace DeepBot.CLI.Model
             Client = new HttpClient();
 
             var JsonString = JsonSerializer.Serialize(Identification);
-            var response = await Client.PostAsync("https://localhost:44319/api/User/Login", new StringContent(JsonString, Encoding.UTF8, "application/json"));
+            var response = await Client.PostAsync("https://localhost/api/User/Login", new StringContent(JsonString, Encoding.UTF8, "application/json"));
 
             if (response.IsSuccessStatusCode)
             {

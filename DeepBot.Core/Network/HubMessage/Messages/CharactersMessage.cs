@@ -1,8 +1,6 @@
 ﻿using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Core.Network.HubMessage.Messages
 {
@@ -16,6 +14,5 @@ namespace DeepBot.Core.Network.HubMessage.Messages
             Characters = characters.ToArray();
             TcpId = tcpId;
         }
-
     }
 }

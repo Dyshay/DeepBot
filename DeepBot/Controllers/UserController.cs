@@ -1,15 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Net.Mail;
-using System.Security.Claims;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
-using DeepBot.ControllersModel;
+﻿using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
@@ -22,6 +11,14 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MongoDB.Driver;
 using Newtonsoft.Json.Linq;
+using System;
+using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DeepBot.Controllers
 {
@@ -57,10 +54,9 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             foreach (var item in user.Accounts)
             {
-                if(item.CurrentCharacter != null)
-                  item.CurrentCharacter.Config = _configCharacter.FirstOrDefault(o => o.Fk_Character == item.CurrentCharacter.Key);
+                if (item.CurrentCharacter != null)
+                    item.CurrentCharacter.Config = _configCharacter.FirstOrDefault(o => o.Fk_Character == item.CurrentCharacter.Key);
             }
-
             return user;
 
         }
@@ -111,10 +107,10 @@ namespace DeepBot.Controllers
             return null;
         }
 
-        public async Task<bool> isAlreadyCreatedAsync(string mail,string identifiant)
+        public async Task<bool> isAlreadyCreatedAsync(string mail, string identifiant)
         {
             UserDB userAlreadyCreated = null;
-             userAlreadyCreated = await _userManager.FindByEmailAsync(mail);
+            userAlreadyCreated = await _userManager.FindByEmailAsync(mail);
             if (userAlreadyCreated == null)
                 userAlreadyCreated = await _userManager.FindByNameAsync(identifiant);
             if (userAlreadyCreated == null)
@@ -178,7 +174,7 @@ namespace DeepBot.Controllers
                },
                 protocol: HttpContext.Request.Scheme);
 
-                var isSent = await SendMailAsync(IdentityUser.Email,confirmationLink);
+                var isSent = await SendMailAsync(IdentityUser.Email, confirmationLink);
 
 #if DEBUG
 
@@ -189,8 +185,8 @@ namespace DeepBot.Controllers
                       if (!await _roleManager.RoleExistsAsync("Utilisateur"))
                 await _roleManager.CreateAsync(new RoleDB("Utilisateur"));
                 await _userManager.AddToRoleAsync(IdentityUser, "Utilisateur");
-#endif     
-               
+#endif
+
                 if (isSent)
                     return JsonSerializer.Serialize("MailSent");
                 else
@@ -200,7 +196,7 @@ namespace DeepBot.Controllers
             return JsonSerializer.Serialize("RegisterError");
         }
 
-        public async Task<bool> SendMailAsync(string toAdresse,string link)
+        public async Task<bool> SendMailAsync(string toAdresse, string link)
         {
             MailjetClient client = new MailjetClient("1d0df2423ce013e7f969f535fd60172a", "849fdd5b2eee3ec31fedb5e2e2f1a70b")
             {
@@ -235,7 +231,7 @@ namespace DeepBot.Controllers
             {
                 return false;
             }
-           
+
         }
 
         [HttpGet]
@@ -243,15 +239,15 @@ namespace DeepBot.Controllers
         public IActionResult ConfirmEmail(string userid, string token)
         {
             UserDB user = _userManager.FindByIdAsync(userid).Result;
-            IdentityResult result = _userManager. ConfirmEmailAsync(user, token).Result;
-            if(result == IdentityResult.Success)
+            IdentityResult result = _userManager.ConfirmEmailAsync(user, token).Result;
+            if (result == IdentityResult.Success)
             {
-              
-                return Redirect("https://localhost:44319/login/"+"succes");
+
+                return Redirect("https://localhost/login/" + "succes");
             }
             else
             {
-                return Redirect("https://localhost:44319/login");
+                return Redirect("https://localhost/login");
             }
         }
 
@@ -303,7 +299,7 @@ namespace DeepBot.Controllers
 
 
                 }
-                else if(role == null)
+                else if (role == null)
                 {
                     return NotFound(new { message = "AccountProblemRole" });
                 }

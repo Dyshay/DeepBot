@@ -1,18 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using DeepBot.ControllersModel;
+﻿using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DeepBot.Controllers
 {
@@ -73,11 +72,11 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
 
-           
+
             var user = await _userManager.FindByIdAsync(userId);
             group.Key = Guid.NewGuid();
             await CreateConfigAsync(group.Key);
-            group.Fk_Configuration =  Database.ConfigsGroup.Find(FilterDefinition<ConfigGroupDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Group == group.Key).Key;
+            group.Fk_Configuration = Database.ConfigsGroup.Find(FilterDefinition<ConfigGroupDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Group == group.Key).Key;
 
             group.FK_User = Guid.Parse(userId);
             int level = 0;
@@ -86,7 +85,7 @@ namespace DeepBot.Controllers
                 foreach (Account account in user.Accounts)
                 {
                     var character = account.Characters.FirstOrDefault(o => o.Key == charactersId);
-                    
+
                     var principalChaarcter = account.CurrentCharacter;
                     if (character != null)
                     {
@@ -100,7 +99,7 @@ namespace DeepBot.Controllers
             foreach (var account in user.Accounts)
             {
                 var leader = account.Characters.FirstOrDefault(o => o.Key == idLeader);
-                
+
                 if (leader != null)
                 {
                     level += leader.Level;
@@ -122,11 +121,11 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            GroupDB grouptoDelete =  _groups.FirstOrDefault(o => o.Key.ToString() == groupkey.key && o.FK_User.ToString() == userId);
+            GroupDB grouptoDelete = _groups.FirstOrDefault(o => o.Key.ToString() == groupkey.key && o.FK_User.ToString() == userId);
 
             try
             {
-                if(grouptoDelete != null)
+                if (grouptoDelete != null)
                 {
                     foreach (var item in grouptoDelete.Fk_Followers)
                     {
@@ -137,14 +136,14 @@ namespace DeepBot.Controllers
 
                     await Database.Groups.DeleteOneAsync(o => o.Key == grouptoDelete.Key);
                 }
-                  
+
             }
-            catch (Exception ex )
+            catch (Exception ex)
             {
 
                 throw;
             }
-           
+
             return JsonSerializer.Serialize(grouptoDelete.Name);
         }
 
@@ -161,7 +160,7 @@ namespace DeepBot.Controllers
 
             foreach (var account in user.Accounts)
             {
-                if(account.CurrentCharacter.Fk_Group == group.Key && !listcharacterkeygroup.Contains(account.CurrentCharacter.Key))
+                if (account.CurrentCharacter.Fk_Group == group.Key && !listcharacterkeygroup.Contains(account.CurrentCharacter.Key))
                 {
                     account.CurrentCharacter.Fk_Group = Guid.Empty;
                 }

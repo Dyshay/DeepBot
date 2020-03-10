@@ -1,16 +1,15 @@
-﻿using DeepBot.Core.Hubs;
+﻿using DeepBot.Core.Extensions;
+using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
+using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
-using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
@@ -38,7 +37,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ALK")]
         public void SelectCharacter(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var currentCharacter = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
+            var currentAccount = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
             string[] splittedData = package.Substring(3).Split('|');
             int count = 2;
             bool found = false;
@@ -59,9 +58,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 if (isScan)
                     characters.Add(new Character() { BreedId = model, Key = id, Name = characterName, Level = Level });
 
-                if (!isScan && currentCharacter != null)
+                if (!isScan && currentAccount != null)
                 {
-                    if(characterName.ToLower().Equals(currentCharacter.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
+                    if (characterName.ToLower().Equals(currentAccount.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
                     {
                         hub.SendPackage($"AS{id}", tcpId, true);
                         hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
@@ -86,18 +85,23 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             string[] splittedData = package.Substring(4).Split('|');
-            
+
             Account account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
+            Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
+            var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
+            inventory.Items = new List<Data.Model.Global.Item>();
+
             account.CurrentCharacter.Key = int.Parse(splittedData[0]);
             account.CurrentCharacter.Name = splittedData[1];
             account.CurrentCharacter.Level = byte.Parse(splittedData[2]);
             account.CurrentCharacter.BreedId = byte.Parse(splittedData[3]);
             account.CurrentCharacter.Sex = byte.Parse(splittedData[4]);
-            //account.CurrentCharacter.Inventory.getInventory(splittedData[9]);
+            inventory.Items.DeserializeItems(splittedData[9]);
 
             account.State = AccountState.IDLE;
             hub.SendPackage("GC1", tcpId);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }
     }

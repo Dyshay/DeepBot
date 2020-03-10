@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DeepBot.Data.Model.Path
 {
@@ -15,9 +13,9 @@ namespace DeepBot.Data.Model.Path
 
     public enum Direction
     {
-        TOP=0,
-        RIGHT=1,
-        BOTTOM=2,
-        LEFT=3
+        TOP = 0,
+        RIGHT = 1,
+        BOTTOM = 2,
+        LEFT = 3
     }
 }

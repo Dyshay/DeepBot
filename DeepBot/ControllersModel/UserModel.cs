@@ -1,8 +1,5 @@
 ﻿using DeepBot.ControllersModel.Enum;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DeepBot.ControllersModel
 {
@@ -32,8 +29,8 @@ namespace DeepBot.ControllersModel
 
 
     public class SideNav
-    { 
-       public List<SideNavItem> items { get; set; }
+    {
+        public List<SideNavItem> items { get; set; }
     }
     public class SideNavItem
     {
