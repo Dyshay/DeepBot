@@ -156,8 +156,6 @@ export class UpdateAccountComponent implements OnInit {
         );
       }
     );
-
-
   }
 
   openAccount(accountName?: AccountInterface['accountName']) {
@@ -167,7 +165,7 @@ export class UpdateAccountComponent implements OnInit {
     }).afterClosed().subscribe(
       (data: Account) => {
         if (data != null) {
-          var index = this.tableData.findIndex(o => o.key == data.key);
+          var index = this.tableData.findIndex(o => o.accountName == data.accountName);
           this.tableData[index] = data;
         }
 

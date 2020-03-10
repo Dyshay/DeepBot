@@ -63,3 +63,21 @@
 .toast-top-full-width {
   width: 25% !important;
 }
+
+table {
+  text-align: center !important;
+}
+
+.mat-header-cell {
+  text-align: center !important;
+}
+.mat-sort-header-container {
+  justify-content: center !important;
+}
+.mat-sort-header-button {
+  margin-left: 3vh;
+}
+.cdk-overlay-pane{
+    max-width:100% !important;
+    max-height:100% !important;
+}

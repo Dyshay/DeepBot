@@ -25,4 +25,5 @@ export const selectPathStatusState = createSelector(
 );
 
 
-
+export const getAllPaths = createSelector(selectPathStatusState, frompath.getAllPaths);
+export const getPathByKey = createSelector(selectPathStatusState, frompath.getPathByKey);

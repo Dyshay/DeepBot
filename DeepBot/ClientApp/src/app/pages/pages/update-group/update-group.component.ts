@@ -97,7 +97,7 @@ export class UpdateGroupComponent implements OnInit {
                 else 
                   followers = followers + result.find(o => o.key == result1[i].fk_Followers[j]).name + ', ';
               }
-              if (followers != null)
+              if (followers != null )
                 followers = followers.substring(0, followers.lastIndexOf(','));
               this.tableData.push(
                 {

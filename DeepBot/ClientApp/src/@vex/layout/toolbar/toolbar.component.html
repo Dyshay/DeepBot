@@ -79,8 +79,8 @@
       <span>{{ 'TOOLBAR.CREATEPATH' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
+    <button mat-menu-item [routerLink]="['/updatePath']">
+      <mat-icon [icIcon]="icAssignment" ></mat-icon>
       <span>{{ 'TOOLBAR.UPDATEPATH' | translate}}</span>
     </button>
   </mat-menu>

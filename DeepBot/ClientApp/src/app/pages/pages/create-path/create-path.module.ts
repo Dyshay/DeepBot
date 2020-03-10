@@ -28,15 +28,11 @@ import { MapCaniaAbraknydesRetourComponent } from './map-cania-abraknydes-retour
 import { MapAmaknaComponent } from './map-amakna/map-amakna.component';
 import { MapAmaknaBanqueComponent } from './map-amakna-banque/map-amakna-banque.component';
 import { MapAmaknaRetourComponent } from './map-amakna-retour/map-amakna-retour.component';
+import { SharedModule } from '../../../../shared.module';
 
 
 @NgModule({
-  declarations: [CreatePathComponent,
-    MapBontaComponent, MapBontaBanqueComponent, MapBontaRetourComponent,
-    MapCaniaAbraknydesComponent, MapCaniaAbraknydesBanqueComponent, MapCaniaAbraknydesRetourComponent,
-    MapAmaknaComponent,MapAmaknaBanqueComponent,MapAmaknaRetourComponent,
-    DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
-    DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent],
+  declarations: [CreatePathComponent],
   imports: [
     CommonModule,
     CreatePathRoutingModule,
@@ -48,6 +44,7 @@ import { MapAmaknaRetourComponent } from './map-amakna-retour/map-amakna-retour.
     FlexLayoutModule,
     MatSliderModule,
     MatExpansionModule,
+    SharedModule,
     MatSlideToggleModule,
     MatInputModule,
     MatButtonModule,
@@ -67,8 +64,7 @@ import { MapAmaknaRetourComponent } from './map-amakna-retour/map-amakna-retour.
     MatTableModule,
     TranslateModule
   ],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  entryComponents: [DialogZaapComponent, DialogCellComponent, DialogUseItemComponent, DialogListActionComponent, DialogInteractionComponent, DialogZaapiComponent]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CreatePathModule {
 }
