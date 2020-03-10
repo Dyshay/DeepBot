@@ -70,9 +70,9 @@ namespace DeepBot.Controllers
             account.ExpirationDateBan = null;
             account.EndAnakamaSubscribe = null;
 
-            account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
-            account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(FilterDefinition<InventoryDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
-            account.CurrentCharacter.Fk_Jobs = Database.Jobs.Find(FilterDefinition<JobsDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+            account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
+            account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
+            account.CurrentCharacter.Fk_Jobs = Database.Jobs.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
             if (user.Accounts == null)
             {
                 user.Accounts = new List<Account>() { account };
@@ -119,14 +119,23 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             Account currentAcount = user.Accounts.FirstOrDefault(o => o.Key == account.Key);
 
-            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key && _configCharacter.FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key) == null)
+            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key 
+                && Database.ConfigsCharacter.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault() == null)
             {
                 await CreateConfigAsync(account.CurrentCharacter.Key);
-                account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+                account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
+            }
+            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key 
+                && Database.Inventories.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault() == null)
+            {
                 await CreateInventoryAsync(account.CurrentCharacter.Key);
-                account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(FilterDefinition<InventoryDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+                account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
+            }
+            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key 
+                && Database.Jobs.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault() == null)
+            {
                 await CreateJobsAsync(account.CurrentCharacter.Key);
-                account.CurrentCharacter.Fk_Jobs = Database.Jobs.Find(FilterDefinition<JobsDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+                account.CurrentCharacter.Fk_Jobs = Database.Jobs.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
             }
 
             if ((account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key) || (account.CurrentCharacter.Fk_Group != currentAcount.CurrentCharacter.Fk_Group))
