@@ -25,6 +25,7 @@ export class Account {
   tcpId?: string;
   state: AccountState;
   server?: Server | null;
+  isConnected: boolean
 }
 
 export class CreateAccount {

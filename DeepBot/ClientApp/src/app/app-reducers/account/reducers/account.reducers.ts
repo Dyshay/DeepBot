@@ -41,11 +41,24 @@ export const reducer = createReducer(initialState,
   on(AccountActions.deleteAccountSuccess, (state, { accontName }) => ({ ...state, pending: false })),
   on(AccountActions.deleteAccountFailure, (state, { error }) => ({ ...state, error, pending: false })),
 
-  on(AccountActions.updateCurrentAccount, (state, {id}) =>
-  {
-    let account =  state.allAccounts.find(c => c.currentCharacter.key === id);
+  on(AccountActions.updateCurrentAccount, (state, { id }) => {
+    let account = state.allAccounts.find(c => c.currentCharacter.key === id);
 
-    return {...state, currentAccount: account}
+    return { ...state, currentAccount: account }
+  }),
+  on(AccountActions.updateDisconnectedAccount, (state, { id }) => {
+    let temporyAccounts = state.allAccounts;
+    temporyAccounts.forEach(acc => {
+      if (acc.key === id) {
+        acc.isConnected = false;
+      }
+    })
+    let current = state.currentAccount;
+    if (current.key === id) {
+      current.isConnected = false;
+    }
+
+    return { ...state, allAccounts: temporyAccounts, currentAccount: current };
   }
   ),
 )

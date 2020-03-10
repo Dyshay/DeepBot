@@ -31,3 +31,4 @@ export const updateAccount = createAction('[BOT/UPDATE] UPDATE ACCOUNT', props<{
 
 export const updateTcpClient = createAction('[BOT/TCPID] UPDATE THE TCP ID', props<{tcpId: string}>());
 export const updateCharacter = createAction('[BOT/CHARACTER] UPDATE CHARACTER', props<{character: Character, key: number | undefined}>());
+
