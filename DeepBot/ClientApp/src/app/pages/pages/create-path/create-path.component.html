@@ -252,7 +252,7 @@
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
                     <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
-                    <mat-option [value]="3">ZONE 4</mat-option>
+                    <mat-option [value]="3">{{ 'CREATEPATH.ZONE4' | translate }}</mat-option>
                     <mat-option [value]="4">ZONE 5</mat-option>
                   </mat-select>
                   <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
@@ -276,6 +276,9 @@
                   <app-map-amakna (selectMapEvent)="selectMap($event)"
                                  (specificActionEvent)="specificAction($event)"
                                  [hidden]="zoneChoose !== 2"> </app-map-amakna>
+                  <app-map-sidimote (selectMapEvent)="selectMap($event)"
+                                 (specificActionEvent)="specificAction($event)"
+                                 [hidden]="zoneChoose !== 3">  </app-map-sidimote>
 
                   <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
                     <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
@@ -324,7 +327,7 @@
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
                     <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
-                    <mat-option [value]="3">ZONE 4</mat-option>
+                    <mat-option [value]="3">{{ 'CREATEPATH.ZONE4' | translate }}</mat-option>
                     <mat-option [value]="4">ZONE 5</mat-option>
                   </mat-select>
                   <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
@@ -344,8 +347,11 @@
                                                    (specificActionEvent)="specificAction($event)"
                                                    [hidden]="zoneChoose !== 1"></app-map-cania-abraknydes-banque>
                   <app-map-amakna-banque (selectMapEvent)="selectMap($event)"
-                                  (specificActionEvent)="specificAction($event)"
-                                  [hidden]="zoneChoose !== 2"> </app-map-amakna-banque>
+                                         (specificActionEvent)="specificAction($event)"
+                                         [hidden]="zoneChoose !== 2"> </app-map-amakna-banque>
+                  <app-map-sidimote-banque (selectMapEvent)="selectMap($event)"
+                                    (specificActionEvent)="specificAction($event)"
+                                    [hidden]="zoneChoose !== 3">  </app-map-sidimote-banque>
 
 
                   <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
@@ -391,7 +397,7 @@
                     <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
                     <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
                     <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
-                    <mat-option [value]="3">ZONE 4</mat-option>
+                    <mat-option [value]="3">{{ 'CREATEPATH.ZONE4' | translate }}</mat-option>
                     <mat-option [value]="4">ZONE 5</mat-option>
                   </mat-select>
                   <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
@@ -414,8 +420,12 @@
 
                   </app-map-cania-abraknydes-retour>
                   <app-map-amakna-retour (selectMapEvent)="selectMap($event)"
-                                  (specificActionEvent)="specificAction($event)"
-                                  [hidden]="zoneChoose !== 2"> </app-map-amakna-retour>
+                                         (specificActionEvent)="specificAction($event)"
+                                         [hidden]="zoneChoose !== 2"> </app-map-amakna-retour>
+
+                  <app-map-sidimote-retour (selectMapEvent)="selectMap($event)"
+                                    (specificActionEvent)="specificAction($event)"
+                                    [hidden]="zoneChoose !== 3">  </app-map-sidimote-retour>
 
                   <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
                     <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">

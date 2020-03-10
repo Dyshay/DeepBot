@@ -247,6 +247,7 @@
     "ZONE1": "Zone de Bonta,Plaine de cania",
     "ZONE2": "Zone de Massif de cania,Plaine de Cania,Abraknydes",
     "ZONE3": "Zone d'Amakna,Scarafeuille,Gelée,Dragoeuf,Cochon",
+    "ZONE4": "Zone Sidimote,Koalak,Dragoeuf,Village Eleveur",
     "BANKPATH": "Trajet Banque",
     "SELECTPATHBANK": "Selectionnez le trajet de retour en banque",
     "SELECTPATHBANKINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la zone combat ou récolte, puis à la map banque ajouter l'action 'Banque'",
