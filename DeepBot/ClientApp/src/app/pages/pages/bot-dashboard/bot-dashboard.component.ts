@@ -126,6 +126,10 @@ export class BotDashboardComponent implements OnInit, OnChanges {
       this.deeptalk.FetchTcpId(this.character.key);
   }
 
+  disconnect(acc: Account){
+    this.deeptalk.requestDisconnect(acc);
+  }
+
   links: Link[] = [
     {
       label: this.translateService.instant('GLOBAL.DASHBOARD'),

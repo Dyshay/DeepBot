@@ -43,6 +43,10 @@ export class TalkService {
     this._hubConnection.invoke('CreateConnexion', accountName, accountPassword, serverId, isScan);
   }
 
+  requestDisconnect(account: Account){
+    this._hubConnection.invoke('DisconnectCLI', account.tcpId, false);
+  }
+
   public startConnection(): void {
     this._hubConnection
       .start()
