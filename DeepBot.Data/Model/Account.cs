@@ -1,20 +1,14 @@
 ﻿using DeepBot.Data.Driver;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using DeepBot.Data.Model;
-using System.Text.Json.Serialization;
-using System.ComponentModel.DataAnnotations.Schema;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model.GameServer;
-using DeepBot.Data.Model.CharacterInfo;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
+using System.Collections.Generic;
 
 namespace DeepBot.Data.Model
 {
 
-    public class Account: Document<Guid>
+    public class Account : Document<Guid>
     {
         public List<Character> Characters { get; set; }
         public Character CurrentCharacter { get; set; }

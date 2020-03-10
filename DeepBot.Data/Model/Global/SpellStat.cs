@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DeepBot.Data.Model.Global
+﻿namespace DeepBot.Data.Model.Global
 {
     public class SpellStat
     {

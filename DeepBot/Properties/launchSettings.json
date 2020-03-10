@@ -2,6 +2,10 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "https://localhost/",
+      "sslPort": 0
+    },
     "iisExpress": {
       "applicationUrl": "http://localhost:64417",
       "sslPort": 44319
@@ -9,7 +13,7 @@
   },
   "profiles": {
     "IIS Express": {
-      "commandName": "IISExpress",
+      "commandName": "IIS",
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
@@ -22,6 +26,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "IIS test": {
+      "commandName": "IIS",
+      "workingDirectory": "D:\\bot\\DeepBot-publish",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Statging"
+      }
     }
   }
 }

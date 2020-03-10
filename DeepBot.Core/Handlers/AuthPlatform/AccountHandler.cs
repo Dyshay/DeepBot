@@ -5,13 +5,10 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.GameServer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DeepBot.Core.Handlers.AuthPlatform

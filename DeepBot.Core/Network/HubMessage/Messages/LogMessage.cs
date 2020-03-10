@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using DeepBot.Data.Enums;
+﻿using DeepBot.Data.Enums;
 
 namespace DeepBot.Core.Network.HubMessage.Messages
 {

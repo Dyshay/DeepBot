@@ -1,15 +1,10 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
 
 namespace DeepBot.Data.Database
 {
-    public class MapDB: Document<int>
+    public class MapDB : Document<int>
     {
         public string GlobalAreaName { get; set; }
         public string AreaName { get; set; }

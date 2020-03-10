@@ -1,7 +1,6 @@
 ﻿using DeepBot.CLI.Model;
 using DeepBot.CLI.Network.Packages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -23,6 +22,7 @@ namespace DeepBot.CLI.Network.Tcp
 
         private bool Disposed;
         private Account Account;
+        private string PacketBuffer;
 
         public TcpHandler(Account account, string tcpId)
         {
@@ -87,12 +87,23 @@ namespace DeepBot.CLI.Network.Tcp
             if (bytes_read > 0 && reply == SocketError.Success)
             {
                 string datas = Encoding.UTF8.GetString(Buffer, 0, bytes_read);
-
-                foreach (var packet in datas.Replace("\x0a", string.Empty).Split('\0').Where(x => x != string.Empty))
+                var packets = datas.Replace("\x0a", string.Empty).Split('\0').Where(x => x != string.Empty).ToList();
+                foreach (var packet in packets)
                 {
-                    PackageReceiver.Receive(packet, Account, TcpId);
+                    if (packets.IndexOf(packet) == packets.Count - 1 && !datas.EndsWith("\0"))
+                    {
+                        Console.WriteLine("Buffering packet " + packet);
+                        this.PacketBuffer = packet;
+                    }
+                    else if (!String.IsNullOrEmpty(this.PacketBuffer))
+                    {
+                        Console.WriteLine("Unbuffering packet " + this.PacketBuffer);
+                        PackageReceiver.Receive(this.PacketBuffer + packet, Account, TcpId);
+                        this.PacketBuffer = null;
+                    }
+                    else
+                        PackageReceiver.Receive(packet, Account, TcpId);
                 }
-
                 if (IsConnected())
                     Socket.BeginReceive(Buffer, 0, Buffer.Length, SocketFlags.None, new AsyncCallback(ReceptionCallBack), Socket);
             }

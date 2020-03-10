@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text.Json;
-using System.Threading.Tasks;
-using DeepBot.ControllersModel;
+﻿using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using static DeepBot.ControllersModel.AccountModel;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DeepBot.Controllers
 {
@@ -40,7 +37,6 @@ namespace DeepBot.Controllers
             _userCollection = userCollection;
         }
 
-
         [HttpGet]
         [Authorize]
         [Route("GetAccounts")]
@@ -48,12 +44,11 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            if(user !=null)
+            if (user != null)
                 return user.Accounts;
             else
                 return null;
         }
-        
 
         [HttpPost]
         [Authorize]
@@ -65,8 +60,10 @@ namespace DeepBot.Controllers
             var account = user.Accounts.Find(c => c.AccountName == acc.accountName);
             account.CurrentCharacter = account.Characters.Find(c => c.Key == acc.currentCharacterId);
             await CreateConfigAsync(account.CurrentCharacter.Key);
+            await CreateInventoryAsync(account.CurrentCharacter.Key);
+            await CreateJobsAsync(account.CurrentCharacter.Key);
 
-            user.Accounts.RemoveAll(o=> o.isScan);
+            user.Accounts.RemoveAll(o => o.isScan);
             account.isScan = false;
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
@@ -74,6 +71,8 @@ namespace DeepBot.Controllers
             account.EndAnakamaSubscribe = null;
 
             account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+            account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(FilterDefinition<InventoryDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+            account.CurrentCharacter.Fk_Jobs = Database.Jobs.Find(FilterDefinition<JobsDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
             if (user.Accounts == null)
             {
                 user.Accounts = new List<Account>() { account };
@@ -110,6 +109,7 @@ namespace DeepBot.Controllers
             else
                 return ValidationProblem("MaxAccount");
         }
+
         [HttpPost]
         [Authorize]
         [Route("UpdateAccount")]
@@ -119,13 +119,17 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             Account currentAcount = user.Accounts.FirstOrDefault(o => o.Key == account.Key);
 
-            if(account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key && _configCharacter.FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key) == null)
+            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key && _configCharacter.FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key) == null)
             {
                 await CreateConfigAsync(account.CurrentCharacter.Key);
                 account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(FilterDefinition<ConfigCharacterDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+                await CreateInventoryAsync(account.CurrentCharacter.Key);
+                account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(FilterDefinition<InventoryDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
+                await CreateJobsAsync(account.CurrentCharacter.Key);
+                account.CurrentCharacter.Fk_Jobs = Database.Jobs.Find(FilterDefinition<JobsDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Character == account.CurrentCharacter.Key).Key;
             }
 
-            if((account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key) || (account.CurrentCharacter.Fk_Group != currentAcount.CurrentCharacter.Fk_Group))
+            if ((account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key) || (account.CurrentCharacter.Fk_Group != currentAcount.CurrentCharacter.Fk_Group))
             {
                 List<GroupDB> grouptoUpdate = _groups.Where(o => o.Fk_Followers.Contains(currentAcount.CurrentCharacter.Key)).ToList();
                 foreach (var item in grouptoUpdate)
@@ -159,21 +163,32 @@ namespace DeepBot.Controllers
 
                 throw;
             }
-
-
             return JsonSerializer.Serialize(accountToDelete.AccountName);
         }
 
-            public async Task CreateConfigAsync(int characterId)
+        public async Task CreateConfigAsync(int characterId)
         {
             ConfigCharacterDB config = new ConfigCharacterDB();
             config.Fk_Character = characterId;
             config.Fk_User = new Guid(User.Claims.First(c => c.Type == "UserID").Value);
             config.CreationDate = DateTime.Now;
-
-
             await Database.ConfigsCharacter.InsertOneAsync(config);
+        }
 
+        public async Task CreateInventoryAsync(int characterId)
+        {
+            InventoryDB inventory = new InventoryDB();
+            inventory.Fk_Character = characterId;
+            inventory.Fk_User = new Guid(User.Claims.First(c => c.Type == "UserID").Value);
+            await Database.Inventories.InsertOneAsync(inventory);
+        }
+
+        public async Task CreateJobsAsync(int characterId)
+        {
+            JobsDB jobs = new JobsDB();
+            jobs.Fk_Character = characterId;
+            jobs.Fk_User = new Guid(User.Claims.First(c => c.Type == "UserID").Value);
+            await Database.Jobs.InsertOneAsync(jobs);
         }
     }
 

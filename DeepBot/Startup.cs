@@ -13,7 +13,6 @@ using DeepBot.Data.Model.Path;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -48,7 +47,7 @@ namespace DeepBot
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "ClientApp/dist/vex";
             });
 
 
@@ -76,16 +75,16 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<ZaapAction>();
             BsonClassMap.RegisterClassMap<ZaapiAction>();
 
-            services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
-            {
-                identity.Password.RequireDigit = false;
-                identity.Password.RequireLowercase = false;
-                identity.Password.RequireNonAlphanumeric = false;
-                identity.Password.RequireUppercase = false;
-                identity.Password.RequiredLength = 1;
-                identity.Password.RequiredUniqueChars = 0;
-                identity.SignIn.RequireConfirmedEmail = true;
-            },
+            services.AddIdentityMongoDbProvider<UserDB, RoleDB>(identity =>
+             {
+                 identity.Password.RequireDigit = false;
+                 identity.Password.RequireLowercase = false;
+                 identity.Password.RequireNonAlphanumeric = false;
+                 identity.Password.RequireUppercase = false;
+                 identity.Password.RequiredLength = 1;
+                 identity.Password.RequiredUniqueChars = 0;
+                 identity.SignIn.RequireConfirmedEmail = true;
+             },
                 mongo =>
                 {
                     mongo.ConnectionString = ConnectionString;
@@ -134,11 +133,15 @@ namespace DeepBot
                 Console.WriteLine("Maps not imported, processing import");
                 Loader.LoadMaps();
             }
-
             if (Database.Items.FindSync(FilterDefinition<ItemDB>.Empty).FirstOrDefault() == null)
             {
                 Console.WriteLine("Items not imported, processing import");
                 Loader.LoadItems();
+            }
+            if (Database.Spells.FindSync(FilterDefinition<SpellDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Spells not imported, processing import");
+                Loader.LoadSpells();
             }
         }
 
@@ -197,7 +200,7 @@ namespace DeepBot
                 }
             });
 
-            ///* création des roles si non présent */
+            ///* crÃ©ation des roles si non prÃ©sent */
             //DataInit.SeedAndCreateRoles(app.ApplicationServices).GetAwaiter().GetResult();
         }
     }

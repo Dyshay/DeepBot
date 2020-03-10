@@ -1,9 +1,6 @@
 ﻿using DeepBot.Data.Driver;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Database
 {
@@ -17,7 +14,7 @@ namespace DeepBot.Data.Database
         public int MoveDelay { get; set; }
         public int PauseNumber { get; set; }
         public int PauseTime { get; set; }
-        public int AgressionZone { get; set; } 
+        public int AgressionZone { get; set; }
         public bool AutoAnswer { get; set; }
         public bool AutoDisconnect { get; set; }
         public int RefuseDelay { get; set; }
