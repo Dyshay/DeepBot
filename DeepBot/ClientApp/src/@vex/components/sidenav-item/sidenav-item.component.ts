@@ -18,8 +18,10 @@ import { NavigationService } from '../../services/navigation.service';
 import icKeyboardArrowRight from '@iconify/icons-ic/twotone-keyboard-arrow-right';
 import { CharacterActions } from '../../../app/app-reducers/character/actions';
 import { webUserActions } from '../../../app/app-reducers/webUser/actions';
+import { AccountActions } from '../../../app/app-reducers/account/actions';
 import * as fromCharacter from '../../../app/app-reducers/character/reducers';
 import * as fromWeb from '../../../app/app-reducers/webUser/reducers';
+import * as fromAccount from '../../../app/app-reducers/account/reducers';
 import { Store } from '@ngrx/store';
 import { TalkService } from 'src/app/Services/TalkService';
 
@@ -43,8 +45,10 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
   isSubheading = this.navigationService.isSubheading;
 
   constructor(private router: Router,
-              private cd: ChangeDetectorRef,
-              private navigationService: NavigationService, private characterStore: Store<fromCharacter.State>, private webStore: Store<fromWeb.State>, private hub: TalkService) { }
+    private cd: ChangeDetectorRef,
+    private navigationService: NavigationService,
+    private accountStore: Store<fromAccount.State>,
+    private characterStore: Store<fromCharacter.State>, private webStore: Store<fromWeb.State>, private hub: TalkService) { }
 
   @HostBinding('class')
   get levelClass() {
@@ -70,11 +74,12 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  switchBot(item){
+  switchBot(item) {
     var regex = /([0-9]){3,}/;
     let id = regex.exec(item)[0];
     this.hub.FetchTcpId(Number.parseInt(id));
-    this.characterStore.dispatch(CharacterActions.updateCharacter({character: undefined, key: Number.parseInt(id)}))
+    this.characterStore.dispatch(CharacterActions.updateCharacter({ character: undefined, key: Number.parseInt(id) }))
+    this.accountStore.dispatch(AccountActions.updateCurrentAccount({ id: Number.parseInt(id) }));
     this.characterStore.dispatch(CharacterActions.ResetCharacteristics());
   }
 
@@ -144,5 +149,5 @@ export class SidenavItemComponent implements OnInit, OnChanges, OnDestroy {
     this.router.navigateByUrl(route)
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void { }
 }

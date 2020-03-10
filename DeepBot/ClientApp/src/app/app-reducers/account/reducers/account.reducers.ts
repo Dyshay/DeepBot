@@ -11,7 +11,7 @@ export interface State {
   accountCreated: Account | null,
   error: string | null,
   pending: boolean,
-
+  currentAccount: Account | null,
 }
 
 export const initialState: State = {
@@ -19,7 +19,8 @@ export const initialState: State = {
   allAccounts: null,
   accountCreated: null,
   error: null,
-  pending: false
+  pending: false,
+  currentAccount: null
 }
 
 
@@ -39,8 +40,17 @@ export const reducer = createReducer(initialState,
   on(AccountActions.deleteAccount, (state) => ({ ...state, pending: true })),
   on(AccountActions.deleteAccountSuccess, (state, { accontName }) => ({ ...state, pending: false })),
   on(AccountActions.deleteAccountFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+  on(AccountActions.updateCurrentAccount, (state, {id}) =>
+  {
+    let account =  state.allAccounts.find(c => c.currentCharacter.key === id);
+
+    return {...state, currentAccount: account}
+  }
+  ),
 )
 
 export const getAccountCreated = (state: State) => state.accountCreated;
 export const getAllAccounts = (state: State) => state.allAccounts;
 export const getMap = (state: State) => state.map;
+export const getCurrentAccount = (state: State) => state.currentAccount;

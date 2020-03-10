@@ -41,6 +41,7 @@ import { Account } from 'src/webModel/Account';
 import { CharacterService } from '../../../services/character.service';
 import { Group } from '../../../../webModel/Group';
 import { CharacterActions } from 'src/app/app-reducers/character/actions';
+import { AccountActions } from 'src/app/app-reducers/account/actions';
 
 export interface FriendSuggestion {
   name: string;
@@ -65,7 +66,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
     console.log('test');
   }
-  account: Account;
+  account = this.accountStore.pipe(select(fromAccount.getCurrentAccount));
   character: Character = new Character();
   indexSelected: number = 0;
   iconCharacter: string;
@@ -96,6 +97,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
                 for (let c = 0; c < accountStoring.length; c++) {
                   if (accountStoring[c].currentCharacter.key === this.character.key) {
                     this.characterStore.dispatch(CharacterActions.updateAccount({ character: this.character, tcpId: this.character.key.toString() }));
+                    this.accountStore.dispatch(AccountActions.updateCurrentAccount({id: result[i].key}));
                   }
 
                 }
@@ -115,21 +117,13 @@ export class BotDashboardComponent implements OnInit, OnChanges {
           }
         })
     });
-    this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accounts: Account[]) => {
-      accounts.forEach(acc => {
-        if (acc.characters.find(c => c.name == this.character.name)) {
-          this.account = acc;
-        }
-      })
-    });
   }
 
 
 
-  initConnection() {
-    console.log('ACCOUNT NAME',this.account.accountName);
-    this.deeptalk.createConnexionBot(this.account.accountName, this.account.password, this.account.server.id, false);
-    this.deeptalk.FetchTcpId(this.character.key);
+  initConnection(acc: Account) {
+      this.deeptalk.createConnexionBot(acc.accountName, acc.password, acc.server.id, false);
+      this.deeptalk.FetchTcpId(this.character.key);
   }
 
   links: Link[] = [
