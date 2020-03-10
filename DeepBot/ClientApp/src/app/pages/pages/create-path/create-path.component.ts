@@ -11,14 +11,15 @@ import icTopArrow from '@iconify/icons-ic/twotone-keyboard-arrow-up'
 import icRightArrow from '@iconify/icons-ic/twotone-keyboard-arrow-right'
 import icBottomArrow from '@iconify/icons-ic/twotone-keyboard-arrow-down'
 import icDelete from '@iconify/icons-fa-solid/trash';
-import 'jquery';
-import { PathService } from '../../../services/path.service';
-import { Path, SpecificMonsterLevel, SpecificMonsterQuantity, CaptureMonsterQuantity, PathAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction } from '../../../../webModel/Utility/PathCreator/Path';
-import { MapArea } from '../../../../webModel/Utility/PathCreator/areas';
-declare var $: any;
 import * as frompath from 'src/app/app-reducers/path/reducers';
 import { PathActions } from 'src/app/app-reducers/path/actions';
 import { Store } from '@ngrx/store';
+import { PathService } from '../../../services/path.service';
+import { Path, SpecificMonsterLevel, SpecificMonsterQuantity, CaptureMonsterQuantity, PathAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, MapAction } from '../../../../webModel/Utility/PathCreator/Path';
+import { MapArea } from '../../../../webModel/Utility/PathCreator/areas';
+import 'jquery';
+declare var $: any;
+
 declare global {
   interface JQuery {
     mapster(): JQuery;
@@ -62,7 +63,9 @@ export class CreatePathComponent implements OnInit {
   directionBottom: boolean = false;
   directionLeft: boolean = false;
 
-
+  zone1Alreadyloaded: boolean = false;
+  zone2Alreadyloaded: boolean = false;
+  zone3Alreadyloaded: boolean = false;
 
   zoneChoose;
   statePath;
@@ -81,210 +84,350 @@ export class CreatePathComponent implements OnInit {
     this.pathToCreate.pathAction = [];
   }
 
- 
 
-  ngAfterViewInit() {
-    var self = this;
-      $(document).ready(function () {
-        $('#zone1').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-
-            if (e.selected ) {
-              $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' } );
-              $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744'});
-              $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              return false;
-            }
-            else {
-              $('#zone1Banque').mapster('set', false, e.key);
-              $('#zone1Retour').mapster('set', false, e.key);
-            }
+  zoneChanged(event) {
+    if (event.value == 0 && !this.zone1Alreadyloaded) {
+      $('#zone1').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            return false;
           }
-        });
-        $('#zone1Banque').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              return false;
-            }
-            else {
-              if ($('#zone1').mapster('get_options', e.key, true).selected) 
-                return false;
-              
-            }
-              }
-         
-
-        });
-        $('#zone1Retour').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              return false;
-            }
-            else {
-              if ($('#zone1').mapster('get_options', e.key, true).selected) 
-                return false;
-            }
+          else {
+            $('#zone1Banque').mapster('set', false, e.key);
+            $('#zone1Retour').mapster('set', false, e.key);
           }
-          ,
-
-        });
-        $('#zone2').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              return false;
-            }
-            else {
-              $('#zone2Banque').mapster('set', false, e.key);
-              $('#zone2Retour').mapster('set', false, e.key);
-            }
-          }
-        });
-        $('#zone2Banque').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              return false;
-            }
-            else {
-              if ($('#zone2').mapster('get_options', e.key, true).selected)
-                return false;
-            }
-          }
-        });
-        $('#zone2Retour').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              return false;
-            }
-            else {
-              if ($('#zone2').mapster('get_options', e.key, true).selected)
-                return false;
-            }
-          }
-        });
-        $('#zone3').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
-              return false;
-            }
-            else {
-            }
-          }
-        });
-        $('#zone3Banque').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
-              return false;
-            }
-            else {
-              if ($('#zone3').mapster('get_options', e.key, true).selected)
-                return false;
-
-            }
-          }
-
-
-        });
-        $('#zone3Retour').mapster({
-          mapKey: 'data-key',
-          showToolTip: true,
-          fillOpacity: 0.6,
-          areas: MapArea.mapArea,
-          onClick: function (e) {
-            if (e.selected) {
-              $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
-              return false;
-            }
-            else {
-              if ($('#zone3').mapster('get_options', e.key, true).selected)
-                return false;
-            }
-          }
-          ,
-
-        });
+        }
       });
+      $('#zone1Banque').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            return false;
+          }
+          else {
+            if ($('#zone1').mapster('get_options', e.key, true).selected)
+              return false;
+
+          }
+        }
+
+
+      });
+      $('#zone1Retour').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            return false;
+          }
+          else {
+            if ($('#zone1').mapster('get_options', e.key, true).selected)
+              return false;
+          }
+        }
+        ,
+
+      });
+      this.loadArea(event.value);
+    }
+    else if (event.value == 1 && !this.zone2Alreadyloaded) {
+      $('#zone2').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            return false;
+          }
+          else {
+            $('#zone2Banque').mapster('set', false, e.key);
+            $('#zone2Retour').mapster('set', false, e.key);
+          }
+        }
+      });
+      $('#zone2Banque').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            return false;
+          }
+          else {
+            if ($('#zone2').mapster('get_options', e.key, true).selected)
+              return false;
+          }
+        }
+      });
+      $('#zone2Retour').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            return false;
+          }
+          else {
+            if ($('#zone2').mapster('get_options', e.key, true).selected)
+              return false;
+          }
+        }
+      });
+      this.loadArea(event.value);
+    }
+    else if (event.value == 2 && !this.zone3Alreadyloaded) {
+      $('#zone3').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            return false;
+          }
+          else {
+          }
+        }
+      });
+      $('#zone3Banque').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            return false;
+          }
+          else {
+            if ($('#zone3').mapster('get_options', e.key, true).selected)
+              return false;
+
+          }
+        }
+
+
+      });
+      $('#zone3Retour').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            return false;
+          }
+          else {
+            if ($('#zone3').mapster('get_options', e.key, true).selected)
+              return false;
+          }
+        }
+        ,
+
+      });
+      this.loadArea(event.value);
+    }
   }
 
-  submit() {
-
+  loadArea(zone) {
+    for (var i = 0; i < this.pathToCreate.pathAction.length; i++) {
+      var key = this.pathToCreate.pathAction[i].mapPos;
+      var actions = this.pathToCreate.pathAction[i].actions;
+      var type = this.StateAction(actions);
+      if (type == 0) {
+        if (zone == 0 && !this.zone1Alreadyloaded) {
+          $('#zone1').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone1Banque').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone1Retour').mapster('set', true, key, { fillColor: 'FA2744' });
+        }
+        else if (zone == 1 && !this.zone2Alreadyloaded) {
+          $('#zone2').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone2Banque').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone2Retour').mapster('set', true, key, { fillColor: 'FA2744' });
+        }
+        else if (zone == 2 && !this.zone3Alreadyloaded) {
+          $('#zone3').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone3Banque').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone3Retour').mapster('set', true, key, { fillColor: 'FA2744' });
+        }
+      }
+      else if (type == 2) {
+        if (zone == 0 && !this.zone1Alreadyloaded) {
+          $('#zone1Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+        else if (zone == 1 && !this.zone2Alreadyloaded) {
+          $('#zone2Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+        else if (zone == 2 && !this.zone3Alreadyloaded) {
+          $('#zone3Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+      }
+      else if (type == 3) {
+        if (zone == 0 && !this.zone1Alreadyloaded) {
+          $('#zone1Retour').mapster('set', true, key, { fillColor: '000888' });
+        }
+        else if (zone == 1 && !this.zone2Alreadyloaded) {
+          $('#zone2Retour').mapster('set', true, key, { fillColor: '000888' });
+        }
+        else if (zone == 2 && !this.zone3Alreadyloaded) {
+          $('#zone3Retour').mapster('set', true, key, { fillColor: '000888' });
+        }
+      }
+      else if (type == 4) {
+        if (zone == 0 && !this.zone1Alreadyloaded) {
+          $('#zone1Retour').mapster('set', true, key, { fillColor: '000888' });
+          $('#zone1Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+        else if (zone == 1 && !this.zone2Alreadyloaded) {
+          $('#zone2Retour').mapster('set', true, key, { fillColor: '000888' });
+          $('#zone2Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+        else if (zone == 2 && !this.zone3Alreadyloaded) {
+          $('#zone3Retour').mapster('set', true, key, { fillColor: '000888' });
+          $('#zone3Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+      }
+    }
+    if (zone == 0 && !this.zone1Alreadyloaded)
+      this.zone1Alreadyloaded = true;
+    if (zone == 1 && !this.zone2Alreadyloaded)
+      this.zone2Alreadyloaded = true;
+    if (zone == 2 && !this.zone3Alreadyloaded)
+      this.zone3Alreadyloaded = true;
   }
-  
-  changeZone(zone) {
+
+  StateAction(actions: MapAction[]) {
+    var retour = null;
+    for (var i = 0; i < actions.length; i++) {
+      if (actions[i].fightAction != null || actions[i].gatherAction) {
+        retour = 0;
+        break;
+      }
+      else if (actions[i].bankAction != null) {
+        retour = 2;
+        break;
+      }
+      else if (actions[i].interactionAction ? actions[i].interactionAction.toGoBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 2;
+      }
+      else if (actions[i].interactionAction ? actions[i].interactionAction.toBackBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 3;
+      }
+      else if (actions[i].moveAction ? actions[i].moveAction.toGoBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 2;
+      }
+      else if (actions[i].moveAction ? actions[i].moveAction.toBackBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 3;
+      }
+      else if (actions[i].useItemAction ? actions[i].useItemAction.toBackBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 3;
+      }
+      else if (actions[i].useItemAction ? actions[i].useItemAction.toGoBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 2;
+      }
+      else if (actions[i].zaapAction ? actions[i].zaapAction.toBackBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 3;
+      }
+      else if (actions[i].zaapAction ? actions[i].zaapAction.toGoBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 2;
+      }
+      else if (actions[i].zaapiAction ? actions[i].zaapiAction.toBackBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 3;
+      }
+      else if (actions[i].zaapiAction ? actions[i].zaapiAction.toGoBank == true : false) {
+        if (retour != null)
+          retour = 4;
+        else
+          retour = 2;
+      }
+    }
+    return retour;
   }
 
+ 
   createPathInService() {
     this.pathService.path = this.pathToCreate;
   }

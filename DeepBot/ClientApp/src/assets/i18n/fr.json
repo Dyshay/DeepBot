@@ -241,7 +241,7 @@
     "PATHCREATOR": "Création du trajet",
     "GATHERINGPATHCREATOR": "Création du trajet de récolte",
     "SELECTPATH": "Selectionnez le trajet",
-    "SELECTPATHINFO": "Cochez les cartes du trajet voulu, l'ordre de selection determinera la trajectoire, vous pourez modifier ceci lors de la synthése",
+    "SELECTPATHINFO": "Cochez les cartes du trajet voulu en choisisant la(es) direction(s) voulue(s), clic droit afin d'ajouter ou visualiser les actions sur la map ",
     "CHOICEMAP": "Choisir la zone du trajet",
     "CHOICEMAPHINT": "Atention la zone selectionné doit contenir l'ensemble de la zone combat ou récolte",
     "ZONE1": "Zone de Bonta,Plaine de cania",
@@ -249,10 +249,10 @@
     "ZONE3": "Zone d'Amakna,Scarafeuille,Gelée,Dragoeuf,Cochon",
     "BANKPATH": "Trajet Banque",
     "SELECTPATHBANK": "Selectionnez le trajet de retour en banque",
-    "SELECTPATHBANKINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la zone combat ou récolte, puis jusqu'à la map de la banque",
+    "SELECTPATHBANKINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la zone combat ou récolte, puis à la map banque ajouter l'action 'Banque'",
     "BACKPATH": "Trajet Retour",
     "SELECTPATHBACK": "Selectionnez le trajet de retour vers la zone de combat / récolte",
-    "SELECTPATHBAckINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la banque, puis jusqu'à une map adjacente de la zone combat / récolte",
+    "SELECTPATHBAckINFO": "Cochez les cartes du trajet voulu, demarrer le trajet depuis la map banque, puis jusqu'à une map adjacente de la zone combat / récolte",
     "GENERATEPATH": "Générer le trajet",
     "CHOICEZAAP": "Choisissez la destination",
     "USEPOTION1": "Utiliser potion de rappel",
@@ -326,5 +326,18 @@
     "PATHACTIONMSG30": "Action zaap ajouté avec succés en (",
     "PATHACTIONMSG31": ") destination ( ",
     "PATHACTIONMSG32": "Action zaapi ajouté avec succés en ("
+  },
+  "UPDATEPATH": {
+    "PATH": "Mes Trajets ",
+    "SEARCHPATH": "Rechercher un Trajet",
+    "PATHNAME": "Nom du trajet",
+    "TYPE": "Type de trajet",
+    "ZONES": "Zones du trajet",
+    "CAPTURE": "Trajet de capture",
+    "NUMBERUSED": "Nb utilisation du trajet",
+    "NOPATHFOUND": "Aucun trajet ne correspond à votre filtre",
+    "UPDATEPATH": "Mettre à jour le trajet",
+    "FIGHTPATHUPDATE": "Modifier le trajet de combat",
+    "GATHERINGPATHUPDATE": "Modifier le trajet de récolte"
   }
 }

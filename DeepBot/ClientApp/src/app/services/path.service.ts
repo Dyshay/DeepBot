@@ -3,7 +3,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Path, PathAction, MapAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, ZaapAction, ZaapiAction, BankAction, PathMinDisplayed } from '../../webModel/Utility/PathCreator/Path';
 import { ToastrService } from 'ngx-toastr';
 import { ListBank } from '../../webModel/Utility/PathCreator/Bank';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -31,6 +31,9 @@ export class PathService {
   zaapiActiontoAdd: ZaapiAction = new ZaapiAction;
   bankActionToAdd: BankAction = new BankAction;
 
+  private emitChangePathUpdate = new Subject<any>();
+  changePathUpdateEmitted$ = this.emitChangePathUpdate.asObservable();
+
   constructor(private http: HttpClient, private toastr: ToastrService, private translateService: TranslateService) {
     this.toastr.toastrConfig.timeOut = 3300;
     this.toastr.toastrConfig.maxOpened = 4;
@@ -39,17 +42,34 @@ export class PathService {
     this.toastr.toastrConfig.positionClass = 'toast-top-full-width'
   }
 
+  emitChange(pathUpdate: any) {
+    this.path = pathUpdate;
+    this.emitChangePathUpdate.next(pathUpdate);
+  }
+
 
 
   createPath(createdPath: any): Observable<any> {
-    console.log("tt");
     return this.http.post<any>(`${environment.apiURL}Path/CreatePath`, createdPath, httpOptions)
+  }
+  updatePath(updatedPath: any): Observable<any> {
+    return this.http.post<any>(`${environment.apiURL}Path/UpdatePath`, updatedPath, httpOptions)
   }
 
   
   getAllPaths(): Observable<PathMinDisplayed[]> {
     return this.http.get<PathMinDisplayed[]>(`${environment.apiURL}Path/GetAllPaths`, httpOptions);
   }
+
+  getPathByKey(keyPath: any): Observable<Path> {
+    return this.http.post<Path>(`${environment.apiURL}Path/GetPathByKey`, { 'key':keyPath }, httpOptions)
+  }
+
+  deletePath(key: string) {
+    return this.http.post<string>(`${environment.apiURL}Path/DeletePath`, { key }, httpOptions);
+  }
+
+
   receivedActionToadd(position: string) {
     var index = this.path.pathAction.findIndex(o => o.mapPos == position);
     var toDelete = false;

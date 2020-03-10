@@ -8,6 +8,7 @@ namespace DeepBot.ControllersModel
 {
     public class PathModel
     {
+        public string? Key { get; set; }
         public string Name { get; set; }
         public TypePath Type { get; set; }
         public int MaxPod { get; set; }
@@ -118,6 +119,11 @@ namespace DeepBot.ControllersModel
         public Guid Key { get; set; }
         public int UsedNumber { get; set; }
         public List<string> Zones { get; set; }
+    }
+
+    public class pathKey
+    {
+        public Guid Key { get; set; }
     }
 
 }
