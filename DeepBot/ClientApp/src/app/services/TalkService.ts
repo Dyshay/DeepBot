@@ -30,7 +30,6 @@ export class TalkService {
   }
 
   private createConnection(): void {
-    console.log("coucou");
     this._hubConnection = new HubConnectionBuilder()
       .withUrl("https://localhost:443/deeptalk", {
         accessTokenFactory: () => {
