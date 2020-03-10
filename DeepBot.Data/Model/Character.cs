@@ -33,13 +33,11 @@ namespace DeepBot.Data.Model
         public IADB IA { get; set; }
         [BsonIgnore]
         public MapCell Cell { get; set; }
-        [BsonIgnore]
-        public Caracteristic Characteristic { get; set; } = new Caracteristic();
 
         [BsonIgnore]
-        public Inventory Inventory { get; set; }
+        public InventoryDB Inventory { get; set; }
         [BsonIgnore]
-        public List<Job> Jobs { get; set; }
+        public List<JobsDB> Jobs { get; set; }
         public MapDB  Map { get; set; }
         public List<SpellDB> Spells
         {
@@ -51,8 +49,6 @@ namespace DeepBot.Data.Model
                 return spells;
             }
         }
-        [BsonIgnore]
-        public MapDB Map { get; set; }
         [BsonIgnore]
         public GroupDB Group { get; set; }
         [BsonIgnore]
