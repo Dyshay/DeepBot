@@ -1,6 +1,7 @@
 ﻿using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.Global;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
