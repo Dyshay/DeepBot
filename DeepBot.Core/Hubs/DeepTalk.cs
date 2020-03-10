@@ -119,7 +119,6 @@ namespace DeepBot.Core.Hubs
             if (!invisible)
             {
                 currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected = false;
-                await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", currentUser.Accounts.Find(c => c.TcpId == tcpId));
                 currentUser.Accounts.Find(c => c.TcpId == tcpId).TcpId = "";
                 await Manager.UpdateAsync(currentUser);
             }
