@@ -2,6 +2,7 @@
    [fragment]="item.fragment"
    [routerLinkActiveOptions]="item.routerLinkActive || { exact: false }"
    [routerLink]="item.route"
+   (click)="switchBot(item.route)"
    class="item"
    fxLayout="row"
    matRipple
@@ -31,7 +32,7 @@
 </div>
 
 <ng-container *ngIf="isDropdown(item)">
-  <div 
+  <div
        [class.active]="isOpen || isActive"
        [class.open]="isOpen"
        class="item"
@@ -47,7 +48,7 @@
     <div style="min-width:4rem;" fxLayout="row" fxLayoutAlign="end center" (click)="toggleOpen()">
       <mat-icon [icIcon]="icKeyboardArrowRight" class="item-dropdown-icon" fxFlex="none" ></mat-icon>
     </div>
-    
+
   </div>
   <div [@dropdown]="isOpen" class="item-dropdown">
     <vex-sidenav-item *ngFor="let subItem of item.children" [item]="subItem" [level]="level + 1"></vex-sidenav-item>

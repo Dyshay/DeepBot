@@ -7,6 +7,9 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Database.Loaders;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
+using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.MapComponent;
+using DeepBot.Data.Model.Path;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -49,9 +52,8 @@ namespace DeepBot
 
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
-                .AddJsonOptions(opt =>
-                {
-                    opt.JsonSerializerOptions.MaxDepth = 10;
+                .AddJsonOptions (opt => {
+                    opt.JsonSerializerOptions.MaxDepth =15;
                     opt.JsonSerializerOptions.WriteIndented = true;
                 });
 
@@ -59,6 +61,19 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<Account>();
             BsonClassMap.RegisterClassMap<Character>();
             BsonClassMap.RegisterClassMap<Proxy>();
+            BsonClassMap.RegisterClassMap<PathAction>();
+            BsonClassMap.RegisterClassMap<BankAction>();
+            BsonClassMap.RegisterClassMap<CaptureMonsterQuantity>();
+            BsonClassMap.RegisterClassMap<FightAction>();
+            BsonClassMap.RegisterClassMap<GatherAction>();
+            BsonClassMap.RegisterClassMap<InteractionAction>();
+            BsonClassMap.RegisterClassMap<MapAction>();
+            BsonClassMap.RegisterClassMap<MoveAction>();
+            BsonClassMap.RegisterClassMap<SpecificMonsterLevel>();
+            BsonClassMap.RegisterClassMap<SpecificMonsterQuantity>();
+            BsonClassMap.RegisterClassMap<UseItemAction>();
+            BsonClassMap.RegisterClassMap<ZaapAction>();
+            BsonClassMap.RegisterClassMap<ZaapiAction>();
 
             services.AddIdentityMongoDbProvider<UserDB, RoleDB>(identity =>
              {
@@ -185,7 +200,7 @@ namespace DeepBot
                 }
             });
 
-            ///* création des roles si non présent */
+            ///* crÃ©ation des roles si non prÃ©sent */
             //DataInit.SeedAndCreateRoles(app.ApplicationServices).GetAwaiter().GetResult();
         }
     }

@@ -14,14 +14,13 @@ namespace DeepBot.Data.Model
         public Character CurrentCharacter { get; set; }
         public Proxy Proxy { get; set; }
         public Nullable<DateTime> EndAnakamaSubscribe { get; set; }
+        public bool isConnected { get; set; }
         public DateTime? CreationDate { get; set; }
-        public string AnkamaPseudo { get; set; }
         public bool isBan { get; set; }
         public Nullable<DateTime> ExpirationDateBan { get; set; }
         public string NickName { get; set; }
         public string AccountName { get; set; }
         public string Password { get; set; }
-        public int ServerId { get; set; }
         public string WelcomeKey { get; set; }
         public string AnkamaNickName { get; set; }
         public string GameTicket { get; set; }

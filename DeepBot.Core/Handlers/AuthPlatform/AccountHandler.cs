@@ -56,7 +56,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 /// A REVOIR EN DESSOUS
                 if (id == user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.Id)
                 {
-                    server.Id = 607;
+                    server.Id = id;
                     server.Name = "Bilby"; // NEED TO USE CFG
                     server.State = serverState;
                     manager.ReplaceOneAsync(c => c.Id == user.Id, user);

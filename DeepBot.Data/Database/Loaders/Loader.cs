@@ -103,7 +103,6 @@ namespace DeepBot.Data.Database.Loaders
                 cellsValues = mapj.MapData.Substring(i, 10);
                 map.Cells[i / 10] = DecompressCell(mapj, cellsValues, Convert.ToInt16(i / 10));
             }
-            map.CellsTeleport = mapj.CellsTeleport;
             map.Coordinate = mapj.Coordinate;
             return map;
         }

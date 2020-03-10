@@ -133,7 +133,9 @@ export class webUserEffects {
             if (user.accounts[i].characters[j] !== null)
               allCharacters.push(user.accounts[i].characters[j]);
           }
+         
         }
+        user.accounts = null;
         this.characterStore.dispatch(CharacterActions.getAllCharacters({ allCharacters }));
         this.characterStore.dispatch(CharacterActions.getAllCurrentCharacters({ allCurrentCharacters }));
       })

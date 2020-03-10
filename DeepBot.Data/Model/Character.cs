@@ -34,6 +34,13 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public MapCell Cell { get; set; }
         [BsonIgnore]
+        public Caracteristic Characteristic { get; set; } = new Caracteristic();
+
+        [BsonIgnore]
+        public Inventory Inventory { get; set; }
+        [BsonIgnore]
+        public List<Job> Jobs { get; set; }
+        public MapDB  Map { get; set; }
         public List<SpellDB> Spells
         {
             get

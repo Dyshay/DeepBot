@@ -6,7 +6,6 @@ import { AccountModel } from 'src/webModel/AccountModel';
 
 
 
-export const receveidLogs = createAction('[BOT/TALK] RECEIVED LOG', props<{ network: LogMessage }>());
 export const receveidMaps = createAction('[BOT/TALK] RECEIVED MAP', props<{ network: MapMessage }>());
 
 export const createAccount = createAction('[BOT/ACCOUNT] CREATE ACCOUNT', props<{ acc: AccountModel  }>());
@@ -25,3 +24,5 @@ export const updateAccountFailure = createAction('[BOT/ACCOUNT] UPDATE ACCOUNT E
 export const deleteAccount = createAction('[BOT/ACCOUNT] DELETE  ACCOUNT', props<{ accountKeyToDelete: string }>());
 export const deleteAccountSuccess = createAction('[BOT/ACCOUNT] DELETE ACCOUNT SUCCESS', props<{ accontName: string }>());
 export const deleteAccountFailure = createAction('[BOT/ACCOUNT] DELETE ACCOUNT ERROR', props<{ error: any }>());
+
+export const updateCurrentAccount = createAction('[BOT/ACCOUNT] UPDATE CURRENT ACCOUNT', props<{id: number}>());
