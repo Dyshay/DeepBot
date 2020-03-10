@@ -8,6 +8,7 @@ using DeepBot.Data.Database.Loaders;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.IA;
 using DeepBot.Data.Model.MapComponent;
 using DeepBot.Data.Model.Path;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -75,6 +76,8 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<UseItemAction>();
             BsonClassMap.RegisterClassMap<ZaapAction>();
             BsonClassMap.RegisterClassMap<ZaapiAction>();
+            BsonClassMap.RegisterClassMap<SpellAction>();
+            BsonClassMap.RegisterClassMap<ConditionalAction>();
 
             services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
             {

@@ -339,5 +339,13 @@
     "UPDATEPATH": "Mettre à jour le trajet",
     "FIGHTPATHUPDATE": "Modifier le trajet de combat",
     "GATHERINGPATHUPDATE": "Modifier le trajet de récolte"
+  },
+  "CREATEIA": {
+    "DESCRIPTION1": "Créez votre IA pour vos bots",
+    "DESCRIPTION2": "- Cette sera sauvegardé sur votre compte.",
+    "DESCRIPTION3": "- Suivez les étapes ci-dessous pour créer votre IA",
+    "GROUPLABEL": "Paramétres de l'IA",
+    "GROUPPROPLABEL": "Definissez les propriétés de l'IA",
+    "IANAME":"Nom de l'IA'"
   }
 }
