@@ -5,11 +5,6 @@ import { DialogListActionComponent } from '../dialog-list-action/dialog-list-act
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-declare global {
-  interface JQuery {
-    mapster(): JQuery;
-  }
-}
 
 
 @Component({

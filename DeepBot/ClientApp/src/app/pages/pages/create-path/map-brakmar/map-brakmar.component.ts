@@ -8,19 +8,19 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-    selector: 'app-map-amakna',
-    templateUrl: './map-amakna.component.html',
-    styleUrls: ['./map-amakna.component.scss']
+    selector: 'app-map-brakmar',
+    templateUrl: './map-brakmar.component.html',
+    styleUrls: ['./map-brakmar.component.scss']
 })
-/** map-amakna component*/
-export class MapAmaknaComponent {
+/** map-brakmar component*/
+export class MapBrakmarComponent {
   @Output() selectMapEvent = new EventEmitter<string>();
   @Output() specificActionEvent = new EventEmitter<{ position: string, event: string, payload?: any }>();
 
   rightClickPos: string;
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuZone: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
-    /** map-amakna ctor */
+    /** map-brakmar ctor */
   constructor(public dialog: MatDialog, private pathService: PathService, private toastr: ToastrService, private translateService: TranslateService) {
 
   }
@@ -75,5 +75,4 @@ export class MapAmaknaComponent {
   selectMap(event) {
     this.selectMapEvent.next(event.target.alt);
   }
-
 }

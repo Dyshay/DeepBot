@@ -1,59 +1,53 @@
 import { Component, ViewChild, Input, Output, EventEmitter } from '@angular/core';
 import { MatMenuTrigger, MatDialog } from '@angular/material';
+import { PathService } from '../../../../services/path.service';
 import { DialogZaapComponent } from '../dialog-zaap/dialog-zaap.component';
 import { DialogCellComponent } from '../dialog-cell/dialog-cell.component';
 import { DialogUseItemComponent } from '../dialog-use-item/dialog-use-item.component';
-import { PathService } from '../../../../services/path.service';
 import { DialogInteractionComponent } from '../dialog-interaction/dialog-interaction.component';
 import { DialogZaapiComponent } from '../dialog-zaapi/dialog-zaapi.component';
 import { DialogListActionComponent } from '../dialog-list-action/dialog-list-action.component';
 import { ListZaap } from '../../../../../webModel/Utility/PathCreator/Zaap';
 import { ListZaapi } from '../../../../../webModel/Utility/PathCreator/Zaapi';
-import { ListBank } from '../../../../../webModel/Utility/PathCreator/Bank';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
-
 @Component({
-    selector: 'app-map-amakna-banque',
-    templateUrl: './map-amakna-banque.component.html',
-    styleUrls: ['./map-amakna-banque.component.scss']
+    selector: 'app-map-brakmar-retour',
+    templateUrl: './map-brakmar-retour.component.html',
+    styleUrls: ['./map-brakmar-retour.component.scss']
 })
-/** map-amakna-banque component*/
-export class MapAmaknaBanqueComponent {
-
+/** map-brakmar-retour component*/
+export class MapBrakmarRetourComponent {
+  rightClickPos: string;
   isZaapMap: boolean = false;
   isZaapiMap: boolean = false;
-  isBankMap: boolean = false;
   @Output() selectMapEvent = new EventEmitter<string>();
   @Output() specificActionEvent = new EventEmitter<{ position: string, event: string, payload?: any }>();
-  rightClickPos: string;
-  @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanque: MatMenuTrigger;
+
+  @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanqueRetour: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
-    /** map-amakna-banque ctor */
-  constructor(public dialog: MatDialog, private pathService: PathService, private toastr: ToastrService, private translateService: TranslateService) {
+    /** map-brakmar-retour ctor */
+  constructor(private pathService: PathService, public dialog: MatDialog, private toastr: ToastrService, private translateService: TranslateService) {
 
   }
 
 
   onContextMenu(event) {
-    this.rightClickPos = event.target.alt;
     this.isZaapMap = false;
     this.isZaapiMap = false;
-    this.isBankMap = false;
     this.rightClickPos = event.target.alt;
     if (ListZaap.Zaaps.map(o => o.destination).includes(this.rightClickPos))
       this.isZaapMap = true;
     if (ListZaapi.Zaapis.map(o => o.destination).includes(this.rightClickPos))
       this.isZaapiMap = true;
-    if (ListBank.Banks.map(o => o.posBank).includes(this.rightClickPos))
-      this.isBankMap = true;
     event.preventDefault();
     this.contextMenuPosition.x = event.clientX + 'px';
     this.contextMenuPosition.y = event.clientY + 'px';
 
-    this.contextMenuBanque.menu.focusFirstItem('mouse');
-    this.contextMenuBanque.openMenu();
+    this.contextMenuBanqueRetour.menu.focusFirstItem('mouse');
+    this.contextMenuBanqueRetour.openMenu();
+
 
   }
 
@@ -81,14 +75,10 @@ export class MapAmaknaBanqueComponent {
         payload: consommable
       });
     }
-  }
-  onContextMenuActionBank() {
-    this.specificActionEvent.next({
-      position: this.rightClickPos,
-      event: 'bankProcess',
-    })
-  }
 
+
+
+  }
   onContextMenuActionCell() {
     var cells;
     const dialogRef = this.dialog.open(DialogCellComponent, {
@@ -104,7 +94,6 @@ export class MapAmaknaBanqueComponent {
           payload: cells
         });
     });
-
   }
 
   onContextMenuActionZaapi() {
@@ -129,16 +118,19 @@ export class MapAmaknaBanqueComponent {
     const dialogRef = this.dialog.open(DialogZaapComponent, {
       width: '450px',
     });
+
     dialogRef.afterClosed().subscribe(result => {
       zaap = result;
       if (zaap != null)
         this.specificActionEvent.next({
           position: this.rightClickPos,
           event: 'useZaap',
-          payload: result
+          payload: zaap
         });
     });
+
   }
+
   onContextMenuActionInteraction() {
     var interaction;
     const dialogRef = this.dialog.open(DialogInteractionComponent, {
@@ -155,7 +147,6 @@ export class MapAmaknaBanqueComponent {
         });
     });
   }
-
   onContextMenuActionList() {
     var actions = this.pathService.getAlActionsOnMap(this.rightClickPos);
     if (actions != null) {
@@ -176,5 +167,4 @@ export class MapAmaknaBanqueComponent {
   selectMap(event) {
     this.selectMapEvent.next(event.target.alt);
   }
-
 }

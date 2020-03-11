@@ -15,13 +15,12 @@ import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
-    selector: 'app-map-amakna-banque',
-    templateUrl: './map-amakna-banque.component.html',
-    styleUrls: ['./map-amakna-banque.component.scss']
+    selector: 'app-map-brakmar-banque',
+    templateUrl: './map-brakmar-banque.component.html',
+    styleUrls: ['./map-brakmar-banque.component.scss']
 })
-/** map-amakna-banque component*/
-export class MapAmaknaBanqueComponent {
-
+/** map-brakmar-banque component*/
+export class MapBrakmarBanqueComponent {
   isZaapMap: boolean = false;
   isZaapiMap: boolean = false;
   isBankMap: boolean = false;
@@ -30,10 +29,11 @@ export class MapAmaknaBanqueComponent {
   rightClickPos: string;
   @ViewChild(MatMenuTrigger, { static: false }) contextMenuBanque: MatMenuTrigger;
   contextMenuPosition = { x: '0px', y: '0px' };
-    /** map-amakna-banque ctor */
+    /** map-brakmar-banque ctor */
   constructor(public dialog: MatDialog, private pathService: PathService, private toastr: ToastrService, private translateService: TranslateService) {
 
   }
+
 
 
   onContextMenu(event) {
@@ -176,5 +176,4 @@ export class MapAmaknaBanqueComponent {
   selectMap(event) {
     this.selectMapEvent.next(event.target.alt);
   }
-
 }
