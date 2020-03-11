@@ -8,7 +8,7 @@ namespace DeepBot.Data.Model.IA
     {
         public OperatorType  Operator { get; set; }
         public ConditionalType ConditionalType { get; set; }
-        public int ComparaValue { get; set; } /* 0 = true , 1 false  pour les conditioon de type bool*/
+        public int CompareValue { get; set; } /* 0 = true , 1 false  pour les conditioon de type bool*/
     }
 
     public enum ConditionalType
