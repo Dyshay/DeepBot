@@ -41,7 +41,7 @@ namespace DeepBot.CLI.Network.Tcp
                 Buffer = new byte[Socket.ReceiveBufferSize];
                 Semaphore = new SemaphoreSlim(1);
                 ///TODO ADD PROXY SOCKS
-                Socket.BeginConnect(IPAddress.Parse(IP), port, new AsyncCallback(ConnectCallback), Socket);
+                Socket.BeginConnect(Dns.GetHostAddresses(IP), port, new AsyncCallback(ConnectCallback), Socket);
                 //return Socket;
             }
             catch (Exception ex)
