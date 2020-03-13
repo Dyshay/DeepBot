@@ -1,13 +1,14 @@
 ﻿namespace DeepBot.Data.Enums
 {
-    public enum AccountState
+    public enum CharacterStateEnum
     {
         CONNECTING,
         CONNECTED,
         FIGHTING,
         DISCONNECTED,
         GATHERING,
-        BANK,
+        BANKING,
+        TRADING,
         WALKING,
         HEALING,
         IDLE,
