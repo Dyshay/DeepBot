@@ -1,4 +1,5 @@
 ﻿using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.Global;
 using System;
@@ -124,7 +125,7 @@ namespace DeepBot.Data.Database.Loaders
             MapCell cell = new MapCell()
             {
                 Id = cellId,
-                Type = (CellTypes)((cellInformations[2] & 56) >> 3),
+                Type = (CellTypeEnum)((cellInformations[2] & 56) >> 3),
                 IsActive = (cellInformations[0] & 32) >> 5 != 0,
                 IsInLineOfSight = (cellInformations[0] & 1) != 1,
                 InteractiveObject = interactiv,

@@ -1,4 +1,5 @@
 ﻿using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
 using System.Collections.Generic;
 

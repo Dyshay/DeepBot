@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DeepBot.Data.Enums;
+using System.Collections.Generic;
 
 namespace DeepBot.Data.Model.Global
 {

@@ -1,5 +1,6 @@
 ﻿using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
 using DeepBot.Data.Model.CharacterInfo;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
@@ -51,7 +52,7 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public byte Sex { get; set; }
         [BsonIgnore]
-        public CharacterState State { get; set; }
+        public CharacterStateEnum State { get; set; }
         //[BsonIgnore]
         //public G.Game Game { get; set; }
         [BsonIgnore]

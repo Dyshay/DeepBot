@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DeepBot.Data.Enums;
+using System;
 using System.Linq;
 
 namespace DeepBot.Data.Model
@@ -7,7 +8,7 @@ namespace DeepBot.Data.Model
     {
         public short Id { get; set; }
         public bool IsActive { get; set; }
-        public CellTypes Type { get; set; }
+        public CellTypeEnum Type { get; set; }
         public bool IsInLineOfSight { get; set; }
         public byte LayerGroundLevel { get; set; }
         public byte LayerGroundSlope { get; set; }
@@ -18,8 +19,8 @@ namespace DeepBot.Data.Model
         public int Y { get; set; }
 
         private static readonly int[] TeleportTexturesSpritesId = { 1030, 1029, 1764, 2298, 745 };
-        public bool IsWalkable => IsActive && Type != CellTypes.NOT_WALKABLE && !IsInLineOfSight && !IsInteractiveCell;
+        public bool IsWalkable => IsActive && Type != CellTypeEnum.NOT_WALKABLE && !IsInLineOfSight && !IsInteractiveCell;
         public bool IsTeleportCell => TeleportTexturesSpritesId.Contains(LayerObject1) || TeleportTexturesSpritesId.Contains(LayerObject2);
-        public bool IsInteractiveCell => Type == CellTypes.INTERACTIVE_OBJECT || InteractiveObject != -1;
+        public bool IsInteractiveCell => Type == CellTypeEnum.INTERACTIVE_OBJECT || InteractiveObject != -1;
     }
 }
