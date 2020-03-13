@@ -16,6 +16,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
 {
     public class CharacterHandler
     {
+        public object CharacterState { get; private set; }
+
         [Receiver("As")]
         public void StatsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
@@ -122,10 +124,10 @@ namespace DeepBot.Core.Handlers.GamePlatform
 
             if (character.Key != playerId)
                 return;
-            if (emoteId == 1 && character.State != CharacterState.REGENERATING)
-                character.State = CharacterState.REGENERATING;
-            else if (emoteId == 0 && character.State == CharacterState.REGENERATING)
-                character.State = CharacterState.IDLE;
+            if (emoteId == 1 && character.State != CharacterStateEnum.HEALING)
+                character.State = CharacterStateEnum.HEALING;
+            else if (emoteId == 0 && character.State == CharacterStateEnum.HEALING)
+                character.State = CharacterStateEnum.IDLE;
 
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
         }

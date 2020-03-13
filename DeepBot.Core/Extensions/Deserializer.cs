@@ -1,4 +1,5 @@
 ﻿using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.Global;
 using MongoDB.Driver;
@@ -122,7 +123,11 @@ namespace DeepBot.Core.Extensions
 
         public static void DeserializeEffects(this List<Effect> effects, string rawData)
         {
-            string[] effect_split = rawData.Substring(0, rawData.Length - 1).Split(',');
+            string[] effect_split = null;
+            if (rawData.EndsWith(","))
+                effect_split = rawData.Substring(0, rawData.Length - 1).Split(',');
+            else
+                effect_split = rawData.Substring(0, rawData.Length).Split(',');
             for (int i = 0; i < effect_split.Length; i++)
             {
                 string[] stats = effect_split[i].Split('#');
@@ -139,7 +144,7 @@ namespace DeepBot.Core.Extensions
 
         public static void DeserializeSkills(this List<Job> jobs, string rawData)
         {
-            foreach (var dataJob in rawData.Substring(3).Split('|'))
+            foreach (var dataJob in rawData.Split('|'))
             {
                 var jobId = (JobIdEnum)Convert.ToInt32(dataJob.Split(';')[0]);
                 var job = jobs.Find(x => x.Id == jobId);

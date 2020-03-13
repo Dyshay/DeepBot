@@ -19,7 +19,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public void GetWelcomeKeyAsync(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             //account dispatch value (connecting)
-            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = AccountState.CONNECTING;
+            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = CharacterStateEnum.CONNECTING;
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey = package.Substring(2);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
 
@@ -52,15 +52,11 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                 int id = int.Parse(separator[0]);
                 ServerState serverState = (ServerState)byte.Parse(separator[1]);
 
-                //if (id == (int)account.Config.Server)
-                /// A REVOIR EN DESSOUS
-                if (id == user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.Id)
+                if (id == server.Id)
                 {
-                    server.Id = 607;
-                    server.Name = "Bilby"; // NEED TO USE CFG
                     server.State = serverState;
                     manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-                    hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, $"Le serveur Bilby est {user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.State}", tcpId), tcpId).Wait();
+                    hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, $"Le serveur {server.Name} est {server.State}", tcpId), tcpId).Wait();
 
                     if (serverState != ServerState.ONLINE)
                         firstTime = false;
@@ -120,14 +116,14 @@ namespace DeepBot.Core.Handlers.AuthPlatform
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Vous n'êtes pas abonnée", tcpId), tcpId).Wait();
         }
 
-        //[Receiver("AXK")]
-        //public void GetServerWorld(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
-        //{
-        //    user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Substring(14);
-        //    manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-        //    hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
-        //    hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
-        //}
+        [Receiver("AXK")]
+        public void GetServerWorld(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Substring(14);
+            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
+        }
 
         [Receiver("AYK")]
         public void GetServerWorldRemastered(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)

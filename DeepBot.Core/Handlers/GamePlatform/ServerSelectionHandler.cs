@@ -98,7 +98,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             account.CurrentCharacter.Sex = byte.Parse(splittedData[4]);
             inventory.Items.DeserializeItems(splittedData[9]);
 
-            account.State = AccountState.IDLE;
+            account.State = CharacterStateEnum.IDLE;
             hub.SendPackage("GC1", tcpId);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.SignalR;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -62,7 +63,7 @@ namespace DeepBot.Core.Hubs
         public async Task CreateConnexion(string userName, string password, short serverId, bool isScan = false)
         {
             string tcpId = GetTcpId();
-
+            Debug.WriteLine("COUCOU " + userName);
             var CurrentUser = await UserDB;
 
             if (isScan)
@@ -75,7 +76,7 @@ namespace DeepBot.Core.Hubs
 
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
 
-            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId, isScan);
+            await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
 
             if (isScan)
                 IsScans.Add(tcpId, isScan);
