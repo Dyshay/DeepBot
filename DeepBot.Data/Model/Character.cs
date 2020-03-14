@@ -2,6 +2,7 @@
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.MapComponent;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
@@ -46,7 +47,7 @@ namespace DeepBot.Data.Model
             }
         }
         [BsonIgnore]
-        public MapDB Map { get; set; }
+        public Map Map { get; set; }
         [BsonIgnore]
         public GroupDB Group { get; set; }
         [BsonIgnore]

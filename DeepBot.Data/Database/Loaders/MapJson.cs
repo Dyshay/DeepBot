@@ -15,6 +15,5 @@ namespace DeepBot.Data.Database.Loaders
         public string MapData { get; set; }
         public string Coordinate { get; set; }
         public MapCell[] Cells { get; set; }
-        public Dictionary<MovementDirection, List<short>> CellsTeleport;
     }
 }

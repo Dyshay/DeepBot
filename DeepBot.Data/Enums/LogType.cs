@@ -2,7 +2,7 @@
 
 namespace DeepBot.Data.Enums
 {
-    public enum LogTypeEnum
+    public enum LogType
     {
         SYSTEM_INFORMATION = '1',
         SYSTEM_ERROR = '2',

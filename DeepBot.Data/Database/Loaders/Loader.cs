@@ -1,5 +1,6 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
+using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.Global;
 using System;
@@ -104,7 +105,10 @@ namespace DeepBot.Data.Database.Loaders
                 cellsValues = mapj.MapData.Substring(i, 10);
                 map.Cells[i / 10] = DecompressCell(mapj, cellsValues, Convert.ToInt16(i / 10));
             }
-            map.CellsTeleport = mapj.CellsTeleport;
+            map.TopCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.TOP);
+            map.RightCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.RIGHT);
+            map.BottomCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.BOTTOM);
+            map.LeftCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.LEFT);
             map.Coordinate = mapj.Coordinate;
             return map;
         }
@@ -137,6 +141,16 @@ namespace DeepBot.Data.Database.Loaders
                 Y = loc5 - loc7
             };
             return cell;
+        }
+
+        public static List<short> DecompressTeleportCells(MapCell[] cells, MovementDirectionEnum dir)
+        {
+            var cellsTeleport = new List<short>();
+            cells.Where(c => c.IsTeleportCell).ToList().ForEach(cell =>
+            {
+                cellsTeleport.AddTeleportCell(cell.Id, dir);
+            });
+            return cellsTeleport;
         }
 
         public static SpellDB DecompressSpell(SpellJson spellj)
