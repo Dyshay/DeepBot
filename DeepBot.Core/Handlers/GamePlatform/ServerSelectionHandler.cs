@@ -19,14 +19,14 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void WelcomeGame(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) => hub.SendPackage($"AT{user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket}", tcpId);
 
         [Receiver("ATK0")]
-        public void ResultServerSelection(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void ResultServerSelection(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.SendPackage("Ak0", tcpId);
             hub.SendPackage("AV", tcpId);
         }
 
         [Receiver("AV0")]
-        public void GetListCharacters(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetListCharacters(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.SendPackage("Ages", tcpId);
             hub.SendPackage("AL", tcpId);

@@ -111,7 +111,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
 
 
         [Receiver("AXEf")]
-        public void NotSubscribe(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void NotSubscribe(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Vous n'êtes pas abonnée", tcpId), tcpId).Wait();
         }
