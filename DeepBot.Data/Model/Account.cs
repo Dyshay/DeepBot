@@ -39,7 +39,6 @@ namespace DeepBot.Data.Model
         [BsonConstructor]
         public Account()
         {
-
         }
 
 

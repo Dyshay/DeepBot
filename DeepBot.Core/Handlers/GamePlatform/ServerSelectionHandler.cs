@@ -2,6 +2,7 @@
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
+using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
@@ -31,7 +32,6 @@ namespace DeepBot.Core.Handlers.GamePlatform
             hub.SendPackage("Ages", tcpId);
             hub.SendPackage("AL", tcpId);
             hub.SendPackage("Af", tcpId);
-
         }
 
         [Receiver("ALK")]
@@ -42,7 +42,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             int count = 2;
             bool found = false;
             List<Character> characters = new List<Character>();
-            //TODO STOCK INFO IN account.Character
+
             hub.CallCheck(tcpId).Wait();
 
             DeepTalk.IsScans.TryGetValue(tcpId, out bool isScan);
@@ -60,10 +60,11 @@ namespace DeepBot.Core.Handlers.GamePlatform
 
                 if (!isScan && currentAccount != null)
                 {
-                    if (characterName.ToLower().Equals(currentAccount.CurrentCharacter.Name.ToLower())) //TODO USE THE Name in cfg
+                    if (characterName.ToLower().Equals(currentAccount.CurrentCharacter.Name.ToLower()))
                     {
                         hub.SendPackage($"AS{id}", tcpId, true);
                         hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
+                        Storage.Instance.Characters[currentAccount.CurrentCharacter.Key] = currentAccount.CurrentCharacter;
                         found = true;
                     }
                 }

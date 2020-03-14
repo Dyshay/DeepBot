@@ -92,7 +92,6 @@ namespace DeepBot.Core.Handlers.AuthPlatform
                     if (user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.State == ServerState.ONLINE)
                     {
                         picked = true;
-                        //account.Game.Character.evento_Servidor_Seleccionado();
                     }
                     else
                     {

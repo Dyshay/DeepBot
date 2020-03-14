@@ -1,4 +1,5 @@
 ﻿using DeepBot.Data.Database;
+using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model.MapComponent.Interactives;
 using MongoDB.Bson.Serialization.Attributes;
@@ -10,24 +11,24 @@ using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent
 {
-    public class Map
+    public class Map : Document<int>
     {
         public int MapId
         {
             set
             {
+                Key = value;
                 CurrentMap = Driver.Database.Maps.Find(o => o.Key == value).FirstOrDefault();
-                Entities = new ConcurrentDictionary<int, MapEntity>();
-                Interactives = new ConcurrentDictionary<int, InteractiveObject>();
+                Entities = new Dictionary<int, MapEntity>();
+                Interactives = new Dictionary<int, InteractiveObject>();
                 foreach (var cell in CurrentMap.Cells)
                     if (cell.InteractiveObject != -1 && InteractiveObjectManager.Instance.Exists(cell.InteractiveObject))
-                        Interactives.TryAdd(cell.InteractiveObject,
-                            InteractiveObjectManager.Instance.Generate(cell.InteractiveObject, CurrentMap.Key, cell.Id));
+                        Interactives.TryAdd(cell.Id, InteractiveObjectManager.Instance.Generate(cell.InteractiveObject, CurrentMap.Key, cell.Id));
             }
         }
         public MapDB CurrentMap { get; private set; }
-        public ConcurrentDictionary<int, MapEntity> Entities { get; set; }
-        public ConcurrentDictionary<int, InteractiveObject> Interactives { get; set; }
+        public Dictionary<int, MapEntity> Entities { get; set; }
+        public Dictionary<int, InteractiveObject> Interactives { get; set; }
 
         public Map(int mapId)
         {

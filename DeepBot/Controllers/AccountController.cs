@@ -59,6 +59,7 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             var account = user.Accounts.Find(c => c.AccountName == acc.accountName);
             account.CurrentCharacter = account.Characters.Find(c => c.Key == acc.currentCharacterId);
+
             await CreateConfigAsync(account.CurrentCharacter.Key);
             await CreateInventoryAsync(account.CurrentCharacter.Key);
             await CreateJobsAsync(account.CurrentCharacter.Key);

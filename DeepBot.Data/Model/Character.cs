@@ -10,7 +10,6 @@ using System.Collections.Generic;
 
 namespace DeepBot.Data.Model
 {
-
     public class Character : Document<int>
     {
         public Guid Fk_IA { get; set; }
@@ -27,14 +26,24 @@ namespace DeepBot.Data.Model
         public int AvailableCharactericsPts { get; set; }
         public int AvailableSpellPts { get; set; }
         public Caracteristic Characteristic { get; set; } = new Caracteristic();
+        public CharacterStateEnum State { get; set; }
+
+        [BsonIgnore]
+        public MapCell Cell { get; set; }
+        [BsonIgnore]
+        public Map Map { get; set; }
         [BsonIgnore]
         public TrajetDB Trajet { get; set; }
         [BsonIgnore]
-        public ConfigCharacterDB Config { get; set; }
+        public ConfigCharacterDB Config
+        {
+            get
+            {
+                return Driver.Database.ConfigsCharacter.Find(c => c.Key == Fk_Configuration).FirstOrDefault();
+            }
+        }
         [BsonIgnore]
         public IADB IA { get; set; }
-        [BsonIgnore]
-        public MapCell Cell { get; set; }
         [BsonIgnore]
         public List<SpellDB> Spells
         {
@@ -42,20 +51,14 @@ namespace DeepBot.Data.Model
             {
                 List<SpellDB> spells = new List<SpellDB>();
                 if (Fk_Spells != null)
-                    Fk_Spells.ForEach(spell => spells.Add(Driver.Database.Spells.Find(spel => spel.Key == spell.Key).First()));
+                    Fk_Spells.ForEach(spell => spells.Add(Driver.Database.Spells.Find(s => s.Key == spell.Key).First()));
                 return spells;
             }
         }
         [BsonIgnore]
-        public Map Map { get; set; }
-        [BsonIgnore]
         public GroupDB Group { get; set; }
         [BsonIgnore]
         public byte Sex { get; set; }
-        [BsonIgnore]
-        public CharacterStateEnum State { get; set; }
-        //[BsonIgnore]
-        //public G.Game Game { get; set; }
         [BsonIgnore]
         public bool HasGroup => Group != null;
         [BsonIgnore]

@@ -14,7 +14,7 @@ using System.Linq;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
-    public class CharacterHandler
+    public class CharacterHandler : IHandler
     {
         public object CharacterState { get; private set; }
 

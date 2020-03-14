@@ -4,25 +4,15 @@ using System.Text;
 
 namespace DeepBot.Data.Generic
 {
-    public abstract class Singleton<T>
-        where T : class, new()
+    public abstract class Singleton<T> where T : class
     {
-        public static T Instance
-        {
-            get
-            {
-                return SingletonAllocator.instance;
-            }
-        }
+        private static readonly Lazy<T> sInstance = new Lazy<T>(() => CreateInstanceOfT());
 
-        internal static class SingletonAllocator
-        {
-            internal static T instance;
+        public static T Instance { get { return sInstance.Value; } }
 
-            static SingletonAllocator()
-            {
-                instance = new T();
-            }
+        private static T CreateInstanceOfT()
+        {
+            return Activator.CreateInstance(typeof(T), true) as T;
         }
     }
 }

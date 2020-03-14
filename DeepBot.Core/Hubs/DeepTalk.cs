@@ -1,5 +1,6 @@
 ﻿using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage;
+using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
@@ -63,7 +64,7 @@ namespace DeepBot.Core.Hubs
         public async Task CreateConnexion(string userName, string password, short serverId, bool isScan = false)
         {
             string tcpId = GetTcpId();
-            Debug.WriteLine("COUCOU " + userName);
+
             var CurrentUser = await UserDB;
 
             if (isScan)
@@ -72,7 +73,6 @@ namespace DeepBot.Core.Hubs
 
             else if (!isScan)
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
-
 
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
 
@@ -130,6 +130,10 @@ namespace DeepBot.Core.Hubs
                 CurrentUser.CliConnectionId = "";
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
+                CurrentUser.Accounts.ForEach(a =>
+                {
+                    Storage.Instance.Characters.TryRemove(a.CurrentCharacter.Key, out Character c);
+                });
             }
         }
 

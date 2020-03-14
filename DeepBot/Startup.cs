@@ -7,6 +7,7 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Database.Loaders;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
+using DeepBot.Data.Model.MapComponent;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -181,8 +182,8 @@ namespace DeepBot
 
                 if (env.IsDevelopment())
                 {
-                    //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
 
