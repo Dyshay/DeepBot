@@ -14,7 +14,6 @@ using DeepBot.Data.Model.Path;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
@@ -54,8 +53,9 @@ namespace DeepBot
 
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
-                .AddJsonOptions (opt => {
-                    opt.JsonSerializerOptions.MaxDepth =15;
+                .AddJsonOptions(opt =>
+                {
+                    opt.JsonSerializerOptions.MaxDepth = 10;
                     opt.JsonSerializerOptions.WriteIndented = true;
                 });
 
@@ -137,11 +137,15 @@ namespace DeepBot
                 Console.WriteLine("Maps not imported, processing import");
                 Loader.LoadMaps();
             }
-
             if (Database.Items.FindSync(FilterDefinition<ItemDB>.Empty).FirstOrDefault() == null)
             {
                 Console.WriteLine("Items not imported, processing import");
                 Loader.LoadItems();
+            }
+            if (Database.Spells.FindSync(FilterDefinition<SpellDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Spells not imported, processing import");
+                Loader.LoadSpells();
             }
         }
 

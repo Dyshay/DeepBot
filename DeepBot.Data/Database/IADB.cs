@@ -3,8 +3,6 @@ using DeepBot.Data.Model.IA;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Bson.Serialization.IdGenerators;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Database
 {

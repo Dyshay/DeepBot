@@ -1,15 +1,13 @@
 ﻿using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
-using System;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.Options;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Text.Json;
 
 namespace DeepBot.Data.Database
 {
-    public class MapDB: Document<int>
+    public class MapDB : Document<int>
     {
         public string GlobalAreaName { get; set; }
         public string AreaName { get; set; }
@@ -18,6 +16,9 @@ namespace DeepBot.Data.Database
         public int Height { get; set; }
         public string Coordinate { get; set; }
         public MapCell[] Cells { get; set; }
-        public Dictionary<MovementDirection, List<short>> CellsTeleport;
+        public List<short> TopCellsTeleport { get; set; }
+        public List<short> RightCellsTeleport { get; set; }
+        public List<short> BottomCellsTeleport { get; set; }
+        public List<short> LeftCellsTeleport { get; set; }
     }
 }

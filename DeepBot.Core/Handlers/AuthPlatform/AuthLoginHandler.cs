@@ -3,11 +3,7 @@ using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
-using DeepBot.Data.Model;
-using Microsoft.AspNetCore.Identity;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace DeepBot.Core.Handlers.AuthPlatform
@@ -15,25 +11,25 @@ namespace DeepBot.Core.Handlers.AuthPlatform
     public class AuthLoginHandler : IHandler
     {
         [Receiver("AlEf")]
-        public void WrongCredentialsError(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void WrongCredentialsError(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_ERROR, "Connexion rejetée. Nom de compte ou mot de passe incorrect.", tcpId), tcpId).Wait();
         }
 
         [Receiver("AlEa")]
-        public void AlreadyConnectedError(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void AlreadyConnectedError(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_ERROR, "Déjà connecté. Essayez encore une fois.", tcpId), tcpId).Wait();
         }
 
         [Receiver("AlEv")]
-        public void WrongVersionError(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void WrongVersionError(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_ERROR, "La version de Dofus que vous avez installée n'est pas compatible avec ce serveur. Pour jouer, installez la nouvelle version . Le client DOFUS sera fermé.", tcpId), tcpId).Wait();
         }
 
         [Receiver("AlEb")]
-        public void AccountBannedError(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void AccountBannedError(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_ERROR, "Connexion rejetée. Votre compte a été banni.", tcpId), tcpId).Wait();
         }

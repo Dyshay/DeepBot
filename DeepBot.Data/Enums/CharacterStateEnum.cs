@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DeepBot.Data.Enums
+﻿namespace DeepBot.Data.Enums
 {
-    public enum AccountState
+    public enum CharacterStateEnum
     {
         CONNECTING,
         CONNECTED,
         FIGHTING,
         DISCONNECTED,
         GATHERING,
-        BANK,
+        BANKING,
+        TRADING,
         WALKING,
         HEALING,
         IDLE,

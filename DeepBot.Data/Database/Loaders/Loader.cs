@@ -1,12 +1,13 @@
 ﻿using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
+using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
-using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.Global;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Text.Json;
 
 namespace DeepBot.Data.Database.Loaders
@@ -44,6 +45,21 @@ namespace DeepBot.Data.Database.Loaders
             }
         }
 
+        public static void LoadSpells()
+        {
+            var Spells = new Dictionary<int, SpellDB>();
+            using Stream stream = Assembly.GetExecutingAssembly().GetManifestResourceStream("DeepBot.Data.Database.Resources.Spells.json");
+            using (StreamReader reader = new StreamReader(stream))
+            {
+                string result = reader.ReadToEnd();
+                Spells = JsonSerializer.Deserialize<List<SpellJson>>(result).ToDictionary(c => c.Id, c => DecompressSpell(c));
+            }
+            foreach (var spell in Spells.Values)
+            {
+                spell.Insert();
+            }
+        }
+
         public static ItemDB DecompressItem(ItemJson itemj)
         {
             ItemDB item = new ItemDB();
@@ -58,6 +74,9 @@ namespace DeepBot.Data.Database.Loaders
             item.Buff = itemj.Buff;
             item.Usable = itemj.Usable;
             item.Targetable = itemj.Targetable;
+            item.Equipable = ItemTypeEnum.TYPE_PIERRE_AME == item.Type || ItemTypeEnum.TYPE_PELLE == item.Type || ItemTypeEnum.TYPE_OUTIL == item.Type || ItemTypeEnum.TYPE_PIOCHE == item.Type || ItemTypeEnum.TYPE_COIFFE == item.Type
+                || ItemTypeEnum.TYPE_ANNEAU == item.Type || ItemTypeEnum.TYPE_AMULETTE == item.Type || ItemTypeEnum.TYPE_BOTTES == item.Type || ItemTypeEnum.TYPE_CEINTURE == item.Type || ItemTypeEnum.TYPE_DAGUES == item.Type || ItemTypeEnum.TYPE_DOFUS == item.Type
+                || ItemTypeEnum.TYPE_EPEE == item.Type || ItemTypeEnum.TYPE_FAUX == item.Type || ItemTypeEnum.TYPE_HACHE == item.Type || ItemTypeEnum.TYPE_BATON == item.Type || ItemTypeEnum.TYPE_BAGUETTE == item.Type || ItemTypeEnum.TYPE_ARC == item.Type;
             item.Conditions = itemj.Conditions;
             item.BaseEffects = itemj.Effects;
             item.SetId = itemj.SetId;
@@ -86,7 +105,10 @@ namespace DeepBot.Data.Database.Loaders
                 cellsValues = mapj.MapData.Substring(i, 10);
                 map.Cells[i / 10] = DecompressCell(mapj, cellsValues, Convert.ToInt16(i / 10));
             }
-            map.CellsTeleport = mapj.CellsTeleport;
+            map.TopCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.TOP);
+            map.RightCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.RIGHT);
+            map.BottomCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.BOTTOM);
+            map.LeftCellsTeleport = DecompressTeleportCells(map.Cells, MovementDirectionEnum.LEFT);
             map.Coordinate = mapj.Coordinate;
             return map;
         }
@@ -107,7 +129,7 @@ namespace DeepBot.Data.Database.Loaders
             MapCell cell = new MapCell()
             {
                 Id = cellId,
-                Type = (CellTypes)((cellInformations[2] & 56) >> 3),
+                Type = (CellTypeEnum)((cellInformations[2] & 56) >> 3),
                 IsActive = (cellInformations[0] & 32) >> 5 != 0,
                 IsInLineOfSight = (cellInformations[0] & 1) != 1,
                 InteractiveObject = interactiv,
@@ -119,6 +141,54 @@ namespace DeepBot.Data.Database.Loaders
                 Y = loc5 - loc7
             };
             return cell;
+        }
+
+        public static List<short> DecompressTeleportCells(MapCell[] cells, MovementDirectionEnum dir)
+        {
+            var cellsTeleport = new List<short>();
+            cells.Where(c => c.IsTeleportCell).ToList().ForEach(cell =>
+            {
+                cellsTeleport.AddTeleportCell(cell.Id, dir);
+            });
+            return cellsTeleport;
+        }
+
+        public static SpellDB DecompressSpell(SpellJson spellj)
+        {
+            SpellDB spell = new SpellDB();
+            spell.Key = spellj.Id;
+            spell.Name = spellj.Name;
+            spell.Stats = new List<SpellStat>();
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelOne));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelTwo));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelThree));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelFour));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelFive));
+            spell.Stats.Add(DecompressSpellStat(spellj.LevelSix));
+            return spell;
+        }
+
+        public static SpellStat DecompressSpellStat(string data)
+        {
+            if (data == "-1")
+                return null;
+            var stat = new SpellStat();
+            var datas = data.Split(',');
+            stat.PA = byte.Parse(datas[2]);
+            stat.RangeMinimum = byte.Parse(datas[3]);
+            stat.RangeMaximum = byte.Parse(datas[4]);
+            stat.CriticalRate = short.Parse(datas[5]);
+            stat.EchecRate = short.Parse(datas[6]);
+            stat.LineOnly = bool.Parse(datas[7]);
+            stat.LineOfSight = bool.Parse(datas[8]);
+            stat.FreeCell = bool.Parse(datas[9]);
+            stat.CanBoostRange = bool.Parse(datas[10]);
+            stat.LaunchCountByTurn = byte.Parse(datas[11]);
+            stat.LaunchCountByTarget = byte.Parse(datas[12]);
+            stat.CoolDown = byte.Parse(datas[14]);
+            stat.RangeType = datas[15];
+            stat.RequiredLevel = byte.Parse(datas[18]);
+            return stat;
         }
     }
 }

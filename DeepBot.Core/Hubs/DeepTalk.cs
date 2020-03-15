@@ -1,5 +1,6 @@
 ﻿using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage;
+using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
@@ -10,8 +11,8 @@ using Microsoft.AspNetCore.SignalR;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DeepBot.Core.Hubs
@@ -73,10 +74,9 @@ namespace DeepBot.Core.Hubs
             else if (!isScan)
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
 
-
             await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
 
-            await Clients.Client(CliID).SendAsync("NewConnection", "34.251.172.139", 443, false, tcpId, isScan);
+            await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
 
             if (isScan)
                 IsScans.Add(tcpId, isScan);
@@ -130,6 +130,10 @@ namespace DeepBot.Core.Hubs
                 CurrentUser.CliConnectionId = "";
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
+                CurrentUser.Accounts.ForEach(a =>
+                {
+                    Storage.Instance.Characters.TryRemove(a.CurrentCharacter.Key, out Character c);
+                });
             }
         }
 

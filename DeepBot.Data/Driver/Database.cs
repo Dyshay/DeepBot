@@ -1,8 +1,6 @@
 ﻿using DeepBot.Data.Database;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Driver
 {
@@ -20,6 +18,9 @@ namespace DeepBot.Data.Driver
         public static readonly IMongoCollection<ConfigGroupDB> ConfigsGroup = Base.GetCollection<ConfigGroupDB>("ConfigGroup");
         public static readonly IMongoCollection<MapDB> Maps = Base.GetCollection<MapDB>("Maps");
         public static readonly IMongoCollection<ItemDB> Items = Base.GetCollection<ItemDB>("Items");
+        public static readonly IMongoCollection<SpellDB> Spells = Base.GetCollection<SpellDB>("Spells");
+        public static readonly IMongoCollection<InventoryDB> Inventories = Base.GetCollection<InventoryDB>("Inventories");
+        public static readonly IMongoCollection<JobsDB> Jobs = Base.GetCollection<JobsDB>("Jobs");
         public static readonly IMongoCollection<TrajetDB> Paths = Base.GetCollection<TrajetDB>("Paths");
 
         public static void Insert<TDocument>(this TDocument document)
@@ -49,6 +50,15 @@ namespace DeepBot.Data.Driver
                     break;
                 case ItemDB e:
                     Items.InsertOne(e);
+                    break;
+                case SpellDB e:
+                    Spells.InsertOne(e);
+                    break;
+                case InventoryDB e:
+                    Inventories.InsertOne(e);
+                    break;
+                case JobsDB e:
+                    Jobs.InsertOne(e);
                     break;
                 default:
                     throw new NotImplementedException();

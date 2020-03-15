@@ -15,7 +15,13 @@ node_modules/
 bower_components/
 
 # IDEs and editors
-.idea/
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
 
 # misc
 .sass-cache/
@@ -300,4 +306,6 @@ __pycache__/
 # Cake - Uncomment if you are using it
 # tools/
 
-# End of https://www.gitignore.io/api/angular,aspnetcore
+# System Files
+.DS_Store
+Thumbs.db
