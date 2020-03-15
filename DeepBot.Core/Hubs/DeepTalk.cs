@@ -90,7 +90,7 @@ namespace DeepBot.Core.Hubs
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
                 CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected = true;
                 var account = CurrentUser.Accounts.Find(c => c.AccountName == userName);
-                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account).Wait();
+                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account.CurrentCharacter).Wait();
             }
 
             await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
