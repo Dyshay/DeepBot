@@ -348,6 +348,7 @@
     "DESCRIPTION3": "- Suivez les étapes ci-dessous pour créer votre IA",
     "GROUPLABEL": "Paramétres de l'IA",
     "GROUPPROPLABEL": "Definissez les propriétés de l'IA",
-    "IANAME":"Nom de l'IA'"
+    "IANAME": "Nom de l'IA",
+    "CLASSEIA": "Classe de l'IA"
   }
 }

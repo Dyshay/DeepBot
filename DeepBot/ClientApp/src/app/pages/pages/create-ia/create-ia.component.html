@@ -26,13 +26,20 @@
             <h2 class="title m-0">{{ 'CREATEIA.GROUPPROPLABEL' | translate }}</h2>
 
             <div fxLayout="column" fxLayoutAlign="space-around center">
-              <div>
+  
                 <mat-form-field fxFlex="auto">
                   <mat-label>{{ 'CREATEIA.IANAME' | translate }}</mat-label>
-                  <input [(ngModel)]="" matInput required>
+                  <input [(ngModel)]="iaToCreate.name" matInput required>
                 </mat-form-field>
-              </div>
-
+              
+              <mat-form-field class="mt-1">
+                <mat-label>{{ 'CREATEIA.CLASSEIA' | translate }}</mat-label>
+                <mat-select [(ngModel)]="iaToCreate.classe"  required>
+                  <mat-option value="enum" *ngFor="let enum of classeEnum | keyvalue">
+                    {{ enum.key }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
 
             </div>
 

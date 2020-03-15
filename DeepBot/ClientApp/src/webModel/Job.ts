@@ -5,3 +5,6 @@ export class Job {
 }
 
 
+export enum Jobs {
+
+}
