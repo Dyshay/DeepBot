@@ -31,7 +31,7 @@ export class TalkService {
 
   private createConnection(): void {
     this._hubConnection = new HubConnectionBuilder()
-      .withUrl("https://localhost:443/deeptalk", {
+      .withUrl("https://localhost:44319/deeptalk", {
         accessTokenFactory: () => {
           return localStorage.getItem('DeepBot');
         }, skipNegotiation: true, transport: HttpTransportType.WebSockets
@@ -107,7 +107,7 @@ export class TalkService {
   private GetChangeCurrentUser():void{
     this._hubConnection.on("UpdateCharac", (character : Character, tcpId: string) => {
       this.storeUser.dispatch(webUserActions.getBotNav());
-      this.storeCharacter.dispatch(CharacterActions.updateAccount({ character, tcpId}));
+      this.storeCharacter.dispatch(CharacterActions.updateAccountCharacter({ character, tcpId}));
     })
   }
 }

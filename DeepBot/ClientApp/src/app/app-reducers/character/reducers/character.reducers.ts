@@ -17,6 +17,7 @@ export interface State {
   logsCharacters: Object,
   currentUser: Character | null,
   currentTcp: string | null,
+  currentCharacters: object,
 }
 
 export const initialState: State = {
@@ -49,6 +50,7 @@ export const initialState: State = {
   characteristicsPoints: 0,
   error: null,
   logsCharacters: {},
+  currentCharacters: {},
   pending: false,
   currentTcp: null,
 }
@@ -83,16 +85,17 @@ export const reducer = createReducer(initialState,
     temporyLogs[logs.tcpId].push({ message: logs.message, type: logs.logType });
     return { ...state, logsCharacters: temporyLogs };
   }),
-  on(CharacterActions.updateAccount, (state, { character, tcpId }) => {
+  on(CharacterActions.updateAccountCharacter, (state, { character, tcpId }) => {
     let charactersMemory = state.allCurrentCharacters;
     charactersMemory.forEach(c => {
       if (c.key === character.key) {
         c = character;
       }
     })
+    console.log(character);
     return { ...state, allCurrentCharacters: charactersMemory, currentUser: character, characteristics: character.characteristic, kamas: character.kamas, characteristicsPoints: character.availableCharactericsPts };
   }),
-  on(CharacterActions.updateCharacter, (state, {character, key}) => ({...state, currentUser: character ? character : state.allCurrentCharacters.find(c  => c.key === key)})),
+  on(CharacterActions.updateCharacter, (state, {character, key}) => ({...state, currentUser: character !== undefined ? character : state.allCurrentCharacters.find(c  => c.key === key)})),
   on(CharacterActions.updateTcpClient, (state, {tcpId}) => ({...state, currentTcp: tcpId})),
 
 )

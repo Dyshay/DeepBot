@@ -96,7 +96,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
               this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accountStoring: Account[]) => {
                 for (let c = 0; c < accountStoring.length; c++) {
                   if (accountStoring[c].currentCharacter.key === this.character.key) {
-                    this.characterStore.dispatch(CharacterActions.updateAccount({ character: this.character, tcpId: this.character.key.toString() }));
+                    this.characterStore.dispatch(CharacterActions.updateAccountCharacter({ character: this.character, tcpId: this.character.key.toString() }));
                     this.accountStore.dispatch(AccountActions.updateCurrentAccount({id: result[i].key}));
                   }
 
