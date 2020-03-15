@@ -75,7 +75,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Characters = characters;
                 manager.ReplaceOneAsync(c => c.Id == user.Id, user).Wait();
                 hub.DispatchToClient(new CharactersMessage(characters, tcpId), tcpId).Wait();
-                hub.DisconnectCli(tcpId).Wait();
+                hub.DisconnectCli(tcpId, true).Wait();
             }
         }
 

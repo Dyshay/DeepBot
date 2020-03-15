@@ -3,6 +3,7 @@ import { CharacterActions } from '../actions';
 import { Character } from 'src/webModel/Character';
 import { CharacteristicsMessage } from 'src/webModel/CharacteristicsMessage';
 import { Caracteristic } from 'src/webModel/Caracteristic';
+import { LogMessage } from 'src/webModel/LogMessage';
 
 export interface State {
   scanCharacters: Character[],
@@ -13,11 +14,16 @@ export interface State {
   pending: boolean,
   characteristics: Caracteristic,
   characteristicsPoints: number,
+  logsCharacters: Object,
+  currentUser: Character | null,
+  currentTcp: string | null,
+  currentCharacters: object,
 }
 
 export const initialState: State = {
   scanCharacters: [],
   allCharacters: [],
+  currentUser: null,
   allCurrentCharacters: [],
   characteristics: {
     agility: { total: 0 },
@@ -43,7 +49,10 @@ export const initialState: State = {
   kamas: 0,
   characteristicsPoints: 0,
   error: null,
-  pending: false
+  logsCharacters: {},
+  currentCharacters: {},
+  pending: false,
+  currentTcp: null,
 }
 
 
@@ -63,8 +72,31 @@ export const reducer = createReducer(initialState,
   on(CharacterActions.updateCharacterConfig, (state) => ({ ...state, pending: true })),
   on(CharacterActions.updateCharacterConfigSuccess, (state, { characterConfigToUpdate }) => ({ ...state, pending: false })),
   on(CharacterActions.updateCharacterConfigFailure, (state, { error }) => ({ ...state, error, pending: false })),
-  on(CharacterActions.addOnCurrentCharacter, (state, {currentCharacter}) => ({...state, allCurrentCharacters: state.allCurrentCharacters.concat(currentCharacter)}))
-
+  on(CharacterActions.addOnCurrentCharacter, (state, { currentCharacter }) => ({ ...state, allCurrentCharacters: state.allCurrentCharacters.concat(currentCharacter) })),
+  on(CharacterActions.ResetCharacteristics, (state) => ({ ...state, characteristics: initialState.characteristics, kamas: initialState.kamas, characteristicsPoints: initialState.characteristicsPoints })),
+  on(CharacterActions.updateCharacteristics, (state, { characteristics }) => ({ ...state, characteristics })),
+  on(CharacterActions.updateKamas, (state, { kamas }) => ({ ...state, kamas })),
+  on(CharacterActions.updatecharacteristicsPoints, (state, { characteristicsPoints }) => ({ ...state, characteristicsPoints })),
+  on(CharacterActions.getLogs, (state, { logs }) => {
+    let temporyLogs = state.logsCharacters;
+    if (temporyLogs[logs.tcpId] === undefined) {
+      temporyLogs[logs.tcpId] = [];
+    }
+    temporyLogs[logs.tcpId].push({ message: logs.message, type: logs.logType });
+    return { ...state, logsCharacters: temporyLogs };
+  }),
+  on(CharacterActions.updateAccountCharacter, (state, { character, tcpId }) => {
+    let charactersMemory = state.allCurrentCharacters;
+    charactersMemory.forEach(c => {
+      if (c.key === character.key) {
+        c = character;
+      }
+    })
+    console.log(character);
+    return { ...state, allCurrentCharacters: charactersMemory, currentUser: character, characteristics: character.characteristic, kamas: character.kamas, characteristicsPoints: character.availableCharactericsPts };
+  }),
+  on(CharacterActions.updateCharacter, (state, {character, key}) => ({...state, currentUser: character !== undefined ? character : state.allCurrentCharacters.find(c  => c.key === key)})),
+  on(CharacterActions.updateTcpClient, (state, {tcpId}) => ({...state, currentTcp: tcpId})),
 
 )
 
@@ -73,4 +105,6 @@ export const getKamas = (state: State) => state.kamas;
 export const getCharacteristicsPoints = (state: State) => state.characteristicsPoints;
 export const getCharacteristics = (state: State) => state.characteristics;
 export const getAllCharacters = (State: State) => State.allCharacters;
+export const getCurrrentUser = (state: State) => state.currentUser;
 export const getAllCurrentCharacters = (State: State) => State.allCurrentCharacters;
+export const getLogsUser = (state: State) => state.logsCharacters[state.currentTcp];

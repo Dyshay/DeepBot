@@ -336,6 +336,7 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+
 DeepBot/ClientApp/dist/vex/index.html
 DeepBot/ClientApp/dist/vex/main-es5.js
 DeepBot/ClientApp/dist/vex/main-es5.js.map

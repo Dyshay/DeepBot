@@ -32,6 +32,7 @@ export class CharacterEffects {
 
   );
 
+
   updateCharacterConfigSucces$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CharacterActions.updateCharacterConfigSuccess),

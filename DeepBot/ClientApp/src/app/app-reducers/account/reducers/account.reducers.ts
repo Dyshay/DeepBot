@@ -6,27 +6,25 @@ import { Account } from 'src/webModel/Account';
 import { MapMessage } from '../../../../webModel/MapMessage';
 
 export interface State {
-  logs: LogMessage[],
   map: MapMessage | null,
   allAccounts: Account[] | null,
   accountCreated: Account | null,
   error: string | null,
   pending: boolean,
-
+  currentAccount: Account | null,
 }
 
 export const initialState: State = {
-  logs: [],
   map: null,
   allAccounts: null,
   accountCreated: null,
   error: null,
-  pending: false
+  pending: false,
+  currentAccount: null
 }
 
 
 export const reducer = createReducer(initialState,
-  on(AccountActions.receveidLogs, (state, { network }) => ({ ...state, logs: state.logs.concat(network) })),
   on(AccountActions.receveidMaps, (state, { network }) => ({ ...state, map: network })),
 
   on(AccountActions.createAccount, (state) => ({ ...state, pending: true })),
@@ -42,9 +40,30 @@ export const reducer = createReducer(initialState,
   on(AccountActions.deleteAccount, (state) => ({ ...state, pending: true })),
   on(AccountActions.deleteAccountSuccess, (state, { accontName }) => ({ ...state, pending: false })),
   on(AccountActions.deleteAccountFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+  on(AccountActions.updateCurrentAccount, (state, { id }) => {
+    let account = state.allAccounts.find(c => c.currentCharacter.key === id);
+
+    return { ...state, currentAccount: account }
+  }),
+  on(AccountActions.updateConnectedStatus, (state, { id, isConnected }) => {
+    let temporyAccounts = state.allAccounts;
+    temporyAccounts.forEach(acc => {
+      if (acc.key === id) {
+        acc.isConnected = isConnected;
+      }
+    })
+    let current = state.currentAccount;
+    if (current.key === id) {
+      current.isConnected = isConnected;
+    }
+
+    return { ...state, allAccounts: temporyAccounts, currentAccount: current };
+  }
+  ),
 )
 
 export const getAccountCreated = (state: State) => state.accountCreated;
 export const getAllAccounts = (state: State) => state.allAccounts;
-export const getLogs = (state: State) => state.logs;
 export const getMap = (state: State) => state.map;
+export const getCurrentAccount = (state: State) => state.currentAccount;
