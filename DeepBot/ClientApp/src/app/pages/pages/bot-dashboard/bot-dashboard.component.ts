@@ -128,7 +128,6 @@ export class BotDashboardComponent implements OnInit, OnChanges {
 
   disconnect(acc: Account){
     this.deeptalk.requestDisconnect(acc);
-    this.accountStore.dispatch(AccountActions.updateDisconnectedAccount({id: acc.key}));
   }
 
   links: Link[] = [

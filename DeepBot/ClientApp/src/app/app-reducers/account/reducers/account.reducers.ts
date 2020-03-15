@@ -46,16 +46,16 @@ export const reducer = createReducer(initialState,
 
     return { ...state, currentAccount: account }
   }),
-  on(AccountActions.updateDisconnectedAccount, (state, { id }) => {
+  on(AccountActions.updateConnectedStatus, (state, { id, isConnected }) => {
     let temporyAccounts = state.allAccounts;
     temporyAccounts.forEach(acc => {
       if (acc.key === id) {
-        acc.isConnected = false;
+        acc.isConnected = isConnected;
       }
     })
     let current = state.currentAccount;
     if (current.key === id) {
-      current.isConnected = false;
+      current.isConnected = isConnected;
     }
 
     return { ...state, allAccounts: temporyAccounts, currentAccount: current };

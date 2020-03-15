@@ -9,6 +9,7 @@ import * as fromCharacter from '../app-reducers/character/reducers';
 import { CharacterActions } from '../app-reducers/character/actions';
 import { Character } from 'src/webModel/Character';
 import { Account } from 'src/webModel/Account';
+import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class TalkService {
   messageReceived = new EventEmitter<string>();
@@ -19,7 +20,8 @@ export class TalkService {
 
   constructor(private storeUser: Store<fromwebUser.State>,
     private storeAccount: Store<fromwebUser.State>,
-    private storeCharacter: Store<fromCharacter.State>
+    private storeCharacter: Store<fromCharacter.State>,
+    private toastr: ToastrService
   ) {
     this.createConnection();
     // this.startConnection();
@@ -65,6 +67,7 @@ export class TalkService {
     this.GetConnected();
     this.GetChangeCurrentUser();
     this.GetTcpId();
+    this.GetStatusMessage();
   }
 
   public FetchTcpId(key: number): void{
@@ -108,6 +111,17 @@ export class TalkService {
     this._hubConnection.on("UpdateCharac", (character : Character, tcpId: string) => {
       this.storeUser.dispatch(webUserActions.getBotNav());
       this.storeCharacter.dispatch(CharacterActions.updateAccountCharacter({ character, tcpId}));
+    })
+  }
+
+  private GetStatusMessage(): void{
+    this._hubConnection.on("CLIRequiredMessage", (isConnectedCLI, id, isConnectedAcc) => {
+      if(isConnectedCLI){
+        this.storeAccount.dispatch(AccountActions.updateConnectedStatus({id, isConnected: isConnectedAcc}))
+      }
+      else{
+        this.toastr.error("", "Veuillez lancé le programme pour effectuer des actions")
+      }
     })
   }
 }

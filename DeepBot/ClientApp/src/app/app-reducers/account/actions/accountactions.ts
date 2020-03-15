@@ -26,4 +26,4 @@ export const deleteAccountSuccess = createAction('[BOT/ACCOUNT] DELETE ACCOUNT S
 export const deleteAccountFailure = createAction('[BOT/ACCOUNT] DELETE ACCOUNT ERROR', props<{ error: any }>());
 
 export const updateCurrentAccount = createAction('[BOT/ACCOUNT] UPDATE CURRENT ACCOUNT', props<{id: number}>());
-export const updateDisconnectedAccount = createAction('[BOT/ACCOUNT] IS DISCONNECTED', props<{id: string}>());
+export const updateConnectedStatus = createAction('[BOT/ACCOUNT] STATUS CONNECTED UPDATE', props<{id: string, isConnected: boolean}>());
