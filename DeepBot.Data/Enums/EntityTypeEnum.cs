@@ -22,7 +22,7 @@ namespace DeepBot.Data.Enums
         TYPE_NPC = -4,
         TYPE_MONSTER_GROUP = -3,
         TYPE_MONSTER_FIGHTER = -2,
-        TYPE_UNKNOW_MONSTER = -1,
+        TYPE_FIGHTER = -1,
         TYPE_CHARACTER = 0,
     }
 }

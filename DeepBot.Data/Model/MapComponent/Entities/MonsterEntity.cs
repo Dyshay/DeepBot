@@ -4,7 +4,8 @@ using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent.Entities
 {
-    class MonsterEntity
+    public class MonsterEntity : AbstractEntity
     {
+        public int Level { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent.Entities
 {
-    class MountEntity
+    public class MountEntity : AbstractEntity
     {
     }
 }

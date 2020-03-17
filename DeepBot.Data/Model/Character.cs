@@ -26,7 +26,7 @@ namespace DeepBot.Data.Model
         public int AvailableCharactericsPts { get; set; }
         public int AvailableSpellPts { get; set; }
         public Caracteristic Characteristic { get; set; } = new Caracteristic();
-        public CharacterStateEnum State { get; set; }
+        public CharacterStateEnum State { get; set; } = CharacterStateEnum.DISCONNECTED;
 
         [BsonIgnore]
         public MapCell Cell { get; set; }
@@ -35,15 +35,9 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public TrajetDB Trajet { get; set; }
         [BsonIgnore]
-        public ConfigCharacterDB Config
-        {
-            get
-            {
-                return Driver.Database.ConfigsCharacter.Find(c => c.Key == Fk_Configuration).FirstOrDefault();
-            }
-        }
+        public ConfigCharacterDB Config { get { return Driver.Database.ConfigsCharacter.Find(c => c.Key == Fk_Configuration).FirstOrDefault(); } }
         [BsonIgnore]
-        public IADB IA { get; set; }
+        public IADB IA { get { return Driver.Database.IA.Find(c => c.Key == Fk_IA).FirstOrDefault(); } }
         [BsonIgnore]
         public List<SpellDB> Spells
         {
@@ -56,7 +50,7 @@ namespace DeepBot.Data.Model
             }
         }
         [BsonIgnore]
-        public GroupDB Group { get; set; }
+        public GroupDB Group { get { return Driver.Database.Groups.Find(c => c.Key == Fk_Group).FirstOrDefault(); } }
         [BsonIgnore]
         public byte Sex { get; set; }
         [BsonIgnore]

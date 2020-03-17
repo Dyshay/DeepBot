@@ -4,7 +4,8 @@ using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent.Entities
 {
-    class MerchantEntity
+    public class MerchantEntity : AbstractEntity
     {
+        protected MerchantEntity() { }
     }
 }
