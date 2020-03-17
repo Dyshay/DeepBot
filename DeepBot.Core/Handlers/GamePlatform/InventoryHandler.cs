@@ -2,6 +2,7 @@
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
+using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
@@ -115,34 +116,33 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ECK")]
         public void ExchangeCreateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             string[] datas = package.Substring(3).Split('|');
             var exchangeType = (ExchangeTypeEnum)Convert.ToInt32(datas[0]);
             if (exchangeType == ExchangeTypeEnum.EXCHANGE_STORAGE)
                 characterGame.State = CharacterStateEnum.BANKING;
             else if (exchangeType == ExchangeTypeEnum.EXCHANGE_PLAYER)
                 characterGame.State = CharacterStateEnum.TRADING;
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
         }
 
         [Receiver("DV")]
         public void DialogLeaveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             characterGame.State = CharacterStateEnum.IDLE;
         }
 
         [Receiver("EK")]
         public void ExchangeValidateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             characterGame.State = CharacterStateEnum.IDLE;
         }
 
         [Receiver("EL")]
         public void ExchangeItemsListHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();
             if (characterGame.State == CharacterStateEnum.BANKING)
             {

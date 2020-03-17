@@ -5,6 +5,7 @@ using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model.MapComponent;
+using DeepBot.Data.Model.MapComponent.Entities;
 using MongoDB.Driver;
 using System;
 using System.Diagnostics;
@@ -16,7 +17,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("GDM")]
         public void GetMapHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             if (package.Length == 21)
             {
                 string[] _loc3 = package.Split('|');
@@ -38,7 +39,6 @@ namespace DeepBot.Core.Handlers.GamePlatform
                     hub.SendPackage("GI", tcpId);
                 }
             }
-            Storage.Instance.Characters[characterGame.Key] = characterGame;
         }
 
         [Receiver("GV")]
@@ -56,19 +56,20 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("GM")]
         public void EntityPopOrMoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             foreach (var playerSplit in package.Substring(3).Split('|'))
             {
                 if (playerSplit.Length != 0)
                 {
-                    var infos = playerSplit.Substring(1).Split(';');
                     if (playerSplit.StartsWith('+'))
                     {
-
+                        var entity = EntityFactory.Instance.CreateEntity(characterGame.Map.Key, playerSplit.Substring(1));
+                        if (entity != null)
+                            characterGame.Map.Entities[entity.Id] = entity;
                     }
                     else if (playerSplit.StartsWith('-'))
                     {
-                        //Storage.Instance.Characters[characterGame.Key].Map.Entities.Remove(Convert.ToInt32(infos[0]));
+                        characterGame.Map.Entities.Remove(Convert.ToInt32(playerSplit.Substring(1)));
                     }
                 }
             }
@@ -77,8 +78,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("GDF")]
         public void InteractiveStateUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
-            characterGame = Storage.Instance.Characters[characterGame.Key];
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             foreach (string interactive in package.Substring(4).Split('|'))
             {
                 var datas = interactive.Split(';');
@@ -93,7 +93,6 @@ namespace DeepBot.Core.Handlers.GamePlatform
                         break;
                 }
             }
-            Storage.Instance.Characters[characterGame.Key] = characterGame;
         }
 
         [Receiver("GA")]

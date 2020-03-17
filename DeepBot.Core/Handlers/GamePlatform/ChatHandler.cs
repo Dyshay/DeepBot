@@ -13,7 +13,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("cC")]
         public void ChannelUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            /*var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            /*
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             if (package.Substring(2).StartsWith("+"))
             {
                 foreach (var chan in package.Substring(3).ToCharArray())

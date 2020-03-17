@@ -2,6 +2,7 @@
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
+using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
@@ -21,9 +22,8 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("As")]
         public void StatsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             characterGame.DeserializeCharacter(package);
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();
             hub.DispatchToClient(new CharacteristicMessage(characterGame.Characteristic, inventory.Kamas, characterGame.AvailableCharactericsPts, tcpId), tcpId).Wait();
         }
@@ -31,22 +31,20 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("AN")]
         public void NewLevelHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             characterGame.Level = Convert.ToByte(package.Substring(2));
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
         }
 
         [Receiver("SL")]
         public void SpellsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             if (!package[2].Equals('o'))
             {
                 foreach (var data in package.Substring(2, package.Length - 3).Split(';'))
                 {
                     var split = data.Split('~');
                     var pair = new KeyValuePair<int, byte>(Convert.ToInt32(split[0]), Convert.ToByte(split[1]));
-                    Debug.WriteLine("Add spell " + pair.Key);
                     var index = characterGame.Fk_Spells.FindIndex(spell => spell.Key == pair.Key);
                     if (index >= 0)
                         characterGame.Fk_Spells[index] = pair;
@@ -54,18 +52,16 @@ namespace DeepBot.Core.Handlers.GamePlatform
                         characterGame.Fk_Spells.Add(pair);
                 }
             }
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             // TODO send hub spell msg
         }
 
         [Receiver("SUK")]
         public void SpellUpdateSuccess(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             var split = package.Substring(3).Split('~');
             var pair = new KeyValuePair<int, byte>(Convert.ToInt32(split[0]), Convert.ToByte(split[1]));
             characterGame.Fk_Spells[characterGame.Fk_Spells.FindIndex(spell => spell.Key == pair.Key)] = pair;
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
             // TODO send hub spell msg
         }
 
@@ -84,7 +80,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("PIK")]
         public void GroupInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, package.Substring(3).Split('|')[0].ToLower() + " t'invite à rejoindre son groupe.", tcpId), tcpId).Wait();
             if (characterGame.HasGroup && package.Substring(3).Split('|')[0].ToLower() == characterGame.Group.Leader.Name.ToLower())
             {
@@ -110,26 +106,24 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void CharacterRegenHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             int regen = Convert.ToInt32(package.Substring(3));
-            user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Characteristic.VitalityActual += regen;
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            characterGame.Characteristic.VitalityActual += regen;
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Vous avez récupéré {regen} points de vie", tcpId), tcpId).Wait();
         }
 
         [Receiver("eUK")]
         public void PlayerEmoteHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+
             var split = package.Substring(3).Split('|');
             int playerId = Convert.ToInt32(split[0]), emoteId = Convert.ToInt32(split[1]);
-            var character = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter;
-
-            if (character.Key != playerId)
+            if (characterGame.Key != playerId)
                 return;
-            if (emoteId == 1 && character.State != CharacterStateEnum.HEALING)
-                character.State = CharacterStateEnum.HEALING;
-            else if (emoteId == 0 && character.State == CharacterStateEnum.HEALING)
-                character.State = CharacterStateEnum.IDLE;
-
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
+            if (emoteId == 1 && characterGame.State != CharacterStateEnum.HEALING)
+                characterGame.State = CharacterStateEnum.HEALING;
+            else if (emoteId == 0 && characterGame.State == CharacterStateEnum.HEALING)
+                characterGame.State = CharacterStateEnum.IDLE;
         }
 
         [Receiver("gJR")]

@@ -10,6 +10,7 @@ using DeepBot.Data.Model;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace DeepBot.Core.Handlers.GamePlatform
@@ -64,6 +65,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                     {
                         hub.SendPackage($"AS{id}", tcpId, true);
                         hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
+                        Debug.WriteLine("Add character " + currentAccount.CurrentCharacter.Key + " to memory");
                         Storage.Instance.Characters[currentAccount.CurrentCharacter.Key] = currentAccount.CurrentCharacter;
                         found = true;
                     }
@@ -85,24 +87,21 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ASK")]
         public void SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();
+
             string[] splittedData = package.Substring(4).Split('|');
 
-            Account account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
-            Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
-            var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
-            inventory.Items = new List<Data.Model.Global.Item>();
-
-            account.CurrentCharacter.Key = int.Parse(splittedData[0]);
-            account.CurrentCharacter.Name = splittedData[1];
-            account.CurrentCharacter.Level = byte.Parse(splittedData[2]);
-            account.CurrentCharacter.BreedId = byte.Parse(splittedData[3]);
-            account.CurrentCharacter.Sex = byte.Parse(splittedData[4]);
+            characterGame.Key = int.Parse(splittedData[0]);
+            characterGame.Name = splittedData[1];
+            characterGame.Level = byte.Parse(splittedData[2]);
+            characterGame.BreedId = byte.Parse(splittedData[3]);
+            characterGame.Sex = byte.Parse(splittedData[4]);
             inventory.Items.DeserializeItems(splittedData[9]);
 
-            account.State = CharacterStateEnum.IDLE;
+            characterGame.State = CharacterStateEnum.IDLE;
             hub.SendPackage("GC1", tcpId);
-            manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            Database.Inventories.ReplaceOneAsync(i => i.Key == inventoryId, inventory);
+            Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }
     }

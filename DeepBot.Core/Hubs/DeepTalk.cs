@@ -132,6 +132,7 @@ namespace DeepBot.Core.Hubs
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
                 CurrentUser.Accounts.ForEach(a =>
                 {
+                    Debug.WriteLine("Remove character " + a.CurrentCharacter.Key + " from memory");
                     Storage.Instance.Characters.TryRemove(a.CurrentCharacter.Key, out Character c);
                 });
             }
