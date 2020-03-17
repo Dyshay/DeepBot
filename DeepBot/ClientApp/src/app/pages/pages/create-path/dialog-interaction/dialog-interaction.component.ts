@@ -20,10 +20,10 @@ export class DialogInteractionComponent {
 
   data: {
     interactiveIdObject: number,
-    InteractiveIdResponse: number
+    interactiveIdResponse: number
   } = {
       interactiveIdObject: 0,
-      InteractiveIdResponse: 0
+      interactiveIdResponse: 0
     }
 
 }

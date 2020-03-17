@@ -72,9 +72,9 @@ export class ModalUpdateAccountComponent implements OnInit {
       }
     );
  
-    this.storeUser.pipe(select(fromwebUser.getUser)).subscribe(
-      (result: User) => {
-        this.account = result.accounts.find(o => o.accountName == this.accountName);
+    this.storeAccount.pipe(select(fromAccount.getAllAccounts)).subscribe(
+      (result: Account[]) => {
+        this.account = result.find(o => o.accountName == this.accountName);
         this.charaters = this.account.characters;
         this.form = this.fb.group({
           accountName: [{ value: this.account.accountName, disabled: true }],
@@ -91,8 +91,8 @@ export class ModalUpdateAccountComponent implements OnInit {
   updateAccount() {
     const clonedeep = require('lodash.clonedeep');
 
-    this.storeUser.pipe(select(fromwebUser.getUser)).subscribe(
-      (result: User) => {
+    this.storeAccount.pipe(select(fromAccount.getAllAccounts)).subscribe(
+      (result: Account[]) => {
         if (this.ValidateCredential()) {
 
           let account = clonedeep(this.account);
@@ -107,7 +107,7 @@ export class ModalUpdateAccountComponent implements OnInit {
 
 
             this.account.currentCharacter.fk_Group == null;
-            this.account.currentCharacter = result.accounts.find(o => o.accountName == this.account.accountName).characters.find(o => o.key == this.form.controls["character"].value);
+            this.account.currentCharacter = result.find(o => o.accountName == this.account.accountName).characters.find(o => o.key == this.form.controls["character"].value);
           }
           this.account.currentCharacter.fk_Group = this.form.controls["group"].value;
           let accountToUpdate = this.account

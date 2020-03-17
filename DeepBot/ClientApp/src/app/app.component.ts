@@ -43,10 +43,13 @@ import { Store } from '@ngrx/store';
 import * as fromwebuser from './app-reducers/webUser/reducers';
 import * as fromAccount from './app-reducers/account/reducers';
 import * as fromGroup from './app-reducers/group/reducers';
+import * as fromPath from './app-reducers/path/reducers';
 import { webUserActions } from './app-reducers/webUser/actions';
 import { AccountActions } from './app-reducers/account/actions';
 import { GroupActions } from './app-reducers/group/actions';
+import { PathActions } from './app-reducers/path/actions';
 import { UserService } from './services/user.service';
+import { dispatch } from 'rxjs/internal/observable/pairs';
 
 @Component({
   selector: 'vex-root',
@@ -71,6 +74,7 @@ export class AppComponent implements OnInit {
     config: NgSelectConfig,
     private storeUser: Store<fromwebuser.State>,
     private storeGroup: Store<fromGroup.State>,
+    private storePath: Store<fromPath.State>,
     private storeAccount: Store<fromAccount.State>,
     private splashScreenService: SplashScreenService,
     private router: Router
@@ -101,9 +105,10 @@ export class AppComponent implements OnInit {
   }
   async ngOnInit() {
     if (await this.userService.isConnected()) {
-      this.storeUser.dispatch(webUserActions.getUser());
-      this.storeGroup.dispatch(GroupActions.getAllGroups());
-      this.navigationService.GenerateNavigation();
+      await this.storeUser.dispatch(webUserActions.getUser());
+      await this.storeGroup.dispatch(GroupActions.getAllGroups());
+      await this.storePath.dispatch(PathActions.getAllPaths());
+      await this.navigationService.GenerateNavigation();
     }
     else {
       this.userService.logout();

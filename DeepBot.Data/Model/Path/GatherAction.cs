@@ -1,6 +1,6 @@
 ﻿namespace DeepBot.Data.Model.Path
 {
-    public class GatherAction
+    public class GatherAction:MapAction
     {
     }
 }

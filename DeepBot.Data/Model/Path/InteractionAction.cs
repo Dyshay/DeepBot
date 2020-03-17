@@ -1,8 +1,10 @@
 ﻿namespace DeepBot.Data.Model.Path
 {
-    public class InteractionAction
+    public class InteractionAction:MapAction
     {
-        public int InteractiveId { get; set; }
-        public int CellId { get; set; }
+        public int InteractiveIdObject { get; set; }
+        public int InteractiveIdResponse { get; set; }
+        public bool ToGoBank { get; set; }
+        public bool ToBackBank { get; set; }
     }
 }

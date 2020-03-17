@@ -79,15 +79,15 @@
       <span>{{ 'TOOLBAR.CREATEPATH' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
+    <button mat-menu-item [routerLink]="['/updatePath']">
+      <mat-icon [icIcon]="icAssignment" ></mat-icon>
       <span>{{ 'TOOLBAR.UPDATEPATH' | translate}}</span>
     </button>
   </mat-menu>
 
   <!--menu IA-->
   <mat-menu #IAMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/createIa']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
       <span>{{ 'TOOLBAR.CREATEIA' | translate}}</span>
     </button>

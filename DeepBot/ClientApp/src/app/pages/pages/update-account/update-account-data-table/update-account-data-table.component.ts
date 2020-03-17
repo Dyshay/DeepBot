@@ -1,6 +1,5 @@
 import { Component, EventEmitter, OnInit, OnChanges, AfterViewInit, Input, Output, ViewChild, SimpleChanges } from '@angular/core';
 import { TableColumn } from '../../../../../@vex/interfaces/table-column.interface';
-import { Contact } from '../../../apps/contacts/interfaces/contact.interface';
 import { MatTableDataSource, MatSort, MatPaginator, MAT_FORM_FIELD_DEFAULT_OPTIONS, MatFormFieldDefaultOptions } from '@angular/material';
 import icStar from '@iconify/icons-ic/twotone-star';
 import icStarBorder from '@iconify/icons-ic/twotone-star-border';

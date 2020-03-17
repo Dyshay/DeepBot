@@ -1,22 +1,30 @@
 
 
 export class Path {
+  key?: string;
   name: string;
-  type: number; /* 0 fight , 1 gather */
-  maxPod: number;
-  monsterQuantityMin: number;
-  monsterQuantityMax: number;
-  groupLevelMin: number;
-  groupLevelMax: number;
+  type: number; 
+  maxPod: number=80;
+  monsterQuantityMin: number =0;
+  monsterQuantityMax: number =8;
+  groupLevelMin: number =0;
+  groupLevelMax: number=9999;
   isCapture: boolean =false;
   leaderBank: boolean = false;
   captureItem: number;
-  monsterLevel: SpecificMonsterLevel[];
-  monsterQuantity: SpecificMonsterQuantity[];
-  monsterCapture: CaptureMonsterQuantity[];
+  monsterLevel?: SpecificMonsterLevel[];
+  monsterQuantity?: SpecificMonsterQuantity[];
+  monsterCapture?: CaptureMonsterQuantity[];
   pathAction: PathAction[];
 }
-
+export class PathMinDisplayed {
+  name: string;
+  type: number;
+  usedNumber: number;
+  isCapture: number;
+  zones: string[];
+  key: string;
+}
 
 export class SpecificMonsterLevel {
   monsterId: number;
@@ -39,8 +47,8 @@ export class CaptureMonsterQuantity {
 export class PathAction {
   mapPos: string;
   actions: MapAction[];
-
-}
+  
+} 
 
 export class MapAction {
   order: number;
@@ -51,15 +59,21 @@ export class MapAction {
   interactionAction?: InteractionAction;
   zaapAction?: ZaapAction;
   zaapiAction?: ZaapiAction;
+  bankAction?: BankAction;
+  
+  
 }
 export class MoveAction {
   direction?: string[];
   cellId?: number;
+  mapId?: number;
   toGoBank: boolean;
   toBackBank: boolean;
 }
 export class UseItemAction {
   itemId: number;
+  toGoBank: boolean;
+  toBackBank: boolean;
 }
 export class FightAction {
   isAlone: boolean;
@@ -71,15 +85,25 @@ export class GatherAction {
 
 export class InteractionAction {
   interactiveIdObject: number;
-  InteractiveIdResponse: number;
+  interactiveIdResponse: number;
+  toGoBank: boolean;
+  toBackBank: boolean;
 }
 
 export class ZaapAction {
   zaapId: number;
   destination: string;
+  toGoBank: boolean;
+  toBackBank: boolean;
 }
 
 export class ZaapiAction {
   zaapiId: number;
   destination: string;
+  toGoBank: boolean;
+  toBackBank: boolean;
+}
+
+export class BankAction {
+  mapId: number;
 }

@@ -28,6 +28,10 @@ const childrenRoutes: VexRoutes = [
     loadChildren: () => import('./pages/pages/create-group/create-group.module').then(m => m.CreateGroupModule),
   },
   {
+    path: 'createIa',
+    loadChildren: () => import('./pages/pages/create-ia/create-ia.module').then(m => m.CreateIaModule),
+  },
+  {
     path: 'createPath',
     loadChildren: () => import('./pages/pages/create-path/create-path.module').then(m => m.CreatePathModule),
   },
@@ -38,6 +42,10 @@ const childrenRoutes: VexRoutes = [
   {
     path: 'updateAccount',
     loadChildren: () => import('./pages/pages/update-account/update-account.module').then(m => m.UpdateAccountModule),
+  },
+  {
+    path: 'updatePath',
+    loadChildren: () => import('./pages/pages/update-path/update-path.module').then(m => m.UpdatePathModule),
   },
   {
     path: 'bot-dashboard/:id',
