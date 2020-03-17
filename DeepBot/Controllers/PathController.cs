@@ -78,6 +78,7 @@ namespace DeepBot.Controllers
                 MaxPod = trajet.MaxPod,
                 MonsterQuantityMin = trajet.MonsterQuantityMin,
                 MonsterQuantityMax = trajet.MonsterQuantityMax,
+                ListRessource = trajet.ListRessource,
                 LeaderBank = trajet.LeaderBank,
                 IsCapture = trajet.IsCapture,
                 Key =  trajet.Key.ToString()
@@ -212,6 +213,7 @@ namespace DeepBot.Controllers
                 MonsterQuantityMax = path.MonsterQuantityMax,
                 LeaderBank = path.LeaderBank,
                 IsCapture = path.IsCapture,
+                ListRessource = path.ListRessource,
                 Key = new Guid(path.Key)
             };
             if(path.MonsterLevel != null)
@@ -480,6 +482,7 @@ namespace DeepBot.Controllers
                 MonsterQuantityMax = path.MonsterQuantityMax,
                 LeaderBank = path.LeaderBank,
                 IsCapture = path.IsCapture,
+                ListRessource = path.ListRessource,
                 Key = Guid.NewGuid()
             };
             foreach (var monstreLevel in path.MonsterLevel)

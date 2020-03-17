@@ -19,6 +19,7 @@ namespace DeepBot.ControllersModel
         public bool IsCapture { get; set; }
         public bool LeaderBank { get; set; }
         public int CaptureItem { get; set; }
+        public List<int> ListRessource { get; set; }
         public List<SpecificMonsterLevelModel> MonsterLevel { get; set; }
         public List<SpecificMonsterQuantityModel> MonsterQuantity { get; set; }
         public List<CaptureMonsterQuantityModel> MonsterCapture { get; set; }

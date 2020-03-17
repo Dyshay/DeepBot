@@ -11,6 +11,23 @@ import icTopArrow from '@iconify/icons-ic/twotone-keyboard-arrow-up'
 import icRightArrow from '@iconify/icons-ic/twotone-keyboard-arrow-right'
 import icBottomArrow from '@iconify/icons-ic/twotone-keyboard-arrow-down'
 import icDelete from '@iconify/icons-fa-solid/trash';
+import bucheron from '@iconify/icons-mdi/hand-saw';
+import paysan from '@iconify/icons-emojione-monotone/ear-of-corn'; // a modif
+import mineur from '@iconify/icons-mdi/pickaxe';
+import chasseur from '@iconify/icons-whh/bow';
+import pecheur from '@iconify/icons-mdi/fish';
+import alchimiste from '@iconify/icons-mdi/flower';
+import bricoleur from '@iconify/icons-mdi/hammer';
+import bijoutier from '@iconify/icons-mdi/ring';
+import cordonnier from '@iconify/icons-mdi/shoe-formal';
+import tailleur from '@iconify/icons-mdi/hat-fedora';
+import sculteur from '@iconify/icons-whh/arrowdown'; // a modif
+import forgeur from '@iconify/icons-whh/arrowdown'; // a modif
+import forgeurbouclier from '@iconify/icons-mdi/shield';
+import cordomage from '@iconify/icons-whh/arrowdown'; // a modif
+import costumage from '@iconify/icons-fa-solid/hat-wizard';
+import jaillomage from '@iconify/icons-map/jewelry-store';
+import theme from '../../../../@vex/utils/tailwindcss';
 import * as frompath from 'src/app/app-reducers/path/reducers';
 import { PathActions } from 'src/app/app-reducers/path/actions';
 import { Store } from '@ngrx/store';
@@ -18,6 +35,9 @@ import { PathService } from '../../../services/path.service';
 import { Path, SpecificMonsterLevel, SpecificMonsterQuantity, CaptureMonsterQuantity, PathAction, MoveAction, UseItemAction, FightAction, GatherAction, InteractionAction, MapAction } from '../../../../webModel/Utility/PathCreator/Path';
 import { MapArea } from '../../../../webModel/Utility/PathCreator/areas';
 import 'jquery';
+import {  JobsGather } from '../../../../webModel/Job';
+import { TranslateService } from '@ngx-translate/core';
+import { PaysanRessources, BucheronRessources, MineurRessources, PecheurRessources, AlchimisteRessources } from '../../../../webModel/Enum/RessourcesMetier';
 declare var $: any;
 
 declare global {
@@ -48,7 +68,24 @@ export class CreatePathComponent implements OnInit {
     { id: 0 }, { id: 1 }
   ]
 
-  
+  public jobEnum = JobsGather
+  theme = theme;
+  bucheron = bucheron;
+  paysan = paysan;
+  mineur = mineur;
+  chasseur = chasseur;
+  pecheur = pecheur;
+  alchimiste = alchimiste;
+  bricoleur = bricoleur;
+  bijoutier = bijoutier;
+  cordonnier = cordonnier;
+  tailleur = tailleur;
+  sculteur = sculteur;
+  forgeur = forgeur;
+  forgeurbouclier = forgeurbouclier;
+  cordomage = cordomage;
+  costumage = costumage;
+  jaillomage = jaillomage;
  
 
   icPlus = icPlus;
@@ -63,17 +100,56 @@ export class CreatePathComponent implements OnInit {
   directionBottom: boolean = false;
   directionLeft: boolean = false;
 
+  bucheronSelected: boolean = false;
+  mineurSelected: boolean = false;
+  paysanSelected: boolean = false;
+  pecheurSelected: boolean = false;
+  alchimisteSelected: boolean = false;
+
   zone1Alreadyloaded: boolean = false;
   zone2Alreadyloaded: boolean = false;
   zone3Alreadyloaded: boolean = false;
   zone4Alreadyloaded: boolean = false;
   zone5Alreadyloaded: boolean = false;
+
+  ressourcesPaysan = PaysanRessources;
+  ressourcesBucheron = BucheronRessources;
+  ressourcesMineur = MineurRessources;
+  ressourcesPecheur = PecheurRessources;
+  ressourcesAlchimiste = AlchimisteRessources;
+
   zoneChoose;
   statePath;
   rightClickPos: string;
     /** create-path ctor */
-  constructor(private fb: FormBuilder, private pathService: PathService, private storePath: Store<frompath.State>) {
+  constructor(private fb: FormBuilder, private translateService: TranslateService, private pathService: PathService, private storePath: Store<frompath.State>) {
     this.pathToCreate = new Path;
+    this.pathService.changeJobEmitted$.subscribe(
+      (result) => {
+        switch (result) {
+          case this.translateService.instant('CREATEPATH.JOB_PAYSAN'): {
+            this.paysanSelected = !this.paysanSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_PECHEUR'): {
+            this.pecheurSelected = !this.pecheurSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_BUCHERON'): {
+            this.bucheronSelected = !this.bucheronSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_MINEUR'): {
+            this.mineurSelected = !this.mineurSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_ALCHIMISTE'): {
+            this.alchimisteSelected = !this.alchimisteSelected;
+          }
+            break;
+          default:
+        }
+      });
   }
   ngOnInit() {
     this.monsterLevelToCreate = new SpecificMonsterLevel;
@@ -83,6 +159,44 @@ export class CreatePathComponent implements OnInit {
     this.pathToCreate.monsterQuantity = [];
     this.pathToCreate.monsterCapture = [];
     this.pathToCreate.pathAction = [];
+    this.pathToCreate.listRessource = [];
+  }
+
+  getRessource(ressource) {
+    return this.translateService.instant('CREATEPATH.' + ressource);
+  }
+  selectRessource(ressource,jobId) {
+    var ressourceId;
+    /* pecheur */
+    if (jobId == 36) {
+      ressourceId = this.ressourcesPecheur[ressource];
+    }
+    /* mineur */
+    else if (jobId == 24) {
+      ressourceId = this.ressourcesMineur[ressource];
+    }
+    /* bucheron */
+    else if (jobId == 2) {
+      ressourceId = this.ressourcesBucheron[ressource];
+    }
+    /* paysan */
+    else if (jobId == 28) {
+      ressourceId = this.ressourcesPaysan[ressource];
+    }
+    /* alchimiste */
+    else if (jobId == 26) {
+      ressourceId = this.ressourcesAlchimiste[ressource];
+    }
+
+    if (this.pathToCreate.listRessource.find(o => o == ressourceId) == null) {
+
+      this.pathToCreate.listRessource.push(ressourceId)
+    }
+    else {
+      var index = (this.pathToCreate.listRessource.findIndex(o => o == ressourceId));
+      this.pathToCreate.listRessource.splice(index, 1);
+    }
+    console.log(this.pathToCreate.listRessource);
   }
 
 

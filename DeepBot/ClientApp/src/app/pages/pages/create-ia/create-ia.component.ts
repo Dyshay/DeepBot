@@ -21,7 +21,6 @@ import { IA, Classe } from '../../../../webModel/IA';
 export class CreateIaComponent {
   iaToCreate: IA = new IA;
   public classeEnum = Classe
-  classes: Classe;
   icDoneAll = icDoneAll;
     /** create-ia ctor */
     constructor() {

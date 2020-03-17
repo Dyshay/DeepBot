@@ -22,9 +22,6 @@ namespace DeepBot.Data.Driver
         public static readonly IMongoCollection<SpellDB> Spells = Base.GetCollection<SpellDB>("Spells");
         public static readonly IMongoCollection<InventoryDB> Inventories = Base.GetCollection<InventoryDB>("Inventories");
         public static readonly IMongoCollection<JobsDB> Jobs = Base.GetCollection<JobsDB>("Jobs");
-=========
-        public static readonly IMongoCollection<TrajetDB> Paths = Base.GetCollection<TrajetDB>("Paths");
->>>>>>>>> Temporary merge branch 2
 
         public static void Insert<TDocument>(this TDocument document)
         {
