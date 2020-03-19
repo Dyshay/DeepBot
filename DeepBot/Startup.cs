@@ -7,15 +7,13 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Database.Loaders;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
-using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.IA;
-using DeepBot.Data.Model.MapComponent;
-using DeepBot.Data.Model.Path;
+using DeepBot.Data.Model.Script;
+using DeepBot.Data.Model.Script.Actions;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -53,8 +51,9 @@ namespace DeepBot
 
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
-                .AddJsonOptions (opt => {
-                    opt.JsonSerializerOptions.MaxDepth =10;
+                .AddJsonOptions(opt =>
+                {
+                    opt.JsonSerializerOptions.MaxDepth = 10;
                     opt.JsonSerializerOptions.WriteIndented = true;
                 });
 

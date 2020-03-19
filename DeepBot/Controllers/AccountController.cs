@@ -120,19 +120,19 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             Account currentAcount = user.Accounts.FirstOrDefault(o => o.Key == account.Key);
 
-            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key 
+            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key
                 && Database.ConfigsCharacter.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault() == null)
             {
                 await CreateConfigAsync(account.CurrentCharacter.Key);
                 account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
             }
-            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key 
+            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key
                 && Database.Inventories.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault() == null)
             {
                 await CreateInventoryAsync(account.CurrentCharacter.Key);
                 account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
             }
-            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key 
+            if (account.CurrentCharacter.Key != currentAcount.CurrentCharacter.Key
                 && Database.Jobs.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault() == null)
             {
                 await CreateJobsAsync(account.CurrentCharacter.Key);

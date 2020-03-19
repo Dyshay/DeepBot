@@ -1,5 +1,6 @@
 ﻿using DeepBot.Data.Driver;
-using DeepBot.Data.Model.Path;
+using DeepBot.Data.Model.Script;
+using DeepBot.Data.Model.Script.Actions;
 using System;
 using System.Collections.Generic;
 

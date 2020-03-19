@@ -1,8 +1,6 @@
 ﻿using DeepBot.Data.Enums;
 using DeepBot.Data.Generic;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent.Entities
 {
@@ -11,7 +9,7 @@ namespace DeepBot.Data.Model.MapComponent.Entities
         public AbstractEntity CreateEntity(int mapId, string rawData)
         {
             var datas = rawData.Split(';');
-            switch((EntityTypeEnum)Convert.ToInt32(datas[5]))
+            switch ((EntityTypeEnum)Convert.ToInt32(datas[5]))
             {
                 case EntityTypeEnum.TYPE_CHARACTER:
                     return new CharacterEntity()

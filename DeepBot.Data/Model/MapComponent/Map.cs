@@ -1,14 +1,9 @@
 ﻿using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
-using DeepBot.Data.Enums;
 using DeepBot.Data.Model.MapComponent.Entities;
 using DeepBot.Data.Model.MapComponent.Interactives;
-using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
-using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Model.MapComponent
 {

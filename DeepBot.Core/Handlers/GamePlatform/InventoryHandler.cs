@@ -6,7 +6,6 @@ using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
-using DeepBot.Data.Model;
 using DeepBot.Data.Model.Global;
 using MongoDB.Driver;
 using System;

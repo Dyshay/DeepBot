@@ -1,5 +1,4 @@
 ﻿using DeepBot.Data.Driver;
-using DeepBot.Data.Enums;
 using DeepBot.Data.Model.GameServer;
 using MongoDB.Bson.Serialization.Attributes;
 using System;

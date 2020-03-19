@@ -2,9 +2,6 @@
 using DeepBot.Core.Network;
 using DeepBot.Data.Database;
 using MongoDB.Driver;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {

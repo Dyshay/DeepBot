@@ -1,7 +1,5 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model.IA;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 
@@ -18,24 +16,25 @@ namespace DeepBot.Data.Database
 
     }
 
-    public enum TypeIA{
-        Fuyarde=0,
-        Agressif=1,
-        Hybride=2
+    public enum TypeIA
+    {
+        Fuyarde = 0,
+        Agressif = 1,
+        Hybride = 2
     }
     public enum Classe
     {
-        Féca=10,
-        Osamodas=20,
-        Enutrof=30,
-        Sram=40,
-        Xélor=50,
-        Ecaflip=60,
-        Eniripsa=70,
-        Iop=80,
-        Cra=90,
-        Sadida=100,
-        Sacrieur=110,
-        Pandawa=120
+        Féca = 10,
+        Osamodas = 20,
+        Enutrof = 30,
+        Sram = 40,
+        Xélor = 50,
+        Ecaflip = 60,
+        Eniripsa = 70,
+        Iop = 80,
+        Cra = 90,
+        Sadida = 100,
+        Sacrieur = 110,
+        Pandawa = 120
     }
 }

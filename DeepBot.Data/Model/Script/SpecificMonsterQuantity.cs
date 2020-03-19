@@ -1,4 +1,4 @@
-﻿namespace DeepBot.Data.Model.Path
+﻿namespace DeepBot.Data.Model.Script
 {
     public class SpecificMonsterQuantity
     {

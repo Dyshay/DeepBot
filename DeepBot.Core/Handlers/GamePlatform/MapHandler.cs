@@ -3,12 +3,10 @@ using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data;
 using DeepBot.Data.Database;
-using DeepBot.Data.Driver;
 using DeepBot.Data.Model.MapComponent;
 using DeepBot.Data.Model.MapComponent.Entities;
 using MongoDB.Driver;
 using System;
-using System.Diagnostics;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
@@ -25,7 +23,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 {
                     hub.SendPackage($"Gdm{mapId}", tcpId);
                     characterGame.Map = new Map(mapId);
-                    hub.DispatchToClient(new MapMessage(characterGame.Map.CurrentMap.Cells, characterGame.Map.CurrentMap.Width, 
+                    hub.DispatchToClient(new MapMessage(characterGame.Map.CurrentMap.Cells, characterGame.Map.CurrentMap.Width,
                         characterGame.Map.CurrentMap.Height, characterGame.Map.CurrentMap.AreaName, characterGame.Map.CurrentMap.Coordinate, tcpId), tcpId).Wait();
                 }
             }

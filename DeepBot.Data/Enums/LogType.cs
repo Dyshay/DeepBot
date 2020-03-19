@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace DeepBot.Data.Enums
+﻿namespace DeepBot.Data.Enums
 {
     public enum LogType
     {
