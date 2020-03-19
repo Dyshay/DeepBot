@@ -18,17 +18,16 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         [Receiver("HC")]
         public void GetWelcomeKeyAsync(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            //account dispatch value (connecting)
-            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = CharacterStateEnum.CONNECTING;
-            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey = package.Substring(2);
+            var account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
+            account.CurrentCharacter.State = CharacterStateEnum.CONNECTING;
+            account.WelcomeKey = package.Substring(2);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
 
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Connexion au serveur d'auth", tcpId), tcpId).Wait();
 
             hub.SendPackage("1.31.2", tcpId);
 
-            // USE THE ACCOUNT AND PASSWORD FROM account
-            hub.SendPackage($"{user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).AccountName}\n{Hash.EncryptPassword(user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Password, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey)}", tcpId);
+            hub.SendPackage($"{account.AccountName}\n{Hash.EncryptPassword(account.Password, account.WelcomeKey)}", tcpId);
             hub.SendPackage($"Af", tcpId);
         }
 

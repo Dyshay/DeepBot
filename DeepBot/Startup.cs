@@ -106,7 +106,7 @@ namespace DeepBot
             }).AddJwtBearer(x =>
             {
                 x.SaveToken = false;
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -199,8 +199,8 @@ namespace DeepBot
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
-                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
 
