@@ -336,7 +336,6 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-
 DeepBot/ClientApp/dist/vex/index.html
 DeepBot/ClientApp/dist/vex/main-es5.js
 DeepBot/ClientApp/dist/vex/main-es5.js.map
@@ -380,5 +379,11 @@ DeepBot/ClientApp/dist/vex/vendor-es5.js.map
 DeepBot/ClientApp/dist/vex/vendor-es2015.js
 DeepBot/ClientApp/dist/vex/vendor-es2015.js.map
 DeepBot/ClientApp/dist/vex/
-/DeepBot/ClientApp/src/webModel/Utility/PathCreator/Zaap.js.map
-*.js
+
+# compiled output
+/dist/
+/dist/*
+/dist
+dist/
+dist/*
+dist

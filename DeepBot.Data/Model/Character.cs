@@ -1,7 +1,8 @@
 ﻿using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
 using DeepBot.Data.Model.CharacterInfo;
-using DeepBot.Data.Model.Global;
+using DeepBot.Data.Model.MapComponent;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
@@ -9,7 +10,6 @@ using System.Collections.Generic;
 
 namespace DeepBot.Data.Model
 {
-
     public class Character : Document<int>
     {
         public Guid Fk_IA { get; set; }
@@ -26,38 +26,33 @@ namespace DeepBot.Data.Model
         public int AvailableCharactericsPts { get; set; }
         public int AvailableSpellPts { get; set; }
         public Caracteristic Characteristic { get; set; } = new Caracteristic();
+        public CharacterStateEnum State { get; set; } = CharacterStateEnum.DISCONNECTED;
+
+        [BsonIgnore]
+        public MapCell Cell { get; set; }
+        [BsonIgnore]
+        public Map Map { get; set; }
         [BsonIgnore]
         public TrajetDB Trajet { get; set; }
         [BsonIgnore]
-        public ConfigCharacterDB Config { get; set; }
+        public ConfigCharacterDB Config { get { return Driver.Database.ConfigsCharacter.Find(c => c.Key == Fk_Configuration).FirstOrDefault(); } }
         [BsonIgnore]
-        public IADB IA { get; set; }
+        public IADB IA { get { return Driver.Database.IA.Find(c => c.Key == Fk_IA).FirstOrDefault(); } }
         [BsonIgnore]
-        public MapCell Cell { get; set; }
-
-        [BsonIgnore]
-        public InventoryDB Inventory { get; set; }
-        [BsonIgnore]
-        public List<JobsDB> Jobs { get; set; }
-        public MapDB  Map { get; set; }
         public List<SpellDB> Spells
         {
             get
             {
                 List<SpellDB> spells = new List<SpellDB>();
                 if (Fk_Spells != null)
-                    Fk_Spells.ForEach(spell => spells.Add(Driver.Database.Spells.Find(spel => spel.Key == spell.Key).First()));
+                    Fk_Spells.ForEach(spell => spells.Add(Driver.Database.Spells.Find(s => s.Key == spell.Key).First()));
                 return spells;
             }
         }
         [BsonIgnore]
-        public GroupDB Group { get; set; }
+        public GroupDB Group { get { return Driver.Database.Groups.Find(c => c.Key == Fk_Group).FirstOrDefault(); } }
         [BsonIgnore]
         public byte Sex { get; set; }
-        [BsonIgnore]
-        public CharacterState State { get; set; }
-        //[BsonIgnore]
-        //public G.Game Game { get; set; }
         [BsonIgnore]
         public bool HasGroup => Group != null;
         [BsonIgnore]

@@ -66,7 +66,8 @@ export class CreatePathComponent implements OnInit {
   zone1Alreadyloaded: boolean = false;
   zone2Alreadyloaded: boolean = false;
   zone3Alreadyloaded: boolean = false;
-
+  zone4Alreadyloaded: boolean = false;
+  zone5Alreadyloaded: boolean = false;
   zoneChoose;
   statePath;
   rightClickPos: string;
@@ -103,6 +104,12 @@ export class CreatePathComponent implements OnInit {
             $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
             return false;
           }
           else {
@@ -121,6 +128,8 @@ export class CreatePathComponent implements OnInit {
             $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             return false;
           }
           else {
@@ -142,6 +151,8 @@ export class CreatePathComponent implements OnInit {
             $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
             $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
             $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: '000888' });
             return false;
           }
           else {
@@ -171,6 +182,12 @@ export class CreatePathComponent implements OnInit {
             $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
             return false;
           }
           else {
@@ -189,6 +206,8 @@ export class CreatePathComponent implements OnInit {
             $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             return false;
           }
           else {
@@ -207,6 +226,8 @@ export class CreatePathComponent implements OnInit {
             $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
             $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
             $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: '000888' });
             return false;
           }
           else {
@@ -234,6 +255,12 @@ export class CreatePathComponent implements OnInit {
             $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
             return false;
           }
           else {
@@ -250,6 +277,8 @@ export class CreatePathComponent implements OnInit {
             $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: '007F40' });
             return false;
           }
           else {
@@ -271,10 +300,164 @@ export class CreatePathComponent implements OnInit {
             $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
             $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
             $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: '000888' });
             return false;
           }
           else {
             if ($('#zone3').mapster('get_options', e.key, true).selected)
+              return false;
+          }
+        }
+        ,
+
+      });
+      this.loadArea(event.value);
+    }
+    else if (event.value == 3 && !this.zone4Alreadyloaded) {
+      $('#zone4').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            return false;
+          }
+          else {
+          }
+        }
+      });
+      $('#zone4Banque').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            return false;
+          }
+          else {
+            if ($('#zone4').mapster('get_options', e.key, true).selected)
+              return false;
+
+          }
+        }
+
+
+      });
+      $('#zone4Retour').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            return false;
+          }
+          else {
+            if ($('#zone4').mapster('get_options', e.key, true).selected)
+              return false;
+          }
+        }
+        ,
+
+      });
+      this.loadArea(event.value);
+    }
+    else if (event.value == 4 && !this.zone5Alreadyloaded) {
+      $('#zone5').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
+            return false;
+          }
+          else {
+          }
+        }
+      });
+      $('#zone5Banque').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone2Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone3Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone4Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            $('#zone5Banque').mapster('set', true, e.key, { fillColor: '007F40' });
+            return false;
+          }
+          else {
+            if ($('#zone5').mapster('get_options', e.key, true).selected)
+              return false;
+
+          }
+        }
+
+
+      });
+      $('#zone5Retour').mapster({
+        mapKey: 'data-key',
+        showToolTip: true,
+        fillOpacity: 0.6,
+        areas: MapArea.mapArea,
+        onClick: function (e) {
+          if (e.selected) {
+            $('#zone1Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone2Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone3Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone4Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            $('#zone5Retour').mapster('set', true, e.key, { fillColor: '000888' });
+            return false;
+          }
+          else {
+            if ($('#zone5').mapster('get_options', e.key, true).selected)
               return false;
           }
         }
@@ -306,6 +489,16 @@ export class CreatePathComponent implements OnInit {
           $('#zone3Banque').mapster('set', true, key, { fillColor: 'FA2744' });
           $('#zone3Retour').mapster('set', true, key, { fillColor: 'FA2744' });
         }
+        else if (zone == 3 && !this.zone4Alreadyloaded) {
+          $('#zone4').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone4Banque').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone4Retour').mapster('set', true, key, { fillColor: 'FA2744' });
+        }
+        else if (zone == 4 && !this.zone5Alreadyloaded) {
+          $('#zone5').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone5Banque').mapster('set', true, key, { fillColor: 'FA2744' });
+          $('#zone5Retour').mapster('set', true, key, { fillColor: 'FA2744' });
+        }
       }
       else if (type == 2) {
         if (zone == 0 && !this.zone1Alreadyloaded) {
@@ -317,6 +510,12 @@ export class CreatePathComponent implements OnInit {
         else if (zone == 2 && !this.zone3Alreadyloaded) {
           $('#zone3Banque').mapster('set', true, key, { fillColor: '007F40' });
         }
+        else if (zone == 3 && !this.zone4Alreadyloaded) {
+          $('#zone4Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+        else if (zone == 4 && !this.zone5Alreadyloaded) {
+          $('#zone5Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
       }
       else if (type == 3) {
         if (zone == 0 && !this.zone1Alreadyloaded) {
@@ -327,6 +526,12 @@ export class CreatePathComponent implements OnInit {
         }
         else if (zone == 2 && !this.zone3Alreadyloaded) {
           $('#zone3Retour').mapster('set', true, key, { fillColor: '000888' });
+        }
+        else if (zone == 3 && !this.zone4Alreadyloaded) {
+          $('#zone4Retour').mapster('set', true, key, { fillColor: '000888' });
+        }
+        else if (zone == 4 && !this.zone5Alreadyloaded) {
+          $('#zone5Retour').mapster('set', true, key, { fillColor: '000888' });
         }
       }
       else if (type == 4) {
@@ -342,6 +547,14 @@ export class CreatePathComponent implements OnInit {
           $('#zone3Retour').mapster('set', true, key, { fillColor: '000888' });
           $('#zone3Banque').mapster('set', true, key, { fillColor: '007F40' });
         }
+        else if (zone == 3 && !this.zone4Alreadyloaded) {
+          $('#zone4Retour').mapster('set', true, key, { fillColor: '000888' });
+          $('#zone4Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
+        else if (zone == 4 && !this.zone5Alreadyloaded) {
+          $('#zone5Retour').mapster('set', true, key, { fillColor: '000888' });
+          $('#zone5Banque').mapster('set', true, key, { fillColor: '007F40' });
+        }
       }
     }
     if (zone == 0 && !this.zone1Alreadyloaded)
@@ -350,6 +563,10 @@ export class CreatePathComponent implements OnInit {
       this.zone2Alreadyloaded = true;
     if (zone == 2 && !this.zone3Alreadyloaded)
       this.zone3Alreadyloaded = true;
+    if (zone == 3 && !this.zone4Alreadyloaded)
+      this.zone4Alreadyloaded = true;
+    if (zone == 4 && !this.zone5Alreadyloaded)
+      this.zone5Alreadyloaded = true;
   }
 
   StateAction(actions: MapAction[]) {

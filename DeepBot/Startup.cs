@@ -8,6 +8,7 @@ using DeepBot.Data.Database.Loaders;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.IA;
 using DeepBot.Data.Model.MapComponent;
 using DeepBot.Data.Model.Path;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -53,7 +54,7 @@ namespace DeepBot
 
             services.AddMvc(option => option.EnableEndpointRouting = false)
                 .AddJsonOptions (opt => {
-                    opt.JsonSerializerOptions.MaxDepth =15;
+                    opt.JsonSerializerOptions.MaxDepth =10;
                     opt.JsonSerializerOptions.WriteIndented = true;
                 });
 
@@ -74,6 +75,8 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<UseItemAction>();
             BsonClassMap.RegisterClassMap<ZaapAction>();
             BsonClassMap.RegisterClassMap<ZaapiAction>();
+            BsonClassMap.RegisterClassMap<SpellAction>();
+            BsonClassMap.RegisterClassMap<ConditionalAction>();
 
             services.AddIdentityMongoDbProvider<UserDB, RoleDB>(identity =>
              {
@@ -197,10 +200,11 @@ namespace DeepBot
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
 
-            ///* crÃ©ation des roles si non prÃ©sent */
+            ///* création des roles si non présent */
             //DataInit.SeedAndCreateRoles(app.ApplicationServices).GetAwaiter().GetResult();
         }
     }

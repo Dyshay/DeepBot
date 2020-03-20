@@ -244,9 +244,11 @@
     "SELECTPATHINFO": "Cochez les cartes du trajet voulu en choisisant la(es) direction(s) voulue(s), clic droit afin d'ajouter ou visualiser les actions sur la map ",
     "CHOICEMAP": "Choisir la zone du trajet",
     "CHOICEMAPHINT": "Atention la zone selectionné doit contenir l'ensemble de la zone combat ou récolte",
-    "ZONE1": "Zone de Bonta,Plaine de cania",
-    "ZONE2": "Zone de Massif de cania,Plaine de Cania,Abraknydes",
-    "ZONE3": "Zone d'Amakna,Scarafeuille,Gelée,Dragoeuf,Cochon",
+    "ZONE1": "Zone de Bonta, Plaine de cania",
+    "ZONE2": "Zone de Massif de cania, Plaine de Cania,Abraknydes",
+    "ZONE3": "Zone d'Amakna, Scarafeuille, Gelée,Dragoeuf, Cochon de lait",
+    "ZONE4": "Zone Sidimote, Koalak, Dragoeuf, Village Eleveur",
+    "ZONE5": "Zone Brakmar, Sidimote, Cimetiére, Dragoeuf, Cochon de lait",
     "BANKPATH": "Trajet Banque",
     "SELECTPATHBANK": "Selectionnez le trajet de retour en banque",
     "SELECTPATHBANKINFO": "Cochez les cartes du trajet voulu, demarrer la zone à une map adjacente de la zone combat ou récolte, puis à la map banque ajouter l'action 'Banque'",
@@ -339,5 +341,13 @@
     "UPDATEPATH": "Mettre à jour le trajet",
     "FIGHTPATHUPDATE": "Modifier le trajet de combat",
     "GATHERINGPATHUPDATE": "Modifier le trajet de récolte"
+  },
+  "CREATEIA": {
+    "DESCRIPTION1": "Créez votre IA pour vos bots",
+    "DESCRIPTION2": "- Cette sera sauvegardé sur votre compte.",
+    "DESCRIPTION3": "- Suivez les étapes ci-dessous pour créer votre IA",
+    "GROUPLABEL": "Paramétres de l'IA",
+    "GROUPPROPLABEL": "Definissez les propriétés de l'IA",
+    "IANAME":"Nom de l'IA'"
   }
 }

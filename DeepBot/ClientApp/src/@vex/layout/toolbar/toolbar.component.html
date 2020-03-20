@@ -87,7 +87,7 @@
 
   <!--menu IA-->
   <mat-menu #IAMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/createIa']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
       <span>{{ 'TOOLBAR.CREATEIA' | translate}}</span>
     </button>

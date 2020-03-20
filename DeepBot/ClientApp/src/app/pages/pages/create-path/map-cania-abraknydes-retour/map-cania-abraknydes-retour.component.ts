@@ -13,11 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 
 
-declare global {
-  interface JQuery {
-    mapster(): JQuery;
-  }
-}
+
 
 @Component({
     selector: 'app-map-cania-abraknydes-retour',

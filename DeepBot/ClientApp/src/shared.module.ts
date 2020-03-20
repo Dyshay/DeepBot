@@ -25,6 +25,12 @@ import { BreadcrumbsModule } from './@vex/components/breadcrumbs/breadcrumbs.mod
 import { ContainerModule } from './@vex/directives/container/container.module';
 import { IconModule } from '@visurel/iconify-angular';
 import { SecondaryToolbarModule } from './@vex/components/secondary-toolbar/secondary-toolbar.module';
+import { MapSidimoteComponent } from './app/pages/pages/create-path/map-sidimote/map-sidimote.component';
+import { MapSidimoteBanqueComponent } from './app/pages/pages/create-path/map-sidimote-banque/map-sidimote-banque.component';
+import { MapSidimoteRetourComponent } from './app/pages/pages/create-path/map-sidimote-retour/map-sidimote-retour.component';
+import { MapBrakmarComponent } from './app/pages/pages/create-path/map-brakmar/map-brakmar.component';
+import { MapBrakmarBanqueComponent } from './app/pages/pages/create-path/map-brakmar-banque/map-brakmar-banque.component';
+import { MapBrakmarRetourComponent } from './app/pages/pages/create-path/map-brakmar-retour/map-brakmar-retour.component';
 
 @NgModule({
   imports: [
@@ -55,18 +61,24 @@ import { SecondaryToolbarModule } from './@vex/components/secondary-toolbar/seco
     MatDialogModule,
     MatTableModule,
     TranslateModule],
-declarations: [
+  declarations: [
     MapBontaComponent, MapBontaBanqueComponent, MapBontaRetourComponent,
     MapCaniaAbraknydesComponent, MapCaniaAbraknydesBanqueComponent, MapCaniaAbraknydesRetourComponent,
     MapAmaknaComponent, MapAmaknaBanqueComponent, MapAmaknaRetourComponent,
+    MapSidimoteComponent, MapSidimoteBanqueComponent, MapSidimoteRetourComponent,
+    MapBrakmarComponent, MapBrakmarBanqueComponent, MapBrakmarRetourComponent,
     DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
     DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent
   ],
-  exports: [MapBontaComponent, MapBontaBanqueComponent, MapBontaRetourComponent,
+  exports: [
+    MapBontaComponent, MapBontaBanqueComponent, MapBontaRetourComponent,
     MapCaniaAbraknydesComponent, MapCaniaAbraknydesBanqueComponent, MapCaniaAbraknydesRetourComponent,
     MapAmaknaComponent, MapAmaknaBanqueComponent, MapAmaknaRetourComponent,
+    MapSidimoteComponent, MapSidimoteBanqueComponent, MapSidimoteRetourComponent,
     DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
-    DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent],
+    MapBrakmarComponent, MapBrakmarBanqueComponent, MapBrakmarRetourComponent,
+    DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent
+  ],
   entryComponents: [DialogZaapComponent, DialogCellComponent, DialogUseItemComponent, DialogListActionComponent, DialogInteractionComponent, DialogZaapiComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

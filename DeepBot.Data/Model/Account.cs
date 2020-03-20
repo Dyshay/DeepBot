@@ -24,7 +24,7 @@ namespace DeepBot.Data.Model
         public string WelcomeKey { get; set; }
         public string AnkamaNickName { get; set; }
         public string GameTicket { get; set; }
-        public AccountState State { get; set; } = AccountState.DISCONNECTED;
+        public CharacterStateEnum State { get; set; } = CharacterStateEnum.DISCONNECTED;
         public Server Server { get; set; }
         public bool isScan { get; set; }
 
@@ -38,7 +38,6 @@ namespace DeepBot.Data.Model
         [BsonConstructor]
         public Account()
         {
-
         }
 
 

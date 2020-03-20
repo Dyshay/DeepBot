@@ -1,4 +1,5 @@
-﻿using DeepBot.Data.Model;
+﻿using DeepBot.Data.Enums;
+using DeepBot.Data.Model;
 using System.Collections.Generic;
 
 namespace DeepBot.Data.Database.Loaders
@@ -14,6 +15,5 @@ namespace DeepBot.Data.Database.Loaders
         public string MapData { get; set; }
         public string Coordinate { get; set; }
         public MapCell[] Cells { get; set; }
-        public Dictionary<MovementDirection, List<short>> CellsTeleport;
     }
 }

@@ -51,12 +51,12 @@ namespace DeepBot.Controllers
         public async Task<Object> getUser()
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            var user = await _userManager.FindByIdAsync(userId);
+            var user = await _userManager.FindByIdAsync(userId);/*
             foreach (var item in user.Accounts)
             {
                 if (item.CurrentCharacter != null)
                     item.CurrentCharacter.Config = _configCharacter.FirstOrDefault(o => o.Fk_Character == item.CurrentCharacter.Key);
-            }
+            }*/
             return user;
 
         }

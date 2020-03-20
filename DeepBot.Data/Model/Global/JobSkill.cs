@@ -1,4 +1,6 @@
-﻿namespace DeepBot.Data.Model.Global
+﻿using DeepBot.Data.Enums;
+
+namespace DeepBot.Data.Model.Global
 {
     public class JobSkill
     {
