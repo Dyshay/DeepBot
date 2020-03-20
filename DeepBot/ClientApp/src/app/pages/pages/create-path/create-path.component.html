@@ -380,6 +380,7 @@
                     <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
                     <mat-option [value]="3">{{ 'CREATEPATH.ZONE4' | translate }}</mat-option>
                     <mat-option [value]="4">{{ 'CREATEPATH.ZONE5' | translate }}</mat-option>
+                    <mat-option [value]="5">Donjon Bouftou</mat-option>
                   </mat-select>
                   <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
                 </mat-form-field>
@@ -406,8 +407,10 @@
                                     (specificActionEvent)="specificAction($event)"
                                     [hidden]="zoneChoose !== 3">  </app-map-sidimote>
                   <app-map-brakmar (selectMapEvent)="selectMap($event)"
-                                    (specificActionEvent)="specificAction($event)"
-                                    [hidden]="zoneChoose !== 4">  </app-map-brakmar>
+                                   (specificActionEvent)="specificAction($event)"
+                                   [hidden]="zoneChoose !== 4">  </app-map-brakmar>
+                  <app-map-donjon-bouftou  [hidden]="zoneChoose !== 5">  </app-map-donjon-bouftou>
+
 
                   <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
                     <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">

@@ -14,6 +14,7 @@ export const getAllCharacters = createAction('[BOT/CHARACTER] GET ALLCHARACTERS'
 export const getAllCurrentCharacters = createAction('[BOT/CHARACTER] GET ALLCURRENTCHARACTERS', props<{ allCurrentCharacters: Character[] }>());
 
 export const updateCharacterFKGroup = createAction('[BOT/CHARACTER] UPDATE FK_GROUP CHARACTER', props<{ fk_Group: string, key: number }>());
+export const updateCharacterFKPath = createAction('[BOT/CHARACTER] UPDATE FK_PATH CHARACTER', props<{ fk_Path: string, key: number }>());
 
 export const updateCharacterConfig = createAction('[BOT/ACCOUNT] UPDATE  CHARACTER CONFIG', props<{ characterConfigToUpdate: ConfigCharacter }>());
 export const updateCharacterConfigSuccess = createAction('[BOT/ACCOUNT] UPDATE CHARACTER CONFIG SUCCESS', props<{ characterConfigToUpdate: ConfigCharacter }>());
@@ -30,5 +31,15 @@ export const getLogs = createAction('[BOT/LOGS] RECEIVED LOG', props<{logs: LogM
 export const updateAccountCharacter = createAction('[BOT/UPDATE] UPDATE ACCOUNT', props<{character: Character, tcpId: string}>());
 
 export const updateTcpClient = createAction('[BOT/TCPID] UPDATE THE TCP ID', props<{tcpId: string}>());
-export const updateCharacter = createAction('[BOT/CHARACTER] UPDATE CHARACTER', props<{character: Character, key: number | undefined}>());
+export const updateCharacter = createAction('[BOT/CHARACTER] UPDATE CHARACTER', props<{ character: Character, key: number | undefined }>());
+
+export const updateCharacterDB = createAction('[BOT/ACCOUNT] UPDATE  CHARACTER ', props<{ characterToUpdate: Character }>());
+export const updateCharacterDBSuccess = createAction('[BOT/ACCOUNT] UPDATE CHARACTER  SUCCESS', props<{ characterToUpdate: Character }>());
+export const updateCharacterDBFailure = createAction('[BOT/ACCOUNT] UPDATE CHARACTER  ERROR', props<{ error: any }>());
+
+
+export const startAndStopBot = createAction('[BOT/ACCOUNT] START/STOP BOT', props<{ key: number }>());
+export const startAndStopBotSuccess = createAction('[BOT/ACCOUNT] START/STOP BOT  SUCCESS', props<{ key: number }>());
+export const startAndStopBotFailure = createAction('[BOT/ACCOUNT] START/STOP BOT  ERROR', props<{ error: any }>());
+
 

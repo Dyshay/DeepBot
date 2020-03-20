@@ -12,7 +12,7 @@ import icRightArrow from '@iconify/icons-ic/twotone-keyboard-arrow-right'
 import icBottomArrow from '@iconify/icons-ic/twotone-keyboard-arrow-down'
 import icDelete from '@iconify/icons-fa-solid/trash';
 import bucheron from '@iconify/icons-mdi/hand-saw';
-import paysan from '@iconify/icons-emojione-monotone/ear-of-corn'; // a modif
+import paysan from '@iconify/icons-emojione-monotone/ear-of-corn'; 
 import mineur from '@iconify/icons-mdi/pickaxe';
 import chasseur from '@iconify/icons-whh/bow';
 import pecheur from '@iconify/icons-mdi/fish';

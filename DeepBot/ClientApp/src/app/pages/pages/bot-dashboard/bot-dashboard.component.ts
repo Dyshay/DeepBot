@@ -28,6 +28,7 @@ import { Link } from '../../../../@vex/interfaces/link.interface';
 import { Store, select } from '@ngrx/store';
 import * as fromCharacter from 'src/app/app-reducers/character/reducers';
 import * as fromGroup from 'src/app/app-reducers/group/reducers';
+import * as fromPath from 'src/app/app-reducers/path/reducers';
 import { Character } from '../../../../webModel/Character';
 import { TranslateService } from '@ngx-translate/core';
 import { Icon } from '@visurel/iconify-angular';
@@ -42,6 +43,8 @@ import { CharacterService } from '../../../services/character.service';
 import { Group } from '../../../../webModel/Group';
 import { CharacterActions } from 'src/app/app-reducers/character/actions';
 import { AccountActions } from 'src/app/app-reducers/account/actions';
+import { Trajet } from '../../../../webModel/Trajet';
+import { PathMinDisplayed } from '../../../../webModel/Utility/PathCreator/Path';
 
 export interface FriendSuggestion {
   name: string;
@@ -70,6 +73,8 @@ export class BotDashboardComponent implements OnInit, OnChanges {
   character: Character = new Character();
   indexSelected: number = 0;
   iconCharacter: string;
+  pathSelected: PathMinDisplayed;
+  pathList: PathMinDisplayed[];
   groupName: string = '';
   // logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   logs$ = this.characterStore.pipe(select(fromCharacter.getCurrentlogs));
@@ -81,6 +86,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
   /** bot-dashboard ctor */
   constructor(private activatedRoute: ActivatedRoute, private characterService: CharacterService,
     private groupStore: Store<fromGroup.State>,
+    private storePath: Store<fromPath.State>,
     private store: Store<fromCharacter.State>, private translateService: TranslateService, private deeptalk: TalkService,
     private accountStore: Store<fromAccount.State>, private characterStore: Store<fromCharacter.State>, private webUser: Store<fromWeb.State>) {
   }
@@ -93,6 +99,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
           for (var i = 0; i < result.length; i++) {
             if (result[i].key.toString() == params.get('id')) {
               this.character = result[i];
+
               this.accountStore.pipe(select(fromAccount.getAllAccounts)).subscribe((accountStoring: Account[]) => {
                 for (let c = 0; c < accountStoring.length; c++) {
                   if (accountStoring[c].currentCharacter.key === this.character.key) {
@@ -104,7 +111,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
 
               })
             }
-            this.iconCharacter = this.characterService.getCharacterIcon(this.character.breedId);
+            this.iconCharacter = this.characterService.getCharacterIcon("" +this.character.breedId + this.character.sex );
             if (this.character.fk_Group != '00000000-0000-0000-0000-000000000000') {
               this.groupStore.pipe(select(fromGroup.getAllGroups)).subscribe(
                 (result: Group[]) => {
@@ -117,8 +124,32 @@ export class BotDashboardComponent implements OnInit, OnChanges {
           }
         })
     });
+
+
+    this.storePath.pipe(select(fromPath.getAllPaths)).subscribe(
+      (result: PathMinDisplayed[]) => {
+        this.pathList = result;
+        for (var i = 0; i < result.length; i++) {
+          if (result[i].key == this.character.fk_Trajet) {
+            this.pathSelected = result[i];
+          }      
+        };
+      }
+    );
   }
 
+  changePath(event) {
+    var idTrajet = event.value.key;
+    this.character.fk_Trajet = idTrajet;
+    let characterToUpdate = this.character;
+    this.characterStore.dispatch(CharacterActions.updateCharacterDB({ characterToUpdate: JSON.parse(JSON.stringify(characterToUpdate)) }));
+  }
+
+
+  startStopPath() {
+    let key = this.character.key;
+    this.characterStore.dispatch(CharacterActions.startAndStopBot({ key: JSON.parse(JSON.stringify(key)) }));
+  }
 
 
   initConnection(acc: Account) {

@@ -415,6 +415,14 @@
     "GROUPLABEL": "Paramétres de l'IA",
     "GROUPPROPLABEL": "Definissez les propriétés de l'IA",
     "IANAME": "Nom de l'IA",
-    "CLASSEIA": "Classe de l'IA"
+    "CLASSEIA": "Classe de l'IA",
+    "IADESCRIPTION": "Description",
+    "TYPEIA": "Type d'IA'",
+    "GROUPLABEL2": "Paramétres de Sort",
+    "GROUPPROPLABEL2": "Definissez les conditions de lancements des sorts",
+    "SPELL": "Sort",
+    "SPELLLIST": "Liste des Sorts",
+    "TRAGETCHOICE": "Cible du sort",
+    "NBLANCER": "Nb Lancer"
   }
 }

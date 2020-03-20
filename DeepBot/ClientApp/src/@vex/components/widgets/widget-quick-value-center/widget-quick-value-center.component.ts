@@ -25,6 +25,7 @@ export class WidgetQuickValueCenterComponent implements OnInit {
   @Input() helpText: string;
   @Input() color: ColorDef;
   @Input() checkable: boolean;
+  @Input() isCheck: boolean;
 
   faCaretUp = faCaretUp;
   faCaretDown = faCaretDown;

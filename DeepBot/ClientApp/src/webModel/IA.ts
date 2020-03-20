@@ -12,6 +12,8 @@ export class IA {
 export class SpellAction {
   priority: number;
   nbLancer: number;
+  spellId: number;
+  spellName: string;
   target: Target;
   conditions: ConditionalAction[];
 }
@@ -35,16 +37,37 @@ export enum Classe {
   Sacrieur = 110,
   Pandawa = 120
 }
+export namespace Classe {
+  export function values() {
+    return Object.keys(Classe).filter(
+      (type) => isNaN(<any>type) && type !== 'values'
+    );
+  }
+}
 export enum TypeIA {
   Fuyarde = 0,
   Agressif = 1,
   Hybride = 2
+}
+export namespace TypeIA {
+  export function values() {
+    return Object.keys(TypeIA).filter(
+      (type) => isNaN(<any>type) && type !== 'values'
+    );
+  }
 }
 export enum Target {
   Enemy = 0,
   Ally = 1,
   Myself = 2,
   Zone = 3
+}
+export namespace Target {
+  export function values() {
+    return Object.keys(Target).filter(
+      (type) => isNaN(<any>type) && type !== 'values'
+    );
+  }
 }
 
 export enum ConditionalType {

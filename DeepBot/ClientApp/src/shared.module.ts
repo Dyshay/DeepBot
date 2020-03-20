@@ -31,6 +31,7 @@ import { MapSidimoteRetourComponent } from './app/pages/pages/create-path/map-si
 import { MapBrakmarComponent } from './app/pages/pages/create-path/map-brakmar/map-brakmar.component';
 import { MapBrakmarBanqueComponent } from './app/pages/pages/create-path/map-brakmar-banque/map-brakmar-banque.component';
 import { MapBrakmarRetourComponent } from './app/pages/pages/create-path/map-brakmar-retour/map-brakmar-retour.component';
+import { MapDonjonBouftouComponent } from './app/pages/pages/create-path/map-donjon-bouftou/map-donjon-bouftou.component';
 
 @NgModule({
   imports: [
@@ -67,6 +68,7 @@ import { MapBrakmarRetourComponent } from './app/pages/pages/create-path/map-bra
     MapAmaknaComponent, MapAmaknaBanqueComponent, MapAmaknaRetourComponent,
     MapSidimoteComponent, MapSidimoteBanqueComponent, MapSidimoteRetourComponent,
     MapBrakmarComponent, MapBrakmarBanqueComponent, MapBrakmarRetourComponent,
+    MapDonjonBouftouComponent,
     DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
     DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent
   ],
@@ -77,6 +79,7 @@ import { MapBrakmarRetourComponent } from './app/pages/pages/create-path/map-bra
     MapSidimoteComponent, MapSidimoteBanqueComponent, MapSidimoteRetourComponent,
     DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
     MapBrakmarComponent, MapBrakmarBanqueComponent, MapBrakmarRetourComponent,
+    MapDonjonBouftouComponent,
     DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent
   ],
   entryComponents: [DialogZaapComponent, DialogCellComponent, DialogUseItemComponent, DialogListActionComponent, DialogInteractionComponent, DialogZaapiComponent],
