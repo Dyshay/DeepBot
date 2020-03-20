@@ -3,10 +3,12 @@ using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.MapComponent;
+using DeepBot.Data.Model.Script;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DeepBot.Data.Model
 {
@@ -26,8 +28,18 @@ namespace DeepBot.Data.Model
         public int AvailableCharactericsPts { get; set; }
         public int AvailableSpellPts { get; set; }
         public Caracteristic Characteristic { get; set; } = new Caracteristic();
-        public CharacterStateEnum State { get; set; } = CharacterStateEnum.DISCONNECTED;
+        public CharacterStateEnum State
+        {
+            get { return _State; }
+            set
+            {
+                _State = value;
+                OnStateChanged?.Invoke();
+            }
+        }
 
+        [BsonIgnore]
+        private CharacterStateEnum _State { get; set; } = CharacterStateEnum.DISCONNECTED;
         [BsonIgnore]
         public MapCell Cell { get; set; }
         [BsonIgnore]
@@ -52,10 +64,14 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public GroupDB Group { get { return Driver.Database.Groups.Find(c => c.Key == Fk_Group).FirstOrDefault(); } }
         [BsonIgnore]
+        public ScriptManager ScriptManager { get; set; }
+        [BsonIgnore]
         public byte Sex { get; set; }
         [BsonIgnore]
         public bool HasGroup => Group != null;
         [BsonIgnore]
         public bool IsGroupLeader => !HasGroup || Group.Leader == this;
+        [BsonIgnore]
+        public Action OnStateChanged;
     }
 }

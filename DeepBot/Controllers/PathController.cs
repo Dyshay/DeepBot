@@ -3,6 +3,7 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Model.Script;
 using DeepBot.Data.Model.Script.Actions;
+using DeepBot.Data.Model.Script.Options;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;

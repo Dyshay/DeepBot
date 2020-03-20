@@ -3,7 +3,6 @@
     public enum CharacterStateEnum
     {
         CONNECTING,
-        CONNECTED,
         FIGHTING,
         DISCONNECTED,
         GATHERING,

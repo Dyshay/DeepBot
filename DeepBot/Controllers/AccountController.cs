@@ -64,8 +64,8 @@ namespace DeepBot.Controllers
             await CreateInventoryAsync(account.CurrentCharacter.Key);
             await CreateJobsAsync(account.CurrentCharacter.Key);
 
-            user.Accounts.RemoveAll(o => o.isScan);
-            account.isScan = false;
+            user.Accounts.RemoveAll(o => o.IsScan);
+            account.IsScan = false;
             account.Key = Guid.NewGuid();
             account.CreationDate = DateTime.Now;
             account.ExpirationDateBan = null;

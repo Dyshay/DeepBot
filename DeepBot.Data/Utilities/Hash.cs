@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace DeepBot.Data.Model
+namespace DeepBot.Data.Utilities
 {
     public class Hash
     {

@@ -1,5 +1,6 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model.GameServer;
+using DeepBot.Data.Utilities;
 using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
@@ -15,7 +16,7 @@ namespace DeepBot.Data.Model
         public Nullable<DateTime> EndAnakamaSubscribe { get; set; }
         public DateTime? CreationDate { get; set; }
         public string AnkamaPseudo { get; set; }
-        public bool isBan { get; set; }
+        public bool IsBan { get; set; }
         public Nullable<DateTime> ExpirationDateBan { get; set; }
         public string NickName { get; set; }
         public string AccountName { get; set; }
@@ -25,7 +26,7 @@ namespace DeepBot.Data.Model
         public string AnkamaNickName { get; set; }
         public string GameTicket { get; set; }
         public Server Server { get; set; }
-        public bool isScan { get; set; }
+        public bool IsScan { get; set; }
 
         /// <summary>
         /// CLI Informations attached to account

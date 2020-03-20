@@ -1,4 +1,4 @@
-﻿namespace DeepBot.Data.Model.Script
+﻿namespace DeepBot.Data.Model.Script.Options
 {
     public class SpecificMonsterLevel
     {

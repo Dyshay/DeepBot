@@ -1,7 +1,7 @@
 ﻿using DeepBot.Data.Driver;
 using System;
 
-namespace DeepBot.Data.Model
+namespace DeepBot.Data.Utilities
 {
     public class Proxy : Document<Guid>
     {

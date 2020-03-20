@@ -5,6 +5,7 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.GameServer;
+using DeepBot.Data.Utilities;
 using Microsoft.AspNetCore.SignalR;
 using MongoDB.Driver;
 using System;
@@ -19,7 +20,8 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public void GetWelcomeKeyAsync(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
-            account.CurrentCharacter.State = CharacterStateEnum.CONNECTING;
+            if (account.CurrentCharacter != null)
+                account.CurrentCharacter.State = CharacterStateEnum.CONNECTING;
             account.WelcomeKey = package.Substring(2);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
 
@@ -119,7 +121,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Substring(14);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
+            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).IsScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
         }
 
@@ -128,7 +130,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Split(';')[1];
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            hub.Clients.Caller.SendAsync("NewConnection", package.Split(';')[0].Substring(3), 443, true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
+            hub.Clients.Caller.SendAsync("NewConnection", package.Split(';')[0].Substring(3), 443, true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).IsScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world ", tcpId), tcpId).Wait();
         }
     }
