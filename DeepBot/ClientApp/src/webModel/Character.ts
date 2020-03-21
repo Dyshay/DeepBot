@@ -10,6 +10,7 @@ import { Inventory } from './Inventory';
 import { Job } from './Job';
 import { CharacterMap } from './CharacterMap';
 import { LogType } from './Enum/LogType';
+import { AccountState } from './Enum/AccountState';
 
 export class Character {
   key: number;
@@ -34,7 +35,8 @@ export class Character {
   characteristic?: Caracteristic;
   inventory?: Inventory;
   jobs?: Job[]| null;
-  map?: CharacterMap| null;
+  map?: CharacterMap | null;
+  state?: AccountState;
 }
 
 
@@ -43,3 +45,5 @@ export interface CharacterMessage {
   characters: Character[],
   tcpId: string
 }
+
+

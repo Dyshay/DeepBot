@@ -20,6 +20,7 @@ namespace DeepBot.Data.Database
         public bool IsCapture { get; set; }
         public bool LeaderBank { get; set; }
         public int CaptureItem { get; set; }
+        public List<int> ListRessource { get; set; }
         public List<SpecificMonsterLevel> MonsterLevel { get; set; }
         public List<SpecificMonsterQuantity> MonsterQuantity { get; set; }
         public List<CaptureMonsterQuantity> MonsterCapture { get; set; }

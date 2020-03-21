@@ -33,6 +33,8 @@ export class PathService {
 
   private emitChangePathUpdate = new Subject<any>();
   changePathUpdateEmitted$ = this.emitChangePathUpdate.asObservable();
+  private emitChangeJob = new Subject<any>();
+  changeJobEmitted$ = this.emitChangeJob.asObservable();
 
   constructor(private http: HttpClient, private toastr: ToastrService, private translateService: TranslateService) {
     this.toastr.toastrConfig.timeOut = 3300;
@@ -45,6 +47,9 @@ export class PathService {
   emitChange(pathUpdate: any) {
     this.path = pathUpdate;
     this.emitChangePathUpdate.next(pathUpdate);
+  }
+  emitChangeJobNext(change: any) {
+    this.emitChangeJob.next(change);
   }
 
 

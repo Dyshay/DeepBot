@@ -9,7 +9,7 @@ using System;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
-    public class JobHandler : IHandler
+    public class JobHandler //: IHandler
     {
         [Receiver("JS")]
         public void JobSkillsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)

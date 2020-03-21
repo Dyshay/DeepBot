@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { IconModule } from '@visurel/iconify-angular';
-import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatTableModule } from '@angular/material';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule, MatIconModule, MatButtonModule, MatSelectModule, MatDatepickerModule, MatNativeDateModule, MatAutocompleteModule, MatSliderModule, MatCheckboxModule, MatRadioModule, MatSlideToggleModule, MatSnackBarModule, MatStepperModule, MatTableModule, MatDividerModule } from '@angular/material';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SecondaryToolbarModule } from '../../../../@vex/components/secondary-toolbar/secondary-toolbar.module';
 import { BreadcrumbsModule } from '../../../../@vex/components/breadcrumbs/breadcrumbs.module';
 import { ContainerModule } from '../../../../@vex/directives/container/container.module';
@@ -13,6 +13,7 @@ import { PageLayoutModule } from '../../../../@vex/components/page-layout/page-l
 import { TranslateModule } from '@ngx-translate/core';
 import { CreateIaComponent } from './create-ia.component';
 import { CreateIaRoutingModule } from './create-ia-routing.module';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 
 @NgModule({
@@ -24,7 +25,11 @@ import { CreateIaRoutingModule } from './create-ia-routing.module';
     MatIconModule,
     ReactiveFormsModule,
     MatStepperModule,
+    DragDropModule,
+    MatDividerModule,
     FlexLayoutModule,
+    ReactiveFormsModule,
+    FormsModule,
     MatInputModule,
     MatButtonModule,
     MatCheckboxModule,

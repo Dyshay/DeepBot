@@ -1,5 +1,7 @@
 ﻿using DeepBot.Data.Driver;
 using DeepBot.Data.Model.IA;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
 using System;
 using System.Collections.Generic;
 

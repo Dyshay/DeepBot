@@ -23,6 +23,26 @@ import { PathActions } from 'src/app/app-reducers/path/actions';
 import { Store, select } from '@ngrx/store';
 import { SpinnerVisibilityService } from 'ng-http-loader';
 import { delay } from 'rxjs/operators';
+import { JobsGather } from '../../../../../webModel/Job';
+import bucheron from '@iconify/icons-mdi/hand-saw';
+import paysan from '@iconify/icons-emojione-monotone/ear-of-corn';
+import mineur from '@iconify/icons-mdi/pickaxe';
+import chasseur from '@iconify/icons-whh/bow';
+import pecheur from '@iconify/icons-mdi/fish';
+import alchimiste from '@iconify/icons-mdi/flower';
+import bricoleur from '@iconify/icons-mdi/hammer';
+import bijoutier from '@iconify/icons-mdi/ring';
+import cordonnier from '@iconify/icons-mdi/shoe-formal';
+import tailleur from '@iconify/icons-mdi/hat-fedora';
+import sculteur from '@iconify/icons-whh/arrowdown'; // a modif
+import forgeur from '@iconify/icons-whh/arrowdown'; // a modif
+import forgeurbouclier from '@iconify/icons-mdi/shield';
+import cordomage from '@iconify/icons-whh/arrowdown'; // a modif
+import costumage from '@iconify/icons-fa-solid/hat-wizard';
+import jaillomage from '@iconify/icons-map/jewelry-store';
+import theme from '../../../../../@vex/utils/tailwindcss';
+import { AlchimisteRessources, PaysanRessources, MineurRessources, PecheurRessources, BucheronRessources } from '../../../../../webModel/Enum/RessourcesMetier';
+import { TranslateService } from '@ngx-translate/core';
 
 declare global {
   interface JQuery {
@@ -54,6 +74,23 @@ export class ModalUpdatePathComponent implements OnInit,AfterViewInit {
   icDelete = icDelete;
   icRightArrow = icRightArrow;
   icBottomArrow = icBottomArrow;
+  theme = theme;
+  bucheron = bucheron;
+  paysan = paysan;
+  mineur = mineur;
+  chasseur = chasseur;
+  pecheur = pecheur;
+  alchimiste = alchimiste;
+  bricoleur = bricoleur;
+  bijoutier = bijoutier;
+  cordonnier = cordonnier;
+  tailleur = tailleur;
+  sculteur = sculteur;
+  forgeur = forgeur;
+  forgeurbouclier = forgeurbouclier;
+  cordomage = cordomage;
+  costumage = costumage;
+  jaillomage = jaillomage;
   directionTop: boolean = false;
   directionRight: boolean = false;
   directionBottom: boolean = false;
@@ -62,6 +99,7 @@ export class ModalUpdatePathComponent implements OnInit,AfterViewInit {
   lisType = [
     { id: 0 }, { id: 1 }
   ]
+  public jobEnum = JobsGather
 
   zoneChoose;
   statePath;
@@ -69,9 +107,19 @@ export class ModalUpdatePathComponent implements OnInit,AfterViewInit {
   zone1Alreadyloaded: boolean = false;
   zone2Alreadyloaded: boolean = false;
   zone3Alreadyloaded: boolean = false;
+  ressourcesPaysan = PaysanRessources;
+  ressourcesBucheron = BucheronRessources;
+  ressourcesMineur = MineurRessources;
+  ressourcesPecheur = PecheurRessources;
+  ressourcesAlchimiste = AlchimisteRessources;
+  bucheronSelected: boolean = false;
+  mineurSelected: boolean = false;
+  paysanSelected: boolean = false;
+  pecheurSelected: boolean = false;
+  alchimisteSelected: boolean = false;
 
     /** modal-update-path ctor */
-  constructor(private cd: ChangeDetectorRef, private pathService: PathService, private storePath: Store<frompath.State>, private loader: SpinnerVisibilityService,
+  constructor(private cd: ChangeDetectorRef, private pathService: PathService, private translateService: TranslateService, private storePath: Store<frompath.State>, private loader: SpinnerVisibilityService,
     private dialogRef: MatDialogRef<ModalUpdatePathComponent>,
     @Inject(MAT_DIALOG_DATA) private pathKey: PathInterface['key'], private fb: FormBuilder) {
     this.pathToUpdate = new Path();
@@ -80,7 +128,32 @@ export class ModalUpdatePathComponent implements OnInit,AfterViewInit {
         this.pathToUpdate = result;
       }
     );
-
+    this.pathService.changeJobEmitted$.subscribe(
+      (result) => {
+        switch (result) {
+          case this.translateService.instant('CREATEPATH.JOB_PAYSAN'): {
+            this.paysanSelected = !this.paysanSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_PECHEUR'): {
+            this.pecheurSelected = !this.pecheurSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_BUCHERON'): {
+            this.bucheronSelected = !this.bucheronSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_MINEUR'): {
+            this.mineurSelected = !this.mineurSelected;
+          }
+            break;
+          case this.translateService.instant('CREATEPATH.JOB_ALCHIMISTE'): {
+            this.alchimisteSelected = !this.alchimisteSelected;
+          }
+            break;
+          default:
+        }
+      });
   }
   async ngOnInit() {
     this.monsterLevelToCreate = new SpecificMonsterLevel;
@@ -90,6 +163,80 @@ export class ModalUpdatePathComponent implements OnInit,AfterViewInit {
   }
  async ngAfterViewInit() {
 
+  }
+  isRessourceUsed(ressource, job) {
+    var ressourceId = null;
+    if (job == 36) {
+      ressourceId = this.ressourcesPecheur[ressource];
+    }
+    /* mineur */
+    else if (job == 24) {
+      ressourceId = this.ressourcesMineur[ressource];
+    }
+    /* bucheron */
+    else if (job == 2) {
+      ressourceId = this.ressourcesBucheron[ressource];
+    }
+    /* paysan */
+    else if (job == 28) {
+      ressourceId = this.ressourcesPaysan[ressource];
+    }
+    /* alchimiste */
+    else if (job == 26) {
+      ressourceId = this.ressourcesAlchimiste[ressource];
+    }
+    if (this.pathToUpdate.listRessource.findIndex(o => o == ressourceId) != -1) {
+      if (job == 24 && !this.mineurSelected)
+        this.mineurSelected = true;
+      if (job == 36 && !this.pecheurSelected)
+        this.pecheurSelected = true;
+      if (job == 26 && !this.alchimisteSelected)
+        this.alchimisteSelected = true;
+      if (job == 2 && !this.bucheronSelected)
+        this.bucheronSelected = true;
+      if (job == 28 && !this.paysanSelected)
+        this.paysanSelected = true;
+      return true;
+    }
+    else
+      return false;
+  }
+
+  getRessource(ressource) {
+    return this.translateService.instant('CREATEPATH.' + ressource);
+  }
+  selectRessource(ressource, jobId) {
+    var ressourceId;
+    /* pecheur */
+    if (jobId == 36) {
+      ressourceId = this.ressourcesPecheur[ressource];
+    }
+    /* mineur */
+    else if (jobId == 24) {
+      ressourceId = this.ressourcesMineur[ressource];
+    }
+    /* bucheron */
+    else if (jobId == 2) {
+      ressourceId = this.ressourcesBucheron[ressource];
+    }
+    /* paysan */
+    else if (jobId == 28) {
+      ressourceId = this.ressourcesPaysan[ressource];
+    }
+    /* alchimiste */
+    else if (jobId == 26) {
+      ressourceId = this.ressourcesAlchimiste[ressource];
+    }
+
+    if (this.pathToUpdate.listRessource.find(o => o == ressourceId) == null) {
+
+      this.pathToUpdate.listRessource.push(ressourceId)
+    }
+    else {
+      var index = (this.pathToUpdate.listRessource.findIndex(o => o == ressourceId));
+      this.pathToUpdate.listRessource.splice(index, 1);
+    }
+    console.log(this.pathToUpdate.listRessource);
   }
 
   zoneChanged(event) {

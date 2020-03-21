@@ -16,6 +16,7 @@ export class Path {
   monsterQuantity?: SpecificMonsterQuantity[];
   monsterCapture?: CaptureMonsterQuantity[];
   pathAction: PathAction[];
+  listRessource: number[];
 }
 export class PathMinDisplayed {
   name: string;

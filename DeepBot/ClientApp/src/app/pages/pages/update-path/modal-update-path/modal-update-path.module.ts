@@ -32,6 +32,7 @@ import { MapCaniaAbraknydesRetourComponent } from '../../create-path/map-cania-a
 import { DialogListActionComponent } from '../../create-path/dialog-list-action/dialog-list-action.component';
 import { DialogCellComponent } from '../../create-path/dialog-cell/dialog-cell.component';
 import { SharedModule } from '../../../../../shared.module';
+import { WidgetQuickValueCenterModule } from '../../../../../@vex/components/widgets/widget-quick-value-center/widget-quick-value-center.module';
 
 @NgModule({
   declarations: [ModalUpdatePathComponent],
@@ -48,6 +49,7 @@ import { SharedModule } from '../../../../../shared.module';
     MatDatepickerModule,
     MatSliderModule,
     MatSlideToggleModule,
+    WidgetQuickValueCenterModule,
     MatTableModule,
     IconModule,
     MatExpansionModule,

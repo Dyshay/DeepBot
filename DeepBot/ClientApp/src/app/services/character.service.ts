@@ -30,6 +30,15 @@ export class CharacterService {
     return this.http.post<ConfigCharacter>(`${environment.apiURL}ConfigCharacter/UpdateConfigCharacter`, config, httpOptions);
   }
 
+  updateCharacterDB(character: Character) {
+    return this.http.post<Character>(`${environment.apiURL}Character/UpdateCharacter`, character, httpOptions);
+  }
+
+  startAndStopBot(key: number) {
+    return this.http.post<number>(`${environment.apiURL}Character/StartAndStopBot`, { key }, httpOptions);
+  }
+
+
   getCharacterBreedName(breedId: number) {
     switch (breedId) {
       case 10:
@@ -85,8 +94,8 @@ export class CharacterService {
     }
   }
 
-  getCharacterIcon(breedId: number) {
-    switch (breedId) {
+  getCharacterIcon(breedId: string) {
+    switch (parseInt(breedId)) {
       case 10:
         return 'assets/img/classe/m_feca.png';
       case 11:

@@ -76,5 +76,46 @@ namespace DeepBot.Controllers
 
             return null;
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("UpdateCharacter")]
+        public async Task<Character> UpdateCharacter(Character character)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user != null)
+            {
+                foreach (var item in user.Accounts)
+                {
+                    if(item.CurrentCharacter.Key == character.Key)
+                    {
+                        item.CurrentCharacter = character;
+                    }
+                }
+            }
+            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+            return character;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("StartAndStopBot")]
+        public async Task<int> StartAndStopBot(CharacterKey key)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            string tcpId;
+            foreach (var item in user.Accounts)
+            {
+                if (item.CurrentCharacter.Key == key.Key)
+                    tcpId = item.TcpId;
+            }
+
+                return key.Key;
+        }
+
+            
     }
 }

@@ -8,6 +8,7 @@ import { MatBottomSheet } from '@angular/material';
 import { ShareBottomSheetComponent } from '../../share-bottom-sheet/share-bottom-sheet.component';
 import { scaleInOutAnimation } from '../../../animations/scale-in-out.animation';
 import { ColorDef } from '../../../utils/tailwindcss.interface';
+import { PathService } from '../../../../app/services/path.service';
 
 @Component({
   selector: 'vex-widget-quick-value-center',
@@ -23,6 +24,8 @@ export class WidgetQuickValueCenterComponent implements OnInit {
   @Input() change: number;
   @Input() helpText: string;
   @Input() color: ColorDef;
+  @Input() checkable: boolean;
+  @Input() isCheck: boolean;
 
   faCaretUp = faCaretUp;
   faCaretDown = faCaretDown;
@@ -31,9 +34,13 @@ export class WidgetQuickValueCenterComponent implements OnInit {
 
   showButton: boolean;
 
-  constructor(private _bottomSheet: MatBottomSheet) { }
+  constructor(private _bottomSheet: MatBottomSheet,private pathService:PathService) { }
 
   ngOnInit() {
+  }
+
+  jobSelected() {
+    this.pathService.emitChangeJobNext(this.value);
   }
 
   openSheet() {

@@ -7,6 +7,9 @@ import { AccountActions } from '../app-reducers/account/actions';
 import * as fromAccount from '../app-reducers/account/reducers';
 import * as fromCharacter from '../app-reducers/character/reducers';
 import { CharacterActions } from '../app-reducers/character/actions';
+import { Character } from 'src/webModel/Character';
+import { Account } from 'src/webModel/Account';
+import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class TalkService {
   messageReceived = new EventEmitter<string>();
@@ -17,7 +20,8 @@ export class TalkService {
 
   constructor(private storeUser: Store<fromwebUser.State>,
     private storeAccount: Store<fromwebUser.State>,
-    private storeCharacter: Store<fromCharacter.State>
+    private storeCharacter: Store<fromCharacter.State>,
+    private toastr: ToastrService
   ) {
     this.createConnection();
     // this.startConnection();
@@ -38,8 +42,11 @@ export class TalkService {
   }
 
   createConnexionBot(accountName, accountPassword, serverId, isScan) {
-    console.log(accountName);
     this._hubConnection.invoke('CreateConnexion', accountName, accountPassword, serverId, isScan);
+  }
+
+  requestDisconnect(account: Account){
+    this._hubConnection.invoke('DisconnectCLI', account.tcpId, false);
   }
 
   public startConnection(): void {
@@ -57,14 +64,28 @@ export class TalkService {
         }, 5000);
       });
     this.GetClientMessage();
+    this.GetConnected();
+    this.GetChangeCurrentUser();
+    this.GetTcpId();
+    this.GetStatusMessage();
+  }
+
+  public FetchTcpId(key: number): void{
+    this._hubConnection.invoke("GetTcpId", key);
+  }
+
+  private GetTcpId(){
+    this._hubConnection.on("GetCurrentTcpId", (tcpId: string) => {
+      this.storeCharacter.dispatch(CharacterActions.updateTcpClient({tcpId}));
+    })
   }
 
   private GetClientMessage(): void {
     this._hubConnection.on("DispatchClient", (network, tcpId) => {
-      console.log(network);
       switch (network.type) {
         case 0:
-          this.storeAccount.dispatch(AccountActions.receveidLogs({ network }));
+          this.storeCharacter.dispatch(CharacterActions.getLogs({logs: network}))
+          // this.storeAccount.dispatch(AccountActions.receveidLogs({ network }));
           break;
         case 5:
           this.storeAccount.dispatch(AccountActions.receveidMaps({ network }));
@@ -77,6 +98,29 @@ export class TalkService {
           break;
         default:
           break;
+      }
+    })
+  }
+
+  private GetConnected(): void{
+    this._hubConnection.on("StatusAccount", (accounts) => {
+      this.storeUser.dispatch(webUserActions.getConnectedBot(accounts));
+    })
+  }
+  private GetChangeCurrentUser():void{
+    this._hubConnection.on("UpdateCharac", (character : Character, tcpId: string) => {
+      this.storeUser.dispatch(webUserActions.getBotNav());
+      this.storeCharacter.dispatch(CharacterActions.updateAccountCharacter({ character, tcpId}));
+    })
+  }
+
+  private GetStatusMessage(): void{
+    this._hubConnection.on("CLIRequiredMessage", (isConnectedCLI, id, isConnectedAcc) => {
+      if(isConnectedCLI){
+        this.storeAccount.dispatch(AccountActions.updateConnectedStatus({id, isConnected: isConnectedAcc}))
+      }
+      else{
+        this.toastr.error("", "Veuillez lancé le programme pour effectuer des actions")
       }
     })
   }

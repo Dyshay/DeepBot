@@ -37,6 +37,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\webModel\Enum\RessourcesMetier.ts" />
+    <None Remove="ClientApp\src\webModel\Enum\SpellBreed.ts" />
     <None Remove="ClientApp\src\webModel\file.ts" />
     <None Remove="ClientApp\src\webModel\Interface\path.ts" />
     <None Remove="ClientApp\src\webModel\MapMessage.ts" />
@@ -56,6 +58,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\webModel\Enum\RessourcesMetier.ts" />
+    <TypeScriptCompile Include="ClientApp\src\webModel\Enum\SpellBreed.ts" />
     <TypeScriptCompile Include="ClientApp\src\webModel\Interface\path.ts" />
     <TypeScriptCompile Include="ClientApp\src\webModel\MapMessage.ts" />
     <TypeScriptCompile Include="ClientApp\src\webModel\Utility\PathCreator\Areas.ts" />
