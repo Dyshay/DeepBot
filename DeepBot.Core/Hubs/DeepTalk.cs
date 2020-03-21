@@ -25,15 +25,19 @@ namespace DeepBot.Core.Hubs
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
         private Task<UserDB> UserDB => Manager.FindByIdAsync(userId);
         private string CliID => Manager.FindByIdAsync(userId).Result.CliConnectionId;
+        private RoleManager<RoleDB> RoleManager;
 
         public static Dictionary<string, bool> IsScans = new Dictionary<string, bool>();
         public readonly IMongoCollection<UserDB> _userCollection;
 
         public async Task ReceivedHandler(string package, string tcpId)
         {
-            var CurrentUser = await UserDB;
+            if (await IsAllowedAPI())
+            {
+                var CurrentUser = await UserDB;
 
-            Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
+                Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
+            }
         }
 
         public async Task JoinRoomCLI()
@@ -51,9 +55,12 @@ namespace DeepBot.Core.Hubs
 
         public async Task JoinRoomClient()
         {
-            var CurrentUser = await UserDB;
-            GetConnected().Wait();
-            await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
+            if (await IsAllowedAPI())
+            {
+                var CurrentUser = await UserDB;
+                GetConnected().Wait();
+                await Groups.AddToGroupAsync(Context.ConnectionId, GetApiKey());
+            }
         }
 
         public async Task GetTcpId(int key)
@@ -75,37 +82,40 @@ namespace DeepBot.Core.Hubs
 
         public async Task CreateConnexion(string userName, string password, short serverId, bool isScan = false)
         {
-            string tcpId = GetTcpId();
-
-            var CurrentUser = await UserDB;
-
-            if (CurrentUser.CliConnectionId == "")
-                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", false).Wait();
-            else
+            if (await IsAllowedAPI())
             {
-                if (isScan)
-                    CurrentUser
-                        .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, IsScan = isScan, Server = new Server() { Id = serverId } });
+                string tcpId = GetTcpId();
 
-                else if (!isScan)
+                var CurrentUser = await UserDB;
+
+                if (CurrentUser.CliConnectionId == "")
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", false).Wait();
+                else
                 {
-                    if (!string.IsNullOrEmpty(CurrentUser.CliConnectionId))
-                        ConnectedBot[CurrentUser.Id].Add(tcpId);
+                    if (isScan)
+                        CurrentUser
+                            .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
 
-                    GetConnected().Wait();
-                    CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
-                    CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).IsConnected = true;
-                    var account = CurrentUser.Accounts.Find(c => c.AccountName == userName);
-                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account.CurrentCharacter).Wait();
+                    else if (!isScan)
+                    {
+                        if (!string.IsNullOrEmpty(CurrentUser.CliConnectionId))
+                            ConnectedBot[CurrentUser.Id].Add(tcpId);
+
+                        GetConnected().Wait();
+                        CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
+                        CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected = true;
+                        var account = CurrentUser.Accounts.Find(c => c.AccountName == userName);
+                        Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account.CurrentCharacter).Wait();
+                    }
+
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected).Wait();
+                    await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
+
+                    await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
+
+                    if (isScan)
+                        IsScans.Add(tcpId, isScan);
                 }
-
-                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).IsConnected).Wait();
-                await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
-
-                await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
-
-                if (isScan)
-                    IsScans.Add(tcpId, isScan);
             }
 
         }
@@ -152,6 +162,11 @@ namespace DeepBot.Core.Hubs
             await Clients.Client(CliID).SendAsync("CheckCliScan", tcpId);
         }
 
+        private async Task ExitCLI()
+        {
+            await Clients.Client(CliID).SendAsync("Exit");
+        }
+
         #endregion
 
         public async Task GetConnected()
@@ -189,10 +204,39 @@ namespace DeepBot.Core.Hubs
             }
         }
 
-        public DeepTalk(UserManager<UserDB> manager, IMongoCollection<UserDB> userCollection)
+        private async Task<bool> IsAllowedAPI()
+        {
+            var CurrentUser = await UserDB;
+
+            var Roles = await Manager.GetRolesAsync(CurrentUser);
+
+            if (CurrentUser.ApiKey.EndDate >= DateTime.Now || (Roles as List<string>).Find(role => role == "ADMINISTRATEUR") != null)
+                return true;
+            else
+            {
+                var accountsOnline = CurrentUser.Accounts.FindAll(c => c.TcpId != "").ToArray();
+
+                for (int i = 0; i < accountsOnline.Length; i++)
+                {
+                    await Clients.Client(CurrentUser.CliConnectionId).SendAsync("Disconnect", accountsOnline[i].TcpId);
+                    CurrentUser.Accounts.Find(c => c.Key == accountsOnline[i].Key).TcpId = "";
+                }
+
+                _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser).Wait();
+
+                Manager.UpdateAsync(CurrentUser).Wait();
+
+                await ExitCLI();
+
+                return false;
+            }
+        }
+
+        public DeepTalk(UserManager<UserDB> manager, IMongoCollection<UserDB> userCollection, RoleManager<RoleDB> roleManager)
         {
             Manager = manager;
             _userCollection = userCollection;
+            RoleManager = roleManager;
         }
     }
 }
