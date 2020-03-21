@@ -14,13 +14,27 @@ namespace DeepBot.Data.Model.Script
         private int CurrentMapId { get; set; }
         private int ActionNumber { get; set; }
 
-        public void Start(Character character)
+        public ScriptManager(Character character)
         {
             Character = character;
-            Running = true;
-            Character.OnStateChanged += ProcessAction;
+        }
 
-            character.ActionManager.Start(character);
+        public void StartStop()
+        {
+            if (Running)
+            {
+                Debug.WriteLine("Stop Script");
+                Running = false;
+                Character.OnStateChanged -= ProcessAction;
+                Character.ActionManager.Stop();
+            }
+            else
+            {
+                Debug.WriteLine("Start Script");
+                Running = true;
+                Character.OnStateChanged += ProcessAction;
+                Character.ActionManager.Start();
+            }
         }
 
         private void ProcessAction()
@@ -29,12 +43,6 @@ namespace DeepBot.Data.Model.Script
                 return;
 
             CheckCharacter(Character);
-        }
-
-        public void Stop()
-        {
-            Running = false;
-            Character.OnStateChanged -= ProcessAction;
         }
 
         private void CheckCharacter(Character character)

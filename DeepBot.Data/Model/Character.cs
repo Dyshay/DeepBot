@@ -77,5 +77,12 @@ namespace DeepBot.Data.Model
 
         [BsonIgnore]
         public Action OnStateChanged;
+
+        [BsonConstructor]
+        public Character()
+        {
+            ScriptManager = new ScriptManager(this);
+            ActionManager = new ActionManager(this);
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DeepBot.ControllersModel;
+using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
@@ -106,16 +107,12 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            string tcpId;
             foreach (var item in user.Accounts)
             {
                 if (item.CurrentCharacter.Key == key.Key)
-                    tcpId = item.TcpId;
+                    Storage.Instance.Characters[key.Key].ScriptManager.StartStop();
             }
-
-                return key.Key;
+            return key.Key;
         }
-
-            
     }
 }

@@ -85,7 +85,7 @@ namespace DeepBot.Core.Hubs
             {
                 if (isScan)
                     CurrentUser
-                        .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
+                        .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, IsScan = isScan, Server = new Server() { Id = serverId } });
 
                 else if (!isScan)
                 {
@@ -94,12 +94,12 @@ namespace DeepBot.Core.Hubs
 
                     GetConnected().Wait();
                     CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
-                    CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected = true;
+                    CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).IsConnected = true;
                     var account = CurrentUser.Accounts.Find(c => c.AccountName == userName);
                     Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account.CurrentCharacter).Wait();
                 }
 
-                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected).Wait();
+                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).IsConnected).Wait();
                 await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
 
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
@@ -130,12 +130,12 @@ namespace DeepBot.Core.Hubs
 
                 if (!invisible)
                 {
-                    currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected = false;
+                    currentUser.Accounts.Find(c => c.TcpId == tcpId).IsConnected = false;
                     currentUser.Accounts.Find(c => c.TcpId == tcpId).TcpId = "";
                     await Manager.UpdateAsync(currentUser);
                 }
 
-                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected).Wait();
+                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).IsConnected).Wait();
                 await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
             }
         }
@@ -178,7 +178,7 @@ namespace DeepBot.Core.Hubs
             {
                 ConnectedBot[CurrentUser.Id] = new List<string>();
                 CurrentUser.CliConnectionId = "";
-                CurrentUser.Accounts.ForEach(c => { c.TcpId = ""; c.isConnected = false; });
+                CurrentUser.Accounts.ForEach(c => { c.TcpId = ""; c.IsConnected = false; });
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
                 CurrentUser.Accounts.ForEach(a =>

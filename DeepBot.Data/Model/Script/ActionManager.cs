@@ -16,9 +16,13 @@ namespace DeepBot.Data.Model.Script
         private Character Character { get; set; }
         private bool Running { get; set; } = false;
 
-        public void Start(Character character)
+        public ActionManager(Character character)
         {
             Character = character;
+        }
+
+        public void Start()
+        {
             Running = true;
             Task.Factory.StartNew(() => Run());
         }
@@ -26,6 +30,7 @@ namespace DeepBot.Data.Model.Script
         public void Stop()
         {
             Running = false;
+            ActionsQueue = new BlockingCollection<MapAction>();
         }
 
         private void Run()
