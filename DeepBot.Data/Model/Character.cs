@@ -24,6 +24,7 @@ namespace DeepBot.Data.Model
         public string Name { get; set; }
         public byte Level { get; set; }
         public int ServerId { get; set; }
+        public int RegenTime { get; set; }
         public short BreedId { get; set; }
         public int AvailableCharactericsPts { get; set; }
         public int AvailableSpellPts { get; set; }
@@ -66,11 +67,14 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public ScriptManager ScriptManager { get; set; }
         [BsonIgnore]
+        public ActionManager ActionManager { get; set; }
+        [BsonIgnore]
         public byte Sex { get; set; }
         [BsonIgnore]
         public bool HasGroup => Group != null;
         [BsonIgnore]
         public bool IsGroupLeader => !HasGroup || Group.Leader == this;
+
         [BsonIgnore]
         public Action OnStateChanged;
     }

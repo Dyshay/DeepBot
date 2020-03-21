@@ -11,6 +11,7 @@
         WALKING,
         HEALING,
         IDLE,
-        DIALOGING
+        DIALOGING,
+        WAITING_FOLLOWERS
     }
 }

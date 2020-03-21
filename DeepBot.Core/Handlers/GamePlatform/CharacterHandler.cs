@@ -95,9 +95,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ILS")]
         public void RegenTimerHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            int regenTime = Convert.ToInt32(package.Substring(3));
-            // TODO
-            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Votre personnage récupère 1 pdv chaque {regenTime / 1000} secondes", tcpId), tcpId).Wait();
+            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            characterGame.RegenTime = Convert.ToInt32(package.Substring(3));
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Votre personnage récupère 1 pdv chaque {characterGame.RegenTime / 1000} secondes", tcpId), tcpId).Wait();
         }
 
         [Receiver("ILS")]
