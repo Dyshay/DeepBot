@@ -32,6 +32,7 @@ import { MapBrakmarComponent } from './app/pages/pages/create-path/map-brakmar/m
 import { MapBrakmarBanqueComponent } from './app/pages/pages/create-path/map-brakmar-banque/map-brakmar-banque.component';
 import { MapBrakmarRetourComponent } from './app/pages/pages/create-path/map-brakmar-retour/map-brakmar-retour.component';
 import { MapDonjonBouftouComponent } from './app/pages/pages/create-path/map-donjon-bouftou/map-donjon-bouftou.component';
+import { DialogAddConditionComponent } from './app/pages/pages/create-ia/dialog-add-condition/dialog-add-condition.component';
 
 @NgModule({
   imports: [
@@ -70,7 +71,9 @@ import { MapDonjonBouftouComponent } from './app/pages/pages/create-path/map-don
     MapBrakmarComponent, MapBrakmarBanqueComponent, MapBrakmarRetourComponent,
     MapDonjonBouftouComponent,
     DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
-    DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent
+    DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent,
+  /*IA */
+    DialogAddConditionComponent
   ],
   exports: [
     MapBontaComponent, MapBontaBanqueComponent, MapBontaRetourComponent,
@@ -80,9 +83,11 @@ import { MapDonjonBouftouComponent } from './app/pages/pages/create-path/map-don
     DialogZaapComponent, DialogZaapiComponent, DialogListActionComponent,
     MapBrakmarComponent, MapBrakmarBanqueComponent, MapBrakmarRetourComponent,
     MapDonjonBouftouComponent,
-    DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent
+    DialogCellComponent, DialogUseItemComponent, DialogInteractionComponent,
+  /* IA*/
+    DialogAddConditionComponent
   ],
-  entryComponents: [DialogZaapComponent, DialogCellComponent, DialogUseItemComponent, DialogListActionComponent, DialogInteractionComponent, DialogZaapiComponent],
+  entryComponents: [DialogZaapComponent, DialogCellComponent, DialogUseItemComponent, DialogListActionComponent, DialogInteractionComponent, DialogZaapiComponent, DialogAddConditionComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule {

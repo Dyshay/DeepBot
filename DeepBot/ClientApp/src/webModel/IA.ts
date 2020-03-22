@@ -19,7 +19,7 @@ export class SpellAction {
 }
 export class ConditionalAction {
   operator: OperatorType;
-  ConditionalType: ConditionalType;
+  conditionalType: ConditionalType;
   compareValue:number;
 }
 
@@ -85,10 +85,26 @@ export enum ConditionalType {
   NbEnemyHitted = 11,
   Turn = 12
 }
+export namespace ConditionalType {
+  export function values() {
+    return Object.keys(ConditionalType).filter(
+      (type) => isNaN(<any>type) && type !== 'values'
+    );
+  }
+}
 export enum OperatorType {
   Inferior = 0,
   InferiorEqual = 1,
   Superior = 2,
   SuperiorEqual = 3,
-  Equal = 4
+  Equal = 4,
+  NotEqual =5
+}
+
+export namespace OperatorType {
+  export function values() {
+    return Object.keys(OperatorType).filter(
+      (type) => isNaN(<any>type) && type !== 'values'
+    );
+  }
 }

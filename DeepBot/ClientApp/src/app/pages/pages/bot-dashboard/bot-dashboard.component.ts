@@ -119,7 +119,6 @@ export class BotDashboardComponent implements OnInit, OnChanges {
                     this.groupName = result.find(o => o.key == this.character.fk_Group).name;
                 }
               );
-
             }
           }
         })

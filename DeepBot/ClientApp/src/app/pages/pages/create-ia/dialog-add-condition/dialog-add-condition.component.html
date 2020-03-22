@@ -1,0 +1,34 @@
+<h1 mat-dialog-title>{{ 'CREATEIA.CREATECONDITION' | translate }}</h1>
+<div mat-dialog-content>
+
+  <div fxLayout="column" fxLayoutAlign="center center">
+
+    <mat-form-field class="full-width">
+      <mat-label>{{ 'CREATEIA.CONDITIONTYPE' | translate }}</mat-label>
+      <mat-select required [(ngModel)]="conditiontoAdd.conditionalType">
+        <mat-option [value]="enum" *ngFor="let enum of conditionalType.values()">
+          {{  getTranslation(enum) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+      <mat-label>{{ 'CREATEIA.CONDITIONOPERATOR' | translate }}</mat-label>
+      <mat-select required [(ngModel)]="conditiontoAdd.operator" [disabled]=" conditiontoAdd.conditionalType == 'IsInvoc' || conditiontoAdd.conditionalType == 'IsBoss'">
+        <mat-option [value]="enum" *ngFor="let enum of operator.values()">
+          {{  getTranslation(enum) }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>{{ 'CREATEIA.VALUECOMPARATOR' | translate }}</mat-label>
+      <input type="number" matInput required [(ngModel)]="conditiontoAdd.compareValue" [disabled]="conditiontoAdd.conditionalType == 'IsInvoc' || conditiontoAdd.conditionalType == 'IsBoss'">
+      <span matSuffix *ngIf="conditiontoAdd.conditionalType == 'Life' || conditiontoAdd.conditionalType == 'Enemylife'">&nbsp; %</span>
+    </mat-form-field>
+  </div>
+
+</div>
+<div mat-dialog-actions>
+  <button mat-raised-button color="primary" (click)="onNoClick()">{{ 'GLOBAL.CANCEL' | translate }}</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="conditiontoAdd" cdkFocusInitial>{{ 'GLOBAL.VALIDATE' | translate }}</button>
+</div>
