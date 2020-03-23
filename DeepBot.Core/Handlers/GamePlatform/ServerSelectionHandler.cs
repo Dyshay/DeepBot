@@ -6,6 +6,7 @@ using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
+using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
 using MongoDB.Driver;
 using System;
@@ -30,7 +31,10 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("AV0")]
         public void GetListCharacters(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            hub.SendPackage("Ages", tcpId);
+            Guid fakeGuid = Guid.NewGuid();
+            var guid = fakeGuid.EncodeBase64String().Replace("_", string.Empty).Replace("@", string.Empty).Substring(0, new Random().Next(11, 16));
+            hub.SendPackage("Agfr", tcpId);
+            hub.SendPackage($"Ai{guid}\n\0", tcpId);
             hub.SendPackage("AL", tcpId);
             hub.SendPackage("Af", tcpId);
         }
@@ -64,6 +68,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                     if (characterName.ToLower().Equals(currentAccount.CurrentCharacter.Name.ToLower()))
                     {
                         hub.SendPackage($"AS{id}", tcpId, true);
+                        hub.SendPackage($"Af", tcpId);
                         hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
                         Debug.WriteLine("Add character " + currentAccount.CurrentCharacter.Key + " to memory");
                         Storage.Instance.Characters[currentAccount.CurrentCharacter.Key] = currentAccount.CurrentCharacter;
@@ -77,7 +82,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Characters = characters;
                 manager.ReplaceOneAsync(c => c.Id == user.Id, user).Wait();
                 hub.DispatchToClient(new CharactersMessage(characters, tcpId), tcpId).Wait();
-                hub.DisconnectCli(tcpId).Wait();
+                hub.DisconnectCli(tcpId, false).Wait();
             }
         }
 
