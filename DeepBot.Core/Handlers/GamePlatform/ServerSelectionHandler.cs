@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DeepBot.Core.Handlers.GamePlatform
 {
@@ -31,10 +32,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("AV0")]
         public void GetListCharacters(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            Guid fakeGuid = Guid.NewGuid();
-            var guid = fakeGuid.EncodeBase64String().Replace("_", string.Empty).Replace("@", string.Empty).Substring(0, new Random().Next(11, 16));
+            var account = user.Accounts.Find(c => c.TcpId == tcpId);
             hub.SendPackage("Agfr", tcpId);
-            hub.SendPackage($"Ai{guid}\n\0", tcpId);
+            hub.SendPackage($"Ai{account.ClientId}\n\0", tcpId);
             hub.SendPackage("AL", tcpId);
             hub.SendPackage("Af", tcpId);
         }
@@ -105,6 +105,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             inventory.Items.DeserializeItems(splittedData[9]);
 
             characterGame.State = CharacterStateEnum.IDLE;
+            Task.Delay(new Random().Next(350));
             hub.SendPackage("GC1", tcpId);
             Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();

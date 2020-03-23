@@ -27,6 +27,7 @@ namespace DeepBot.Data.Model
         public CharacterStateEnum State { get; set; } = CharacterStateEnum.DISCONNECTED;
         public Server Server { get; set; }
         public bool isScan { get; set; }
+        public string ClientId { get;set; }
 
         /// <summary>
         /// CLI Informations attached to account

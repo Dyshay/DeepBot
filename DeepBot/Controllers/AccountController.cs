@@ -1,6 +1,7 @@
 ﻿using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -70,6 +71,7 @@ namespace DeepBot.Controllers
             account.CreationDate = DateTime.Now;
             account.ExpirationDateBan = null;
             account.EndAnakamaSubscribe = null;
+            account.ClientId = Guid.NewGuid().EncodeBase64String().Replace("_", string.Empty).Replace("@", string.Empty).Substring(0, new Random().Next(11, 16));
 
             account.CurrentCharacter.Fk_Configuration = Database.ConfigsCharacter.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
             account.CurrentCharacter.Fk_Inventory = Database.Inventories.Find(o => o.Fk_Character == account.CurrentCharacter.Key).FirstOrDefault().Key;
