@@ -115,9 +115,11 @@ export class TalkService {
   }
 
   private GetStatusMessage(): void{
-    this._hubConnection.on("CLIRequiredMessage", (isConnectedCLI, id, isConnectedAcc) => {
-      if(isConnectedCLI){
-        this.storeAccount.dispatch(AccountActions.updateConnectedStatus({id, isConnected: isConnectedAcc}))
+    this._hubConnection.on("CLIRequiredMessage", (isConnectedCLI, id, isConnectedAcc, isScan) => {
+      if (isConnectedCLI) {
+        if (!isScan) {
+          this.storeAccount.dispatch(AccountActions.updateConnectedStatus({ id, isConnected: isConnectedAcc }));
+        }
       }
       else{
         this.toastr.error("", "Veuillez lancé le programme pour effectuer des actions")

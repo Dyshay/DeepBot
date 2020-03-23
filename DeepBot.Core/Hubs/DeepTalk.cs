@@ -92,7 +92,15 @@ namespace DeepBot.Core.Hubs
                 {
                     if (isScan)
                         CurrentUser
-                            .Accounts.Add(new Account { TcpId = tcpId, AccountName = userName, Password = password, isScan = isScan, Server = new Server() { Id = serverId } });
+                            .Accounts.Add(new Account
+                            {
+                                TcpId = tcpId,
+                                AccountName = userName,
+                                Password = password,
+                                isScan = isScan,
+                                Server = new Server() { Id = serverId },
+                                ClientId = Guid.NewGuid().EncodeBase64String().Replace("_", string.Empty).Replace("@", string.Empty).Substring(0, new Random().Next(11, 16))
+                            });
 
                     else if (!isScan)
                     {
@@ -106,7 +114,7 @@ namespace DeepBot.Core.Hubs
                         Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account.CurrentCharacter).Wait();
                     }
 
-                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected).Wait();
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected, isScan).Wait();
                     await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
 
                     await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
@@ -143,7 +151,7 @@ namespace DeepBot.Core.Hubs
                     await Manager.UpdateAsync(currentUser);
                 }
 
-                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected).Wait();
+                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected, invisible).Wait();
                 await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
             }
         }

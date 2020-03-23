@@ -34,7 +34,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         {
             var account = user.Accounts.Find(c => c.TcpId == tcpId);
             hub.SendPackage("Agfr", tcpId);
-            hub.SendPackage($"Ai{account.ClientId}\n\0", tcpId);
+            hub.SendPackage($"Ai{account.ClientId}", tcpId);
             hub.SendPackage("AL", tcpId);
             hub.SendPackage("Af", tcpId);
         }
@@ -82,7 +82,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Characters = characters;
                 manager.ReplaceOneAsync(c => c.Id == user.Id, user).Wait();
                 hub.DispatchToClient(new CharactersMessage(characters, tcpId), tcpId).Wait();
-                hub.DisconnectCli(tcpId, false).Wait();
+                hub.DisconnectCli(tcpId, true).Wait();
             }
         }
 
