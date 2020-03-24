@@ -36,7 +36,14 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         public void GetAccountUserName(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
 
         [Receiver("Af")]
-        public void GetLoginQueue(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) => hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "[File d'attente] Position " + package[2] + "/" + package[4], tcpId), tcpId).Wait();
+        public void GetLoginQueue(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        {
+            string[] queueData = package.Substring(2).Split('|');
+            hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "[File d'attente] Position " + queueData[0] + "/" + queueData[1], tcpId), tcpId).Wait();
+            if (int.Parse(queueData[0]) > 100)
+                hub.SendPackage("Af", tcpId);
+
+        }
 
         [Receiver("AH")]
         public void GetServerState(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
