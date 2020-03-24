@@ -73,6 +73,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
   groupName: string = '';
   // logs$ = this.accountStore.pipe(select(fromAccount.getLogs));
   logs$ = this.characterStore.pipe(select(fromCharacter.getCurrentlogs));
+  tcp$ = this.characterStore.pipe(select(fromCharacter.getCurrentTcp));
   map$ = this.accountStore.pipe(select(fromAccount.getMap));
   characteristics$ = this.characterStore.pipe(select(fromCharacter.getCharacteristics));
   connectedAccounts$ = this.webUser.pipe(select(fromWeb.getConnectedBot));
@@ -97,7 +98,7 @@ export class BotDashboardComponent implements OnInit, OnChanges {
                 for (let c = 0; c < accountStoring.length; c++) {
                   if (accountStoring[c].currentCharacter.key === this.character.key) {
                     this.characterStore.dispatch(CharacterActions.updateAccountCharacter({ character: this.character, tcpId: this.character.key.toString() }));
-                    this.accountStore.dispatch(AccountActions.updateCurrentAccount({id: result[i].key}));
+                    this.accountStore.dispatch(AccountActions.updateCurrentAccount({ id: result[i].key }));
                   }
 
                 }
@@ -122,12 +123,14 @@ export class BotDashboardComponent implements OnInit, OnChanges {
 
 
   initConnection(acc: Account) {
-      this.deeptalk.createConnexionBot(acc.accountName, acc.password, acc.server.id, false);
-      this.deeptalk.FetchTcpId(this.character.key);
+    this.deeptalk.createConnexionBot(acc.accountName, acc.password, acc.server.id, false);
+    this.deeptalk.FetchTcpId(this.character.key);
   }
 
-  disconnect(acc: Account){
-    this.deeptalk.requestDisconnect(acc);
+  disconnect(acc: Account) {
+    this.tcp$.subscribe(c => {
+      this.deeptalk.requestDisconnect(c);
+    })
   }
 
   links: Link[] = [

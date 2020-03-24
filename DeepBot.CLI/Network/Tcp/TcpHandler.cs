@@ -147,7 +147,7 @@ namespace DeepBot.CLI.Network.Tcp
                 if (Socket != null && Socket.Connected)
                 {
                     Socket.Shutdown(SocketShutdown.Both);
-                    Socket.Disconnect(false);
+                    Socket.Disconnect(true);
                     Socket.Close();
                 }
             }
@@ -160,7 +160,7 @@ namespace DeepBot.CLI.Network.Tcp
                 if (Socket != null && Socket.Connected)
                 {
                     Socket.Shutdown(SocketShutdown.Both);
-                    Socket.Disconnect(false);
+                    Socket.Disconnect(true);
                     Socket.Close();
                 }
 

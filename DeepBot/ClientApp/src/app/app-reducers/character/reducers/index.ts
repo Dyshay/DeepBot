@@ -32,3 +32,4 @@ export const getAllCharacters = createSelector(selectCharacterStatusState, fromC
 export const getAllCurrentCharacters = createSelector(selectCharacterStatusState, fromCharacter.getAllCurrentCharacters);
 export const getCurrentCharacter = createSelector(selectCharacterStatusState, fromCharacter.getCurrrentUser);
 export const getCurrentlogs = createSelector(selectCharacterStatusState, fromCharacter.getLogsUser);
+export const getCurrentTcp = createSelector(selectCharacterStatusState, fromCharacter.getCurrentTcp);

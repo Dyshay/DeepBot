@@ -108,3 +108,4 @@ export const getAllCharacters = (State: State) => State.allCharacters;
 export const getCurrrentUser = (state: State) => state.currentUser;
 export const getAllCurrentCharacters = (State: State) => State.allCurrentCharacters;
 export const getLogsUser = (state: State) => state.logsCharacters[state.currentTcp];
+export const getCurrentTcp = (state: State) => state.currentTcp;

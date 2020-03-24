@@ -136,23 +136,27 @@ namespace DeepBot.Core.Hubs
         public async Task DisconnectCli(string tcpId, bool invisible)
         {
             var currentUser = await UserDB;
+            var account = currentUser.Accounts.Find(c => c.TcpId == tcpId);
 
             if (currentUser.CliConnectionId == "")
                 Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", false).Wait();
             else
             {
+                await Clients.Client(currentUser.CliConnectionId).SendAsync("Disconnect", tcpId);
+
                 if (ConnectedBot[userId] != null)
                     ConnectedBot[userId].Remove(tcpId);
 
                 if (!invisible)
                 {
-                    currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected = false;
-                    currentUser.Accounts.Find(c => c.TcpId == tcpId).TcpId = "";
-                    await Manager.UpdateAsync(currentUser);
+                    account.isConnected = false;
+                    await _userCollection.ReplaceOneAsync(c => c.Id == currentUser.Id, currentUser);
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected, false).Wait();
                 }
 
-                Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected, invisible).Wait();
-                await Clients.Client(CliID).SendAsync("Disconnect", tcpId);
+                if (invisible)
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected, true).Wait();
+
             }
         }
 
