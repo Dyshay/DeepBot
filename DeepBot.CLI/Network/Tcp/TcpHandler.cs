@@ -104,7 +104,7 @@ namespace DeepBot.CLI.Network.Tcp
                     else
                         PackageReceiver.Receive(packet, Account, TcpId);
                 }
-                if (IsConnected())
+                if (IsConnected() && !Disposed)
                     Socket.BeginReceive(Buffer, 0, Buffer.Length, SocketFlags.None, new AsyncCallback(ReceptionCallBack), Socket);
             }
             else
@@ -147,7 +147,7 @@ namespace DeepBot.CLI.Network.Tcp
                 if (Socket != null && Socket.Connected)
                 {
                     Socket.Shutdown(SocketShutdown.Both);
-                    Socket.Disconnect(true);
+                    Socket.Disconnect(false);
                     Socket.Close();
                 }
             }
@@ -161,7 +161,7 @@ namespace DeepBot.CLI.Network.Tcp
                 if (Socket != null && Socket.Connected)
                 {
                     Socket.Shutdown(SocketShutdown.Both);
-                    Socket.Disconnect(true);
+                    Socket.Disconnect(false);
                     Socket.Close();
                 }
 
