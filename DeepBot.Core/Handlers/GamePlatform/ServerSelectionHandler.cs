@@ -105,7 +105,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
             inventory.Items.DeserializeItems(splittedData[9]);
 
             characterGame.State = CharacterStateEnum.IDLE;
-            Task.Delay(new Random().Next(350));
+            Task.Delay(new Random().Next(150,450));
             hub.SendPackage("GC1", tcpId);
             Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
