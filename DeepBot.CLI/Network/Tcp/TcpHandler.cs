@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DeepBot.CLI.Network.Tcp
 {
-    public class TcpHandler
+    public class TcpHandler : IDisposable
     {
         private Socket Socket { get; set; }
         private byte[] Buffer { get; set; }
@@ -152,8 +152,9 @@ namespace DeepBot.CLI.Network.Tcp
                 }
             }
         }
-
-        public void Dispose()
+        ~TcpHandler() => Dispose(false);
+        public void Dispose() => Dispose(true);
+        protected virtual void Dispose(bool disposing)
         {
             if (!Disposed)
             {
@@ -164,8 +165,11 @@ namespace DeepBot.CLI.Network.Tcp
                     Socket.Close();
                 }
 
-                Socket.Dispose();
-                Semaphore.Dispose();
+                if (disposing)
+                {
+                    Socket.Dispose();
+                    Semaphore.Dispose();
+                }
 
                 Semaphore = null;
                 Socket = null;

@@ -101,7 +101,7 @@ namespace DeepBot.CLI.Model
             var tcpClient = Clients[tcpId];
             try
             {
-                tcpClient.Disconnect();
+                tcpClient.Dispose();
             }
             catch (Exception)
             {
