@@ -98,7 +98,19 @@ namespace DeepBot.CLI.Model
 
         private void Disconnect(string tcpId)
         {
-            Clients.Remove(tcpId);
+            var tcpClient = Clients[tcpId];
+            try
+            {
+                tcpClient.Disconnect();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                Clients.Remove(tcpId);
+            }
         }
 
         private void SendPackage(string package, bool needResponse, string tcpId)
