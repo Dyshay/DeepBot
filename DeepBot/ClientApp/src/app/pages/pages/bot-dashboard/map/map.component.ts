@@ -13,10 +13,10 @@ import { CellTypes } from '../../../../../webModel/Enum/CellTypes';
 /** map component*/
 export class MapComponent implements OnChanges {
   @Input() map: MapMessage;
-  TileWidth = 43; // 43
-  TileHeight = 21.5; // 21.5
-  MAP_WIDTH = 14;
-  MAP_HEIGHT = 20;
+  TileWidth = 53; // 43
+  TileHeight = 27; // 21.5
+  MAP_WIDTH = 15;
+  MAP_HEIGHT = 17;
   CellsCount = 560;
   // Vars
   Canvas = undefined;
@@ -109,10 +109,10 @@ export class MapComponent implements OnChanges {
     for (var CellID in this.CELLPOS) {
       if (this.CELLPOS[CellID].Points !== undefined) {
         if (this.CELLPOS[CellID].mov) {
-          this._DrawTileFromPos(_Canvas, this.CELLPOS[CellID].Points, 0xBBBBBB, undefined);
+          this._DrawTileFromPos(_Canvas, this.CELLPOS[CellID].Points, 0xBBBBBB, undefined, false);
         }
         else {
-          this._DrawTileFromPos(_Canvas, this.CELLPOS[CellID].Points, 0xFFFFFF, 0xBBBBBB); // Affichage de la grille
+          this._DrawTileFromPos(_Canvas, this.CELLPOS[CellID].Points, 0xFFFFFF, 0xBBBBBB, true); // Affichage de la grille
           if (this.Config.DisplayCellID == false) this._DrawTextFromPos(_Canvas, this.CELLPOS[CellID].Points, CellID, "#e74c3c");
         }
 
@@ -171,7 +171,7 @@ export class MapComponent implements OnChanges {
   _Refresh() { this._Bind([this.Storage.Canvas.Map, this.Storage.Canvas.Entities]); }
 
   // Core function for Drawing rect tile
-  _DrawTileFromPos(canvas, Points, color, borderColor) {
+  _DrawTileFromPos(canvas, Points, color, borderColor, isWalkable) {
     let target = canvas.getContext("2d");
     var paddingTop = Points.down.y - Points.top.y;
     if (color != undefined) target.fillStyle = "#" + color.toString(16);
@@ -179,15 +179,44 @@ export class MapComponent implements OnChanges {
       target.strokeStyle = "#" + borderColor.toString(16);
       target.lineWidth = .5;
     }
+    if(isWalkable){
     target.beginPath();
     target.moveTo(Points.top.x, Points.top.y + paddingTop);
     target.lineTo(Points.right.x, Points.right.y + paddingTop);
     target.lineTo(Points.down.x, Points.down.y + paddingTop);
     target.lineTo(Points.left.x, Points.left.y + paddingTop);
     target.closePath();
-
     if (color != undefined) target.fill();
     if (borderColor != undefined) target.stroke();
+    }
+    if(!isWalkable){
+      target.beginPath();
+      target.moveTo(Points.left.x, Points.left.y + paddingTop - 8);
+      target.lineTo(Points.top.x, Points.top.y + paddingTop - 8);
+      target.lineTo(Points.right.x, Points.right.y + paddingTop - 8);
+      target.lineTo(Points.down.x, Points.down.y + paddingTop - 8);
+      target.closePath();
+      if (color != undefined) target.fill();
+      if (borderColor != undefined) target.stroke();
+
+      target.beginPath();
+      target.moveTo(Points.left.x, Points.left.y + paddingTop - 8);
+      target.lineTo(Points.down.x, Points.down.y + paddingTop - 8);
+      target.lineTo(Points.down.x, Points.down.y + paddingTop);
+      target.lineTo(Points.left.x, Points.left.y + paddingTop);
+      target.closePath();
+      if (color != undefined) target.fill();
+      if (borderColor != undefined) target.stroke();
+
+      target.beginPath();
+      target.moveTo(Points.right.x, Points.right.y + paddingTop - 8);
+      target.lineTo(Points.right.x, Points.right.y + paddingTop);
+      target.lineTo(Points.down.x, Points.down.y + paddingTop);
+      target.lineTo(Points.down.x, Points.down.y + paddingTop - 8);
+      target.closePath();
+      if (color != undefined) target.fill();
+      if (borderColor != undefined) target.stroke();
+    }
   }
 
   // Core function for Drawing Circle on tile

@@ -104,7 +104,7 @@ namespace DeepBot.CLI.Network.Tcp
                     else
                         PackageReceiver.Receive(packet, Account, TcpId);
                 }
-                if (IsConnected() && !Disposed)
+                if (IsConnected())
                     Socket.BeginReceive(Buffer, 0, Buffer.Length, SocketFlags.None, new AsyncCallback(ReceptionCallBack), Socket);
             }
             else
