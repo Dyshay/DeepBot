@@ -1,9 +1,12 @@
 ﻿using DeepBot.ControllersModel;
+using DeepBot.Core;
+using DeepBot.Core.Hubs;
 using DeepBot.Data.Database;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Collections.Generic;
@@ -16,21 +19,21 @@ namespace DeepBot.Controllers
     [ApiController]
     public class CharacterController : ControllerBase
     {
-
-
         private UserManager<UserDB> _userManager;
         private SignInManager<UserDB> _signInManager;
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
+        private readonly IHubContext<DeepTalk> _hubContext;
 
-        public CharacterController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
+        public CharacterController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection, IHubContext<DeepTalk> hubContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
             _userCollection = userCollection;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -75,6 +78,43 @@ namespace DeepBot.Controllers
             }
 
             return null;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("UpdateCharacter")]
+        public async Task<Character> UpdateCharacter(Character character)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+
+            var user = await _userManager.FindByIdAsync(userId);
+            if(user != null)
+            {
+                foreach (var item in user.Accounts)
+                {
+                    if(item.CurrentCharacter.Key == character.Key)
+                    {
+                        item.CurrentCharacter = character;
+                    }
+                }
+            }
+            await _userCollection.ReplaceOneAsync(x => x.Id == user.Id, user);
+            return character;
+        }
+
+        [HttpPost]
+        [Authorize]
+        [Route("StartAndStopBot")]
+        public async Task<int> StartAndStopBot(CharacterKey key)
+        {
+            string userId = User.Claims.First(c => c.Type == "UserID").Value;
+            var user = await _userManager.FindByIdAsync(userId);
+            foreach (var item in user.Accounts)
+            {
+                if (item.CurrentCharacter.Key == key.Key)
+                    Storage.Instance.GetScriptManagers(key.Key).StartStop(_hubContext);
+            }
+            return key.Key;
         }
     }
 }

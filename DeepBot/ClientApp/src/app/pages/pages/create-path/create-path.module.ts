@@ -29,6 +29,7 @@ import { MapAmaknaComponent } from './map-amakna/map-amakna.component';
 import { MapAmaknaBanqueComponent } from './map-amakna-banque/map-amakna-banque.component';
 import { MapAmaknaRetourComponent } from './map-amakna-retour/map-amakna-retour.component';
 import { SharedModule } from '../../../../shared.module';
+import { WidgetQuickValueCenterModule } from '../../../../@vex/components/widgets/widget-quick-value-center/widget-quick-value-center.module';
 
 
 @NgModule({
@@ -56,6 +57,7 @@ import { SharedModule } from '../../../../shared.module';
     MatDividerModule,
     MatChipsModule,
     MatAutocompleteModule,
+    WidgetQuickValueCenterModule,
     BreadcrumbsModule,
     ContainerModule,
     ColorFadeModule,

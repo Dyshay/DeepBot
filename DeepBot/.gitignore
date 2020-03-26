@@ -53,6 +53,7 @@ e2e/*.map
 [Rr]eleases/
 x64/
 x86/
+build/
 bld/
 [Bb]in/
 [Oo]bj/
@@ -286,3 +287,18 @@ paket-files/
 
 # FAKE - F# Make
 .fake/
+
+# JetBrains Rider
+*.sln.iml
+
+# CodeRush
+.cr/
+
+# Python Tools for Visual Studio (PTVS)
+__pycache__/
+*.pyc
+
+# Cake - Uncomment if you are using it
+# tools/
+
+# End of https://www.gitignore.io/api/angular,aspnetcore

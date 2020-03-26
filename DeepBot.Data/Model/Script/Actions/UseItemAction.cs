@@ -1,6 +1,6 @@
-﻿namespace DeepBot.Data.Model.Path
+﻿namespace DeepBot.Data.Model.Script.Actions
 {
-    public class UseItemAction:MapAction
+    public class UseItemAction : MapAction
     {
         public int ItemId { get; set; }
         public bool ToGoBank { get; set; }

@@ -68,10 +68,22 @@ export const reducer = createReducer(initialState,
 
   on(CharacterActions.updateCharacterFKGroup, (state, { fk_Group, key }) => ({ ...state, scanCharacters: [{ ...state.scanCharacters.find(c => c.key === key), fk_Group: fk_Group }], pending: false })),
 
+  on(CharacterActions.updateCharacterFKPath, (state, { fk_Path, key }) => ({ ...state, allCurrentCharacters: [{ ...state.allCurrentCharacters.find(c => c.key === key), fk_Trajet: fk_Path }], pending: false })),
+
+
 
   on(CharacterActions.updateCharacterConfig, (state) => ({ ...state, pending: true })),
   on(CharacterActions.updateCharacterConfigSuccess, (state, { characterConfigToUpdate }) => ({ ...state, pending: false })),
   on(CharacterActions.updateCharacterConfigFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+  on(CharacterActions.updateCharacterDB, (state) => ({ ...state, pending: true })),
+  on(CharacterActions.updateCharacterDBSuccess, (state, { characterToUpdate }) => ({ ...state, pending: false })),
+  on(CharacterActions.updateCharacterDBFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
+  on(CharacterActions.startAndStopBot, (state) => ({ ...state, pending: true })),
+  on(CharacterActions.startAndStopBotSuccess, (state, { key }) => ({ ...state, pending: false })),
+  on(CharacterActions.startAndStopBotFailure, (state, { error }) => ({ ...state, error, pending: false })),
+
   on(CharacterActions.addOnCurrentCharacter, (state, { currentCharacter }) => ({ ...state, allCurrentCharacters: state.allCurrentCharacters.concat(currentCharacter) })),
   on(CharacterActions.ResetCharacteristics, (state) => ({ ...state, characteristics: initialState.characteristics, kamas: initialState.kamas, characteristicsPoints: initialState.characteristicsPoints })),
   on(CharacterActions.updateCharacteristics, (state, { characteristics }) => ({ ...state, characteristics })),

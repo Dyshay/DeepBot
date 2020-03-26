@@ -3,7 +3,6 @@
     public enum CharacterStateEnum
     {
         CONNECTING,
-        CONNECTED,
         FIGHTING,
         DISCONNECTED,
         GATHERING,
@@ -12,6 +11,7 @@
         WALKING,
         HEALING,
         IDLE,
-        DIALOGING
+        DIALOGING,
+        WAITING_FOLLOWERS
     }
 }

@@ -1,8 +1,7 @@
 ﻿using DeepBot.Data.Enums;
 using DeepBot.Data.Generic;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
 
 namespace DeepBot.Data.Model.MapComponent.Entities
 {
@@ -11,17 +10,8 @@ namespace DeepBot.Data.Model.MapComponent.Entities
         public AbstractEntity CreateEntity(int mapId, string rawData)
         {
             var datas = rawData.Split(';');
-            switch((EntityTypeEnum)Convert.ToInt32(datas[5]))
+            switch ((EntityTypeEnum)Convert.ToInt32(datas[5]))
             {
-                case EntityTypeEnum.TYPE_CHARACTER:
-                    return new CharacterEntity()
-                    {
-                        Id = Convert.ToInt32(datas[3]),
-                        Type = EntityTypeEnum.TYPE_CHARACTER,
-                        Name = datas[4],
-                        MapId = mapId,
-                        CellId = Convert.ToInt32(datas[0]),
-                    };
                 case EntityTypeEnum.TYPE_NPC:
                     return new NPCEntity()
                     {
@@ -49,9 +39,28 @@ namespace DeepBot.Data.Model.MapComponent.Entities
                         });
                     }
                     return group;
-
+                case EntityTypeEnum.TYPE_MOUNT:
+                case EntityTypeEnum.TYPE_PRISM:
+                case EntityTypeEnum.TYPE_MOUNT_PARK:
+                case EntityTypeEnum.TYPE_MUTANT_PLAYER:
+                case EntityTypeEnum.TYPE_MUTANT:
+                case EntityTypeEnum.TYPE_TAX_COLLECTOR:
+                case EntityTypeEnum.TYPE_MERCHANT:
+                case EntityTypeEnum.TYPE_MONSTER_FIGHTER:
+                case EntityTypeEnum.TYPE_FIGHTER:
+                    Debug.WriteLine($"Unknown Entity : {(EntityTypeEnum)Convert.ToInt32(datas[5])}");
+                    return null;
+                case EntityTypeEnum.TYPE_CHARACTER:
+                default:
+                    return new CharacterEntity()
+                    {
+                        Id = Convert.ToInt32(datas[3]),
+                        Type = EntityTypeEnum.TYPE_CHARACTER,
+                        Name = datas[4],
+                        MapId = mapId,
+                        CellId = Convert.ToInt32(datas[0]),
+                    };
             }
-            return null;
         }
     }
 }

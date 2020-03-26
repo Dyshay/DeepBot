@@ -2,9 +2,9 @@
 
   <vex-page-layout-header fxLayout="column" fxLayoutAlign="center start">
     <div vexContainer>
-      <h1 class="title m-0">{{ 'CREATEGROUP.DESCRIPTION1' | translate }}</h1>
-      <h4 class="ml-6">{{ 'CREATEGROUP.DESCRIPTION2' | translate }} </h4>
-      <h4 class="ml-6"> {{ 'CREATEGROUP.DESCRIPTION3' | translate }} </h4>
+      <h1 class="title m-0">{{ 'CREATEIA.DESCRIPTION1' | translate }}</h1>
+      <h4 class="ml-6">{{ 'CREATEIA.DESCRIPTION2' | translate }} </h4>
+      <h4 class="ml-6"> {{ 'CREATEIA.DESCRIPTION3' | translate }} </h4>
     </div>
   </vex-page-layout-header>
 
@@ -12,7 +12,7 @@
     <div class="card p-6">
 
       <div class="overflow-hidden mt-10 mx-5" fxLayoutAlign="center center">
-        <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true">
+        <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true" style="width:100%;">
           <ng-template matStepperIcon="edit">
             <mat-icon [icIcon]="icDoneAll"></mat-icon>
           </ng-template>
@@ -25,22 +25,234 @@
             <ng-template matStepLabel>{{ 'CREATEIA.GROUPLABEL' | translate }} </ng-template>
             <h2 class="title m-0">{{ 'CREATEIA.GROUPPROPLABEL' | translate }}</h2>
 
-            <div fxLayout="column" fxLayoutAlign="space-around center">
-              <div>
-                <mat-form-field fxFlex="auto">
+            <div fxLayout="column" fxLayoutAlign="space-around center" class="mt-4 mx-4">
+              <div fxLayout="row" fxLayoutAlign="space-between center" class="full-width">
+                <mat-form-field fxFlex="35">
                   <mat-label>{{ 'CREATEIA.IANAME' | translate }}</mat-label>
-                  <input [(ngModel)]="" matInput required>
+                  <input [(ngModel)]="iaToCreate.name" matInput required>
+                </mat-form-field>
+
+                <mat-form-field fxFlex="35">
+                  <mat-label>{{ 'CREATEIA.CLASSEIA' | translate }}</mat-label>
+                  <mat-select [(ngModel)]="iaToCreate.classe" required>
+                    <mat-option [value]="enum" *ngFor="let enum of classeEnum.values()">
+                      {{ enum }}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
               </div>
+              <div fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                <div fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                  <mat-form-field fxFlex="35" class="mr-5">
+                    <mat-label>{{ 'CREATEIA.IADESCRIPTION' | translate }}</mat-label>
+                    <textarea [(ngModel)]="iaToCreate.description" matInput></textarea>
+                  </mat-form-field>
 
-
+                  <mat-form-field fxFlex="35" class="ml-5">
+                    <mat-label>{{ 'CREATEIA.TYPEIA' | translate }}</mat-label>
+                    <mat-select [(ngModel)]="iaToCreate.type" required>
+                      <mat-option [value]="enum"  *ngFor="let enum of typeIA.values()">
+                        {{ enum }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
             </div>
-
+            <div class="actions mt-2" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="8px">
+              <button color="primary" mat-raised-button matStepperNext (click)="createIAInService()">
+                {{ 'GLOBAL.NEXT' | translate }}
+              </button>
+            </div>
           </mat-step>
 
           <mat-step [stepControl]="groupstep2">
-  
-          </mat-step>
+            <ng-template matStepLabel>{{ 'CREATEIA.GROUPLABEL2' | translate }} </ng-template>
+            <h2 class="title m-0">{{ 'CREATEIA.GROUPPROPLABEL2' | translate }}</h2>
+
+            <div fxLayout="column" fxLayoutAlign="space-around center" class="mt-4 mx-4">
+              <div fxLayoutAlign="center center" class="full-width">
+                <div fxFlex="20" class="mx-3">
+                  <mat-form-field>
+                    <mat-label>{{ 'CREATEIA.NBLANCER' | translate }}</mat-label>
+                    <input  matInput required [(ngModel)]="iaService.spellToAdd.nbLancer">
+                  </mat-form-field>
+                  </div>
+                  <div fxFlex="35" class="mx-3">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.TRAGETCHOICE' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.target" >
+                        <mat-option [value]="enum" *ngFor="let enum of target.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Cra'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId" >
+                        <mat-option [value]="enum" *ngFor="let enum of sortCra.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Féca'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required  [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortFeca.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Osamodas'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortOsamodas.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Enutrof'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortEnutrof.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Sram'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortSram.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Xélor'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortXelor.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Ecaflip'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortEcaflip.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Eniripsa'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortEniripsa.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Iop'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortIop.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Sadida'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortSadida.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Sacrieur'" fxFlex="35">
+                    <mat-form-field class="full-width">
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortSacrieur.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div *ngIf="iaToCreate.classe == 'Pandawa'" fxFlex="35">
+                    <mat-form-field class="full-width" >
+                      <mat-label>{{ 'CREATEIA.SPELL' | translate }}</mat-label>
+                      <mat-select required [(ngModel)]="iaService.spellToAdd.spellId">
+                        <mat-option [value]="enum" *ngFor="let enum of sortPandawa.values()">
+                          {{ enum }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+
+                  <button color="primary" mat-mini-fab type="button" class="ml-2 mb-3" matTooltipPosition="right" (click)="addSpell()">
+                    <mat-icon [icIcon]="icPlus"></mat-icon>
+                  </button>
+
+                </div>
+                <div fxLayout="column" fxLayoutAlign="center center" class="card full-width">
+                  <div fxLayout="row" fxLayoutAlign="center center" class="mt-2">
+                    <h2> {{ 'CREATEIA.SPELLLIST' | translate }}</h2>
+                  </div>
+                  <mat-divider class="mt-2"></mat-divider>
+                
+                  <div fxLayout="column" fxLayoutAlign="center center" class="full-width">
+                    <div fxLayout="row" fxLayoutAlign="center center" class="mt-2 full-width" *ngFor=" let action of iaService.ia.actions">
+                      <div fxLayout="row" fxLayoutAlign="center center" fxFlex="15">
+                        <p>  {{action.nbLancer}}  *   <strong>{{action.spellName}}</strong>  ( {{action.target}} )</p>
+                      </div>
+                      <div fxLayout="row" fxLayoutAlign="center center" fxFlex="80" cdkDropList cdkDropListOrientation="horizontal" class="example-list" (cdkDropListDropped)="drop($event)">
+                        <div class="example-box" *ngFor="let condition of action.conditions" cdkDrag>
+
+
+                        </div>
+
+                      </div>
+                      <button color="primary" mat-mini-fab type="button" class="ml-2 mb-3" matTooltipPosition="right" (click)="addCondition()">
+                        <mat-icon [icIcon]="icPlus"></mat-icon>
+                      </button>
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+
+              <div class="actions" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="3px">
+                <button color="primary" mat-button matStepperPrevious type="button">{{ 'GLOBAL.BACK' | translate }}</button>
+                <button color="primary" mat-raised-button matStepperNext>
+                  {{ 'GLOBAL.NEXT' | translate }}
+                </button>
+              </div>
+
+</mat-step>
 
           <mat-step [stepControl]="groupstep3">
 

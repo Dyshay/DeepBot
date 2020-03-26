@@ -3,10 +3,12 @@ using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.MapComponent;
+using DeepBot.Data.Model.Script;
 using MongoDB.Bson.Serialization.Attributes;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace DeepBot.Data.Model
 {
@@ -22,18 +24,29 @@ namespace DeepBot.Data.Model
         public string Name { get; set; }
         public byte Level { get; set; }
         public int ServerId { get; set; }
+        public int RegenTime { get; set; }
         public short BreedId { get; set; }
         public int AvailableCharactericsPts { get; set; }
         public int AvailableSpellPts { get; set; }
         public Caracteristic Characteristic { get; set; } = new Caracteristic();
-        public CharacterStateEnum State { get; set; } = CharacterStateEnum.DISCONNECTED;
+        public CharacterStateEnum State
+        {
+            get { return _State; }
+            set
+            {
+                _State = value;
+                OnStateChanged?.Invoke();
+            }
+        }
 
         [BsonIgnore]
-        public MapCell Cell { get; set; }
+        private CharacterStateEnum _State { get; set; } = CharacterStateEnum.DISCONNECTED;
+        [BsonIgnore]
+        public int CellId { get; set; }
         [BsonIgnore]
         public Map Map { get; set; }
         [BsonIgnore]
-        public TrajetDB Trajet { get; set; }
+        public TrajetDB Trajet { get { return Driver.Database.Paths.Find(c => c.Key == Fk_Trajet).FirstOrDefault(); } }
         [BsonIgnore]
         public ConfigCharacterDB Config { get { return Driver.Database.ConfigsCharacter.Find(c => c.Key == Fk_Configuration).FirstOrDefault(); } }
         [BsonIgnore]
@@ -57,5 +70,15 @@ namespace DeepBot.Data.Model
         public bool HasGroup => Group != null;
         [BsonIgnore]
         public bool IsGroupLeader => !HasGroup || Group.Leader == this;
+        [BsonIgnore]
+        public string TcpId { get; set; }
+
+        [BsonIgnore]
+        public Action OnStateChanged;
+
+        [BsonConstructor]
+        public Character()
+        {
+        }
     }
 }

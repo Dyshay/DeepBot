@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace DeepBot.Data.Model.IA
 {
@@ -15,9 +13,9 @@ namespace DeepBot.Data.Model.IA
 
     public enum Target
     {
-        Enemy=0,
-        Ally=1,
-        Myself=2,
-        Zone=3
+        Enemy = 0,
+        Ally = 1,
+        Myself = 2,
+        Zone = 3
     }
 }

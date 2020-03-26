@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace DeepBot.Data.Model.Path
+namespace DeepBot.Data.Model.Script.Actions
 {
     public class PathAction
     {

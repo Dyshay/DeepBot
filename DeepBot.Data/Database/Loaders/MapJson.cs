@@ -1,6 +1,4 @@
-﻿using DeepBot.Data.Enums;
-using DeepBot.Data.Model;
-using System.Collections.Generic;
+﻿using DeepBot.Data.Model;
 
 namespace DeepBot.Data.Database.Loaders
 {

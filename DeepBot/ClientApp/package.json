@@ -26,6 +26,7 @@
     "@aspnet/signalr": "^1.1.4",
     "@icon/simple-icons": "^2.4.0-alpha.0",
     "@iconify/icons-emojione": "^1.0.0",
+    "@iconify/icons-emojione-monotone": "^1.0.5",
     "@iconify/icons-fa-brands": "^1.0.2",
     "@iconify/icons-fa-solid": "^1.0.1",
     "@iconify/icons-ic": "^1.0.0",

@@ -9,7 +9,6 @@ using DeepBot.Data.Enums;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
 using MongoDB.Driver;
-using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -71,7 +70,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                         hub.SendPackage($"Af", tcpId);
                         hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Selection du personnage {characterName}", tcpId), tcpId).Wait();
                         Debug.WriteLine("Add character " + currentAccount.CurrentCharacter.Key + " to memory");
-                        Storage.Instance.Characters[currentAccount.CurrentCharacter.Key] = currentAccount.CurrentCharacter;
+                        Storage.Instance.AddCharacter(currentAccount.CurrentCharacter);
                         found = true;
                     }
                 }
@@ -92,7 +91,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ASK")]
         public void SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();
 
             string[] splittedData = package.Substring(4).Split('|');

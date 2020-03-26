@@ -3,6 +3,9 @@
      class="card p-3 m-3 my-1 relative hover:shadow-18 trans-shadow"
      fxLayout="column"
      fxLayoutAlign="start center" fxFlex="fill">
+  <div *ngIf="checkable ==true" fxLayoutAlign="end start" style="width:100% !important;"   fxLayout="row">
+    <mat-checkbox (change)="jobSelected($event)" [checked]="isCheck"></mat-checkbox>
+  </div>
   <div *ngIf="color"
        [style.background-color]="color['500'] | colorFade:0.9"
        [style.color]="color['500']"
@@ -16,9 +19,9 @@
   <h4 [class.text-green-500]="change > 0"
       [class.text-red-500]="change <= 0"
       class="subheading-1 font-medium mt-4 mb-0">
- 
+
     <span *ngIf="change != null">{{ change }}%</span>
   </h4>
 
- 
+
 </div>

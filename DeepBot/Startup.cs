@@ -9,8 +9,10 @@ using DeepBot.Data.Driver;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.CharacterInfo;
 using DeepBot.Data.Model.IA;
-using DeepBot.Data.Model.MapComponent;
-using DeepBot.Data.Model.Path;
+using DeepBot.Data.Model.Script;
+using DeepBot.Data.Model.Script.Actions;
+using DeepBot.Data.Model.Script.Options;
+using DeepBot.Data.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -106,7 +108,7 @@ namespace DeepBot
             }).AddJwtBearer(x =>
             {
                 x.SaveToken = false;
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),

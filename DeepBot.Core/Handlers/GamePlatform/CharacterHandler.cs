@@ -6,11 +6,9 @@ using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
-using DeepBot.Data.Model;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace DeepBot.Core.Handlers.GamePlatform
@@ -22,7 +20,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("As")]
         public void StatsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.DeserializeCharacter(package);
             var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();
             hub.DispatchToClient(new CharacteristicMessage(characterGame.Characteristic, inventory.Kamas, characterGame.AvailableCharactericsPts, tcpId), tcpId).Wait();
@@ -31,14 +29,14 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("AN")]
         public void NewLevelHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.Level = Convert.ToByte(package.Substring(2));
         }
 
         [Receiver("SL")]
         public void SpellsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             if (!package[2].Equals('o'))
             {
                 foreach (var data in package.Substring(2, package.Length - 3).Split(';'))
@@ -58,7 +56,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("SUK")]
         public void SpellUpdateSuccess(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             var split = package.Substring(3).Split('~');
             var pair = new KeyValuePair<int, byte>(Convert.ToInt32(split[0]), Convert.ToByte(split[1]));
             characterGame.Fk_Spells[characterGame.Fk_Spells.FindIndex(spell => spell.Key == pair.Key)] = pair;
@@ -80,7 +78,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("PIK")]
         public void GroupInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, package.Substring(3).Split('|')[0].ToLower() + " t'invite à rejoindre son groupe.", tcpId), tcpId).Wait();
             if (characterGame.HasGroup && package.Substring(3).Split('|')[0].ToLower() == characterGame.Group.Leader.Name.ToLower())
             {
@@ -97,16 +95,16 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ILS")]
         public void RegenTimerHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            int regenTime = Convert.ToInt32(package.Substring(3));
-            // TODO
-            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Votre personnage récupère 1 pdv chaque {regenTime / 1000} secondes", tcpId), tcpId).Wait();
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
+            characterGame.RegenTime = Convert.ToInt32(package.Substring(3));
+            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Votre personnage récupère 1 pdv chaque {characterGame.RegenTime / 1000} secondes", tcpId), tcpId).Wait();
         }
 
         [Receiver("ILS")]
         public void CharacterRegenHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             int regen = Convert.ToInt32(package.Substring(3));
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.Characteristic.VitalityActual += regen;
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Vous avez récupéré {regen} points de vie", tcpId), tcpId).Wait();
         }
@@ -114,7 +112,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("eUK")]
         public void PlayerEmoteHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
 
             var split = package.Substring(3).Split('|');
             int playerId = Convert.ToInt32(split[0]), emoteId = Convert.ToInt32(split[1]);

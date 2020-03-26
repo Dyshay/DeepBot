@@ -1,8 +1,5 @@
 ﻿using DeepBot.Data.Driver;
-using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.Options;
 using System.Collections.Generic;
 
 namespace DeepBot.Data.Database

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DeepBot.Data.Model.MapComponent.Interactives
+﻿namespace DeepBot.Data.Model.MapComponent.Interactives
 {
     public class HarvestableResource : InteractiveObject
     {

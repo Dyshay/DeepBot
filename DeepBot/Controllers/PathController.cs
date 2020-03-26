@@ -1,18 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DeepBot.ControllersModel;
+﻿using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
-using DeepBot.Data.Model.Path;
+using DeepBot.Data.Enums;
+using DeepBot.Data.Model.Script;
+using DeepBot.Data.Model.Script.Actions;
+using DeepBot.Data.Model.Script.Options;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DeepBot.Controllers
 {
@@ -49,11 +51,11 @@ namespace DeepBot.Controllers
             {
                 listeRetour.Add(new PathMinDisplayed()
                 {
-                    IsCapture=item.IsCapture,
-                    Key= item.Key,
+                    IsCapture = item.IsCapture,
+                    Key = item.Key,
                     Name = item.Name,
                     Type = item.Type,
-                    Zones= item.Zones
+                    Zones = item.Zones
                 });
             }
 
@@ -78,15 +80,16 @@ namespace DeepBot.Controllers
                 MaxPod = trajet.MaxPod,
                 MonsterQuantityMin = trajet.MonsterQuantityMin,
                 MonsterQuantityMax = trajet.MonsterQuantityMax,
+                ListRessource = trajet.ListRessource,
                 LeaderBank = trajet.LeaderBank,
                 IsCapture = trajet.IsCapture,
-                Key =  trajet.Key.ToString()
+                Key = trajet.Key.ToString()
             };
             pathToSend.PathAction = new List<PathActionModel>();
             foreach (var item in trajet.PathAction)
             {
                 PathActionModel pathactionmodelToAdd = new PathActionModel();
-                pathactionmodelToAdd.MapPos = Database.Maps.Find(o => o.Key == item.MapId).First().Coordinate.Replace(',', ';').Replace("[","").Replace("]", "");
+                pathactionmodelToAdd.MapPos = Database.Maps.Find(o => o.Key == item.MapId).First().Coordinate.Replace(',', ';').Replace("[", "").Replace("]", "");
                 pathactionmodelToAdd.Actions = new List<MapActionModel>();
                 foreach (var action in item.Actions)
                 {
@@ -96,7 +99,7 @@ namespace DeepBot.Controllers
                     };
                     if (action is FightAction)
                     {
-                        FightActionModel fight = new FightActionModel(){ IsAlone = ((FightAction)action).IsAlone};
+                        FightActionModel fight = new FightActionModel() { IsAlone = ((FightAction)action).IsAlone };
                         mapaction.FightAction = fight;
                     }
                     else if (action is BankAction)
@@ -104,23 +107,23 @@ namespace DeepBot.Controllers
                         BankActionModel bank = new BankActionModel() { MapId = item.MapId };
                         mapaction.BankAction = bank;
                     }
-                    else if(action is GatherAction)
+                    else if (action is GatherAction)
                     {
                         GatherActionModel gather = new GatherActionModel() { };
                         mapaction.GatherAction = gather;
                     }
-                    else if(action is InteractionAction)
+                    else if (action is InteractionAction)
                     {
                         InteractionActionModel interaction = new InteractionActionModel()
                         {
                             InteractiveidObject = ((InteractionAction)action).InteractiveIdObject,
-                            InteractiveIdResponse=((InteractionAction)action).InteractiveIdResponse,
+                            InteractiveIdResponse = ((InteractionAction)action).InteractiveIdResponse,
                             ToBackBank = ((InteractionAction)action).ToBackBank,
                             ToGoBank = ((InteractionAction)action).ToGoBank
                         };
                         mapaction.InteractionAction = interaction;
                     }
-                    else if(action is MoveAction)
+                    else if (action is MoveAction)
                     {
                         MoveActionModel move = null;
                         if (((MoveAction)action).Direction != null)
@@ -145,10 +148,10 @@ namespace DeepBot.Controllers
                                 MapId = ((MoveAction)action).MapId
                             };
                         }
-                        
+
                         mapaction.moveAction = move;
                     }
-                    else if(action is UseItemAction)
+                    else if (action is UseItemAction)
                     {
                         UseItemActionModel useitem = new UseItemActionModel()
                         {
@@ -158,7 +161,7 @@ namespace DeepBot.Controllers
                         };
                         mapaction.UseItemAction = useitem;
                     }
-                    else if(action is ZaapAction)
+                    else if (action is ZaapAction)
                     {
                         ZaapActionModel zaap = new ZaapActionModel()
                         {
@@ -169,7 +172,7 @@ namespace DeepBot.Controllers
                         };
                         mapaction.ZaapAction = zaap;
                     }
-                    else if(action is ZaapiAction)
+                    else if (action is ZaapiAction)
                     {
                         ZaapiActionModel zaapi = new ZaapiActionModel()
                         {
@@ -202,7 +205,7 @@ namespace DeepBot.Controllers
             TrajetDB trajetDB = new TrajetDB()
             {
                 Name = path.Name,
-                Type = (TypePath)(int)path.Type,
+                Type = (TypePath)path.Type,
                 GroupLevelMax = path.GroupLevelMax,
                 GroupLevelMin = path.GroupLevelMin,
                 CaptureItem = path.CaptureItem,
@@ -212,44 +215,45 @@ namespace DeepBot.Controllers
                 MonsterQuantityMax = path.MonsterQuantityMax,
                 LeaderBank = path.LeaderBank,
                 IsCapture = path.IsCapture,
+                ListRessource = path.ListRessource,
                 Key = new Guid(path.Key)
             };
-            if(path.MonsterLevel != null)
-            foreach (var monstreLevel in path.MonsterLevel)
-            {
-                if (trajetDB.MonsterLevel == null)
-                    trajetDB.MonsterLevel = new List<SpecificMonsterLevel>();
+            if (path.MonsterLevel != null)
+                foreach (var monstreLevel in path.MonsterLevel)
+                {
+                    if (trajetDB.MonsterLevel == null)
+                        trajetDB.MonsterLevel = new List<SpecificMonsterLevel>();
 
-                trajetDB.MonsterLevel.Add(new SpecificMonsterLevel()
+                    trajetDB.MonsterLevel.Add(new SpecificMonsterLevel()
+                    {
+                        MonsterId = monstreLevel.MonsterId,
+                        MonsterLevelMax = monstreLevel.MonsterLevelmax,
+                        MonsterLevelMin = monstreLevel.MonsterLevelMin
+                    });
+                }
+            if (path.MonsterQuantity != null)
+                foreach (var monstreQuantity in path.MonsterQuantity)
                 {
-                    MonsterId = monstreLevel.MonsterId,
-                    MonsterLevelMax = monstreLevel.MonsterLevelmax,
-                    MonsterLevelMin = monstreLevel.MonsterLevelMin
-                });
-            }
-            if(path.MonsterQuantity != null)
-            foreach (var monstreQuantity in path.MonsterQuantity)
-            {
-                if (trajetDB.MonsterQuantity == null)
-                    trajetDB.MonsterQuantity = new List<SpecificMonsterQuantity>();
-                trajetDB.MonsterQuantity.Add(new SpecificMonsterQuantity()
+                    if (trajetDB.MonsterQuantity == null)
+                        trajetDB.MonsterQuantity = new List<SpecificMonsterQuantity>();
+                    trajetDB.MonsterQuantity.Add(new SpecificMonsterQuantity()
+                    {
+                        MonsterId = monstreQuantity.MonsterId,
+                        MonsterQuantityMax = monstreQuantity.MonsterQuantityMax,
+                        MontserQuantityMin = monstreQuantity.MonsterQuantityMin
+                    });
+                }
+            if (path.MonsterCapture != null)
+                foreach (var monstreCapture in path.MonsterCapture)
                 {
-                    MonsterId = monstreQuantity.MonsterId,
-                    MonsterQuantityMax = monstreQuantity.MonsterQuantityMax,
-                    MontserQuantityMin = monstreQuantity.MonsterQuantityMin
-                });
-            }
-            if(path.MonsterCapture != null)
-            foreach (var monstreCapture in path.MonsterCapture)
-            {
-                if (trajetDB.MonsterCapture == null)
-                    trajetDB.MonsterCapture = new List<CaptureMonsterQuantity>();
-                trajetDB.MonsterCapture.Add(new CaptureMonsterQuantity()
-                {
-                    MonsterId = monstreCapture.MonsterId,
-                    MonsterQuantity = monstreCapture.MonsterQuantity
-                });
-            }
+                    if (trajetDB.MonsterCapture == null)
+                        trajetDB.MonsterCapture = new List<CaptureMonsterQuantity>();
+                    trajetDB.MonsterCapture.Add(new CaptureMonsterQuantity()
+                    {
+                        MonsterId = monstreCapture.MonsterId,
+                        MonsterQuantity = monstreCapture.MonsterQuantity
+                    });
+                }
             /* actions du trajet */
             trajetDB.PathAction = new List<PathAction>();
             foreach (PathActionModel action in path.PathAction)
@@ -311,8 +315,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
                             pathActionToCreate.Actions.Add(MoveActionToCreate);
                         }
@@ -378,8 +382,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
 
                             if (trajetDB.PathAction.Exists(o => o.MapId == mapId))
@@ -463,14 +467,14 @@ namespace DeepBot.Controllers
         [Route("CreatePath")]
         public async Task<PathMinDisplayed> CreatePath(PathModel path)
         {
-            int mapId=0;
+            int mapId = 0;
             List<string> zones = new List<string>();
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
             TrajetDB trajetDB = new TrajetDB()
             {
                 Name = path.Name,
-                Type = (TypePath)(int)path.Type,
+                Type = (TypePath)path.Type,
                 GroupLevelMax = path.GroupLevelMax,
                 GroupLevelMin = path.GroupLevelMin,
                 CaptureItem = path.CaptureItem,
@@ -480,6 +484,7 @@ namespace DeepBot.Controllers
                 MonsterQuantityMax = path.MonsterQuantityMax,
                 LeaderBank = path.LeaderBank,
                 IsCapture = path.IsCapture,
+                ListRessource = path.ListRessource,
                 Key = Guid.NewGuid()
             };
             foreach (var monstreLevel in path.MonsterLevel)
@@ -576,8 +581,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
                             pathActionToCreate.Actions.Add(MoveActionToCreate);
                         }
@@ -626,7 +631,7 @@ namespace DeepBot.Controllers
                 {
                     foreach (MapActionModel item in action.Actions)
                     {
-                         pathActionToCreate = new PathAction();
+                        pathActionToCreate = new PathAction();
                         if (item.moveAction != null)
                         {
                             mapId = item.moveAction.MapId.Value;
@@ -643,8 +648,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
 
                             if (trajetDB.PathAction.Exists(o => o.MapId == mapId))
@@ -658,7 +663,7 @@ namespace DeepBot.Controllers
                                 trajetDB.PathAction.Add(pathActionToCreate);
                             }
                         }
-                        else if(item.BankAction != null)
+                        else if (item.BankAction != null)
                         {
                             mapId = item.BankAction.MapId.Value;
                             pathActionToCreate.MapId = mapId;
@@ -678,7 +683,7 @@ namespace DeepBot.Controllers
                                 trajetDB.PathAction.Add(pathActionToCreate);
                             }
                         }
-                         
+
                     }
 
                 }

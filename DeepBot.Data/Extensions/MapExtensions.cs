@@ -1,8 +1,9 @@
 ﻿using DeepBot.Data.Enums;
+using DeepBot.Data.Model.MapComponent;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace DeepBot.Data.Extensions
 {
@@ -24,6 +25,54 @@ namespace DeepBot.Data.Extensions
             else if (dir == MovementDirectionEnum.LEFT && leftCells.Contains(cellId))
                 cells.Add(cellId);
             return cells;
+        }
+
+        public static List<short> GetTeleportCells(this Map map, MovementDirectionEnum dir)
+        {
+            if (dir == MovementDirectionEnum.TOP)
+                return map.CurrentMap.TopCellsTeleport;
+            else if (dir == MovementDirectionEnum.RIGHT)
+                return map.CurrentMap.RightCellsTeleport;
+            else if (dir == MovementDirectionEnum.BOTTOM)
+                return map.CurrentMap.BottomCellsTeleport;
+            else if (dir == MovementDirectionEnum.LEFT)
+                return map.CurrentMap.LeftCellsTeleport;
+            else
+                return null;
+        }
+
+        public static void PrintMap(this Map map)
+        {
+            int cellId = 0;
+            for (int y = 0; y <= 2 * (map.CurrentMap.Height - 1); ++y)
+            {
+                if ((y % 2) == 0)
+                {
+                    for (int x = 0; x <= map.CurrentMap.Width - 1; x++)
+                    {
+                        if (cellId < 10)
+                            Debug.Write("  " + map.CurrentMap.Cells[cellId++].Id + " ");
+                        else if (cellId < 100)
+                            Debug.Write(" " + map.CurrentMap.Cells[cellId++].Id + " ");
+                        else
+                            Debug.Write(map.CurrentMap.Cells[cellId++].Id + " ");
+                    }
+                }
+                else
+                {
+                    Debug.Write("  ");
+                    for (int x = 0; x <= map.CurrentMap.Width - 2; x++)
+                    {
+                        if (cellId < 10)
+                            Debug.Write("  " + map.CurrentMap.Cells[cellId++].Id + " ");
+                        else if (cellId < 100)
+                            Debug.Write(" " + map.CurrentMap.Cells[cellId++].Id + " ");
+                        else
+                            Debug.Write(map.CurrentMap.Cells[cellId++].Id + " ");
+                    }
+                }
+                Debug.WriteLine("");
+            }
         }
     }
 }

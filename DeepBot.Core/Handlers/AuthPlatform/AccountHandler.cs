@@ -5,6 +5,7 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.GameServer;
+using DeepBot.Data.Utilities;
 using Microsoft.AspNetCore.SignalR;
 using MongoDB.Driver;
 using System;
@@ -18,17 +19,17 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         [Receiver("HC")]
         public void GetWelcomeKeyAsync(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            //account dispatch value (connecting)
-            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).State = CharacterStateEnum.CONNECTING;
-            user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey = package.Substring(2);
+            var account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
+            if (account.CurrentCharacter != null)
+                account.CurrentCharacter.State = CharacterStateEnum.CONNECTING;
+            account.WelcomeKey = package.Substring(2);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
 
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Connexion au serveur d'auth", tcpId), tcpId).Wait();
 
-            hub.SendPackage("1.31.2", tcpId);
+            hub.SendPackage("1.31.3", tcpId);
 
-            // USE THE ACCOUNT AND PASSWORD FROM account
-            hub.SendPackage($"{user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).AccountName}\n{Hash.EncryptPassword(user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Password, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).WelcomeKey)}", tcpId);
+            hub.SendPackage($"{account.AccountName}\n{Hash.EncryptPassword(account.Password, account.WelcomeKey)}", tcpId);
             hub.SendPackage($"Af", tcpId);
         }
 
@@ -127,7 +128,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Substring(14);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
+            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).IsScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
         }
 
@@ -136,7 +137,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Split(';')[1];
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            hub.Clients.Caller.SendAsync("NewConnection", package.Split(';')[0].Substring(3), 443, true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
+            hub.Clients.Caller.SendAsync("NewConnection", package.Split(';')[0].Substring(3), 443, true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).IsScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world ", tcpId), tcpId).Wait();
         }
     }

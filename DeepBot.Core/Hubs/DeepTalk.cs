@@ -1,5 +1,6 @@
 ﻿using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage;
+using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.SignalR;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -34,7 +36,7 @@ namespace DeepBot.Core.Hubs
             {
                 var CurrentUser = await UserDB;
 
-                Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
+                await Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
             }
         }
 
@@ -109,7 +111,7 @@ namespace DeepBot.Core.Hubs
 
                         GetConnected().Wait();
                         CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).TcpId = tcpId;
-                        CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected = true;
+                        CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).IsConnected = true;
                         var account = CurrentUser.Accounts.Find(c => c.AccountName == userName);
                         Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account.CurrentCharacter).Wait();
                     }
@@ -150,6 +152,7 @@ namespace DeepBot.Core.Hubs
                 if (!invisible)
                 {
                     account.isConnected = false;
+                    currentUser.Accounts.Find(c => c.TcpId == tcpId).TcpId = "";
                     await _userCollection.ReplaceOneAsync(c => c.Id == currentUser.Id, currentUser);
                     Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected, false).Wait();
                 }
@@ -203,9 +206,17 @@ namespace DeepBot.Core.Hubs
             {
                 ConnectedBot[CurrentUser.Id] = new List<string>();
                 CurrentUser.CliConnectionId = "";
-                CurrentUser.Accounts.ForEach(c => { c.TcpId = ""; c.isConnected = false; });
+                CurrentUser.Accounts.ForEach(c => { c.TcpId = ""; c.IsConnected = false; });
                 await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
                 await Groups.RemoveFromGroupAsync(Context.ConnectionId, GetApiKey());
+                CurrentUser.Accounts.ForEach(a =>
+                {
+                    if (a.CurrentCharacter != null)
+                    {
+                        Debug.WriteLine("Remove character " + a.CurrentCharacter.Key + " from memory");
+                        Storage.Instance.RemoveCharacter(a.CurrentCharacter);
+                    } 
+                });
             }
         }
 

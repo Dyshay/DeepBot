@@ -1,8 +1,6 @@
 ﻿using DeepBot.Data.Database;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DeepBot.ControllersModel
 {
@@ -19,6 +17,7 @@ namespace DeepBot.ControllersModel
         public bool IsCapture { get; set; }
         public bool LeaderBank { get; set; }
         public int CaptureItem { get; set; }
+        public List<int> ListRessource { get; set; }
         public List<SpecificMonsterLevelModel> MonsterLevel { get; set; }
         public List<SpecificMonsterQuantityModel> MonsterQuantity { get; set; }
         public List<CaptureMonsterQuantityModel> MonsterCapture { get; set; }
@@ -75,7 +74,7 @@ namespace DeepBot.ControllersModel
         public int ItemId { get; set; }
         public bool ToGoBank { get; set; }
         public bool ToBackBank { get; set; }
-     
+
     }
     public class FightActionModel
     {
@@ -111,7 +110,7 @@ namespace DeepBot.ControllersModel
         public int? MapId { get; set; }
     }
 
-   public class PathMinDisplayed
+    public class PathMinDisplayed
     {
         public string Name { get; set; }
         public TypePath Type { get; set; }
@@ -128,5 +127,5 @@ namespace DeepBot.ControllersModel
 
 }
 
-   
+
 
