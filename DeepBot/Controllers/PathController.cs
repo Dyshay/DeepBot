@@ -1,6 +1,7 @@
 ﻿using DeepBot.ControllersModel;
 using DeepBot.Data.Database;
 using DeepBot.Data.Driver;
+using DeepBot.Data.Enums;
 using DeepBot.Data.Model.Script;
 using DeepBot.Data.Model.Script.Actions;
 using DeepBot.Data.Model.Script.Options;
@@ -314,8 +315,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
                             pathActionToCreate.Actions.Add(MoveActionToCreate);
                         }
@@ -381,8 +382,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
 
                             if (trajetDB.PathAction.Exists(o => o.MapId == mapId))
@@ -580,8 +581,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
                             pathActionToCreate.Actions.Add(MoveActionToCreate);
                         }
@@ -647,8 +648,8 @@ namespace DeepBot.Controllers
                                 foreach (string direc in item.moveAction.Direction)
                                 {
                                     if (MoveActionToCreate.Direction == null)
-                                        MoveActionToCreate.Direction = new List<Direction>();
-                                    MoveActionToCreate.Direction.Add((Direction)System.Enum.Parse(typeof(Direction), direc.ToUpper()));
+                                        MoveActionToCreate.Direction = new List<MovementDirectionEnum>();
+                                    MoveActionToCreate.Direction.Add((MovementDirectionEnum)System.Enum.Parse(typeof(MovementDirectionEnum), direc.ToUpper()));
                                 }
 
                             if (trajetDB.PathAction.Exists(o => o.MapId == mapId))

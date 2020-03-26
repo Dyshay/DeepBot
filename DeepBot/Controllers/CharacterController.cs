@@ -1,10 +1,12 @@
 ﻿using DeepBot.ControllersModel;
-using DeepBot.Data;
+using DeepBot.Core;
+using DeepBot.Core.Hubs;
 using DeepBot.Data.Database;
 using DeepBot.Data.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System.Collections.Generic;
@@ -17,21 +19,21 @@ namespace DeepBot.Controllers
     [ApiController]
     public class CharacterController : ControllerBase
     {
-
-
         private UserManager<UserDB> _userManager;
         private SignInManager<UserDB> _signInManager;
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
+        private readonly IHubContext<DeepTalk> _hubContext;
 
-        public CharacterController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
+        public CharacterController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection, IHubContext<DeepTalk> hubContext)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _appSettings = appSettings.Value;
             _userCollection = userCollection;
+            _hubContext = hubContext;
         }
 
         [HttpGet]
@@ -110,7 +112,7 @@ namespace DeepBot.Controllers
             foreach (var item in user.Accounts)
             {
                 if (item.CurrentCharacter.Key == key.Key)
-                    Storage.Instance.Characters[key.Key].ScriptManager.StartStop();
+                    Storage.Instance.GetScriptManagers(key.Key).StartStop(_hubContext);
             }
             return key.Key;
         }
