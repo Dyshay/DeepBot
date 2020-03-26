@@ -116,7 +116,7 @@ namespace DeepBot.Core.Hubs
                         Clients.GroupExcept(GetApiKey(), CliID).SendAsync("UpdateCharac", account.CurrentCharacter).Wait();
                     }
 
-                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).isConnected, isScan).Wait();
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, CurrentUser.Accounts.Find(c => c.TcpId == tcpId).Key, CurrentUser.Accounts.FirstOrDefault(c => c.AccountName == userName).IsConnected, isScan).Wait();
                     await Clients.Client(CliID).SendAsync("NewConnection", "dofus-co-retro-f9e1b368375d4153.elb.eu-west-1.amazonaws.com", 443, false, tcpId, isScan);
 
                     await _userCollection.ReplaceOneAsync(c => c.Id == CurrentUser.Id, CurrentUser);
@@ -151,14 +151,14 @@ namespace DeepBot.Core.Hubs
 
                 if (!invisible)
                 {
-                    account.isConnected = false;
+                    account.IsConnected = false;
                     currentUser.Accounts.Find(c => c.TcpId == tcpId).TcpId = "";
                     await _userCollection.ReplaceOneAsync(c => c.Id == currentUser.Id, currentUser);
-                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected, false).Wait();
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).IsConnected, false).Wait();
                 }
 
                 if (invisible)
-                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).isConnected, true).Wait();
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).IsConnected, true).Wait();
 
             }
         }

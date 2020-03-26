@@ -9,6 +9,7 @@ using DeepBot.Data.Enums;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
 using MongoDB.Driver;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -89,7 +90,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void ConnectPackageHandle(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager) => hub.SendPackage("GI", tcpId);
 
         [Receiver("ASK")]
-        public void SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public async Task SelectedCharacterPackageHandle(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();
@@ -104,9 +105,9 @@ namespace DeepBot.Core.Handlers.GamePlatform
             inventory.Items.DeserializeItems(splittedData[9]);
 
             characterGame.State = CharacterStateEnum.IDLE;
-            Task.Delay(new Random().Next(150,450));
-            hub.SendPackage("GC1", tcpId);
-            Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory);
+            await Task.Delay(new Random().Next(150,450));
+            hub.SendPackage("GC1", tcpId).Wait();
+            Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory).Wait();
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }
     }

@@ -128,7 +128,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Substring(14);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).IsScan);
+            hub.Clients.Caller.SendAsync("NewConnection", Hash.DecryptIp(package.Substring(3, 8)), Hash.DecryptPort(package.Substring(11, 3).ToCharArray()), true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world {Hash.DecryptIp(package.Substring(3, 8))} {Hash.DecryptPort(package.Substring(11, 3).ToCharArray())}", tcpId), tcpId).Wait();
         }
 
@@ -137,7 +137,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Split(';')[1];
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
-            hub.Clients.Caller.SendAsync("NewConnection", package.Split(';')[0].Substring(3), 443, true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).IsScan);
+            hub.Clients.Caller.SendAsync("NewConnection", package.Split(';')[0].Substring(3), 443, true, tcpId, user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).isScan);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, $"Redirection vers le world ", tcpId), tcpId).Wait();
         }
     }
