@@ -42,11 +42,11 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         private CharacterStateEnum _State { get; set; } = CharacterStateEnum.DISCONNECTED;
         [BsonIgnore]
-        public MapCell Cell { get; set; }
+        public int CellId { get; set; }
         [BsonIgnore]
         public Map Map { get; set; }
         [BsonIgnore]
-        public TrajetDB Trajet { get; set; }
+        public TrajetDB Trajet { get { return Driver.Database.Paths.Find(c => c.Key == Fk_Trajet).FirstOrDefault(); } }
         [BsonIgnore]
         public ConfigCharacterDB Config { get { return Driver.Database.ConfigsCharacter.Find(c => c.Key == Fk_Configuration).FirstOrDefault(); } }
         [BsonIgnore]
@@ -65,15 +65,13 @@ namespace DeepBot.Data.Model
         [BsonIgnore]
         public GroupDB Group { get { return Driver.Database.Groups.Find(c => c.Key == Fk_Group).FirstOrDefault(); } }
         [BsonIgnore]
-        public ScriptManager ScriptManager { get; set; }
-        [BsonIgnore]
-        public ActionManager ActionManager { get; set; }
-        [BsonIgnore]
         public byte Sex { get; set; }
         [BsonIgnore]
         public bool HasGroup => Group != null;
         [BsonIgnore]
         public bool IsGroupLeader => !HasGroup || Group.Leader == this;
+        [BsonIgnore]
+        public string TcpId { get; set; }
 
         [BsonIgnore]
         public Action OnStateChanged;
@@ -81,8 +79,6 @@ namespace DeepBot.Data.Model
         [BsonConstructor]
         public Character()
         {
-            ScriptManager = new ScriptManager(this);
-            ActionManager = new ActionManager(this);
         }
     }
 }

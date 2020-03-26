@@ -77,6 +77,7 @@ namespace DeepBot.CLI.Model
 
         private void DispatchConnect(string ip, int port, bool isSwitch, string tcpId, bool _isScan = false)
         {
+            Console.WriteLine("Connecting to another");
             if (isSwitch)
             {
                 var TcpClient = Clients[tcpId];

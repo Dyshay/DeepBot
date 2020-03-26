@@ -31,7 +31,17 @@ namespace DeepBot.Data.Model
         /// <summary>
         /// CLI Informations attached to account
         /// </summary>
-        public string TcpId { get; set; }
+        private string _TcpId { get; set; }
+        public string TcpId
+        {
+            get { return _TcpId; }
+            set
+            {
+                _TcpId = value;
+                if (CurrentCharacter != null)
+                    CurrentCharacter.TcpId = value;
+            }
+        }
 
 
         //public TcpClient Connexion { get; set; } <= @Dyshay ? 

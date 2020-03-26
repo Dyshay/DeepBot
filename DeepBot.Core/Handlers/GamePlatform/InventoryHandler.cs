@@ -115,7 +115,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("ECK")]
         public void ExchangeCreateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             string[] datas = package.Substring(3).Split('|');
             var exchangeType = (ExchangeTypeEnum)Convert.ToInt32(datas[0]);
             if (exchangeType == ExchangeTypeEnum.EXCHANGE_STORAGE)
@@ -127,21 +127,21 @@ namespace DeepBot.Core.Handlers.GamePlatform
         [Receiver("DV")]
         public void DialogLeaveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.State = CharacterStateEnum.IDLE;
         }
 
         [Receiver("EK")]
         public void ExchangeValidateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.State = CharacterStateEnum.IDLE;
         }
 
         [Receiver("EL")]
         public void ExchangeItemsListHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
-            var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
+            var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();
             if (characterGame.State == CharacterStateEnum.BANKING)
             {

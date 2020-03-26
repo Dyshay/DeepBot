@@ -27,7 +27,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
 
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Connexion au serveur d'auth", tcpId), tcpId).Wait();
 
-            hub.SendPackage("1.31.2", tcpId);
+            hub.SendPackage("1.31.3", tcpId);
 
             hub.SendPackage($"{account.AccountName}\n{Hash.EncryptPassword(account.Password, account.WelcomeKey)}", tcpId);
             hub.SendPackage($"Af", tcpId);
