@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace DeepBot.Core.Network
 {
@@ -27,12 +29,17 @@ namespace DeepBot.Core.Network
             }
         }
 
-        public static void Receive(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> Manager)
+        public async static Task Receive(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> Manager)
         {
             ReceiverData method = methods.Find(m => package.StartsWith(m.HandlerName));
 
             if (method != null)
-                method.Information.Invoke(method.Instance, new object[5] { hub, package, user, tcpId, Manager });
+            {
+                if (method.Information.ReturnType.GetMethod(nameof(Task.GetAwaiter)) != null)
+                    await (Task)method.Information.Invoke(method.Instance, new object[5] { hub, package, user, tcpId, Manager });
+                else
+                    method.Information.Invoke(method.Instance, new object[5] { hub, package, user, tcpId, Manager });
+            }
         }
     }
 }
