@@ -61,7 +61,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public void EntityPopOrMoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
-            foreach (var playerSplit in package.Substring(3).Split('|'))à
+            foreach (var playerSplit in package.Substring(3).Split('|'))
             {
                 if (playerSplit.Length != 0)
                 {
