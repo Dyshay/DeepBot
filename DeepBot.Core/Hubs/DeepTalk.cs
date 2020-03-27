@@ -154,7 +154,7 @@ namespace DeepBot.Core.Hubs
                     account.IsConnected = false;
                     account.TcpId = "";
                     await _userCollection.ReplaceOneAsync(c => c.Id == currentUser.Id, currentUser);
-                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, currentUser.Accounts.Find(c => c.TcpId == tcpId).Key, currentUser.Accounts.Find(c => c.TcpId == tcpId).IsConnected, false).Wait();
+                    Clients.GroupExcept(GetApiKey(), CliID).SendAsync("CLIRequiredMessage", true, account.Key, account.IsConnected, false).Wait();
                 }
 
                 if (invisible)
