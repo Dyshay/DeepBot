@@ -20,5 +20,6 @@
         TYPE_MONSTER_FIGHTER = -2,
         TYPE_FIGHTER = -1,
         TYPE_CHARACTER = 0,
+        TYPE_OWNERCHARACTER =1,
     }
 }

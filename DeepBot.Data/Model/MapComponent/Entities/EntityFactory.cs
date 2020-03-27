@@ -25,6 +25,7 @@ namespace DeepBot.Data.Model.MapComponent.Entities
                     var group = new MonsterGroupEntity()
                     {
                         Id = Convert.ToInt32(datas[3]),
+                        Type = EntityTypeEnum.TYPE_MONSTER_GROUP,
                         MapId = mapId,
                         CellId = Convert.ToInt32(datas[0]),
                     };

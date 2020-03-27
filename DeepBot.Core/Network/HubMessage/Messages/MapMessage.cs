@@ -2,6 +2,7 @@
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.MapComponent;
 using DeepBot.Data.Model.MapComponent.Entities;
+using System.Linq;
 
 namespace DeepBot.Core.Network.HubMessage.Messages
 {
@@ -25,14 +26,16 @@ namespace DeepBot.Core.Network.HubMessage.Messages
             TcpId = tcpId;
         }
 
-        public MapMessage(MapCell[] cells, int mapWidth, int mapHeight, string areaName, string coordinate, string tcpId)
+        public MapMessage(Map map, string tcpId)
         {
-            Cells = cells;
+            Cells = map.CurrentMap.Cells;
             TcpId = tcpId;
-            MapWidth = mapWidth;
-            MapHeight = mapHeight;
-            AreaName = areaName;
-            Coordinate = coordinate;
+            MapWidth = map.CurrentMap.Width;
+            MapHeight = map.CurrentMap.Height;
+            AreaName = map.CurrentMap.AreaName;
+            Coordinate = map.CurrentMap.Coordinate;
+            Entitys = map.Entities.Values.ToArray();
+            InteractivObjects = map.Interactives.Values.ToArray();
         }
     }
 }
