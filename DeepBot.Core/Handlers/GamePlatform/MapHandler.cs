@@ -28,8 +28,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 {
                     hub.SendPackage($"Gdm{mapId}", tcpId);
                     characterGame.Map = new Map(mapId);
-                    hub.DispatchToClient(new MapMessage(characterGame.Map.CurrentMap.Cells, characterGame.Map.CurrentMap.Width,
-                        characterGame.Map.CurrentMap.Height, characterGame.Map.CurrentMap.AreaName, characterGame.Map.CurrentMap.Coordinate, tcpId), tcpId).Wait();
+                    hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId).Wait();
                 }
             }
             else
@@ -37,8 +36,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 if (int.TryParse(package.Substring(4).Split('|')[0], out int mapId))
                 {
                     characterGame.Map = new Map(mapId);
-                    hub.DispatchToClient(new MapMessage(characterGame.Map.CurrentMap.Cells, characterGame.Map.CurrentMap.Width,
-                        characterGame.Map.CurrentMap.Height, characterGame.Map.CurrentMap.AreaName, characterGame.Map.CurrentMap.Coordinate, tcpId), tcpId).Wait();
+                    hub.DispatchToClient(new MapMessage(characterGame.Map,tcpId), tcpId).Wait();
                     hub.SendPackage("GI", tcpId);
                 }
             }
@@ -72,14 +70,23 @@ namespace DeepBot.Core.Handlers.GamePlatform
                         if (entity != null)
                         {
                             Debug.WriteLine($"Entity {entity.Id} pop or move on cell {entity.CellId}; curr character {entity.Id == characterGame.Key}");
-                            characterGame.Map.Entities[entity.Id] = entity;
+                            if (characterGame.Map.Entities.ContainsKey(entity.Id))
+                                characterGame.Map.Entities[entity.Id].CellId = entity.CellId;
+                            else
+                                characterGame.Map.Entities[entity.Id] = entity;
                             if (entity.Id == characterGame.Key)
+                            {
+                                entity.Type = EntityTypeEnum.TYPE_OWNERCHARACTER;
                                 characterGame.CellId = entity.CellId;
+                            }
+
+                            hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
                         }
                     }
                     else if (playerSplit.StartsWith('-'))
                     {
                         characterGame.Map.Entities.Remove(Convert.ToInt32(playerSplit.Substring(1)));
+                        hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
                     }
                 }
             }
@@ -97,9 +104,11 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 {
                     case 0:
                         characterGame.Map.Interactives[cellId].IsActive = false;
+                        hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
                         break;
                     case 1:
                         characterGame.Map.Interactives[cellId].IsActive = true;
+                        hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
                         break;
                 }
             }
@@ -125,6 +134,11 @@ namespace DeepBot.Core.Handlers.GamePlatform
                             await Task.Delay(PathFinderUtils.Instance.GetDeplacementTime(characterGame.Map, path));
                             await hub.SendPackage($"GKK{gttMovementType}", tcpId);
                             characterGame.CellId = cellId;
+                        }
+                        else
+                        {
+                            characterGame.Map.Entities[entityId].CellId = cellId;
+                            hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
                         }
                         break;
                 }
