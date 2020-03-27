@@ -11,7 +11,7 @@ import { CellTypes } from '../../../../../webModel/Enum/CellTypes';
   styleUrls: ['./map.component.scss']
 })
 /** map component*/
-export class MapComponent implements OnChanges, OnInit, OnDestroy {
+export class MapComponent implements OnChanges, OnInit {
 
   @Input() map: MapMessage;
   TileWidth = 53; // 43
@@ -31,7 +31,7 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
 
   Config = { DisplayCellID: false }
 
-  ngOnInit(){
+  ngOnInit() {
     this.Canvas = document.getElementById("isocanvas");
     this.Context = this.Canvas.getContext('2d');
     this.Canvas.addEventListener('mousedown', this.handlerMouseClick.bind(this), false);
@@ -43,12 +43,6 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(){
-    this.Canvas = document.getElementById("isocanvas");
-    this.Context = this.Canvas.getContext('2d');
-    this.Canvas.removeEventListener("mousedown", this.handlerMouseClick.bind(this));
-  }
-
   handlerMouseClick(event) {
     var r = this.Canvas.getBoundingClientRect(),
       x = event.clientX - r.left,
@@ -56,7 +50,7 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
 
     for (var cellid in this.CELLPOS) {
       if (this.CELLPOS[cellid].Points !== undefined && this.isInCell(this.CELLPOS[cellid], x, y)) {
-        //SEND CELLID TO SERVER
+        console.log('CELL ID', this.CELLPOS[cellid].cellid);
         break;
       }
     }
@@ -68,23 +62,22 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
     return (dx / (this.TileWidth) + dy / (this.TileHeight) <= 1.31)
   }
 
-  getMousePos(canvas, evt) {
-    var rect = canvas.getBoundingClientRect();
-    return {
-      x: evt.clientX - rect.left,
-      y: evt.clientY - rect.top
-    };
-  }
-
   // Init cells
   _InitCells(Width, Height, mapData) {
     for (var q = 0; q < this.CellsCount; q++) {
       this.CELLPOS[q] = { los: false };
+      let interactives = mapData.interactivObjects.find(c => c.cellId === q);
       if (mapData.cells[q] !== undefined) {
-        this.CELLPOS[q].mov = !mapData.cells[q].isWalkable
+        this.CELLPOS[q].mov = mapData.cells[q].isWalkable
+        if (interactives !== undefined) {
+          this.CELLPOS[q].mov = interactives.canWalkThrough;
+          console.log(interactives)
+        }
         this.CELLPOS[q].IsInLineOfSight = mapData.cells[q].isInLineOfSight;
         this.CELLPOS[q].isInteractiveCell = mapData.cells[q].isInteractiveCell;
-        this.CELLPOS[q].teleport = mapData.cells[q].isTeleportCell
+        this.CELLPOS[q].teleport = mapData.cells[q].isTeleportCell;
+        this.CELLPOS[q].cellid = mapData.cells[q].id;
+        this.CELLPOS[q].interactiveId = mapData.cells[q].interactiveObject;
       }
     }
     var cellId = 0;
@@ -123,18 +116,6 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
     }
   }
 
-  // Init entities
-  _InitEntities(EntitiesData) {
-    this.Entities = [];
-    for (var i in EntitiesData) {
-      let data = EntitiesData[i];
-      if (!this.Entities[data.cell]) this.Entities[data.cell] = [];
-      if (data._type == "InteractiveElement") data.color = this.GetColorFromString(data._type + data.elementTypeId)
-      else data.color = this.GetColorFromString(data._type)
-      this.Entities[data.cell].push(data);
-    }
-  }
-
   // Init map construction
   Init(mapData) {
     // Set canvas size
@@ -145,7 +126,7 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
     var drawedHeight = this.Context.canvas.height - (this.Context.canvas.height / 20) * 2;
     this._InitCells(this.Context.canvas.width, drawedHeight, this.map);
     this.SetMap();
-    // this.SetEntities(EntitiesData);
+    this.SetEntities(mapData);
   }
 
   // Set map set <Obstacles> and <Los> (Line of sight)
@@ -154,7 +135,7 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
     for (var CellID in this.CELLPOS) {
       if (this.CELLPOS[CellID].Points !== undefined) {
         let color = this.GetColor(this.CELLPOS[CellID]);
-        if (this.CELLPOS[CellID].mov) {
+        if (!this.CELLPOS[CellID].mov) {
           this._DrawTileFromPos(_Canvas, this.CELLPOS[CellID].Points, color, 0xFFFFFF, false);
         }
         else {
@@ -176,14 +157,14 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
 
   GetColor(cell) {
     let color = 0x5A5A8C;
-    if (!cell.mov)
+    if (cell.mov)
       color = 0xC1C1D7;
     if (cell.IsInLineOfSight)
       color = 0x14141F;
     if (cell.teleport)
       color = 0xFFA500;
-    if (cell.isInteractiveCell)
-      color = 0xFFFFFF;
+    // if (cell.isInteractiveCell)
+    //   color = 0xFFFFFF;
 
     return color;
   }
@@ -199,19 +180,38 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   // Set entities
-  SetEntities(EntitiesData) {
-    this._InitEntities(EntitiesData);
+  SetEntities(Data) {
     let _Canvas = this.GetTempCanvas();
-    for (var CellID in this.CELLPOS) {
-      if (this.Entities[CellID] && this.Entities[CellID].length) {
-        if (this.Entities[CellID][0]._type != "InteractiveElement") this._DrawCircleFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, this.Entities[CellID][0].color);
-        else this._DrawSquareFromPos(_Canvas, this.CELLPOS[CellID].X, this.CELLPOS[CellID].Y, this.Entities[CellID][0].color);
+    for (let i = 0; i < Data.entitys.length; i++) {
+      switch (Data.entitys[i].type) {
+        case -3:
+          this._DrawCircleFromPos(_Canvas, this.CELLPOS[Data.entitys[i].cellId].Points, 0xe84118);
+          break;
+        case -4:
+          this._DrawCircleFromPos(_Canvas, this.CELLPOS[Data.entitys[i].cellId].Points, 0x222f3e);
+          break;
+        case 1:
+          this._DrawCircleFromPos(_Canvas, this.CELLPOS[Data.entitys[i].cellId].Points, 0x1e90ff);
+          break;
+        case 0:
+          this._DrawCircleFromPos(_Canvas, this.CELLPOS[Data.entitys[i].cellId].Points, 0x01a3a4);
+          break;
+        default:
+          break;
+      }
+      for (let i = 0; i < Data.interactivObjects.length; i++) {
+        if (Data.interactivObjects[i].isActive) {
+          this._DrawSquareFromPos(_Canvas, this.CELLPOS[Data.interactivObjects[i].cellId].Points, 0x10ac84)
+        }
       }
     }
-    this.Storage.Source.Entities = EntitiesData;
+    this.Storage.Source.Entities = Data.entitys;
     this.Storage.Canvas.Entities = _Canvas;
+    console.log('ici')
     this._Bind([this.Storage.Canvas.Map, _Canvas]);
+    this._Refresh();
   }
+
   UnsetEntities() {
     this.Storage.Source.Entities = null;
     this.Storage.Canvas.Entities = this.GetTempCanvas();
@@ -280,21 +280,23 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
   }
 
   // Core function for Drawing Circle on tile
-  _DrawCircleFromPos(canvas, x, y, color) {
+  _DrawCircleFromPos(canvas, Points, color) {
     let target = canvas.getContext("2d");
+    var paddingTop = (Points.down.y - Points.top.y);
     if (color != undefined) target.fillStyle = "#" + color.toString(16);
     target.beginPath();
-    target.arc(x + this.TileWidth / 2, y + this.TileHeight / 2, this.TileHeight / 3, 0, Math.PI * 2, false);
+    target.arc((Points.centerX), (Points.centerY + paddingTop), this.TileHeight / 4, 0, Math.PI * 2, false);
     target.closePath();
     if (color != undefined) target.fill();
   }
 
   // Core function for Drawing square on tile
-  _DrawSquareFromPos(canvas, x, y, color) {
+  _DrawSquareFromPos(canvas, Points, color) {
     let target = canvas.getContext("2d");
+    var paddingTop = (Points.down.y - Points.top.y);
     if (color != undefined) target.fillStyle = "#" + color.toString(16);
     target.beginPath();
-    target.fillRect(x + this.TileHeight * .7, y + this.TileHeight * .2, this.TileHeight * .6, this.TileHeight * .6);
+    target.fillRect(Points.centerX - 2, Points.centerY + paddingTop - 4, this.TileHeight * .2, this.TileHeight * .2);
     target.closePath();
     if (color != undefined) target.fill();
   }
@@ -307,27 +309,6 @@ export class MapComponent implements OnChanges, OnInit, OnDestroy {
     target.fillStyle = _fillStyle;
     target.fillText(_text, _text.length > 2 ? Points.centerX - 8 : Points.centerX - 5, Points.centerY + paddingTop + 2.5);
   }
-
-  // Get color from string <ElemType> of element
-  GetColorFromString(ElemType) {
-    let i = 0, r = 0, g = 0, b = 0;
-    for (i = 0; ElemType && i < ElemType.length; ++i) {
-      switch (i % 3) {
-        case 0: r += (ElemType.charCodeAt(i)) * 20; g += (ElemType.charCodeAt(i)) * 10; b += (ElemType.charCodeAt(i)) * 40; break;
-        case 1: r += (ElemType.charCodeAt(i)) * 10; g += (ElemType.charCodeAt(i)) * 40; b += (ElemType.charCodeAt(i)) * 20; break;
-        case 2: r += (ElemType.charCodeAt(i)) * 40; g += (ElemType.charCodeAt(i)) * 20; b += (ElemType.charCodeAt(i)) * 10; break;
-      }
-    }
-    r = 0xEE - r % 150;
-    g = 0xEE - g % 150;
-    b = 0xEE - b % 150;
-    return ((r & 0xFF) << 16) | ((g & 0xFF) << 8) | (b & 0xFF);
-  }
-
-
-  // Get cell coords X/Y on canvas and vice-versa
-  GetCoordsFromCellID(CellID) { return { X: CellID % this.MAP_WIDTH, Y: Math.floor(CellID / this.MAP_WIDTH) } }
-  GetCellIDFromCoords(x, y) { return null; }
 
   // Build temporary canvas
   GetTempCanvas() {
