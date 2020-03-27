@@ -50,6 +50,35 @@ namespace DeepBot.Data.Utilities.Pathfinding
             }
         }
 
+        public string GetPathfindingString(List<Node> path)
+        {
+            Node targetNode = path.Last();
+
+            if (path.Count <= 2)
+                return targetNode.GetCharDirection(path.First()) + Hash.GetCellChar(targetNode.Id);
+
+            StringBuilder pathfinder = new StringBuilder();
+            char previousDir = path[1].GetCharDirection(path.First()), actualDir;
+
+            for (int i = 2; i < path.Count; i++)
+            {
+                Node actualNode = path[i];
+                Node previousNode = path[i - 1];
+                actualDir = actualNode.GetCharDirection(previousNode);
+
+                if (previousDir != actualDir)
+                {
+                    pathfinder.Append(previousDir);
+                    pathfinder.Append(Hash.GetCellChar(previousNode.Id));
+
+                    previousDir = actualDir;
+                }
+            }
+            pathfinder.Append(previousDir);
+            pathfinder.Append(Hash.GetCellChar(targetNode.Id));
+            return pathfinder.ToString();
+        }
+
         public List<Node> GetPath(Map map, int startPos, int targetPos, bool useDiag)
         {
             var sw = new Stopwatch();

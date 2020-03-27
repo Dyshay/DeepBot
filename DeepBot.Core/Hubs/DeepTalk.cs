@@ -5,6 +5,7 @@ using DeepBot.Data.Database;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
 using DeepBot.Data.Model.GameServer;
+using DeepBot.Data.Utilities.Pathfinding;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SignalR;
@@ -25,7 +26,6 @@ namespace DeepBot.Core.Hubs
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
         private Task<UserDB> UserDB => Manager.FindByIdAsync(userId);
         private string CliID => Manager.FindByIdAsync(userId).Result.CliConnectionId;
-        private RoleManager<RoleDB> RoleManager;
 
         public static Dictionary<string, bool> IsScans = new Dictionary<string, bool>();
         public readonly IMongoCollection<UserDB> _userCollection;
@@ -35,7 +35,6 @@ namespace DeepBot.Core.Hubs
             if (await IsAllowedAPI())
             {
                 var CurrentUser = await UserDB;
-
                 await Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
             }
         }
@@ -188,6 +187,17 @@ namespace DeepBot.Core.Hubs
             await Clients.GroupExcept(GetApiKey(), CliID).SendAsync("StatusAccount", ConnectedBot[currentUser.Id]);
         }
 
+        public async Task ChangeMap(short cellId, string tcpId)
+        {
+            var hub = this;
+            var currentUser = await UserDB;
+            var account = currentUser.Accounts.Find(c => c.TcpId == tcpId);
+            var characterGame = Storage.Instance.GetCharacter(account.CurrentCharacter.Key);
+            var path = PathFinder.Instance.GetPath(characterGame.Map, characterGame.CellId, cellId, true);
+            var stringPath = PathFinder.Instance.GetPathfindingString(path);
+            hub.SendPackage(CliID, $"GA001{stringPath}", tcpId, true).Wait();
+        }
+
         private string GetApiKey()
         {
             return Context.User.Claims.FirstOrDefault(c => c.Type == "ApiKey").Value;
@@ -215,10 +225,11 @@ namespace DeepBot.Core.Hubs
                     {
                         Debug.WriteLine("Remove character " + a.CurrentCharacter.Key + " from memory");
                         Storage.Instance.RemoveCharacter(a.CurrentCharacter);
-                    } 
+                    }
                 });
             }
         }
+
 
         private async Task<bool> IsAllowedAPI()
         {
@@ -248,11 +259,10 @@ namespace DeepBot.Core.Hubs
             }
         }
 
-        public DeepTalk(UserManager<UserDB> manager, IMongoCollection<UserDB> userCollection, RoleManager<RoleDB> roleManager)
+        public DeepTalk(UserManager<UserDB> manager, IMongoCollection<UserDB> userCollection)
         {
             Manager = manager;
             _userCollection = userCollection;
-            RoleManager = roleManager;
         }
     }
 }

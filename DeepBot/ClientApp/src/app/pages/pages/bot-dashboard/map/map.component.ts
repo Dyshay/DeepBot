@@ -1,9 +1,12 @@
 import { Component, Input, OnInit, OnChanges, OnDestroy } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Character } from '../../../../../webModel/Character';
+import * as fromCharacter from '../../../../app-reducers/character/reducers';
 import $ from 'jquery';
 import { MapMessage } from '../../../../../webModel/MapMessage';
 import { CellTypes } from '../../../../../webModel/Enum/CellTypes';
+import { TalkService } from 'src/app/Services/TalkService';
+import { Store, select } from '@ngrx/store';
 
 @Component({
   selector: 'app-map',
@@ -12,8 +15,10 @@ import { CellTypes } from '../../../../../webModel/Enum/CellTypes';
 })
 /** map component*/
 export class MapComponent implements OnChanges, OnInit {
+  constructor(private hub: TalkService, private characterStore: Store<fromCharacter.State>) { }
 
   @Input() map: MapMessage;
+  TcpId$ = this.characterStore.pipe(select(fromCharacter.getCurrentTcp));
   TileWidth = 53; // 43
   TileHeight = 27; // 21.5
   MAP_WIDTH = 15;
@@ -50,6 +55,9 @@ export class MapComponent implements OnChanges, OnInit {
 
     for (var cellid in this.CELLPOS) {
       if (this.CELLPOS[cellid].Points !== undefined && this.isInCell(this.CELLPOS[cellid], x, y)) {
+        this.TcpId$.subscribe(c => {
+          this.hub.ChangeMap(Number.parseInt(cellid), c)
+        });
         console.log('CELL ID', this.CELLPOS[cellid].cellid);
         break;
       }
@@ -64,14 +72,13 @@ export class MapComponent implements OnChanges, OnInit {
 
   // Init cells
   _InitCells(Width, Height, mapData) {
-    for (var q = 0; q < this.CellsCount; q++) {
+    for (var q = 0; q < mapData.cells.length; q++) {
       this.CELLPOS[q] = { los: false };
       let interactives = mapData.interactivObjects.find(c => c.cellId === q);
       if (mapData.cells[q] !== undefined) {
         this.CELLPOS[q].mov = mapData.cells[q].isWalkable
         if (interactives !== undefined) {
           this.CELLPOS[q].mov = interactives.canWalkThrough;
-          console.log(interactives)
         }
         this.CELLPOS[q].IsInLineOfSight = mapData.cells[q].isInLineOfSight;
         this.CELLPOS[q].isInteractiveCell = mapData.cells[q].isInteractiveCell;
@@ -207,7 +214,6 @@ export class MapComponent implements OnChanges, OnInit {
     }
     this.Storage.Source.Entities = Data.entitys;
     this.Storage.Canvas.Entities = _Canvas;
-    console.log('ici')
     this._Bind([this.Storage.Canvas.Map, _Canvas]);
     this._Refresh();
   }

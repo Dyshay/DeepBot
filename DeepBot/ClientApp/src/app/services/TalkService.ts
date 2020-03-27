@@ -102,6 +102,10 @@ export class TalkService {
     })
   }
 
+  public ChangeMap(cellid: number, tcpId: string):void {
+    this._hubConnection.invoke("ChangeMap", cellid, tcpId);
+  }
+
   private GetConnected(): void{
     this._hubConnection.on("StatusAccount", (accounts) => {
       this.storeUser.dispatch(webUserActions.getConnectedBot(accounts));
