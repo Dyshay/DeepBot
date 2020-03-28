@@ -80,6 +80,10 @@ namespace DeepBot
             BsonClassMap.RegisterClassMap<SpellAction>();
             BsonClassMap.RegisterClassMap<ConditionalAction>();
 
+            services.AddSingleton<DeepTalkService>();
+            services.AddHostedService<DeepTalkService>();
+            //services.AddSingleton<IDeepTalkService,DeepTalkService>();
+
             services.AddIdentityMongoDbProvider<UserDB, RoleDB>(identity =>
              {
                  identity.Password.RequireDigit = false;

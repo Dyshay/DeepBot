@@ -17,7 +17,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
     public class AccountHandler : IHandler
     {
         [Receiver("HC")]
-        public void GetWelcomeKeyAsync(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetWelcomeKeyAsync(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var account = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId);
             if (account.CurrentCharacter != null)
@@ -34,10 +34,10 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         }
 
         [Receiver("Ad")]
-        public void GetAccountUserName(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
+        public void GetAccountUserName(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService) => Console.WriteLine("NEED CALL TO HUB TO FRONT");
 
         [Receiver("Af")]
-        public void GetLoginQueue(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetLoginQueue(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             string[] queueData = package.Substring(2).Split('|');
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "[File d'attente] Position " + queueData[0] + "/" + queueData[1], tcpId), tcpId).Wait();
@@ -47,7 +47,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         }
 
         [Receiver("AH")]
-        public void GetServerState(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetServerState(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             string[] serverList = package.Substring(2).Split('|');
             Server server = user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server;
@@ -76,14 +76,14 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         }
 
         [Receiver("AQ")]
-        public void GetSecretQuestion(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetSecretQuestion(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             if (user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).Server.State == ServerState.ONLINE)
                 hub.SendPackage("Ax", tcpId, true);
         }
 
         [Receiver("AxK")]
-        public async void GetServerList(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public async void GetServerList(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             //AM.Account account = prmClient.Account;
             string[] loc5 = package.Substring(3).Split('|');
@@ -118,13 +118,13 @@ namespace DeepBot.Core.Handlers.AuthPlatform
 
 
         [Receiver("AXEf")]
-        public void NotSubscribe(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void NotSubscribe(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             hub.DispatchToClient(new LogMessage(LogType.GAME_INFORMATION, "Vous n'êtes pas abonnée", tcpId), tcpId).Wait();
         }
 
         [Receiver("AXK")]
-        public void GetServerWorld(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetServerWorld(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Substring(14);
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);
@@ -133,7 +133,7 @@ namespace DeepBot.Core.Handlers.AuthPlatform
         }
 
         [Receiver("AYK")]
-        public void GetServerWorldRemastered(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GetServerWorldRemastered(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             user.Accounts.FirstOrDefault(c => c.TcpId == tcpId).GameTicket = package.Split(';')[1];
             manager.ReplaceOneAsync(c => c.Id == user.Id, user);

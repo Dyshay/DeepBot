@@ -8,7 +8,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
     public class ChatHandler : IHandler
     {
         [Receiver("cC")]
-        public void ChannelUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ChannelUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             /*
             var characterGame = Storage.Instance.Characters[user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key];
@@ -32,7 +32,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("cMK")]
-        public void MessageHandler(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager)
+        public void MessageHandler(DeepTalk hub, string package, UserDB account, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
 
         }

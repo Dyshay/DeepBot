@@ -18,7 +18,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         public object CharacterState { get; private set; }
 
         [Receiver("As")]
-        public void StatsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void StatsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.DeserializeCharacter(package);
@@ -27,14 +27,14 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("AN")]
-        public void NewLevelHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void NewLevelHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.Level = Convert.ToByte(package.Substring(2));
         }
 
         [Receiver("SL")]
-        public void SpellsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void SpellsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             if (!package[2].Equals('o'))
@@ -54,7 +54,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("SUK")]
-        public void SpellUpdateSuccess(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void SpellUpdateSuccess(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             var split = package.Substring(3).Split('~');
@@ -64,19 +64,19 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("SUE")]
-        public void SpellUpdateError(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void SpellUpdateError(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             // TODO send hub spell msg
         }
 
         [Receiver("DV")]
-        public void NPCDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { } // TODO
+        public void NPCDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService) { } // TODO
 
         [Receiver("EV")]
-        public void OtherDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager) { } // TODO
+        public void OtherDialogClosedHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService) { } // TODO
 
         [Receiver("PIK")]
-        public void GroupInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GroupInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, package.Substring(3).Split('|')[0].ToLower() + " t'invite à rejoindre son groupe.", tcpId), tcpId).Wait();
@@ -93,7 +93,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ILS")]
-        public void RegenTimerHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void RegenTimerHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.RegenTime = Convert.ToInt32(package.Substring(3));
@@ -101,7 +101,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ILS")]
-        public void CharacterRegenHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void CharacterRegenHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             int regen = Convert.ToInt32(package.Substring(3));
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
@@ -110,7 +110,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("eUK")]
-        public void PlayerEmoteHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void PlayerEmoteHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
 
@@ -125,7 +125,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("gJR")]
-        public void GuildInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void GuildInvitationHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, package.Substring(3) + " t'invite à rejoindre sa guilde.", tcpId), tcpId).Wait();
             hub.SendPackage("gJE", tcpId);

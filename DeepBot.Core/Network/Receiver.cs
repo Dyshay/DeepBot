@@ -29,16 +29,16 @@ namespace DeepBot.Core.Network
             }
         }
 
-        public async static Task Receive(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> Manager)
+        public async static Task Receive(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> Manager, DeepTalkService talkService)
         {
             ReceiverData method = methods.Find(m => package.StartsWith(m.HandlerName));
 
             if (method != null)
             {
-                if (method.Information.ReturnType.GetMethod(nameof(Task.GetAwaiter)) != null)
-                    await (Task)method.Information.Invoke(method.Instance, new object[5] { hub, package, user, tcpId, Manager });
-                else
-                    method.Information.Invoke(method.Instance, new object[5] { hub, package, user, tcpId, Manager });
+                //if (method.Information.ReturnType.GetMethod(nameof(Task.GetAwaiter)) != null)
+                //    await (Task)method.Information.Invoke(method.Instance, new object[5] { hub, package, user, tcpId, Manager });
+                //else
+                    method.Information.Invoke(method.Instance, new object[6] { hub, package, user, tcpId, Manager, talkService });
             }
         }
     }

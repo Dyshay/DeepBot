@@ -17,7 +17,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
     {
 
         [Receiver("OAKO")]
-        public void ItemAddHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ItemAddHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
@@ -27,7 +27,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("OM")]
-        public void ItemMoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ItemMoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
@@ -45,7 +45,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("OQ")]
-        public void ItemQuantityUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ItemQuantityUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
@@ -60,7 +60,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("OC")]
-        public void ItemUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ItemUpdateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
@@ -73,7 +73,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("OR")]
-        public void ItemRemoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ItemRemoveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
@@ -84,7 +84,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("Ow")]
-        public void InventoryWeightHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void InventoryWeightHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
@@ -95,7 +95,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("Oa")]
-        public void EntityInventoryHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void EntityInventoryHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             //Guid inventoryId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Inventory;
             //var inventory = Database.Inventories.Find(i => i.Key == inventoryId).First();
@@ -105,7 +105,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ERK")]
-        public void ExchangeRequestHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ExchangeRequestHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             string[] datas = package.Substring(3).Split('|');
             int characterId = Convert.ToInt32(datas[0]), targetId = Convert.ToInt32(datas[1]);
@@ -113,7 +113,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("ECK")]
-        public void ExchangeCreateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ExchangeCreateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             string[] datas = package.Substring(3).Split('|');
@@ -125,21 +125,21 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("DV")]
-        public void DialogLeaveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void DialogLeaveHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.State = CharacterStateEnum.IDLE;
         }
 
         [Receiver("EK")]
-        public void ExchangeValidateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ExchangeValidateHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             characterGame.State = CharacterStateEnum.IDLE;
         }
 
         [Receiver("EL")]
-        public void ExchangeItemsListHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void ExchangeItemsListHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             var characterGame = Storage.Instance.GetCharacter(user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Key);
             var inventory = Database.Inventories.Find(i => i.Key == characterGame.Fk_Inventory).First();

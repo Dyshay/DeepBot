@@ -12,7 +12,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
     public class JobHandler //: IHandler
     {
         [Receiver("JS")]
-        public void JobSkillsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void JobSkillsHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid jobsId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Jobs;
             var jobsBook = Database.Jobs.Find(i => i.Key == jobsId).First();
@@ -21,7 +21,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("JX")]
-        public void JobXpHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void JobXpHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid jobsId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Jobs;
             var jobsBook = Database.Jobs.Find(i => i.Key == jobsId).First();
@@ -30,7 +30,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
         }
 
         [Receiver("JN")]
-        public void JobLevelUpHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager)
+        public void JobLevelUpHandler(DeepTalk hub, string package, UserDB user, string tcpId, IMongoCollection<UserDB> manager, DeepTalkService talkService)
         {
             Guid jobsId = user.Accounts.Find(c => c.TcpId == tcpId).CurrentCharacter.Fk_Jobs;
             var datas = package.Substring(2).Split('|');

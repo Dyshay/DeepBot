@@ -24,6 +24,7 @@ namespace DeepBot.Core.Hubs
         private static Dictionary<string, List<string>> ConnectedBot = new Dictionary<string, List<string>>();
         private readonly UserManager<UserDB> Manager;
         private string userId => Context.User.Claims.First(c => c.Type == "UserID").Value;
+        private DeepTalkService TalkService;
         private Task<UserDB> UserDB => Manager.FindByIdAsync(userId);
         private string CliID => Manager.FindByIdAsync(userId).Result.CliConnectionId;
 
@@ -35,7 +36,7 @@ namespace DeepBot.Core.Hubs
             if (await IsAllowedAPI())
             {
                 var CurrentUser = await UserDB;
-                await Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection);
+                Receiver.Receive(this, package, CurrentUser, tcpId, _userCollection, TalkService);
             }
         }
 
@@ -259,10 +260,11 @@ namespace DeepBot.Core.Hubs
             }
         }
 
-        public DeepTalk(UserManager<UserDB> manager, IMongoCollection<UserDB> userCollection)
+        public DeepTalk(UserManager<UserDB> manager, IMongoCollection<UserDB> userCollection, DeepTalkService talkService)
         {
             Manager = manager;
             _userCollection = userCollection;
+            TalkService = talkService;
         }
     }
 }
