@@ -1,6 +1,7 @@
 ﻿using DeepBot.Core.Extensions;
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
+using DeepBot.Core.Network.HubMessage;
 using DeepBot.Core.Network.HubMessage.Messages;
 using DeepBot.Data;
 using DeepBot.Data.Database;
@@ -8,6 +9,7 @@ using DeepBot.Data.Driver;
 using DeepBot.Data.Enums;
 using DeepBot.Data.Extensions;
 using DeepBot.Data.Model;
+using DeepBot.Data.Model.Hub.Model.Actions;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -105,10 +107,17 @@ namespace DeepBot.Core.Handlers.GamePlatform
             inventory.Items.DeserializeItems(splittedData[9]);
 
             characterGame.State = CharacterStateEnum.IDLE;
+
+            List<IHubAction> Actions = new List<IHubAction>();
+            Actions.Add(new HubPackageAction("GC1"));
+            Actions.Add(new HubMethodAction(() => Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory).Wait()));
+            Actions.Add(new HubClientAction(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId)));
+            talkService.AddTask(tcpId, user.CliConnectionId, user.ApiKey.Key.ToString(), Actions, new Random().Next(150, 450));
+
             //await Task.Delay(new Random().Next(150, 450));
-            hub.SendPackage("GC1", tcpId).Wait();
-            Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory).Wait();
-            hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
+            //hub.SendPackage("GC1", tcpId).Wait();
+            //Database.Inventories.ReplaceOneAsync(i => i.Key == characterGame.Fk_Inventory, inventory).Wait();
+            //hub.DispatchToClient(new LogMessage(LogType.SYSTEM_INFORMATION, "Personnage en ligne", tcpId), tcpId).Wait();
         }
     }
 }
