@@ -145,7 +145,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                             //hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
                             //await hub.SendPackage($"GKK{gttMovementType}", tcpId); 
                             //characterGame.CellId = cellId;
-                            talkService.AddTask(tcpId, cliId, apiKey.Key.ToString(), TaskRequest, DateTime.Now.AddMilliseconds(timeNeed));
+                            talkService.AddTask(tcpId, cliId, apiKey.Key.ToString(), TaskRequest, timeNeed);
                         }
                         else
                         {

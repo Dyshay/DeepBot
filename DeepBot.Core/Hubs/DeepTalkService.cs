@@ -24,9 +24,17 @@ namespace DeepBot.Core.Hubs
             StartedServiceTime = DateTime.Now;
         }
 
-        public void AddTask(string tcpId, string cliId, string apiKey, List<IHubAction> packages, DateTime requestEnd)
+        /// <summary>
+        /// Add new task in the queue
+        /// </summary>
+        /// <param name="tcpId">Connexion ID of Socket</param>
+        /// <param name="cliId">Connexion ID of console</param>
+        /// <param name="apiKey">Connexion ID of clients</param>
+        /// <param name="packages">List of package to send</param>
+        /// <param name="delayTime">Delay in ms</param>
+        public void AddTask(string tcpId, string cliId, string apiKey, List<IHubAction> packages, int delayTime)
         {
-            Tasks.Add(new HubTask(tcpId, cliId, apiKey, packages, requestEnd));
+            Tasks.Add(new HubTask(tcpId, cliId, apiKey, packages, DateTime.Now.AddMilliseconds(delayTime)));
         }
 
         private async Task<bool> WaitingTask()
