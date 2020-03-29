@@ -49,6 +49,7 @@ namespace DeepBot.Core.Hubs
 
         private int GetDelayWaiting()
         {
+            /// Waiting for Upstream the website (signalr)
             if (StartedServiceTime.AddMinutes(3) >= DateTime.Now)
                 return 30000;
 
