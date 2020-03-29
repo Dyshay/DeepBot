@@ -2,10 +2,10 @@
 using DeepBot.Core.Network;
 using DeepBot.Core.Network.HubMessage;
 using DeepBot.Core.Network.HubMessage.Messages;
+using DeepBot.Core.Network.HubMessage.Services;
 using DeepBot.Data;
 using DeepBot.Data.Database;
 using DeepBot.Data.Enums;
-using DeepBot.Data.Model.Hub.Model.Actions;
 using DeepBot.Data.Model.MapComponent;
 using DeepBot.Data.Model.MapComponent.Entities;
 using DeepBot.Data.Utilities;
@@ -39,7 +39,7 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 if (int.TryParse(package.Substring(4).Split('|')[0], out int mapId))
                 {
                     characterGame.Map = new Map(mapId);
-                    hub.DispatchToClient(new MapMessage(characterGame.Map,tcpId), tcpId).Wait();
+                    hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId).Wait();
                     hub.SendPackage("GI", tcpId);
                 }
             }
@@ -131,26 +131,37 @@ namespace DeepBot.Core.Handlers.GamePlatform
                 switch (actionId)
                 {
                     case 1: // Entity Move on map
+                        int startCell = Hash.GetCellNum(splittedData[3].Substring(1, 2));
                         int cellId = Hash.GetCellNum(splittedData[3].Substring(splittedData[3].Length - 2));
                         if (entityId == characterGame.Key)
                         {
                             var gttMovementType = splittedData[0];
                             var path = PathFinder.Instance.GetPath(characterGame.Map, characterGame.CellId, cellId, true);
                             var timeNeed = PathFinderUtils.Instance.GetDeplacementTime(characterGame.Map, path);
-                            //await Task.Delay(PathFinderUtils.Instance.GetDeplacementTime(characterGame.Map, path));
-                            List<IHubAction> TaskRequest = new List<IHubAction>();
-                            TaskRequest.Add(new HubClientAction(new MapMessage(characterGame.Map, tcpId)));
+                            List<IHubClientAction> pathAction = new List<IHubClientAction>();
+                            pathAction.Add(new HubNodeAction(path, (newCell) =>
+                        {
+                            characterGame.CellId = newCell;
+                            characterGame.Map.Entities[entityId].CellId = newCell;
+                        }, new HubClientAction(new MapMessage(characterGame.Map, tcpId)
+                        )));
+                            talkService.AddTask(tcpId, cliId, apiKey.Key.ToString(), pathAction, 0);
+                            List<IHubClientAction> TaskRequest = new List<IHubClientAction>();
                             TaskRequest.Add(new HubPackageAction($"GKK{gttMovementType}"));
-                            TaskRequest.Add(new HubMethodAction(() => characterGame.CellId = cellId));
-                            //hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
-                            //await hub.SendPackage($"GKK{gttMovementType}", tcpId); 
-                            //characterGame.CellId = cellId;
                             talkService.AddTask(tcpId, cliId, apiKey.Key.ToString(), TaskRequest, timeNeed);
                         }
                         else
                         {
-                            characterGame.Map.Entities[entityId].CellId = cellId;
-                            hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
+                            var path = PathFinder.Instance.GetPath(characterGame.Map, startCell, cellId, true);
+                            List<IHubClientAction> TaskRequest = new List<IHubClientAction>();
+                            TaskRequest.Add(new HubNodeAction(path, (newCell) =>
+                            {
+                                if (characterGame.Map.Entities.ContainsKey(entityId))
+                                    characterGame.Map.Entities[entityId].CellId = newCell;
+                            }, new HubClientAction(new MapMessage(characterGame.Map, tcpId))));
+                            talkService.AddTask(tcpId, cliId, apiKey.Key.ToString(), TaskRequest, 0);
+                            //characterGame.Map.Entities[entityId].CellId = cellId;
+                            //hub.DispatchToClient(new MapMessage(characterGame.Map, tcpId), tcpId);
                         }
                         break;
                 }
