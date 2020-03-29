@@ -652,7 +652,6 @@ export class ModalUpdatePathComponent implements OnInit,AfterViewInit {
   }
 
   updatePath() {
-    console.log(this.pathToUpdate);
     let updatedPath = this.pathToUpdate;
     this.storePath.dispatch(PathActions.updatePath({ updatedPath: JSON.parse(JSON.stringify(updatedPath)) }));
     this.dialogRef.close();

@@ -460,5 +460,14 @@
     "TO": "à",
     "DELETECONDITION": "Supprimer la condition",
     "UPDATECONDITION": "Modifier la condition"
+  },
+  "UPDATEIA": {
+    "IA": "Mes IA ",
+    "SEARCHIA": "Rechercher une IA",
+    "DESCRIPTION1": "Modifier vos IA",
+    "DESCRIPTION2": "- Ces modifications sera sauvegardé sur votre compte.",
+    "DESCRIPTION": "Description",
+    "NOIAFOUND": "Aucune IA ne correspond à votre filtre",
+    "SAVEIA": "Sauvegarder IA"
   }
 }

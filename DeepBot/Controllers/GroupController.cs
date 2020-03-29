@@ -43,7 +43,7 @@ namespace DeepBot.Controllers
         public async Task<List<GroupDB>> GetAllGroups()
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            List<GroupDB> ListGroup = _groups.Where(o => o.FK_User.ToString() == userId).ToList();
+            List<GroupDB> ListGroup = Database.Groups.Find(o => o.FK_User == new Guid(userId)).ToList();
             var user = await _userManager.FindByIdAsync(userId);
             foreach (GroupDB item in ListGroup)
             {
@@ -76,7 +76,7 @@ namespace DeepBot.Controllers
             var user = await _userManager.FindByIdAsync(userId);
             group.Key = Guid.NewGuid();
             await CreateConfigAsync(group.Key);
-            group.Fk_Configuration = Database.ConfigsGroup.Find(FilterDefinition<ConfigGroupDB>.Empty).ToList().FirstOrDefault(o => o.Fk_Group == group.Key).Key;
+            group.Fk_Configuration = Database.ConfigsGroup.Find(o=>o.Fk_Group == group.Key).FirstOrDefault().Key;
 
             group.FK_User = Guid.Parse(userId);
             int level = 0;
@@ -121,7 +121,7 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            GroupDB grouptoDelete = _groups.FirstOrDefault(o => o.Key.ToString() == groupkey.key && o.FK_User.ToString() == userId);
+            GroupDB grouptoDelete = _groups.FirstOrDefault(o => o.Key.ToString() == groupkey.key && o.FK_User == new Guid(userId));
 
             try
             {

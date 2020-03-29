@@ -1137,8 +1137,14 @@
     <button mat-menu-item (click)="onContextMenuActionSeparationGroupe()" *ngIf="pathService.statePath === 0">{{ 'CREATEPATH.FIGHTALONE' | translate }}</button>
     <button mat-menu-item (click)="onContextMenuActionNoFight()" *ngIf="pathService.statePath === 0">{{ 'CREATEPATH.NOFIGHT' | translate }}</button>
     <button mat-menu-item (click)="onContextMenuActionNoGather()" *ngIf="pathService.statePath === 1">{{ 'CREATEPATH.NOGATHER' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem('548')">{{ 'CREATEPATH.USEPOTION1' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem('6965')">{{ 'CREATEPATH.USEPOTION2' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem('6964')">{{ 'CREATEPATH.USEPOTION3' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionUseItem()">{{ 'CREATEPATH.USECONSOMMABLE' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionZaap()" [disabled]="!isZaapMap">{{ 'CREATEPATH.USEZAP' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionZaapi()" [disabled]="!isZaapiMap">{{ 'CREATEPATH.USEZAPPI' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionCell()">{{ 'CREATEPATH.MOVECELL' | translate }}</button>
+    <button mat-menu-item (click)="onContextMenuActionInteraction()">{{ 'CREATEPATH.INTERACTION' | translate }}</button>
     <button mat-menu-item (click)="onContextMenuActionList()">{{ 'CREATEPATH.LISTACTIONMAP' | translate }}</button>
-
   </ng-template>
 </mat-menu>
-

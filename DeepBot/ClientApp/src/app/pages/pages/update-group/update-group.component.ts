@@ -132,7 +132,7 @@ export class UpdateGroupComponent implements OnInit {
     );
   }
 
-  setData(data: Account[]) {
+  setData(data: GroupInterface[]) {
     this.tableData = data;
     this.menuOpen = false;
   }

@@ -67,7 +67,7 @@ export interface FriendSuggestion {
 /** bot-dashboard component*/
 export class BotDashboardComponent implements OnInit, OnChanges {
   ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
-    console.log('test');
+
   }
   account = this.accountStore.pipe(select(fromAccount.getCurrentAccount));
   character: Character = new Character();

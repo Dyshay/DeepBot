@@ -10,7 +10,7 @@ namespace DeepBot.Data.Model.IA
         public int NbLancer { get; set; }
         public Target Target { get; set; }
         public int SpellId { get; set; }
-        public List<ConditionalAction> Condtions { get; set; }
+        public List<ConditionalAction> Conditions { get; set; }
     }
 
     public enum Target

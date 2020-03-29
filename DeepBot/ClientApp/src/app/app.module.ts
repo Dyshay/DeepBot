@@ -28,6 +28,7 @@ import { NgHttpLoaderModule } from 'ng-http-loader';
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/fr';
 import { pathModule } from './app-reducers/path/path.modules';
+import { IaModule } from './app-reducers/ia/ia.modules';
 registerLocaleData(localeFr, 'fr-FR');
 
 export function createTranslateLoader(http: HttpClient) {
@@ -43,6 +44,7 @@ export function createTranslateLoader(http: HttpClient) {
     CharacterModule,
     groupModule,
     pathModule,
+    IaModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,

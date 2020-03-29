@@ -957,6 +957,7 @@ A jQuery plugin to enhance image maps.
       // similar to $.extend but does not add properties (only updates), unless the
       // first argument is an empty object, then all properties will be copied
       updateProps: function (_target, _template) {
+
         var onlyProps,
           target = _target || {},
           template = $.isEmptyObject(target) ? _template : _target;
@@ -2079,13 +2080,11 @@ A jQuery plugin to enhance image maps.
     },
     addAltImage: function (context, image, mapArea, options) {
       context.beginPath();
-
       this.renderShape(context, mapArea);
       context.closePath();
       context.clip();
 
       context.globalAlpha = options.altImageOpacity || options.fillOpacity;
-
       context.drawImage(image, 0, 0, mapArea.owner.scaleInfo.width, mapArea.owner.scaleInfo.height);
     },
     render: function () {
@@ -2131,7 +2130,7 @@ A jQuery plugin to enhance image maps.
             shapeContext.closePath();
             //shapeContext.clip();
             shapeContext.fillStyle = css3color(s.options.fillColor, s.options.fillOpacity);
-            shapeContext.fill();
+            shapeContext.fill(); 
           }
         }
         shapeContext.restore();
@@ -2647,7 +2646,6 @@ A jQuery plugin to enhance image maps.
   function configureAltImages(me) {
     var opts = me.options,
       mi = me.images;
-
     // add alt images
 
     if (m.hasCanvas()) {

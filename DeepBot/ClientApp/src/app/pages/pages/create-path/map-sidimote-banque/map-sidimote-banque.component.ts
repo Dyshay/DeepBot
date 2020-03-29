@@ -41,7 +41,6 @@ export class MapSidimoteBanqueComponent {
     this.isZaapMap = false;
     this.isZaapiMap = false;
     this.isBankMap = false;
-    this.rightClickPos = event.target.alt;
     if (ListZaap.Zaaps.map(o => o.destination).includes(this.rightClickPos))
       this.isZaapMap = true;
     if (ListZaapi.Zaapis.map(o => o.destination).includes(this.rightClickPos))

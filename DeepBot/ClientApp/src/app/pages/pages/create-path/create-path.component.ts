@@ -209,7 +209,9 @@ export class CreatePathComponent implements OnInit {
         areas: MapArea.mapArea,
         onClick: function (e) {
           if (e.selected) {
-            $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+           $('#zone1').mapster('set', true, e.key, { fillColor: 'FA2744' });
+         //   $('#zone1').mapster('set', true, e.key, { });
+            
             $('#zone1Banque').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone1Retour').mapster('set', true, e.key, { fillColor: 'FA2744' });
             $('#zone2').mapster('set', true, e.key, { fillColor: 'FA2744' });
@@ -763,7 +765,6 @@ export class CreatePathComponent implements OnInit {
     this.pathService.path = this.pathToCreate;
   }
 
-
   addMonsterQuantity() {
     this.pathToCreate.monsterQuantity.push(this.monsterQuantityToCreate);
     this.monsterQuantityToCreate = new SpecificMonsterQuantity;
@@ -795,8 +796,7 @@ export class CreatePathComponent implements OnInit {
 
   changeStatePath(etat) {
   /*  0 = combat / 1 = recolte  / 2= banque / 3= retour banque */
-      this.pathService.statePath = etat;
-    
+      this.pathService.statePath = etat;    
     }
 
   selectMap(position) {
@@ -804,7 +804,6 @@ export class CreatePathComponent implements OnInit {
   }
 
   specificAction(data) {
-    console.log(data);
     if (data.payload != null)
       this.pathService.receivedSpecificActionToAdd(data.position, data.event, data.payload)
     else
@@ -815,8 +814,7 @@ export class CreatePathComponent implements OnInit {
   changeDirection(direction: string, valeur: boolean) {
     this.pathService.direction = [];
     if (direction === 'Top')
-      this.directionTop = !this.directionTop;
-    
+      this.directionTop = !this.directionTop; 
     else if (direction === 'Left') 
       this.directionLeft = !this.directionLeft;
     else if (direction === 'Right') 

@@ -34,7 +34,7 @@
 
                 <mat-form-field fxFlex="35">
                   <mat-label>{{ 'CREATEIA.CLASSEIA' | translate }}</mat-label>
-                  <mat-select [(ngModel)]="iaToCreate.classe" required>
+                  <mat-select [(ngModel)]="iaToCreate.classe" required (selectionChange)="classChanged($event)">
                     <mat-option [value]="enum" *ngFor="let enum of classeEnum.values()">
                       {{ enum }}
                     </mat-option>

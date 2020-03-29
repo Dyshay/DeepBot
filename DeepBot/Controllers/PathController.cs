@@ -25,7 +25,6 @@ namespace DeepBot.Controllers
         private RoleManager<RoleDB> _roleManager;
         private readonly ApplicationSettings _appSettings;
         readonly IMongoCollection<UserDB> _userCollection;
-        private List<TrajetDB> _paths = Database.Paths.Find(FilterDefinition<TrajetDB>.Empty).ToList();
         private List<string> ListBank = new List<string>() { "-29;-58", "-23;40", "2;-2", "4;-16", "-16;4", "24;-36" };
         public PathController(UserManager<UserDB> userManager, RoleManager<RoleDB> roleManager, IOptions<ApplicationSettings> appSettings, SignInManager<UserDB> signInManager, IMongoCollection<UserDB> userCollection)
         {
@@ -42,7 +41,7 @@ namespace DeepBot.Controllers
         public async Task<List<PathMinDisplayed>> GetAllPaths()
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
-            List<TrajetDB> listTrajet = _paths.Where(o => o.Fk_User.ToString() == userId).ToList();
+            List<TrajetDB> listTrajet = Database.Paths.Find(o => o.Fk_User == new Guid(userId)).ToList();
             List<PathMinDisplayed> listeRetour = new List<PathMinDisplayed>();
             var user = await _userManager.FindByIdAsync(userId);
             foreach (TrajetDB item in listTrajet)
@@ -66,8 +65,8 @@ namespace DeepBot.Controllers
         {
             string userId = User.Claims.First(c => c.Type == "UserID").Value;
             var user = await _userManager.FindByIdAsync(userId);
-            TrajetDB trajet = _paths.FirstOrDefault(o => o.Key == key.Key);
 
+            TrajetDB trajet = Database.Paths.Find(o => o.Fk_User == new Guid(userId)).FirstOrDefault();
             PathModel pathToSend = new PathModel()
             {
                 Name = trajet.Name,
@@ -456,9 +455,6 @@ namespace DeepBot.Controllers
 
             return JsonSerializer.Serialize(trajettoDelete.Name);
         }
-
-
-
 
         [HttpPost]
         [Authorize]

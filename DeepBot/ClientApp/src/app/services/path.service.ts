@@ -230,6 +230,8 @@ export class PathService {
       }
       else if (this.statePath === 1) {
         this.addGatherAction(position);
+        if (this.direction.length > 0)
+          this.addMoveAction(position);
       }
       else if ((this.statePath === 2 || this.statePath === 3) && this.direction.length > 0) {
         this.addMoveAction(position);
@@ -258,11 +260,9 @@ export class PathService {
       this.toastr.error(this.translateService.instant('CREATEPATH.PATHACTIONMSG9') + position + this.translateService.instant('CREATEPATH.PATHACTIONMSG10'), this.translateService.instant('CREATEPATH.PATHACTIONMSG8'));
       return;
     }
-
     if (type === 'separateGroup' || type === 'noFight' || type === 'noGather') {
       this.updateAction(position, type);
     }
-
     else if (type === 'useItem') {
       this.addUseItemAction(position, payload)
     }
@@ -311,17 +311,17 @@ export class PathService {
       this.toastr.success(this.translateService.instant('CREATEPATH.PATHACTIONMSG11'), this.translateService.instant('CREATEPATH.PATHACTIONMSG14') + position + ')');
     }
   }
-  addUseItemAction(position, item) {
+  addUseItemAction(position, item) { 
     var order = this.getOrdre(position);
     if(this.statePath ==2)
     this.useItemActionToAdd = {
-      itemId: item,
+      itemId: parseInt(item),
       toBackBank: false,
       toGoBank:true
       }
     else
       this.useItemActionToAdd = {
-        itemId: item,
+        itemId: parseInt(item),
         toBackBank: true,
         toGoBank: false
       }
@@ -543,7 +543,6 @@ export class PathService {
           toBackBank: false
         }
     }
-
     this.addActionMapOnMap(position, ordre, this.moveActionToAdd, 'MoveAction');
   }
 
