@@ -1,6 +1,5 @@
 ﻿using DeepBot.Core.Network.HubMessage;
-using DeepBot.Data.Model.Hub.Model;
-using DeepBot.Data.Model.Hub.Model.Actions;
+using DeepBot.Core.Network.HubMessage.Services;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using System;
@@ -32,7 +31,7 @@ namespace DeepBot.Core.Hubs
         /// <param name="apiKey">Connexion ID of clients</param>
         /// <param name="packages">List of package to send</param>
         /// <param name="delayTime">Delay in ms</param>
-        public void AddTask(string tcpId, string cliId, string apiKey, List<IHubAction> packages, int delayTime)
+        public void AddTask(string tcpId, string cliId, string apiKey, List<IHubClientAction> packages, int delayTime)
         {
             Tasks.Add(new HubTask(tcpId, cliId, apiKey, packages, DateTime.Now.AddMilliseconds(delayTime)));
         }
@@ -42,32 +41,37 @@ namespace DeepBot.Core.Hubs
             if (Tasks.Count == 0)
             {
                 await Task.Delay(GetDelayWaiting());
-                await WaitingTask();
+                return false;
             }
-
-            return true;
+            else
+                return true;
         }
 
         private int GetDelayWaiting()
         {
-            if (StartedServiceTime.AddMinutes(6) >= DateTime.Now)
+            if (StartedServiceTime.AddMinutes(3) >= DateTime.Now)
                 return 30000;
 
-            return 600;
+            return 1000;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
 
-            while (!stoppingToken.IsCancellationRequested)
+            while (true)
             {
-                if (await WaitingTask())
-                {
-                    var task = Tasks.Find(c => c.RequestEnd <= DateTime.Now);
+                bool wait = await WaitingTask();
 
-                    if (Tasks.Find(c => c.RequestEnd <= DateTime.Now) != null)
+                if (wait)
+                {
+                    var task = Tasks.Find(c => c.RequestEnd <= DateTime.Now && !c.isProgress);
+
+                    if (task != null)
                     {
-                        task.Packages.ForEach(async package =>
+                        Task.Factory.StartNew(() =>
+                        {
+                            task.isProgress = true;
+                            task.Packages.ForEach(async package =>
                         {
                             switch (package)
                             {
@@ -80,12 +84,21 @@ namespace DeepBot.Core.Hubs
                                 case HubPackageAction e:
                                     await _hubContext.Clients.Client(task.CliID).SendAsync("SendPackage", e.Package, false, task.TcpId);
                                     break;
+                                case HubNodeAction e:
+                                    for (int node = 1; node < e.NodePath.Count; node++)
+                                    {
+                                        await Task.Delay(40);
+                                        e.Method?.Invoke(e.NodePath[node].Id);
+                                        await _hubContext.Clients.GroupExcept(task.ApiKey, task.CliID).SendAsync("DispatchClient", e.ActionClient.Network, task.TcpId);
+                                    }
+                                    break;
                                 default:
                                     break;
                             }
                         });
+                            Tasks.Remove(task);
+                        }).Wait();
 
-                        Tasks.Remove(task);
                     }
                 }
             }
