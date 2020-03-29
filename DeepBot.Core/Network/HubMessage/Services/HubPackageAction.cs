@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace DeepBot.Data.Model.Hub.Model.Actions
+namespace DeepBot.Core.Network.HubMessage.Services
 {
-    public class HubPackageAction : IHubAction
+    public class HubPackageAction : IHubClientAction
     {
         public string Package { get; set; }
 
