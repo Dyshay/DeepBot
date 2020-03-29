@@ -60,9 +60,7 @@ namespace DeepBot.Core.Hubs
 
             while (true)
             {
-                bool wait = await WaitingTask();
-
-                if (wait)
+                if (await WaitingTask())
                 {
                     var task = Tasks.Find(c => c.RequestEnd <= DateTime.Now && !c.isProgress);
 
