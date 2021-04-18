@@ -32,9 +32,13 @@
             ],
             "styles": [
               "src/styles.scss",
-              "src/@vex/styles/tailwind.scss"
+              "src/@vex/styles/tailwind.scss",
+              "node_modules/ngx-toastr/toastr.css"
             ],
-            "scripts": [],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/jquery-imagemapster/dist/jquery.imagemapster.js"
+            ],
             "customWebpackConfig": {
               "path": "./webpack.config.js"
             }

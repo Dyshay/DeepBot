@@ -2,8 +2,12 @@
   "iisSettings": {
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
+    "iis": {
+      "applicationUrl": "https://localhost/",
+      "sslPort": 0
+    },
     "iisExpress": {
-      "applicationUrl": "http://localhost:64417",
+      "applicationUrl": "http://localhost:4300",
       "sslPort": 44319
     }
   },
@@ -22,6 +26,13 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "applicationUrl": "https://localhost:5001;http://localhost:5000"
+    },
+    "IIS test": {
+      "commandName": "IIS",
+      "workingDirectory": "D:\\bot\\DeepBot-publish",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Statging"
+      }
     }
   }
 }

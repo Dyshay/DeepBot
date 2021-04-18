@@ -1,0 +1,99 @@
+<div class="container py-gutter">
+  <div class="card overflow-hidden">
+    <div class="h-44 relative ">
+      <!--<div class="absolute bg-contrast-black opacity-25 top-0 right-0 bottom-0 left-0 w-full h-full z-0"></div>-->
+      <div fxLayout="column" fxLayoutAlign="start center" class="full-width" fxFlex="fill">
+        <div fxLayout="column" fxLayoutAlign="start center" class="full-width overflow-hidden bg-pattern" fxFlex="fill">
+          <div fxLayout="row" fxLayoutAlign="start start" class="full-width">
+            <div *ngIf="(account | async) as account">
+              <button class="rounded-full h-10 mt-3 ml-3" style=" min-width: 154px !important;" color="primary"
+                      mat-raised-button type="button" *ngIf="account.isConnected === false; else disconnected"
+                      (click)="initConnection(account)">
+                <ic-icon [icon]="icToConnect" class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2" inline="true" size="25px">
+                </ic-icon>
+                <span class="mr-3">{{'GLOBAL.CONNECT' | translate}}</span>
+              </button>
+              <ng-template #disconnected>
+                <button class="rounded-full h-10 mt-3 ml-3" style=" min-width: 154px !important;" color="primary"
+                        mat-raised-button type="button" (click)="disconnect(account)">
+                  <ic-icon [icon]="icToConnect" class="ltr:-ml-2 rtl:-mr-2 ltr:mr-2 rtl:ml-2" inline="true" size="25px">
+                  </ic-icon>
+                  <span class="mr-3">{{'GLOBAL.DISCONNECT' | translate}}</span>
+                </button>
+              </ng-template>
+            </div>
+            <button color="primary" mat-mini-fab type="button" class="ml-4 mt-3"
+                    matTooltip=" {{'DASHBOARDBOT.BOTPAUSE' | translate}}" matTooltipPosition="right"
+                    [disabled]="character.fk_Group !='00000000-0000-0000-0000-000000000000'" (click)="startStopPath(account)">
+              <mat-icon [icIcon]="icPause"></mat-icon>
+            </button>
+            <mat-form-field fxFlex="20" class="ml-2 mt-2">
+              <mat-label>{{ 'GLOBAL.ACTUALPATH' | translate }}</mat-label>
+              <mat-select  [(ngModel)]="pathSelected" (selectionChange)="changePath($event)">
+                <mat-option [(value)]="trajet" *ngFor="let trajet of pathList">
+                  {{trajet.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div fxFlex="fill" fxLayout="row" fxLayoutAlign="end center" class="mt-2 mr-3">
+              <img @scaleIn class="avatar2 h-24 w-24 ml-2" src="assets/img/logo/logo-retro.png" >
+            </div>
+          
+          </div>
+          <div fxLayout="row" fxLayoutAlign="start end" class="full-width mt-3">
+            <img @scaleIn class="avatar h-24 w-24 ml-2" src="{{iconCharacter}}">
+            <h1 @fadeInRight class="headline text-contrast-black ml-2 mb-2">{{character?.name}}</h1>
+            <div @fadeInRight matTooltip="{{'GLOBAL.LEVEL' | translate}}" class="mx-3  mb-2">
+              <h1 class="headline text-contrast-black m-0 ng-trigger ng-trigger-fadeInRight" style="">
+                (  {{character?.level}} )
+              </h1>
+            </div>
+            <div @fadeInRight matTooltip="{{'GLOBAL.GROUPACTUAL' | translate}}" class="mx-3  mb-2">
+              <h1 class="headline text-contrast-black  m-0 ng-trigger ng-trigger-fadeInRight" style="">
+                {{groupName}}
+              </h1>
+            </div>
+            <div @fadeInRight matTooltip="{{'GLOBAL.DATEENDSUBSCRIBEANKAMA' | translate}}" class="mx-3  mb-2">
+              <h1 class="headline text-contrast-black m-0 ng-trigger ng-trigger-fadeInRight" style="">date fin abo</h1>
+            </div>
+          </div>
+
+          <div fxLayout="row" fxLayoutAlign="end center" class="full-width mt-1" matTooltip="258/535">
+            <mat-progress-bar mode="determinate" [value]="40" color="warn"></mat-progress-bar>
+          </div>
+        </div>
+  
+
+        <div fxLayout="row" fxLayoutAlign="end center" class="full-width">
+          <mat-tab-group #tabGroup (selectedTabChange)="tabChanged($event)" mat-align-tabs="center" class="full-width">
+            <mat-tab *ngFor="let link of links">
+              <ng-template mat-tab-label>
+                <ic-icon [icon]="link.icon" size="20px"></ic-icon>
+                <span class="pl-2"> {{ link.label }}</span>
+              </ng-template>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+
+      </div>
+
+
+    </div>
+  </div>
+
+  <div class="mt-3" fxLayout="row" fxLayout.lt-md="column" fxLayoutAlign="start start"
+       fxLayoutAlign.lt-md="start stretch" fxLayoutGap="24px">
+    <div fxFlex="calc(70% - 12px)" fxFlex.lt-md="auto">
+      <app-dashboard *ngIf="indexSelected == 0" [character]="character" [account]="account | async"
+                     [logs]="logs$ | async" [kamas]="kamas$ | async" [experienceActual]="(characteristics$ | async).experienceActual"
+                     [experienceLevelUp]="(characteristics$ | async).experienceLevelUp"></app-dashboard>
+      <app-character *ngIf="indexSelected == 1" [character]="character" [characteristics]="characteristics$ | async"
+                     [points]="characteristicsPoints$ | async" [kamas]="kamas$ | async"></app-character>
+      <app-fight *ngIf="indexSelected == 2" [character]="character"></app-fight>
+      <app-job *ngIf="indexSelected == 3" [character]="character"></app-job>
+      <app-inventory *ngIf="indexSelected == 4" [character]="character"></app-inventory>
+      <app-map *ngIf="indexSelected == 5" [character]="character" [map]="map$ | async"></app-map>
+      <app-parameters *ngIf="indexSelected == 6" [character]="character"></app-parameters>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="card">
+  <div class="px-gutter py-4 border-b">
+    <h2 class="title m-0">{{'GLOBAL.DASHBOARD' | translate}}</h2>
+  </div>
+
+  <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr 1fr" gdColumns.lt-md="1fr 1fr" gdColumns.lt-sm="1fr"
+       gdGap="16px" vexContainer>
+
+
+    <vex-widget-quick-value-center [icon]="icKamas" [color]="theme.colors.primary" gdColumn.lt-sm="1" label="Kamas"
+                               value="{{kamas}}"></vex-widget-quick-value-center>
+    <vex-widget-quick-value-center [change]="80.5" [icon]="icPOD" [color]="theme.colors.orange" gdColumn.lt-sm="1"
+                                   label="Inventaire" value="5.3K/5.6K"></vex-widget-quick-value-center>
+    <vex-widget-quick-value-center [change]="75.5" [icon]="icExperience" [color]="theme.colors.orange"
+                                   gdColumn.lt-sm="1" label="Experience" value="{{experienceActual}}/{{experienceLevelUp}}"></vex-widget-quick-value-center>
+    <vex-widget-quick-value-center [icon]="icTimer" [color]="theme.colors.teal" gdColumn.lt-sm="1"
+                                   label="Durée de connection" value="29h 16m 48s"></vex-widget-quick-value-center>
+
+
+    <mat-divider gdColumn="1 / 5" gdColumn.lt-md="1 / -1" gdColumn.lt-sm="1" class="mt-2"></mat-divider>
+
+    <div gdColumn="1 / 5" gdColumn.lt-md="1 / -1" gdColumn.lt-sm="1">
+      <mat-list class="list mat-elevation-z1">
+        <h3 mat-subheader>Historique d'action</h3>
+          <mat-list-item *ngFor="let log of logs">
+            <!--<h3 matLine>[14:57:10]</h3>-->
+            <p matLine>
+              <span>[DeepBot]</span>
+              <span class=" subline ml-3">{{log.message}}</span>
+            </p>
+          </mat-list-item>
+      </mat-list>
+    </div>
+  </div>
+</div>

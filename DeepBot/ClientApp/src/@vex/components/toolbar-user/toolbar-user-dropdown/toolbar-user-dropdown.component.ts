@@ -22,9 +22,11 @@ import { PopoverRef } from '../../popover/popover-ref';
 import checkCircle from '@iconify/icons-fa-solid/check-circle';
 import exclamationCircle from '@iconify/icons-fa-solid/exclamation-circle';
 import keyIcon from '@iconify/icons-fa-solid/key';
-import * as fromAuth from '../../../../app/pages/pages/auth/reducers';
+import * as fromWebUser from '../../../../app/app-reducers/webUser/reducers';
 import { Store, select } from '@ngrx/store';
-import { AuthActions } from 'src/app/pages/pages/auth/actions';
+
+import { TranslateService } from '@ngx-translate/core';
+import { UserService } from '../../../../app/services/user.service';
 
 export interface OnlineStatus {
   id: 'online' | 'away' | 'dnd' | 'offline';
@@ -45,32 +47,24 @@ export class ToolbarUserDropdownComponent implements OnInit {
     {
       id: '1',
       icon: icAccountCircle,
-      label: 'My Profile',
-      description: 'Personal Information',
+      label: this.translate.instant('USERPANEL.PROFIL'),
+      description: this.translate.instant('USERPANEL.PROFILDESCRIPTION'),
       colorClass: 'text-teal-500',
       route: '/pages/profile'
     },
     {
       id: '2',
       icon: icMoveToInbox,
-      label: 'My Inbox',
-      description: 'Messages & Latest News',
+      label: this.translate.instant('USERPANEL.INBOX'),
+      description: this.translate.instant('USERPANEL.INBOXDESCRIPTION'),
       colorClass: 'text-primary-500',
       route: '/apps/chat'
     },
     {
-      id: '3',
-      icon: icListAlt,
-      label: 'My Projects',
-      description: 'Tasks & Active Projects',
-      colorClass: 'text-amber-500',
-      route: '/apps/scrumboard'
-    },
-    {
       id: '4',
       icon: icTableChart,
-      label: 'Billing Information',
-      description: 'Pricing & Current Plan',
+      label: this.translate.instant('USERPANEL.SUBSCRIPTION'),
+      description: this.translate.instant('USERPANEL.SUBSCRIPTIONDESCRIPTION'),
       colorClass: 'text-purple-500',
       route: '/pages/pricing'
     }
@@ -119,13 +113,15 @@ export class ToolbarUserDropdownComponent implements OnInit {
   keyIcon = keyIcon;
   icNotificationsOff = icNotificationsOff;
 
-  user = this.store.pipe(select(fromAuth.getUser));
+  user = this.store.pipe(select(fromWebUser.getUser));
 
   constructor(private cd: ChangeDetectorRef,
               private popoverRef: PopoverRef<ToolbarUserDropdownComponent>,
-              private store: Store<fromAuth.State>,
+    private store: Store<fromWebUser.State>,
+    private translate: TranslateService,
+    private userService : UserService
           ) { 
-                this.store.dispatch(AuthActions.getUser());
+                //this.store.dispatch(AuthActions.getUser());
 
               }
 
@@ -139,5 +135,6 @@ export class ToolbarUserDropdownComponent implements OnInit {
 
   close() {
     this.popoverRef.close();
+    this.userService.logout();
   }
 }

@@ -1,0 +1,655 @@
+<div class="overflow-hidden" fxLayoutAlign="center center" [hidden]="pathToUpdate == null">
+  <mat-horizontal-stepper #stepper="matHorizontalStepper" [linear]="true" style="width:100%;">
+    <ng-template matStepperIcon="edit">
+      <mat-icon [icIcon]="icDoneAll"></mat-icon>
+    </ng-template>
+
+    <ng-template matStepperIcon="done">
+      <mat-icon [icIcon]="icDoneAll"></mat-icon>
+    </ng-template>
+
+    <mat-step>
+      <ng-template matStepLabel>{{ 'CREATEPATH.PATHPARAMETERS' | translate }} </ng-template>
+
+      <h2 class="title m-0">{{ 'UPDATEPATH.UPDATEPATH' | translate }}</h2>
+      <div class="subheading-1">{{ 'CREATEPATH.PATHPROPLABEL' | translate }}</div>
+
+      <div class="mt-4" fxLayout="column" fxLayoutGap="8px" *ngIf="pathToUpdate != null">
+        <mat-form-field fxFlex="auto">
+          <mat-label>{{ 'CREATEPATH.PATHNAME' | translate }}</mat-label>
+          <input [(ngModel)]="pathToUpdate.name" matInput required>
+        </mat-form-field>
+        <mat-form-field class="mt-1">
+          <mat-label>{{ 'CREATEPATH.TYPEPATH' | translate }}</mat-label>
+          <mat-select [(ngModel)]="pathToUpdate.type" (selectionChange)="changeStatePath($event)" required>
+            <mat-option [value]="0">{{ 'GLOBAL.FIGHT' | translate }}</mat-option>
+            <mat-option [value]="1">{{ 'GLOBAL.GATHERING' | translate }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-divider class="my-2 full-width"></mat-divider>
+        <div *ngIf="pathToUpdate.type === 0" class="mb-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="100">
+
+          <div fxLayout="row" fxLayoutAlign="space-around center" class="full-width">
+            <mat-form-field fxFlex="20">
+              <mat-label>{{ 'CREATEPATH.MINMONSTER' | translate }}</mat-label>
+              <input type="number" [(ngModel)]="pathToUpdate.monsterQuantityMin" matInput>
+            </mat-form-field>
+            <mat-form-field fxFlex="20">
+              <mat-label>{{ 'CREATEPATH.MAXMONSTER' | translate }}</mat-label>
+              <input type="number" [(ngModel)]="pathToUpdate.monsterQuantityMax" matInput>
+            </mat-form-field>
+            <mat-form-field fxFlex="20">
+              <mat-label>{{ 'CREATEPATH.LEVELMIN' | translate }}</mat-label>
+              <input type="number" [(ngModel)]="pathToUpdate.groupLevelMin" matInput>
+            </mat-form-field>
+            <mat-form-field fxFlex="20">
+              <mat-label>{{ 'CREATEPATH.LEVELMAX' | translate }}</mat-label>
+              <input type="number" [(ngModel)]="pathToUpdate.groupLevelMax" matInput>
+            </mat-form-field>
+          </div>
+          <mat-divider class="my-2 full-width"></mat-divider>
+          <div fxLayout="row" fxLayoutAlign="space-between center" class=" mb-2 full-width">
+            <div fxLayout="column" fxLayoutAlign="center center" fxFlex="45">
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <mat-form-field fxFlex="18" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.MONSTERID' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterQuantityToCreate.monsterId" [name]="specificQuantityMonsterId">
+                </mat-form-field>
+                <mat-form-field fxFlex="30" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.SPECIFICQUANTITYMIN' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterQuantityToCreate.monsterQuantityMin" [name]="specificQuantityMin">
+                  <mat-hint>{{'CREATEPATH.SPECIFICQUANTITYMINHINT' | translate}}</mat-hint>
+                </mat-form-field>
+                <mat-form-field fxFlex="30" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.SPECIFICQUANTITYMAX' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterQuantityToCreate.monsterQuantityMax" [name]="specificQuantityMax">
+                  <mat-hint>{{'CREATEPATH.SPECIFICQUANTITYMAXHINT' | translate}}</mat-hint>
+                </mat-form-field>
+                <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addMonsterQuantity()">
+                  <mat-icon [icIcon]="icPlus"></mat-icon>
+                </button>
+              </div>
+              <div class="mt-2 full-width" fxLayout="column" fxLayoutAlign="center center">
+                <mat-list-item class="mt-3 mx-3 card full-width" *ngFor="let item of pathToUpdate.monsterQuantity">
+                  <div fxLayout="row" class="full-width my-2" fxLayoutAlign="center center">
+                    <div fxFlex="20" fxLayoutAlign="center center">
+                      MonstreId : {{item.monsterId}}
+                    </div>
+                    <div fxFlex="20" fxLayoutAlign="center center">
+                      Nombre min : {{item.monsterQuantityMin}}
+                    </div>
+                    <div fxFlex="20" fxLayoutAlign="center center">
+                      Nombre max : {{item.monsterQuantityMax}}
+                    </div>
+                    <div fxFlex="5" fxLayoutAlign="center center">
+                      <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="DeleteQuantityMonster(item.monsterId)">
+                        <mat-icon [icIcon]="icDelete"></mat-icon>
+                      </button>
+                    </div>
+                    <mat-divider></mat-divider>
+                  </div>
+                </mat-list-item>
+              </div>
+            </div>
+
+            <div fxLayout="column" fxLayoutAlign="center center" fxFlex="45">
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <mat-form-field fxFlex="18" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.MONSTERID' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterLevelToCreate.monsterId" [name]="specificQuantityMonsterId">
+                </mat-form-field>
+                <mat-form-field fxFlex="30" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.SPECIFICLEVELMIN' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterLevelToCreate.monsterLevelMin" [name]="specificQuantityMin">
+                  <mat-hint>{{'CREATEPATH.SPECIFICLEVELMINHINT' | translate}}</mat-hint>
+                </mat-form-field>
+                <mat-form-field fxFlex="30" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.SPECIFICLEVELMAX' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterLevelToCreate.monsterLevelMax" [name]="specificQuantityMax">
+                  <mat-hint>{{'CREATEPATH.SPECIFICLEVELMAXHINT' | translate}}</mat-hint>
+                </mat-form-field>
+                <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addMonsterLevel()">
+                  <mat-icon [icIcon]="icPlus"></mat-icon>
+                </button>
+              </div>
+              <div class="mt-3 full-width" fxLayout="column" fxLayoutAlign="center center">
+                <mat-list-item class="mt-2 mx-3 card full-width" *ngFor="let item of pathToUpdate.monsterLevel">
+                  <div fxLayout="row" class="full-width my-2" fxLayoutAlign="center center">
+                    <div fxFlex="20" fxLayoutAlign="center center">
+                      MonstreId : {{item.monsterId}}
+                    </div>
+                    <div fxFlex="20" fxLayoutAlign="center center">
+                      Level min : {{item.monsterLevelMin}}
+                    </div>
+                    <div fxFlex="20" fxLayoutAlign="center center">
+                      Level max : {{item.monsterLevelMax}}
+                    </div>
+                    <div fxFlex="5" fxLayoutAlign="center center">
+                      <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="DeleteLevelMonster(item.monsterId)">
+                        <mat-icon [icIcon]="icDelete"></mat-icon>
+                      </button>
+                    </div>
+                    <mat-divider></mat-divider>
+                  </div>
+                </mat-list-item>
+              </div>
+            </div>
+          </div>
+
+
+          <mat-divider class="my-2 full-width"></mat-divider>
+          <div fxLayout="row" fxLayoutAlign="space-around center" class="full-width">
+            <div fxLayout="row" fxLayoutAlign="center center">
+              <mat-slider [(ngModel)]="pathToUpdate.maxPod"
+                          thumbLabel="true"
+                          min="1"
+                          max="99"> </mat-slider>
+              <p>{{'CREATEPATH.MAXPOD' | translate}}</p>
+            </div>
+            <div fxLayout="column" fxLayoutAlign="center center">
+              <mat-slide-toggle color="primary" [(ngModel)]="pathToUpdate.leaderBank">{{'CREATEPATH.LEADERBANK' | translate}}</mat-slide-toggle>
+              <mat-hint>{{'CREATEPATH.LEADERHINT' | translate}}</mat-hint>
+            </div>
+          </div>
+
+          <mat-divider class="my-2 full-width"></mat-divider>
+
+          <div fxLayout="row" fxLayoutAlign="center center" class="full-width">
+            <div>
+              <mat-slide-toggle color="primary" [(ngModel)]="pathToUpdate.isCapture">{{'CREATEPATH.BOOLCAPTURE' | translate}}</mat-slide-toggle>
+            </div>
+          </div>
+          <div *ngIf="pathToUpdate.isCapture" fxLayout="column" class="full-width mt-2" fxLayoutAlign="center center">
+            <div fxLayout="row" fxLayoutAlign="space-between center" class="full-width">
+              <div fxLayout="row" fxLayoutAlign="center center" fxFlex="25">
+                <mat-form-field class="mt-1 full-width">
+                  <mat-label>{{ 'CREATEPATH.CAPTUREITEM' | translate }}</mat-label>
+                  <mat-select [(ngModel)]="pathToUpdate.captureItem">
+                    <mat-option [value]="0">{{ 'CREATEPATH.CAPTUREITEM1' | translate }}</mat-option>
+                    <mat-option [value]="1">{{ 'CREATEPATH.CAPTUREITEM2' | translate }}</mat-option>
+                    <mat-option [value]="2">{{ 'CREATEPATH.CAPTUREITEM3' | translate }}</mat-option>
+                    <mat-option [value]="3">{{ 'CREATEPATH.CAPTUREITEM4' | translate }}</mat-option>
+                    <mat-option [value]="4">{{ 'CREATEPATH.CAPTUREITEM5' | translate }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center" fxFlex="50" class="mt-1">
+                <mat-form-field fxFlex="25" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.MONSTERID' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterCaptureToCreate.monsterId" [name]="monsterID">
+                </mat-form-field>
+                <mat-form-field fxFlex="65" class="mx-2">
+                  <mat-label>{{ 'CREATEPATH.NUMBERMONSTER' | translate }}</mat-label>
+                  <input type="number" matInput [(ngModel)]="monsterCaptureToCreate.monsterQuantity" [name]="monsterQuantity">
+                  <mat-hint>{{'CREATEPATH.HINTNUMBERMONSTER' | translate}}</mat-hint>
+                </mat-form-field>
+                <button color="primary" mat-mini-fab type="button" class="ml-2 mt-2" (click)="addCaptureMonster()">
+                  <mat-icon [icIcon]="icPlus"></mat-icon>
+                </button>
+              </div>
+            </div>
+            <div class="mt-2 width-30" fxLayout="column" fxLayoutAlign="center center">
+              <mat-list-item class="mt-2 mx-3 card  full-width" *ngFor="let item of pathToUpdate.monsterCapture">
+                <div fxLayout="row" class="full-width my-2" fxLayoutAlign="center center">
+                  <div fxFlex="30" fxLayoutAlign="center center">
+                    MonstreId : {{item.monsterId}}
+                  </div>
+                  <div fxFlex="30" fxLayoutAlign="center center">
+                    Nombre minimum : {{item.monsterQuantity}}
+                  </div>
+                  <div fxFlex="10" fxLayoutAlign="center center">
+                    <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltipPosition="left" (click)="DeleteCaptureMonster(item.monsterId)">
+                      <mat-icon [icIcon]="icDelete"></mat-icon>
+                    </button>
+                  </div>
+                  <mat-divider></mat-divider>
+                </div>
+
+              </mat-list-item>
+            </div>
+          </div>
+          <mat-divider class="my-3"></mat-divider>
+        </div>
+        <div *ngIf="pathToUpdate.type === 1" class="mb-2">
+          <div fxLayout="row" fxLayoutAlign="space-around center">
+            <vex-widget-quick-value-center [icon]="bucheron"
+                                           [color]="theme.colors.primary"
+                                           [checkable]="true"
+                                           [isCheck] ="bucheronSelected"
+                                           gdColumn.lt-sm="1"
+                                           value="{{ 'CREATEPATH.JOB_BUCHERON' | translate }}"
+                                           label="" style="cursor:pointer" fxFlex="18"></vex-widget-quick-value-center>
+            <vex-widget-quick-value-center [icon]="mineur"
+                                           [color]="theme.colors.primary"
+                                           gdColumn.lt-sm="1"
+                                           [checkable]="true"
+                                           [isCheck] ="mineurSelected"
+                                           value="{{ 'CREATEPATH.JOB_MINEUR' | translate }}"
+                                           label="" style="cursor:pointer" fxFlex="18"></vex-widget-quick-value-center>
+            <vex-widget-quick-value-center [icon]="paysan"
+                                           [color]="theme.colors.primary"
+                                           gdColumn.lt-sm="1"
+                                           [checkable]="true"
+                                            [isCheck] ="paysanSelected"
+                                           value="{{ 'CREATEPATH.JOB_PAYSAN' | translate }}"
+                                           label="" style="cursor:pointer" fxFlex="18"></vex-widget-quick-value-center>
+            <vex-widget-quick-value-center [icon]="alchimiste"
+                                           [color]="theme.colors.primary"
+                                           gdColumn.lt-sm="1"
+                                           [checkable]="true"
+                                           [isCheck] ="alchimisteSelected"
+                                           value="{{ 'CREATEPATH.JOB_ALCHIMISTE' | translate }}"
+                                           label="" style="cursor:pointer" fxFlex="18"></vex-widget-quick-value-center>
+            <vex-widget-quick-value-center [icon]="pecheur"
+                                           [color]="theme.colors.primary"
+                                           gdColumn.lt-sm="1"
+                                           [checkable]="true"
+                                           [isCheck] ="pecheurSelected"
+                                           value="{{ 'CREATEPATH.JOB_PECHEUR' | translate }}"
+                                           label="" style="cursor:pointer" fxFlex="18"></vex-widget-quick-value-center>
+          </div>
+          <mat-divider class="my-2"></mat-divider>
+          <div fxLayout="column" fxLayoutAlign="center center">
+            <div [hidden]="!paysanSelected" class="full-width">
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <h2> {{ 'CREATEPATH.PAYSAN_RSS' | translate }}</h2>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div *ngFor="let enum of ressourcesPaysan.values()" fxFlex="15" fxLayoutAlign="center center">
+                  <div fxLayout="column" fxLayoutAlign="center center" class="mt-2">
+                    <div>
+                      {{ getRessource(enum)}}
+                    </div>
+                    <div>
+                      <mat-checkbox (change)="selectRessource(enum,28)" [checked]="isRessourceUsed(enum,28)"></mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="mt-2"></mat-divider>
+            </div>
+            <div [hidden]="!bucheronSelected" class="full-width">
+              <div fxLayout="row" fxLayoutAlign="center center" class="mt-2">
+                <h2> {{ 'CREATEPATH.BUCHERON_RSS' | translate }}</h2>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div *ngFor="let enum of ressourcesBucheron.values()" fxFlex="15" fxLayoutAlign="space-around stretch">
+                  <div fxLayout="column" fxLayoutAlign="center center" class="mt-2" fxFlex>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="text-center">
+                      <span>{{ getRessource(enum)}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center end">
+                      <mat-checkbox (change)="selectRessource(enum,2)" [checked]="isRessourceUsed(enum,2)"></mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="mt-2"></mat-divider>
+            </div>
+            <div [hidden]="!mineurSelected" class="full-width">
+              <div fxLayout="row" fxLayoutAlign="center center" class="mt-2">
+                <h2> {{ 'CREATEPATH.MINEUR_RSS' | translate }}</h2>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div *ngFor="let enum of ressourcesMineur.values()" fxFlex="15" fxLayoutAlign="space-around stretch">
+                  <div fxLayout="column" fxLayoutAlign="center center" class="mt-2" fxFlex>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="text-center">
+                      <span>{{ getRessource(enum)}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center end">
+                      <mat-checkbox (change)="selectRessource(enum,24)" [checked]="isRessourceUsed(enum,24)"></mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="mt-2"></mat-divider>
+            </div>
+            <div [hidden]="!pecheurSelected" class="full-width">
+              <div fxLayout="row" fxLayoutAlign="center center" class="mt-2">
+                <h2> {{ 'CREATEPATH.PECHEUR_RSS' | translate }}</h2>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div *ngFor="let enum of ressourcesPecheur.values()" fxFlex="15" fxLayoutAlign="space-around stretch">
+                  <div fxLayout="column" fxLayoutAlign="center center" class="mt-2" fxFlex>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="text-center">
+                      <span>{{ getRessource(enum)}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center end">
+                      <mat-checkbox (change)="selectRessource(enum,36)" [checked]="isRessourceUsed(enum,36)"></mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="mt-2"></mat-divider>
+            </div>
+            <div [hidden]="!alchimisteSelected" class="full-width">
+              <div fxLayout="row" fxLayoutAlign="center center" class="mt-2">
+                <h2> {{ 'CREATEPATH.ALCHIMISTE_RSS' | translate }}</h2>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center center">
+                <div *ngFor="let enum of ressourcesAlchimiste.values()" fxFlex="15" fxLayoutAlign="space-around stretch">
+                  <div fxLayout="column" fxLayoutAlign="center center" class="mt-2" fxFlex>
+                    <div fxLayout="row" fxLayoutAlign="center start" class="text-center">
+                      <span>{{ getRessource(enum)}}</span>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="center end">
+                      <mat-checkbox (change)="selectRessource(enum,26)" [checked]="isRessourceUsed(enum,26)"></mat-checkbox>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <mat-divider class="mt-2"></mat-divider>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+
+      <div class="actions" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+        <div>
+          <button mat-raised-button color="warn" (click)="DeletePath()" type="button">{{'GLOBAL.DELETE' | translate}}</button>
+        </div>
+        <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(pathToUpdate.type);">
+          {{ 'GLOBAL.NEXT' | translate }}
+        </button>
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <div *ngIf="pathToUpdate != null">
+        <ng-template matStepLabel *ngIf="pathToUpdate.type === 0">{{ 'UPDATEPATH.FIGHTPATHUPDATE' | translate }}</ng-template>
+        <ng-template matStepLabel *ngIf="pathToUpdate.type === 1">{{ 'UPDATEPATH.GATHERINGPATHUPDATE' | translate }}</ng-template>
+
+
+      </div>
+     
+      <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATH' | translate }}</h2>
+      <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHINFO' | translate }}</div>
+
+      <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+        <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+          <mat-form-field class="mt-1 full-width">
+            <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
+            <mat-select [(ngModel)]="zoneChoose" (selectionChange)="zoneChanged($event)">
+              <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
+              <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
+              <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
+              <mat-option [value]="3">ZONE 4</mat-option>
+              <mat-option [value]="4">ZONE 5</mat-option>
+            </mat-select>
+            <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
+          </mat-form-field>
+
+        </div>
+
+      </div>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
+          <div fxLayout="row" fxLayoutAlign="space-between start" class="mb-5">
+            <app-map-bonta (selectMapEvent)="selectMap($event)"
+                           (specificActionEvent)="specificAction($event)"
+                           [hidden]="zoneChoose !== 0">
+
+            </app-map-bonta>
+            <app-map-cania-abraknydes (selectMapEvent)="selectMap($event)"
+                                      (specificActionEvent)="specificAction($event)"
+                                      [hidden]="zoneChoose !== 1"></app-map-cania-abraknydes>
+
+            <app-map-amakna (selectMapEvent)="selectMap($event)"
+                            (specificActionEvent)="specificAction($event)"
+                            [hidden]="zoneChoose !== 2"> </app-map-amakna>
+
+            <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
+              <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
+                <span class="font-medium"> Choix de la direction</span>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Top',directionTop)"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-evenly start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Left',directionTop)"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
+                <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Right',directionTop)"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Bottom',directionTop)"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+
+
+
+      <div class="actions" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="3px">
+        <div>
+          <button mat-raised-button color="warn" (click)="DeletePath()" type="button">{{'GLOBAL.DELETE' | translate}}</button>
+        </div>
+        <div>
+          <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(pathToUpdate.type)">{{ 'GLOBAL.BACK' | translate }}</button>
+          <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(2)">
+            {{ 'GLOBAL.NEXT' | translate }}
+          </button>
+        </div>
+
+      </div>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>{{ 'CREATEPATH.BANKPATH' | translate }}</ng-template>
+
+
+      <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATHBANK' | translate }}</h2>
+      <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHBANKINFO' | translate }}</div>
+
+      <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+        <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+          <mat-form-field class="mt-1 full-width">
+            <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
+            <mat-select [(ngModel)]="zoneChoose" (selectionChange)="zoneChanged($event)"> 
+              <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
+              <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
+              <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
+              <mat-option [value]="3">ZONE 4</mat-option>
+              <mat-option [value]="4">ZONE 5</mat-option>
+            </mat-select>
+            <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
+          <div fxLayout="row" fxLayoutAlign="space-between start" class="mb-5">
+            <app-map-bonta-banque (selectMapEvent)="selectMap($event)"
+                                  (specificActionEvent)="specificAction($event)"
+                                  [hidden]="zoneChoose !== 0"></app-map-bonta-banque>
+
+            <app-map-cania-abraknydes-banque (selectMapEvent)="selectMap($event)"
+                                             (specificActionEvent)="specificAction($event)"
+                                             [hidden]="zoneChoose !== 1"></app-map-cania-abraknydes-banque>
+            <app-map-amakna-banque (selectMapEvent)="selectMap($event)"
+                                   (specificActionEvent)="specificAction($event)"
+                                   [hidden]="zoneChoose !== 2"> </app-map-amakna-banque>
+
+
+            <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
+              <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
+                <span class="font-medium"> Choix de la direction</span>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Top',directionTop)"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-evenly start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Left',directionTop)"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
+                <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Right',directionTop)"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Bottom',directionTop)"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions mt-2" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px">
+        <div>
+          <button mat-raised-button color="warn" (click)="DeletePath()" type="button">{{'GLOBAL.DELETE' | translate}}</button>
+        </div>
+        <div>
+          <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(pathToUpdate.type)">{{ 'GLOBAL.BACK' | translate }}</button>
+          <button color="primary" mat-raised-button matStepperNext (click)="changeStatePath(3)">
+            {{ 'GLOBAL.NEXT' | translate }}
+          </button>
+        </div>
+
+      </div>
+
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>{{ 'CREATEPATH.BACKPATH' | translate }}</ng-template>
+
+
+      <h2 class="title m-0">{{ 'CREATEPATH.SELECTPATHBACK' | translate }}</h2>
+      <div class="subheading-1">{{ 'CREATEPATH.SELECTPATHBAckINFO' | translate }}</div>
+
+      <div class="mt-4" fxLayout="column" fxLayoutGap="8px">
+        <div fxLayout="row" fxLayoutAlign="center start" fxFlex="30">
+          <mat-form-field class="mt-1 full-width">
+            <mat-label>{{ 'CREATEPATH.CHOICEMAP' | translate }}</mat-label>
+            <mat-select [(ngModel)]="zoneChoose" (selectionChange)="zoneChanged($event)">
+              <mat-option [value]="0"> {{ 'CREATEPATH.ZONE1' | translate }}</mat-option>
+              <mat-option [value]="1">{{ 'CREATEPATH.ZONE2' | translate }}</mat-option>
+              <mat-option [value]="2">{{ 'CREATEPATH.ZONE3' | translate }}</mat-option>
+              <mat-option [value]="3">ZONE 4</mat-option>
+              <mat-option [value]="4">ZONE 5</mat-option>
+            </mat-select>
+            <mat-hint>{{'CREATEPATH.CHOICEMAPHINT' | translate}}</mat-hint>
+          </mat-form-field>
+
+        </div>
+      </div>
+
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <div style="overflow-y:scroll;overflow-x:scroll" #zone1 class="full-width">
+          <div fxLayout="row" fxLayoutAlign="space-between start" class="mb-5">
+            <app-map-bonta-retour (selectMapEvent)="selectMap($event)"
+                                  (specificActionEvent)="specificAction($event)"
+                                  [hidden]="zoneChoose !== 0">
+
+            </app-map-bonta-retour>
+            <app-map-cania-abraknydes-retour (selectMapEvent)="selectMap($event)"
+                                             (specificActionEvent)="specificAction($event)"
+                                             [hidden]="zoneChoose !== 1">
+
+            </app-map-cania-abraknydes-retour>
+            <app-map-amakna-retour (selectMapEvent)="selectMap($event)"
+                                   (specificActionEvent)="specificAction($event)"
+                                   [hidden]="zoneChoose !== 2"> </app-map-amakna-retour>
+
+            <div class="card ml-3 mt-20 p-2" fxLayout="column" fxLayoutAlign="center center" fxFlex="auto" *ngIf="zoneChoose != null">
+              <div fxLayoutAlign="center center" fxLayout="row" class="full-width mb-2">
+                <span class="font-medium"> Choix de la direction</span>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionTop ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Top',directionTop)"><mat-icon [icIcon]="icTopArrow"></mat-icon></button>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="space-evenly start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionLeft ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Left',directionTop)"><mat-icon [icIcon]="icLeftArrow"></mat-icon></button>
+                <button mat-mini-fab color="primary" [style.background-color]="directionRight ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Right',directionTop)"><mat-icon [icIcon]="icRightArrow"></mat-icon></button>
+              </div>
+              <div fxLayout="row" fxLayoutAlign="center start" class="full-width">
+                <button mat-mini-fab color="primary" [style.background-color]="directionBottom ? '#ffe45c' :'#5c77ff' " (click)="changeDirection('Bottom',directionTop)"><mat-icon [icIcon]="icBottomArrow"></mat-icon></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions mt-2" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px">
+        <div>
+          <button mat-raised-button color="warn" (click)="DeletePath()" type="button">{{'GLOBAL.DELETE' | translate}}</button>
+        </div>
+        <div>
+          <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(2)">{{ 'GLOBAL.BACK' | translate }}</button>
+          <button color="primary" mat-raised-button matStepperNext>
+            {{ 'CREATEPATH.SYNTHESIS' | translate }}
+          </button>
+        </div>
+
+      </div>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>{{ 'CREATEPATH.SYNTHESIS' | translate }}</ng-template>
+
+
+      <h2 class="title m-0">{{ 'CREATEPATH.SYNTHESISLABEL' | translate }}</h2>
+      <div class="subheading-1">{{ 'CREATEPATH.SYNTHESISLABELINFO' | translate }}</div>
+
+      <mat-accordion class="mt-3" *ngIf="pathToUpdate != null">
+        <mat-expansion-panel *ngFor="let pathAction of pathService.path.pathAction">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Map : {{pathAction.mapPos}}
+            </mat-panel-title>
+            <mat-panel-description>
+              Nombre d'actions : {{pathAction.actions.length}}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div fxLayoutAlign="center center" fxLayout="column" class="full-width mb-2" *ngFor="let mapAction of pathAction.actions">
+            <div *ngIf="mapAction.moveAction != null" class="full-width">
+              <div *ngIf="mapAction.moveAction.direction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                <p>Déplacement direction : {{mapAction.moveAction.direction}} &nbsp;&nbsp; </p><p *ngIf="mapAction.moveAction.toGoBank"> Vers Banque</p> <p *ngIf="mapAction.moveAction.toBackBank"> Vers Zone</p>
+              </div>
+              <div *ngIf="mapAction.moveAction.cellId != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                <p>Déplacement cellId : {{mapAction.moveAction.cellId}} &nbsp;&nbsp;</p> <p *ngIf="mapAction.moveAction.toGoBank"> Vers Banque</p> <p *ngIf="mapAction.moveAction.toBackBank"> Vers Zone</p>
+              </div>
+            </div>
+            <div *ngIf="mapAction.useItemAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+              <p>Utilisation item :{{mapAction.useItemAction.itemId}}</p>
+            </div>
+            <div *ngIf="mapAction.fightAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+              <p>Combat </p><p *ngIf="mapAction.fightAction.isAlone"> seul </p>
+            </div>
+            <div *ngIf="mapAction.gatherAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+              <p>Récolte</p>
+            </div>
+            <div *ngIf="mapAction.interactionAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+              <p>Intéraction avec {{mapAction.interactionAction.interactiveIdObject}}, action :{{mapAction.interactionAction.interactiveIdResponse}}</p>
+            </div>
+            <div *ngIf="mapAction.zaapAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+              <p>Utilisation du Zaap : {{mapAction.zaapAction.zaapId}}, destination {{mapAction.zaapAction.destination}}</p>
+            </div>
+            <div *ngIf="mapAction.zaapiAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+              <p>Utilisation du Zaapi : {{mapAction.zaapiAction.zaapiId}}, destination {{mapAction.zaapiAction.destination}}</p>
+            </div>
+            <div *ngIf="mapAction.bankAction != null" fxLayout="row" fxLayoutAlign="center center" class="full-width">
+              <p>Echange avec Banquier</p>
+            </div>
+            <mat-divider class="width-30 mt-1"></mat-divider>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+      <div class="actions mt-2" fxLayout="row" fxLayoutAlign="space-between center" fxLayoutGap="8px">
+        <div>
+          <button color="primary" mat-raised-button (click)="deletePath()">
+           Supprimer
+          </button>
+        </div>
+
+        <div>
+          <button color="primary" mat-button matStepperPrevious type="button" (click)="changeStatePath(3)">{{ 'GLOBAL.BACK' | translate }}</button>
+          <button color="primary" mat-raised-button (click)="updatePath()">
+            {{ 'UPDATEPATH.UPDATEPATH' | translate }}
+          </button>
+        </div>
+
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

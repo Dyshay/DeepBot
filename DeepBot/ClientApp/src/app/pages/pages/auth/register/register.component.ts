@@ -5,8 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { fadeInUp400ms } from '../../../../../@vex/animations/fade-in-up.animation';
-import { User } from '../../../../../webModel/UserModel';
+import { User } from '../../../../../webModel/User';
 import { environment } from '../../../../../environments/environment';
+import { TranslateService } from '@ngx-translate/core';
+import { DialogResultRegisterComponent } from './dialog-result-register/dialog-result-register.component';
+import { MatDialog } from '@angular/material';
 
 const httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -35,9 +38,11 @@ export class RegisterComponent implements OnInit {
   icVisibilityOff = icVisibilityOff;
 
   constructor(private router: Router,
-              private fb: FormBuilder,
+    private fb: FormBuilder,
+    public dialog: MatDialog,
       private cd: ChangeDetectorRef,
-      private http: HttpClient,
+    private http: HttpClient,
+      private translatService: TranslateService
   ) { }
 
   ngOnInit() {
@@ -49,14 +54,20 @@ export class RegisterComponent implements OnInit {
     });
   }
 
-    CreateAccount() {
-
+  CreateAccount() {
+    this.userToCreate.langue = this.translatService.currentLang;
         let body = JSON.stringify(this.userToCreate);
-        this.http.post<User>(environment.apiURL +'User/Register', body, httpOptions).subscribe(
+        this.http.post(environment.apiURL +'User/Register', body, httpOptions).subscribe(
             (result: any) => {
-                console.log(result);
+            this.dialog.open(DialogResultRegisterComponent, {
+              width: '450px',
+              height: '300px',
+              
+                data: result 
+              });
+            
             },
-            (err) => { }
+          (err) => { console.log(err); }
         );
     }
   toggleVisibility() {

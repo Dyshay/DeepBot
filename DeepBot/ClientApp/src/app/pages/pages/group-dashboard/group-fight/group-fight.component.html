@@ -1,0 +1,89 @@
+<div class="card">
+  <div class="px-gutter py-4 border-b">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h2 class="title m-0"> {{'DASHBOARDBOT.FIGHT' | translate}}</h2>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'GLOBAL.SAVE' | translate}}" matTooltipPosition="left" (click)="Save()">
+          <mat-icon [icIcon]="icSave"></mat-icon>
+        </button>
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'DASHBOARDBOT.IMPORTCONFIG' | translate}}" matTooltipPosition="left" (click)="Import()">
+          <mat-icon [icIcon]="icImport"></mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </div>
+  <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr"
+       gdColumns.lt-md="1fr 1fr 1fr"
+       gdColumns.lt-sm="1fr"
+       gdGap="16px"
+       vexContainer>
+    <div gdColumn="1 / 4">
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.PREPARATION' | translate}}</h3>
+
+    </div>
+
+    <mat-divider gdColumn="1 / 4"></mat-divider>
+
+
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [(ngModel)]="group.config.blockSpectate">{{'DASHBOARDBOT.BLOCKSPEC' | translate}}</mat-slide-toggle>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [(ngModel)]="group.config.blockFight">{{'DASHBOARDBOT.BLOCKFIGHT' | translate}}</mat-slide-toggle>
+    </div>
+    <mat-divider gdColumn="1 / 4"></mat-divider>
+    <div gdColumn="1 / 4">
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.COMBATPHASE' | translate}}</h3>
+    </div>
+    <mat-divider gdColumn="1 / 4"></mat-divider>
+    <div gdColumn="2 / 2" fxLayoutAlign="center center">
+      <mat-form-field class="full-width" fxFlex="75">
+        <mat-label>{{'DASHBOARDBOT.TRYCHALLENGE' | translate}} </mat-label>
+        <mat-select multiple>
+          <mat-option value="1">Mystique</mat-option>
+          <mat-option value="2">Anachoréte</mat-option>
+          <mat-option value="3">Borné</mat-option>
+          <mat-option value="4">Statue</mat-option>
+          <mat-option value="5">Versatile</mat-option>
+          <mat-option value="6">Pétulant</mat-option>
+          <mat-option value="7">Pusillanime</mat-option>
+          <mat-option value="8">Nomade</mat-option>
+          <mat-option value="9">Zombie</mat-option>
+          <mat-option value="10">Collant</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <mat-divider gdColumn="1 / 4"></mat-divider>
+    <div gdColumn="1 / 4">
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.POSTCOMBATPHASE' | translate}}</h3>
+    </div>
+    <mat-divider gdColumn="1 / 4"></mat-divider>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [(ngModel)]="group.config.alignTeam">{{'GROUPDASHBOARD.ALIGNTEAM' | translate}}</mat-slide-toggle>
+    </div>
+
+    <div gdColumn="2 / 2" fxLayoutAlign="center center">
+      <mat-form-field class="full-width" fxFlex="75">
+        <mat-label>{{'DASHBOARDBOT.MAKEPAUSE' | translate}}</mat-label>
+        <mat-select [(value)]="group.config.pauseNumber">
+          <mat-option [value]="0">{{ 'DASHBOARDBOT.NOPAUSE' | translate}}</mat-option>
+          <mat-option [value]="1">40 combats</mat-option>
+          <mat-option [value]="2">60 combats</mat-option>
+          <mat-option [value]="3">80 combats</mat-option>
+          <mat-option [value]="4">100 combats</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-form-field class="example-full-width">
+        <mat-label>{{'GROUPDASHBOARD.PAUSETIME' | translate}}</mat-label>
+        <input matInput placeholder="3" type="number" [(ngModel)]="group.config.pauseTime" [name]="agressionZone">
+        <span matSuffix>&nbsp; (min)</span>
+      </mat-form-field>
+    </div>
+
+
+    </div>
+
+  </div>

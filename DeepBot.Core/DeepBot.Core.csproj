@@ -6,7 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeepBot.Data\DeepBot.Data.csproj" />
+    <None Remove="Network\HubMessage\Messages\NewFile1.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DeepBot.Data\DeepBot.Data.csproj" />
+  </ItemGroup>
 </Project>

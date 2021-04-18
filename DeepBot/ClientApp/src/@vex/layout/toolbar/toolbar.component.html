@@ -18,59 +18,43 @@
           color="primary"
           mat-raised-button
           type="button">
-    Gestion du bot
+    {{ 'TOOLBAR.BOTHANDLE' | translate}}
   </button>
 
   <mat-menu #addNewMenu="matMenu" [overlapTrigger]="false" xPosition="after" yPosition="below">
 
     <button [matMenuTriggerFor]="AccountMenu" mat-menu-item>
       <mat-icon [icIcon]="icPersonAdd"></mat-icon>
-      <span>Gerer mes comptes Dofus</span>
+      <span>{{ 'TOOLBAR.HANDLEACCOUNT' | translate}}</span>
     </button>
 
     <button [matMenuTriggerFor]="GroupMenu" mat-menu-item>
       <mat-icon [icIcon]="icDoneAll"></mat-icon>
-      <span>Gérer mes groupes</span>
+      <span>{{ 'TOOLBAR.HANDLEGROUP' | translate}}</span>
     </button>
 
     <button [matMenuTriggerFor]="PathMenu" mat-menu-item>
       <mat-icon [icIcon]="icAssignmentTurnedIn"></mat-icon>
-      <span>Gérer mes trajets</span>
+      <span>{{ 'TOOLBAR.HANDLEPATH' | translate}}</span>
     </button>
 
     <button [matMenuTriggerFor]="IAMenu" mat-menu-item>
       <mat-icon [icIcon]="icBallot"></mat-icon>
-      <span>Gérer mes IA</span>
+      <span>{{ 'TOOLBAR.HANDLEIA' | translate}}</span>
     </button>
   </mat-menu>
 
-  <mat-menu #IAMenu="matMenu">
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Creer un trajet</span>
-    </button>
-
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un trajet</span>
-    </button>
-  </mat-menu>
 
   <!--menu account-->
   <mat-menu #AccountMenu="matMenu">
     <button mat-menu-item [routerLink]="['/createAccount']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Ajouter un compte Dofus</span>
+      <span>{{ 'TOOLBAR.CREATEACCOUNT' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/updateAccount']">
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un compte Dofus</span>
-    </button>
-
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer un compte Dofus</span>
+      <span>{{ 'TOOLBAR.UPDATEACCOUNT' | translate}}</span>
     </button>
   </mat-menu>
 
@@ -78,51 +62,39 @@
   <mat-menu #GroupMenu="matMenu">
     <button mat-menu-item [routerLink]="['/createGroup']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Créer un groupe de bot</span>
+      <span>{{ 'TOOLBAR.CREATEGROUP' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un groupe</span>
+    <button mat-menu-item [routerLink]="['/updateGroup']">
+      <mat-icon [icIcon]="icAssignment" ></mat-icon>
+      <span>{{ 'TOOLBAR.UPDATEGROUP' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer un groupe</span>
-    </button>
   </mat-menu>
 
   <!--menu trajet-->
   <mat-menu #PathMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/createPath']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Creer un trajet</span>
+      <span>{{ 'TOOLBAR.CREATEPATH' | translate}}</span>
     </button>
 
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier un trajet</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer un trajet</span>
+    <button mat-menu-item [routerLink]="['/updatePath']">
+      <mat-icon [icIcon]="icAssignment" ></mat-icon>
+      <span>{{ 'TOOLBAR.UPDATEPATH' | translate}}</span>
     </button>
   </mat-menu>
 
   <!--menu IA-->
   <mat-menu #IAMenu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item [routerLink]="['/createIa']">
       <mat-icon [icIcon]="icDescription"></mat-icon>
-      <span>Creer une IA</span>
+      <span>{{ 'TOOLBAR.CREATEIA' | translate}}</span>
     </button>
 
     <button mat-menu-item>
       <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Modifier une IA</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon [icIcon]="icAssignment"></mat-icon>
-      <span>Supprimer une IA</span>
+      <span>{{ 'TOOLBAR.UPDATEIA' | translate}}</span>
     </button>
   </mat-menu>
 
@@ -151,47 +123,34 @@
   <span fxFlex></span>
 
   <div class="-mx-1 flex items-center">
-    <div class="px-1">
-      <button (click)="openSearch()" mat-icon-button type="button">
-        <mat-icon [icIcon]="icSearch"></mat-icon>
-      </button>
-    </div>
-
-    <div class="px-1">
-      <vex-toolbar-notifications></vex-toolbar-notifications>
-    </div>
-
-    <div class="px-1">
-      <button (click)="openQuickpanel()" mat-icon-button type="button">
-        <mat-icon [icIcon]="icBookmarks"></mat-icon>
-      </button>
-    </div>
 
     <div class="px-1">
       <button [matMenuTriggerFor]="languageMenu" mat-icon-button type="button">
-        <mat-icon [icIcon]="emojioneFR"></mat-icon>
+        <mat-icon *ngIf="user.langue == 'fr'" [icIcon]="emojioneFR"></mat-icon>
+        <mat-icon *ngIf="user.langue == 'es'" [icIcon]="emojioneES"></mat-icon>
+        <mat-icon *ngIf="user.langue == 'en'" [icIcon]="emojioneEN"></mat-icon>
       </button>
     </div>
 
     <div class="px-1">
-      <div *ngIf="(user$ | async) as Account">
-        <vex-toolbar-user [username]="user$ | async"></vex-toolbar-user>
+      <div>
+        <vex-toolbar-user></vex-toolbar-user>
       </div>
     </div>
 
     <mat-menu #languageMenu="matMenu" overlapTrigger="false" xPosition="before" yPosition="below">
-      <button mat-menu-item>
+      <button mat-menu-item (click)="changeLanguage('fr')">
         <mat-icon [icIcon]="emojioneFR"></mat-icon>
         <span>Français</span>
       </button>
-      <button mat-menu-item disabled>
-        <mat-icon [icIcon]="emojioneUS"></mat-icon>
+      <button mat-menu-item (click)="changeLanguage('en')" >
+        <mat-icon [icIcon]="emojioneEN"></mat-icon>
         <span>English</span>
       </button>
 
-      <button mat-menu-item disabled>
-        <mat-icon [icIcon]="emojioneDE"></mat-icon>
-        <span>German</span>
+      <button mat-menu-item (click)="changeLanguage('es')">
+        <mat-icon [icIcon]="emojioneES"></mat-icon>
+        <span>Espanol</span>
       </button>
     </mat-menu>
   </div>

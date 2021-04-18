@@ -14,3 +14,70 @@
   All possible variables can be found in @vex/styles/core or by simply inspecting the element you want to change
   in Chrome/Firefox DevTools
 */
+
+
+.mat-table {
+  border-spacing: 0;
+  width: 100%;
+}
+
+.avatar {
+  object-fit: contain !important;
+  height: 3.5rem !important;
+  width: 3.5rem !important;
+}
+
+@media (min-width: 1780px) {
+  .container {
+    max-width: 1650px !important;
+  }
+}
+
+.border-2 {
+  border: 2px solid #dee2e6 !important;
+}
+
+.rounded-2 {
+  border-radius: .8rem !important;
+}
+
+.mat-progress-bar{
+    height:9px !important;
+}
+
+.full-width{
+    width:100% !important;
+}
+.width-30 {
+  width: 30% !important;
+}
+.mat-divider {
+  border-top-width: 2px !important;
+}
+
+.mat-menu-panel {
+  max-width: 380px !important;
+}
+
+
+.toast-top-full-width {
+  width: 25% !important;
+}
+
+table {
+  text-align: center !important;
+}
+
+.mat-header-cell {
+  text-align: center !important;
+}
+.mat-sort-header-container {
+  justify-content: center !important;
+}
+.mat-sort-header-button {
+  margin-left: 3vh;
+}
+.cdk-overlay-pane{
+    max-width:100% !important;
+    max-height:100% !important;
+}

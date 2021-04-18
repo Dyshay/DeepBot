@@ -1,0 +1,18 @@
+<div class="px-gutter py-4" gdColumns="1fr 1fr 1fr"
+     gdColumns.lt-md="1fr 1fr 1fr"
+     gdColumns.lt-sm="1fr"
+     gdGap="16px"
+     vexContainer *ngIf="jobSelected != null">
+
+  <div gdColumn="1 / 4">
+    <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.JOBHANDLE' | translate}} {{jobSelected.name}}</h3>
+
+  </div>
+
+  <mat-divider gdColumn="1 / 4"></mat-divider>
+
+  <div gdColumn="1 / 4">
+    RAF Afficher liste ressource récoltable du métier + check box  + quantité  recoltable en fonction du lvl
+  </div>
+
+</div>

@@ -1,48 +1,19 @@
-﻿using DeepBot.Data.Model.Character;
-using System;
+﻿using DeepBot.Data.Database;
+using DeepBot.Data.Enums;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Driver;
 using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Model.Global
 {
     public class Item
     {
-        public uint Id { get; set; }
-        public int GuidItem { get; set; }
-        public string Name { get; set; }
-        public short Level { get; set; }
-        public ItemTypeEnum Type { get; set; }
-        public ItemSlotEnum Position { get; set; }
+        public int InventoryId { get; set; }
+        public int Fk_ItemId { get; set; }
         public int Quantity { get; set; }
-        public int Weight { get; set; }
-        public bool IsUsable { get; set; }
-        public int EstimedPrice { get; set; }
+        public ItemSlotEnum Position { get; set; }
         public List<Effect> Effects { get; set; }
-        public bool IsEquippable => IsEquippabled();
-        public Pet Pet => GetPet(Id); /* EXCLURE MONTURE */
-
-        
-
-        public Item()
-        {
-
-        }
-
-        public Pet GetPet(uint id)
-        {
-            return null;
-        }
-
-
-        public bool IsEquippabled()
-        {
-            return ItemSlotEnum.SLOT_INVENTORY == Position && (ItemTypeEnum.TYPE_PIERRE_AME == Type || ItemTypeEnum.TYPE_PELLE == Type || ItemTypeEnum.TYPE_OUTIL == Type || ItemTypeEnum.TYPE_PIOCHE == Type || ItemTypeEnum.TYPE_COIFFE == Type
-                || ItemTypeEnum.TYPE_ANNEAU == Type || ItemTypeEnum.TYPE_AMULETTE == Type || ItemTypeEnum.TYPE_BOTTES == Type || ItemTypeEnum.TYPE_CEINTURE == Type || ItemTypeEnum.TYPE_DAGUES == Type || ItemTypeEnum.TYPE_DOFUS == Type
-                || ItemTypeEnum.TYPE_EPEE == Type || ItemTypeEnum.TYPE_FAUX == Type || ItemTypeEnum.TYPE_HACHE == Type || ItemTypeEnum.TYPE_BATON == Type || ItemTypeEnum.TYPE_BAGUETTE == Type || ItemTypeEnum.TYPE_ARC == Type
-                );
-        }
+        [BsonIgnore]
+        public ItemDB baseItem => Driver.Database.Items.Find(c => c.Key == Fk_ItemId).FirstOrDefault();
     }
-
-
-
 }

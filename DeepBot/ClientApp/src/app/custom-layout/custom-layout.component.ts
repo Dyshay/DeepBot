@@ -8,6 +8,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { ConfigService } from '../../@vex/services/config.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { SidebarComponent } from '../../@vex/components/sidebar/sidebar.component';
+import { NavigationService } from '../../@vex/services/navigation.service';
 
 @Component({
   selector: 'vex-custom-layout',
@@ -33,12 +34,11 @@ export class CustomLayoutComponent implements OnInit, OnDestroy {
   constructor(private layoutService: LayoutService,
               private configService: ConfigService,
               private breakpointObserver: BreakpointObserver,
-              private router: Router) { }
+              private router: Router
+              ) { }
 
   ngOnInit() {
-    this.layoutService.configpanelOpen$.pipe(
-      untilDestroyed(this)
-    ).subscribe(open => open ? this.configpanel.open() : this.configpanel.close());
+    
   }
 
   ngOnDestroy(): void {}

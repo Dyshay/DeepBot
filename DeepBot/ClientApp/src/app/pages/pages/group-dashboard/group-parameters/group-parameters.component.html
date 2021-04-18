@@ -1,0 +1,39 @@
+<div class="card">
+  <div class="px-gutter py-4 border-b">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
+      <h2 class="title m-0"> {{'DASHBOARDBOT.PARAMETERS' | translate}}</h2>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'GLOBAL.SAVE' | translate}}" matTooltipPosition="left" (click)="Save()">
+          <mat-icon [icIcon]="icSave"></mat-icon>
+        </button>
+        <button color="primary" mat-mini-fab type="button" class="ml-2" matTooltip="{{'DASHBOARDBOT.IMPORTCONFIG' | translate}}" matTooltipPosition="left" (click)="Import()">
+          <mat-icon [icIcon]="icImport"></mat-icon>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+  <div class="px-gutter py-4 mt-3" gdColumns="1fr 1fr 1fr"
+       gdColumns.lt-md="1fr 1fr 1fr"
+       gdColumns.lt-sm="1fr"
+       gdGap="16px"
+       vexContainer>
+    <div gdColumn="1 / 4">
+      <h3 class="font-medium" fxLayoutAlign="center center">{{'DASHBOARDBOT.GLOBALPARAMETERS' | translate}}</h3>
+    </div>
+    <mat-divider gdColumn="1 / 4"></mat-divider>
+    <mat-form-field class="example-full-width">
+      <mat-label>{{'DASHBOARDBOT.AGRESSIONZONE' | translate}}</mat-label>
+      <input matInput placeholder="3" type="number" [(ngModel)]="group.config.agressionZone" [name]="agressionZone" >
+    </mat-form-field>
+ 
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [(ngModel)]="group.config.autoDisconnect" >{{'DASHBOARDBOT.AUTODISCONNECT' | translate}}</mat-slide-toggle>
+    </div>
+    <div gdColumn.lt-sm="1" fxLayoutAlign="center center">
+      <mat-slide-toggle color="primary" [(ngModel)]="group.config.autoCaptureArchi" >{{'DASHBOARDBOT.AUTOCAPTURE' | translate}}</mat-slide-toggle>
+    </div>
+
+  </div>
+</div>

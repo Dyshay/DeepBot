@@ -1,8 +1,6 @@
 ﻿using DeepBot.Data.Database;
 using MongoDB.Driver;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace DeepBot.Data.Driver
 {
@@ -11,25 +9,56 @@ namespace DeepBot.Data.Driver
         private static readonly IMongoDatabase Base = new MongoClient().GetDatabase("DeepBot");
 
         public static readonly IMongoCollection<UserDB> Users = Base.GetCollection<UserDB>("Users");
-        public static readonly IMongoCollection<AccountDB> Accounts = Base.GetCollection<AccountDB>("Accounts");
         public static readonly IMongoCollection<RoleDB> Roles = Base.GetCollection<RoleDB>("Roles");
-
-       public static long CountRole()
-        {
-            return Base.GetCollection<RoleDB>("Roles").CountDocuments(_ =>true);
-        }
-
-        public static void AddRole(string name)
-        {
-            Base.GetCollection<RoleDB>("Roles").InsertOne(new RoleDB() { Name = name });
-        }
+        public static readonly IMongoCollection<GroupDB> Groups = Base.GetCollection<GroupDB>("Groups");
+        public static readonly IMongoCollection<IADB> IA = Base.GetCollection<IADB>("IA");
+        public static readonly IMongoCollection<StatsDB> Stats = Base.GetCollection<StatsDB>("Stats");
+        public static readonly IMongoCollection<ApiKeyArchiveDB> ApiArchives = Base.GetCollection<ApiKeyArchiveDB>("ApiArchive");
+        public static readonly IMongoCollection<ConfigCharacterDB> ConfigsCharacter = Base.GetCollection<ConfigCharacterDB>("ConfigCharacter");
+        public static readonly IMongoCollection<ConfigGroupDB> ConfigsGroup = Base.GetCollection<ConfigGroupDB>("ConfigGroup");
+        public static readonly IMongoCollection<MapDB> Maps = Base.GetCollection<MapDB>("Maps");
+        public static readonly IMongoCollection<ItemDB> Items = Base.GetCollection<ItemDB>("Items");
+        public static readonly IMongoCollection<TrajetDB> Paths = Base.GetCollection<TrajetDB>("Paths");
+        public static readonly IMongoCollection<SpellDB> Spells = Base.GetCollection<SpellDB>("Spells");
+        public static readonly IMongoCollection<InventoryDB> Inventories = Base.GetCollection<InventoryDB>("Inventories");
+        public static readonly IMongoCollection<JobsDB> Jobs = Base.GetCollection<JobsDB>("Jobs");
 
         public static void Insert<TDocument>(this TDocument document)
         {
             switch (document)
             {
-                case AccountDB e:
-                    Accounts.InsertOne(e);
+                case IADB e:
+                    IA.InsertOne(e);
+                    break;
+                case GroupDB e:
+                    Groups.InsertOne(e);
+                    break;
+                case StatsDB e:
+                    Stats.InsertOne(e);
+                    break;
+                case ApiKeyArchiveDB e:
+                    ApiArchives.InsertOne(e);
+                    break;
+                case ConfigCharacterDB e:
+                    ConfigsCharacter.InsertOne(e);
+                    break;
+                case ConfigGroupDB e:
+                    ConfigsGroup.InsertOne(e);
+                    break;
+                case MapDB e:
+                    Maps.InsertOne(e);
+                    break;
+                case ItemDB e:
+                    Items.InsertOne(e);
+                    break;
+                case SpellDB e:
+                    Spells.InsertOne(e);
+                    break;
+                case InventoryDB e:
+                    Inventories.InsertOne(e);
+                    break;
+                case JobsDB e:
+                    Jobs.InsertOne(e);
                     break;
                 default:
                     throw new NotImplementedException();
@@ -40,8 +69,23 @@ namespace DeepBot.Data.Driver
         {
             switch (document)
             {
-                case AccountDB e:
-                    Accounts.DeleteOne(x => x.Key == e.Key);
+                case IADB e:
+                    IA.InsertOne(e);
+                    break;
+                case GroupDB e:
+                    Groups.InsertOne(e);
+                    break;
+                case StatsDB e:
+                    Stats.InsertOne(e);
+                    break;
+                case ApiKeyArchiveDB e:
+                    ApiArchives.InsertOne(e);
+                    break;
+                case ConfigCharacterDB e:
+                    ConfigsCharacter.InsertOne(e);
+                    break;
+                case ConfigGroupDB e:
+                    ConfigsGroup.InsertOne(e);
                     break;
                 default:
                     throw new NotImplementedException();
@@ -54,13 +98,35 @@ namespace DeepBot.Data.Driver
 
             switch (document)
             {
-                case AccountDB  e:
-                    Accounts.ReplaceOne(x => x.Key == e.Key, e);
+                case IADB e:
+                    IA.InsertOne(e);
+                    break;
+                case GroupDB e:
+                    Groups.InsertOne(e);
+                    break;
+                case StatsDB e:
+                    Stats.InsertOne(e);
+                    break;
+                case ApiKeyArchiveDB e:
+                    ApiArchives.InsertOne(e);
+                    break;
+                case ConfigCharacterDB e:
+                    ConfigsCharacter.InsertOne(e);
+                    break;
+                case ConfigGroupDB e:
+                    ConfigsGroup.InsertOne(e);
                     break;
                 default:
                     throw new NotImplementedException();
             }
         }
+
+
+        public static long CountRole()
+        {
+            return Base.GetCollection<RoleDB>("Roles").CountDocuments(_ => true);
+        }
+
 
     }
 }

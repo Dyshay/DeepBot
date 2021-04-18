@@ -1,9 +1,49 @@
 import { Classe } from './Enum/Classe';
+import { Trajet } from './Trajet';
+import { ConfigCharacter } from './ConfigCharacter';
+import { Group } from './Group';
+import { IA } from './IA';
+import { Cell } from './Cell';
+import { Spell } from './Spell';
+import { Caracteristic } from './Caracteristic';
+import { Inventory } from './Inventory';
+import { Job } from './Job';
+import { CharacterMap } from './CharacterMap';
+import { LogType } from './Enum/LogType';
+import { AccountState } from './Enum/AccountState';
 
-export interface Character {
-  characterName: string,
-  level: number,
-  classe: Classe
+export class Character {
+  key: number;
+  fk_IA?: string;
+  fk_Group?: string;
+  fk_Configuration?: string;
+  fk_Trajet?: string;
+  name: string;
+  level: number;
+  breedId: number;
+  sex: number;
+  kamas: number;
+  availableCharactericsPts: number;
+  availableSpellPts: number;
+  serverId: number;
+  cell?: Cell | null;
+  trajet?: Trajet | null;
+  config?: ConfigCharacter | null;
+  group?: Group| null;
+  ia?: IA| null;
+  spells?: Spell[]| null;
+  characteristic?: Caracteristic;
+  inventory?: Inventory;
+  jobs?: Job[]| null;
+  map?: CharacterMap | null;
+  state?: AccountState;
+}
+
+
+export interface CharacterMessage {
+  type: LogType,
+  characters: Character[],
+  tcpId: string
 }
 
 

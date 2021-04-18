@@ -1,7 +1,6 @@
 ﻿using DeepBot.CLI.Model;
 using DeepBot.CLI.Network.Packages;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -11,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace DeepBot.CLI.Network.Tcp
 {
-    public class TcpHandler
+    public class TcpHandler : IDisposable
     {
         private Socket Socket { get; set; }
         private byte[] Buffer { get; set; }
@@ -23,6 +22,7 @@ namespace DeepBot.CLI.Network.Tcp
 
         private bool Disposed;
         private Account Account;
+        private string PacketBuffer;
 
         public TcpHandler(Account account, string tcpId)
         {
@@ -41,7 +41,7 @@ namespace DeepBot.CLI.Network.Tcp
                 Buffer = new byte[Socket.ReceiveBufferSize];
                 Semaphore = new SemaphoreSlim(1);
                 ///TODO ADD PROXY SOCKS
-                Socket.BeginConnect(IPAddress.Parse(IP), port, new AsyncCallback(ConnectCallback), Socket);
+                Socket.BeginConnect(Dns.GetHostAddresses(IP), port, new AsyncCallback(ConnectCallback), Socket);
                 //return Socket;
             }
             catch (Exception ex)
@@ -80,24 +80,41 @@ namespace DeepBot.CLI.Network.Tcp
             if (!IsConnected() || Disposed)
             {
                 return;
+
             }
 
-            int bytes_read = Socket.EndReceive(result, out SocketError reply);
-
-            if (bytes_read > 0 && reply == SocketError.Success)
+            if (result != null)
             {
-                string datas = Encoding.UTF8.GetString(Buffer, 0, bytes_read);
+                int bytes_read = Socket.EndReceive(result, out SocketError reply);
 
-                foreach (var packet in datas.Replace("\x0a", string.Empty).Split('\0').Where(x => x != string.Empty))
+                if (bytes_read > 0 && reply == SocketError.Success)
                 {
-                    PackageReceiver.Receive(packet, Account, TcpId);
+                    string datas = Encoding.UTF8.GetString(Buffer, 0, bytes_read);
+                    var packets = datas.Replace("\x0a", string.Empty).Split('\0').Where(x => x != string.Empty).ToList();
+                    foreach (var packet in packets)
+                    {
+                        if (packets.IndexOf(packet) == packets.Count - 1 && !datas.EndsWith("\0"))
+                        {
+                            Console.WriteLine("Buffering packet " + packet);
+                            this.PacketBuffer = packet;
+                        }
+                        else if (!String.IsNullOrEmpty(this.PacketBuffer))
+                        {
+                            Console.WriteLine("Unbuffering packet " + this.PacketBuffer);
+                            PackageReceiver.Receive(this.PacketBuffer + packet, Account, TcpId);
+                            this.PacketBuffer = null;
+                        }
+                        else
+                            PackageReceiver.Receive(packet, Account, TcpId);
+                    }
+                    if (IsConnected())
+                        Socket.BeginReceive(Buffer, 0, Buffer.Length, SocketFlags.None, new AsyncCallback(ReceptionCallBack), Socket);
                 }
+                else
+                    Disconnect();
 
-                if (IsConnected())
-                    Socket.BeginReceive(Buffer, 0, Buffer.Length, SocketFlags.None, new AsyncCallback(ReceptionCallBack), Socket);
             }
-            else
-                Disconnect();
+
 
         }
 
@@ -126,7 +143,27 @@ namespace DeepBot.CLI.Network.Tcp
 
         public bool IsConnected()
         {
-            return !(Disposed || Socket == null || !Socket.Connected && Socket.Available == 0);
+            bool SocketAvailable;
+            bool SocketConnected;
+            try
+            {
+                if (Socket != null)
+                {
+                    SocketConnected = Socket.Connected;
+                    SocketAvailable = Socket.Available == 0;
+                }
+                else
+                {
+                    SocketConnected = false;
+                    SocketAvailable = false;
+                }
+            }
+            catch (ObjectDisposedException)
+            {
+                SocketConnected = false;
+                SocketAvailable = false;
+            }
+            return !(Disposed || Socket == null || !SocketConnected && SocketAvailable);
         }
 
         public void Disconnect()
@@ -141,8 +178,9 @@ namespace DeepBot.CLI.Network.Tcp
                 }
             }
         }
-
-        public void Dispose()
+        ~TcpHandler() => Dispose(false);
+        public void Dispose() => Dispose(true);
+        protected virtual void Dispose(bool disposing)
         {
             if (!Disposed)
             {
@@ -153,8 +191,11 @@ namespace DeepBot.CLI.Network.Tcp
                     Socket.Close();
                 }
 
-                Socket.Dispose();
-                Semaphore.Dispose();
+                if (disposing)
+                {
+                    Socket.Dispose();
+                    Semaphore.Dispose();
+                }
 
                 Semaphore = null;
                 Socket = null;

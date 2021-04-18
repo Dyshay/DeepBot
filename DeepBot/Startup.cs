@@ -4,16 +4,26 @@ using DeepBot.ControllersModel;
 using DeepBot.Core.Hubs;
 using DeepBot.Core.Network;
 using DeepBot.Data.Database;
+using DeepBot.Data.Database.Loaders;
+using DeepBot.Data.Driver;
+using DeepBot.Data.Model;
+using DeepBot.Data.Model.CharacterInfo;
+using DeepBot.Data.Model.IA;
+using DeepBot.Data.Model.Script;
+using DeepBot.Data.Model.Script.Actions;
+using DeepBot.Data.Model.Script.Options;
+using DeepBot.Data.Utilities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using MongoDB.Bson.Serialization;
+using MongoDB.Driver;
 using System;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,22 +45,55 @@ namespace DeepBot
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSignalR();
-            services.AddControllersWithViews();
+            services.AddCors();
+            services.AddAuthorization();
             // In production, the Angular files will be served from this directory
             services.AddSpaStaticFiles(configuration =>
             {
-                configuration.RootPath = "ClientApp/dist";
+                configuration.RootPath = "ClientApp/dist/vex";
             });
 
-            services.AddIdentityMongoDbProvider<UserDB,RoleDB>(identity =>
-            {
-                identity.Password.RequireDigit = false;
-                identity.Password.RequireLowercase = false;
-                identity.Password.RequireNonAlphanumeric = false;
-                identity.Password.RequireUppercase = false;
-                identity.Password.RequiredLength = 1;
-                identity.Password.RequiredUniqueChars = 0;
-            },
+
+            services.AddMvc(option => option.EnableEndpointRouting = false)
+                .AddJsonOptions (opt => {
+                    opt.JsonSerializerOptions.MaxDepth =10;
+                    opt.JsonSerializerOptions.WriteIndented = true;
+                });
+
+            /* object nested */
+            BsonClassMap.RegisterClassMap<Account>();
+            BsonClassMap.RegisterClassMap<Character>();
+            BsonClassMap.RegisterClassMap<Proxy>();
+            BsonClassMap.RegisterClassMap<PathAction>();
+            BsonClassMap.RegisterClassMap<BankAction>();
+            BsonClassMap.RegisterClassMap<CaptureMonsterQuantity>();
+            BsonClassMap.RegisterClassMap<FightAction>();
+            BsonClassMap.RegisterClassMap<GatherAction>();
+            BsonClassMap.RegisterClassMap<InteractionAction>();
+            BsonClassMap.RegisterClassMap<MapAction>();
+            BsonClassMap.RegisterClassMap<MoveAction>();
+            BsonClassMap.RegisterClassMap<SpecificMonsterLevel>();
+            BsonClassMap.RegisterClassMap<SpecificMonsterQuantity>();
+            BsonClassMap.RegisterClassMap<UseItemAction>();
+            BsonClassMap.RegisterClassMap<ZaapAction>();
+            BsonClassMap.RegisterClassMap<ZaapiAction>();
+            BsonClassMap.RegisterClassMap<SpellAction>();
+            BsonClassMap.RegisterClassMap<ConditionalAction>();
+
+            services.AddSingleton<DeepTalkService>();
+            services.AddHostedService<DeepTalkService>();
+            //services.AddSingleton<IDeepTalkService,DeepTalkService>();
+
+            services.AddIdentityMongoDbProvider<UserDB, RoleDB>(identity =>
+             {
+                 identity.Password.RequireDigit = false;
+                 identity.Password.RequireLowercase = false;
+                 identity.Password.RequireNonAlphanumeric = false;
+                 identity.Password.RequireUppercase = false;
+                 identity.Password.RequiredLength = 1;
+                 identity.Password.RequiredUniqueChars = 0;
+                 identity.SignIn.RequireConfirmedEmail = true;
+             },
                 mongo =>
                 {
                     mongo.ConnectionString = ConnectionString;
@@ -69,7 +112,7 @@ namespace DeepBot
             }).AddJwtBearer(x =>
             {
                 x.SaveToken = false;
-                x.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
                     IssuerSigningKey = new SymmetricSecurityKey(key),
@@ -93,6 +136,22 @@ namespace DeepBot
                     }
                 };
             });
+
+            if (Database.Maps.FindSync(FilterDefinition<MapDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Maps not imported, processing import");
+                Loader.LoadMaps();
+            }
+            if (Database.Items.FindSync(FilterDefinition<ItemDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Items not imported, processing import");
+                Loader.LoadItems();
+            }
+            if (Database.Spells.FindSync(FilterDefinition<SpellDB>.Empty).FirstOrDefault() == null)
+            {
+                Console.WriteLine("Spells not imported, processing import");
+                Loader.LoadSpells();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -123,6 +182,8 @@ namespace DeepBot
             //Launch Handler Core
             Receiver.Initialize();
 
+            //DataInit.SeedAndCreateRoles();
+
             app.UseRouting();
             //Identity
             app.UseAuthentication();
@@ -145,6 +206,7 @@ namespace DeepBot
                 if (env.IsDevelopment())
                 {
                     spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:4200");
                 }
             });
 

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, OnChanges } from '@angular/core';
 import icGroup from '@iconify/icons-ic/twotone-group';
 import icPageView from '@iconify/icons-ic/twotone-pageview';
 import icCloudOff from '@iconify/icons-ic/twotone-cloud-off';
@@ -9,17 +9,22 @@ import { TableColumn } from '../../../../@vex/interfaces/table-column.interface'
 import icMoreVert from '@iconify/icons-ic/twotone-more-vert';
 import theme from '../../../../@vex/utils/tailwindcss';
 import { Store, select } from '@ngrx/store';
-import * as fromBot from '../../pages/bot/reducers';
 import { TalkService } from 'src/app/Services/TalkService';
+import { NavigationService } from '../../../../@vex/services/navigation.service';
+import * as fromWeb from 'src/app/app-reducers/webUser/reducers';
+import { webUserActions } from 'src/app/app-reducers/webUser/actions';
 
 @Component({
   selector: 'vex-dashboard-analytics',
   templateUrl: './dashboard-analytics.component.html',
   styleUrls: ['./dashboard-analytics.component.scss']
 })
-export class DashboardAnalyticsComponent implements OnInit {
+export class DashboardAnalyticsComponent implements OnInit, OnChanges {
+  ngOnChanges(changes: import("@angular/core").SimpleChanges): void {
+    this.webStore.dispatch(webUserActions.getBotNav());
+    }
 
-  logs$ = this.store.pipe(select(fromBot.getLogs));
+
 
   tableColumns: TableColumn<Order>[] = [
     {
@@ -94,7 +99,7 @@ export class DashboardAnalyticsComponent implements OnInit {
 
   theme = theme;
 
-  constructor(private cd: ChangeDetectorRef, private store: Store<fromBot.State>, private deepTalk: TalkService) { }
+  constructor(private cd: ChangeDetectorRef,private deepTalk: TalkService, private webStore: Store<fromWeb.State>) { }
 
   ngOnInit() {
     setTimeout(() => {
@@ -108,10 +113,6 @@ export class DashboardAnalyticsComponent implements OnInit {
         }
       ];
     }, 3000);
-  }
-
-  init(){
-    this.deepTalk.createConnexion();
   }
 
 }
